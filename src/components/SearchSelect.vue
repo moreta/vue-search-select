@@ -7,7 +7,7 @@
            @keyup.up="prevItem"
            @keyup.down="nextItem"
            @keyup.enter="enterItem"
-           @keyup.delete="openOptions"
+           @keyup.delete="changeSearchText"
     />
     <div class="text"></div>
     <div class="menu" :class="{ 'visible':showMenu }" tabindex="-1">
@@ -56,12 +56,26 @@
         return filter(this.selectOptions, this.searchText)
       }
     },
+    watch: {
+      'selectOptions': function(val, oldVal) {
+        let selectedItem = val.find(function (item) {
+          return item.selected === true
+        })
+        if (selectedItem) {
+          this.selectItem(selectedItem)
+        }
+      }
+    },
     methods: {
+      changeSearchText () {
+        this.searchItem = {}
+        this.$dispatch('select-item', {}) // for callback other component
+        this.openOptions()
+      },
       // inputに cursor
       openOptions () {
         this.showMenu = true
         this.mousedownState = false
-        this.searchItem = {}
       },
       // blurされた時
       blurInput () {
