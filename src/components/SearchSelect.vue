@@ -1,13 +1,18 @@
 <!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
   <div class="ui search dropdown selection">
-    <i class="dropdown icon"></i>
+    <i class="dropdown icon" @click="openOptions"></i>
     <input type="hidden" v-model="searchItem" />
-    <input class="search" type="text" autocomplete="off" tabindex="0" v-model="searchText" @focus="focusCursor" @blur="blurCursor" @keyup.up="prevItem" @keyup.down="nextItem" @keyup.enter="selectItem" />
+    <input class="search" type="text" autocomplete="off" tabindex="0" v-model="searchText" @focus="openOptions" @blur="closeOptions"
+           @keyup.up="prevItem"
+           @keyup.down="nextItem"
+           @keyup.enter="enterItem"
+           @keyup.delete="openOptions"
+    />
     <div class="text"></div>
     <div class="menu" :class="{ 'visible':showMenu }" tabindex="-1">
       <template v-for="(idx, option) in selectOptions | filterBy searchText">
-        <div class="item" :class="{ 'selected': option.selected }" @click="clickItem(option)" @mousedown="mousedownItem">{{option.text}}</div>
+        <div class="item" :class="{ 'selected': option.selected }" @click="selectItem(option)" @mousedown="mousedownItem">{{option.text}}</div>
       </template>
     </div>
   </div>
@@ -40,30 +45,26 @@
     },
     methods: {
       // inputに cursor
-      focusCursor () {
-        console.log('focus input')
+      openOptions () {
         this.showMenu = true
         this.mousedownState = false
+        this.searchItem = {}
       },
       // blurされた時
-      blurCursor () {
-        console.log('blur input')
-        console.log('activeElement')
-        console.log(this.mousedownState)
+      closeOptions () {
         if (!this.mousedownState) {
           this.showMenu = false
         }
       },
       // up arrow key
       prevItem () {
-        console.log('select prev item')
         let selectedItemIndex = this.filteredOptions.findIndex(function (item) {
           return item.selected === true
         })
-        console.log('selectedItemIndex : ' + selectedItemIndex)
         if (selectedItemIndex === -1) {
           this.filteredOptions[0].selected = true
         } else if (selectedItemIndex === 0) {
+          // nothing todo
         } else {
           this.filteredOptions[selectedItemIndex].selected = false
           this.filteredOptions[selectedItemIndex - 1].selected = true
@@ -71,39 +72,32 @@
       },
       // down arrow key
       nextItem () {
-        console.log('select next item')
-        console.log(this.filteredOptions)
         let selectedItemIndex = this.filteredOptions.findIndex(function (item) {
           return item.selected === true
         })
-        console.log('selectedItemIndex : ' + selectedItemIndex)
-        console.log('selectedItemIndex : ' + selectedItemIndex)
         if (selectedItemIndex === -1) {
-          console.log('select next item')
           this.filteredOptions[0].selected = true
         } else if (selectedItemIndex === this.filteredOptions.length - 1) {
           // nothing todo
         } else {
-          console.log('select next item')
           this.filteredOptions[selectedItemIndex].selected = false
           this.filteredOptions[selectedItemIndex + 1].selected = true
         }
       },
-      selectItem () {
+      enterItem () {
         // selected = trueのitemをセット
-        console.log('select selected item')
+        let selectedItem = this.filteredOptions.find(function (item) {
+          return item.selected === true
+        })
+        this.selectItem(selectedItem)
       },
       mousedownItem () {
-        console.log('item mousedown')
         this.mousedownState = true
       },
-      clickItem (option) {
-        console.log('option selected =========')
-        console.log(option.value)
-        console.log(option.text)
+      selectItem (option) {
         this.searchItem = option
         this.searchText = option.text
-        this.showMenu = false
+        this.closeOptions()
       }
     }
   }
