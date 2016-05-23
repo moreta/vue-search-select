@@ -9,6 +9,9 @@
         <div class="link">
           <a v-link="{ path: '/SearchSelect' }">Search select example</a>
         </div>
+        <div class="link">
+          <a v-link="{ path: '/NestedSearchSelect' }">Nested Search select example</a>
+        </div>
 
     </div>
     <!-- route outlet -->
