@@ -7,7 +7,7 @@
     </div>
     <div style="height: 50px;"></div>
     <div>
-      <select-search :select-options="selectOptions" v-on:on-select="selectedItem1" :reset-trigger-value="searchText" />
+      <select-search :select-options="selectOptions" v-on:on-select="selectedItem1" :reset-trigger-value="searchText"></select-search>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import SearchSelect from './SearchSelect'
+  import SearchSelect from '../SearchSelect'
   export default {
     data () {
       return {

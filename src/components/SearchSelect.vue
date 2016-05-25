@@ -11,7 +11,9 @@
     <div class="text"></div>
     <div class="menu" :class="{ 'visible':showMenu }" tabindex="-1">
       <template v-for="(idx, option) in selectOptions | filterBy searchText">
-        <div class="item" :class="{ 'selected': option.selected }" @click="selectItem(option)" @mousedown="mousedownItem">{{option.text}}</div>
+        <div class="item" :class="{ 'selected': option.selected }" @click="selectItem(option)" @mousedown="mousedownItem">
+          {{option.text}}
+        </div>
       </template>
     </div>
   </div>
@@ -21,11 +23,10 @@
   import Vue from 'vue'
   export default {
     props: {
-      'selectOptions' : {
+      'selectOptions': {
         type: Array
       },
-      'resetTriggerValue' : {
-      },
+      'resetTriggerValue': {},
       'onSelect': {
         type: Function
       }
@@ -44,9 +45,9 @@
       }
     },
     watch: {
-      'selectOptions': function(val, oldVal) {
+      'selectOptions': function (val, oldVal) {
         console.log('selectOptions changed : ')
-        var selectedItem = val.find(function (item) {
+        var selectedItem = val.find(item => {
           return item.selected === true
         })
         if (selectedItem) {
@@ -57,11 +58,11 @@
           this.selectItem({})
         }
       },
-      'resetTriggerValue': function(val, oldVal) {
+      'resetTriggerValue': function (val, oldVal) {
         //        console.log('resetTriggerValue changed : '+ val)
         if (!val) {
           this.searchText = ''
-          this.selectOptions = this.selectOptions.map(function(m) {
+          this.selectOptions = this.selectOptions.map(m => {
             m.selected = false
             return m
           })
@@ -92,7 +93,7 @@
       },
       // up arrow key
       prevItem () {
-        let selectedItemIndex = this.filteredOptions.findIndex(function (item) {
+        let selectedItemIndex = this.filteredOptions.findIndex(item => {
           return item.selected === true
         })
         if (selectedItemIndex === -1) {
@@ -106,7 +107,7 @@
       },
       // down arrow key
       nextItem () {
-        let selectedItemIndex = this.filteredOptions.findIndex(function (item) {
+        let selectedItemIndex = this.filteredOptions.findIndex(item => {
           return item.selected === true
         })
         if (selectedItemIndex === -1) {
@@ -120,7 +121,7 @@
       },
       enterItem () {
         // selected = trueのitemをセット
-        let selectedItem = this.filteredOptions.find(function (item) {
+        let selectedItem = this.filteredOptions.find(item => {
           return item.selected === true
         })
         this.selectItem(selectedItem)

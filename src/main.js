@@ -1,22 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
-import Hello from './components/Hello'
-import SearchSelect from './components/SearchSelect'
-import NestedSearchSelect from './components/NestedSearchSelect'
+import BasicSearchSelect from './components/sample/BasicSearchSelect'
+import MultipleSearchSelect from './components/sample/MultipleSearchSelect'
 
 Vue.use(VueRouter)
 var router = new VueRouter()
 
 router.map({
-  '/Hello': {
-    component: Hello
+  '/Basic': {
+    component: BasicSearchSelect
   },
-  '/SearchSelect': {
-    component: SearchSelect
-  },
-  '/NestedSearchSelect': {
-    component: NestedSearchSelect
+  '/Multiple': {
+    component: MultipleSearchSelect
   }
 })
 router.start(App, '#container')
