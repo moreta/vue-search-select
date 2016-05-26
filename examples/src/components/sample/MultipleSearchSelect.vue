@@ -2,12 +2,19 @@
 <template>
   <div style="width: 500px;">
     <div>
-      <div>{{item.value}}</div>
-      <div>{{item.text}}</div>
+      <div>{{item1.value}}</div>
+      <div>{{item1.text}}</div>
+    </div>
+    <div>
+      <select-search :select-options="selectOptions" v-on:on-select="selectedItem1" :reset-trigger-value="searchText"></select-search>
     </div>
     <div style="height: 50px;"></div>
     <div>
-      <select-search :select-options="selectOptions" v-on:on-select="selectedItem1" :reset-trigger-value="searchText"></select-search>
+      <div>{{item2.value}}</div>
+      <div>{{item2.text}}</div>
+    </div>
+    <div>
+      <select-search :select-options="selectOptions" v-on:on-select="selectedItem2" :reset-trigger-value="searchText"></select-search>
     </div>
   </div>
 
@@ -15,7 +22,7 @@
 </template>
 
 <script>
-  import SearchSelect from '../SearchSelect'
+  import SearchSelect from '../../../../src/components/SearchSelect.vue'
   export default {
     data () {
       return {
@@ -41,12 +48,16 @@
           { value: '19', text: 'ef' + ' - ' + '19', selected: false }
         ],
         resetTriggerValue: '', // If value is falsy, reset searchText & searchItem
-        item: {}
+        item1: {},
+        item2: {}
       }
     },
     methods: {
-      selectedItem (item) {
-        this.item = item
+      selectedItem1 (item) {
+        this.item1 = item
+      },
+      selectedItem2 (item) {
+        this.item2 = item
       }
     },
     components: {
