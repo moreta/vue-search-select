@@ -7,7 +7,7 @@
     </div>
     <div style="height: 50px;"></div>
     <div>
-      <select-search :select-options="selectOptions" v-on:on-select="selectedItem1" :reset-trigger-value="searchText"></select-search>
+      <select-search :select-options="selectOptions" v-on:on-select="selectedItem" :reset-trigger-value="searchText"></select-search>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import SearchSelect from '../../../../src/components/SearchSelect.vue'
+  import VueSearchSelect from '../../../../src/components/SearchSelect.vue'
   export default {
     data () {
       return {
@@ -50,7 +50,7 @@
       }
     },
     components: {
-      'select-search': SearchSelect
+      'select-search': VueSearchSelect
     }
   }
 </script>

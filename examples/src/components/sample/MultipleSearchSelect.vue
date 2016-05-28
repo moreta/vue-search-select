@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import SearchSelect from '../../../../src/components/SearchSelect.vue'
+  import VueSearchSelect from '../../../../src/components/SearchSelect.vue'
   export default {
     data () {
       return {
@@ -61,7 +61,7 @@
       }
     },
     components: {
-      'select-search': SearchSelect
+      'select-search': VueSearchSelect
     }
   }
 </script>

@@ -1,7 +1,7 @@
 {
   "name": "vue-search-select-example",
   "version": "1.0.0",
-  "description": "A Vue.js search select form component",
+  "description": "A Vue.js search select form component example",
   "author": "JungJoo Seo <moretajoo@gmail.com>",
   "scripts": {
     "dev": "node build/dev-server.js",

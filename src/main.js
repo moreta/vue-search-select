@@ -1,1 +1,3 @@
-export { SearchSelect }  from './components/SearchSelect.vue'
+import VueSearchSelect from './components/SearchSelect.vue'
+
+module.exports = VueSearchSelect
