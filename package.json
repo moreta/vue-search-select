@@ -4,7 +4,7 @@
   "description": "A Vue.js search select form component",
   "author": "JungJoo Seo <moretajoo@gmail.com>",
   "license": "MIT",
-  "main": "dist/vue-search-select-component.js",
+  "main": "dist/vue-search-select.js",
   "keywords": [
     "autocomplete",
     "vuejs",
