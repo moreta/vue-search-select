@@ -557,8 +557,8 @@
     width: auto;
     outline: none;
     margin: 0px -1px;
-    min-width: calc(100% + 2px);
-    width: calc(100% + 2px);
+    min-width: calc(100%);
+    width: calc(100%);
     border-radius: 0em 0em 0.28571429rem 0.28571429rem;
     box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);
     -webkit-transition: opacity 0.1s ease;
