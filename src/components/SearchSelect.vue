@@ -3,8 +3,8 @@
   <div class="ui search dropdown selection" :class="{ 'active':showMenu }">
     <i class="dropdown icon" @click="openOptions"></i>
     <input class="search" type="text" autocomplete="off" tabindex="0" v-model="searchText" @focus="openOptions" @blur="blurInput"
-           @keyup.up="prevItem"
-           @keyup.down="nextItem"
+           @keydown.up="prevItem"
+           @keydown.down="nextItem"
            @keyup.enter="enterItem"
            @keyup.delete="changeSearchText"
     />
@@ -107,6 +107,7 @@
       },
       // down arrow key
       nextItem () {
+        console.log('nextItem')
         let selectedItemIndex = this.filteredOptions.findIndex(item => {
           return item.selected === true
         })
