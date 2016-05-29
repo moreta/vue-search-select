@@ -46,20 +46,16 @@
     },
     watch: {
       'selectOptions': function (val, oldVal) {
-        console.log('selectOptions changed : ')
         var selectedItem = val.find(item => {
           return item.selected === true
         })
         if (selectedItem) {
-          console.log('selectOptions changed : selectedItem exist')
           this.selectItem(selectedItem)
         } else {
-          console.log('selectOptions changed : selectedItem not exist')
           this.selectItem({})
         }
       },
       'resetTriggerValue': function (val, oldVal) {
-        //        console.log('resetTriggerValue changed : '+ val)
         if (!val) {
           this.searchText = ''
           this.selectOptions = this.selectOptions.map(m => {
@@ -107,7 +103,6 @@
       },
       // down arrow key
       nextItem () {
-        console.log('nextItem')
         let selectedItemIndex = this.filteredOptions.findIndex(item => {
           return item.selected === true
         })
