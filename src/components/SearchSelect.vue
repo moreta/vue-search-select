@@ -51,17 +51,16 @@
         })
         if (selectedItem) {
           this.selectItem(selectedItem)
-        } else {
-          this.selectItem({})
         }
       },
       'resetTriggerValue': function (val, oldVal) {
         if (!val) {
-          this.searchText = ''
           this.selectOptions = this.selectOptions.map(m => {
             m.selected = false
             return m
           })
+        } else {
+          this.changeSelectKey(val)
         }
       }
     },
@@ -129,6 +128,17 @@
         this.searchText = option.text
         this.closeOptions()
         this.onSelect(option)
+      },
+      changeSelectKey: function(key) {
+        var option = this.selectOptions.find(function(o, idx) {
+          if (o.value === key) {
+            return true
+          }
+        })
+        if (option) {
+          this.searchText = option.text
+          this.closeOptions()
+        }
       }
     }
   }
