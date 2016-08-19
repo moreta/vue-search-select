@@ -1,0 +1,8 @@
+.idea
+*.log
+.DS_Store
+node_modules/
+test/unit/coverage
+test/e2e/reports
+examples
+webpack.*
