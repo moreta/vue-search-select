@@ -10,7 +10,7 @@
     />
     <div class="text"></div>
     <div class="menu" :class="{ 'visible':showMenu }" tabindex="-1">
-      <template v-for="(idx, option) in selectOptions | filterBy searchText">
+      <template v-for="(idx, option) in selectOptions | filterBy searchText in 'text'">
         <div class="item" :class="{ 'selected': option.selected }" @click="selectItem(option)" @mousedown="mousedownItem">
           {{option.text}}
         </div>
@@ -21,6 +21,8 @@
 
 <script>
   import Vue from 'vue'
+  const filter = Vue.filter('filterBy')
+  
   export default {
     props: {
       'selectOptions': {
@@ -28,7 +30,8 @@
       },
       'resetTriggerValue': {},
       'onSelect': {
-        type: Function
+        type: Function,
+        default: function(obj) {}
       }
     },
     data () {
@@ -40,7 +43,6 @@
     },
     computed: {
       filteredOptions () {
-        const filter = Vue.filter('filterBy')
         return filter(this.selectOptions, this.searchText)
       }
     },
@@ -119,7 +121,9 @@
         let selectedItem = this.filteredOptions.find(item => {
           return item.selected === true
         })
-        this.selectItem(selectedItem)
+        if (selectedItem) {
+          this.selectItem(selectedItem)
+        }
       },
       mousedownItem () {
         this.mousedownState = true

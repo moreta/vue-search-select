@@ -1,8 +1,8 @@
 {
   "name": "vue-search-select",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A Vue.js search select form component",
-  "author": "JungJoo Seo <moretajoo@gmail.com>",
+  "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
   "main": "dist/vue-search-select.js",
   "keywords": [
