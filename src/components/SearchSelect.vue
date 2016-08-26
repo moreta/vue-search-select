@@ -1,6 +1,6 @@
 <!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
-  <div class="ui search dropdown selection" :class="{ 'active':showMenu }">
+  <div class="ui search dropdown selection" :class="{ 'active':showMenu, 'error': isError }">
     <i class="dropdown icon" @click="openOptions"></i>
     <input class="search" type="text" autocomplete="off" tabindex="0" v-model="searchText" @focus="openOptions" @blur="blurInput"
            @keydown.up="prevItem"
@@ -31,7 +31,11 @@
       'resetTriggerValue': {},
       'onSelect': {
         type: Function,
-        default: function(obj) {}
+        default: () => {}
+      },
+      'isError': {
+        type: Boolean,
+        default: false
       }
     },
     data () {

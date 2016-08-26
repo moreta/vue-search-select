@@ -5,6 +5,9 @@
         <div class="link">
           <a v-link="{ path: '/Basic' }">Search Select Basic example</a>
         </div>
+      <div class="link">
+        <a v-link="{ path: '/Error' }">Search Select Error example</a>
+      </div>
         <div class="link">
           <a v-link="{ path: '/Multiple' }">Nested Search select example</a>
         </div>

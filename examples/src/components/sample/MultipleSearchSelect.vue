@@ -6,7 +6,7 @@
       <div>{{item1.text}}</div>
     </div>
     <div>
-      <select-search :select-options="selectOptions" v-on:on-select="selectedItem1" :reset-trigger-value="searchText"></select-search>
+      <select-search :select-options="selectOptions" :on-select="selectedItem1" :reset-trigger-value="searchText"></select-search>
     </div>
     <div style="height: 50px;"></div>
     <div>
@@ -14,7 +14,7 @@
       <div>{{item2.text}}</div>
     </div>
     <div>
-      <select-search :select-options="selectOptions" v-on:on-select="selectedItem2" :reset-trigger-value="searchText"></select-search>
+      <select-search :select-options="selectOptions" :on-select="selectedItem2" :reset-trigger-value="searchText"></select-search>
     </div>
   </div>
 

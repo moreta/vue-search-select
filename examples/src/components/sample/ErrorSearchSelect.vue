@@ -7,7 +7,7 @@
     </div>
     <div style="height: 50px;"></div>
     <div>
-      <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="searchText"></select-search>
+      <select-search :select-options="selectOptions" :on-select="selectedItem" :is-error="isError"></select-search>
     </div>
   </div>
 
@@ -16,6 +16,7 @@
 
 <script>
   import VueSearchSelect from '../../../../src/components/SearchSelect.vue'
+  import _ from 'lodash'
   export default {
     data () {
       return {
@@ -42,6 +43,12 @@
         ],
         resetTriggerValue: '', // If value is falsy, reset searchText & searchItem
         item: {}
+      }
+    },
+    computed: {
+      // a computed getter
+      isError () {
+        return _.isEmpty(this.item)
       }
     },
     methods: {
