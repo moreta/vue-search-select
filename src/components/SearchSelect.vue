@@ -512,6 +512,7 @@
     transform: rotateZ(0deg);
     min-width: 14em;
     /*min-height: 2.7142em;*/
+    width: 100%;
     background: #FFFFFF;
     display: inline-block;
     padding: 0.78571429em 2.6em 0.78571429em 1em;
