@@ -271,7 +271,7 @@
     line-height: 1em;
     color: rgba(0, 0, 0, 0.87);
     padding: 0.71428571rem 1.14285714rem !important;
-    font-size: 1rem;
+    font-size: 1em;
     text-transform: none;
     font-weight: normal;
     box-shadow: none;
