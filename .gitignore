@@ -2,6 +2,5 @@
 *.log
 .DS_Store
 node_modules/
-dist/
 test/unit/coverage
 test/e2e/reports
