@@ -5,6 +5,10 @@ A Vue.js search select component.
 + Dependency only vue.js (no jquery and any other npm)
 + Design css copy from <https://github.com/Semantic-Org/UI-Dropdown>
 
+## Demo
+
+<http://moreta.github.io/vue-search-select/>
+
 # Usage
 
 ## Install
@@ -12,10 +16,6 @@ A Vue.js search select component.
 ```bash
 npm install --save vue-search-select
 ```
-
-## Demo
-
-<http://moreta.github.io/vue-search-select/>
 
 ## Basic Example
 
