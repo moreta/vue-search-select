@@ -13,11 +13,15 @@ A Vue.js search select component.
 npm install --save vue-search-select
 ```
 
-## Example
+## Demo
+
+<http://moreta.github.io/vue-search-select/>
+
+## Basic Example
 
 ```html
 <template>
-  <select-search :select-options="selectOptions" v-on:on-select="selectedItem" :reset-trigger-value="searchText"></select-search>
+  <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="searchText"></select-search>
 </template>
 
 <script>
@@ -56,6 +60,7 @@ npm install --save vue-search-select
 # Run examples
 
 ```bash
+# go examples directory
 cd examples
 
 # install dependencies
