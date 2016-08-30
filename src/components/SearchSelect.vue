@@ -60,12 +60,13 @@
         }
       },
       'resetTriggerValue': function (val, oldVal) {
-        if (!val) {
+        if (!val && val !== '') {
           this.selectOptions = this.selectOptions.map(m => {
             m.selected = false
             return m
           })
         } else {
+          console.log('!val else')
           this.changeSelectKey(val)
         }
       }
@@ -143,10 +144,12 @@
             return true
           }
         })
-        if (option) {
+        if (option.value) {
           this.searchText = option.text
-          this.closeOptions()
+        } else {
+          this.searchText = ''
         }
+        this.closeOptions()
       }
     }
   }

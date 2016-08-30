@@ -6,8 +6,9 @@
       <div>{{item.text}}</div>
     </div>
     <div style="height: 50px;"></div>
+    <button type="button" @click="resetValue" class="btn btn-info btn-sm">reset value</button>
     <div>
-      <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="searchText"></select-search>
+      <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="item.value"></select-search>
     </div>
   </div>
 
@@ -40,13 +41,19 @@
           { value: '18', text: 'ef' + ' - ' + '18', selected: false },
           { value: '19', text: 'ef' + ' - ' + '19', selected: false }
         ],
-        resetTriggerValue: '', // If value is falsy, reset searchText & searchItem
-        item: {}
+        searchText: '', // If value is falsy, reset searchText & searchItem
+        item: {
+          value: '',
+          text: ''
+        }
       }
     },
     methods: {
       selectedItem (item) {
         this.item = item
+      },
+      resetValue () {
+        this.item.value = ''
       }
     },
     components: {
