@@ -6,7 +6,8 @@
       <div>{{item.text}}</div>
     </div>
     <div style="height: 50px;"></div>
-    <button type="button" @click="resetValue" class="btn btn-info btn-sm">reset value</button>
+    <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
+    <button type="button" @click="resetValue" class="btn btn-info btn-sm">reset by value</button>
     <div>
       <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="item.value"></select-search>
     </div>
@@ -51,6 +52,9 @@
     methods: {
       selectedItem (item) {
         this.item = item
+      },
+      resetObject () {
+        this.item = { value: '' } // reset by object
       },
       resetValue () {
         this.item.value = ''

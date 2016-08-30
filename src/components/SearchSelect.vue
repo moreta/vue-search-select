@@ -144,7 +144,7 @@
             return true
           }
         })
-        if (option.value) {
+        if (option && option.value) {
           this.searchText = option.text
         } else {
           this.searchText = ''
