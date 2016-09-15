@@ -28,7 +28,9 @@
       'selectOptions': {
         type: Array
       },
-      'resetTriggerValue': {},
+      'resetTriggerValue': {
+        type: String
+      },
       'onSelect': {
         type: Function,
         default: () => {}
@@ -62,18 +64,24 @@
       },
       'resetTriggerValue': function (val, oldVal) {
         if (!val && val !== '') {
-          this.selectOptions = this.selectOptions.map(m => {
-            m.selected = false
-            return m
-          })
+//          console.log('reset trigger value if')
+//          console.log(val)
+          this.resetSelect()
         } else {
+//          console.log('reset trigger value else')
+//          console.log(val)
           this.changeSelectKey(val)
         }
       }
     },
     methods: {
       resetSelect () {
+        this.selectedOption = {}
         this.searchText = ''
+        this.selectOptions = this.selectOptions.map(m => {
+          m.selected = false
+          return m
+        })
       },
       changeSearchText () {
         this.openOptions()
@@ -134,13 +142,14 @@
         this.mousedownState = true
       },
       selectItem (option) {
+//        console.log(option.text)
         this.searchText = option.text
         this.selectedOption = option
         this.closeOptions()
         this.onSelect(option)
       },
-      changeSelectKey: function(key) {
-        var option = this.selectOptions.find(function(o, idx) {
+      changeSelectKey (key) {
+        var option = this.selectOptions.find((o, idx) => {
           if (o.value === key) {
             return true
           }
