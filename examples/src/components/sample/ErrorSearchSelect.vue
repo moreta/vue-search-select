@@ -1,13 +1,15 @@
 <!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
   <div style="width: 500px;">
-    <div>
-      <div>{{item.value}}</div>
-      <div>{{item.text}}</div>
-    </div>
-    <div style="height: 50px;"></div>
-    <div>
-      <select-search :select-options="selectOptions" :on-select="selectedItem" :is-error="isError"></select-search>
+    <div style="margin-top: 20px;">
+      <div>
+        <div>{{item.value}}</div>
+        <div>{{item.text}}</div>
+      </div>
+      <div style="margin-top: 30px;"></div>
+      <div>
+        <select-search :select-options="selectOptions" :on-select="selectedItem" :is-error="isError"></select-search>
+      </div>
     </div>
   </div>
 
@@ -41,7 +43,6 @@
           { value: '18', text: 'ef' + ' - ' + '18', selected: false },
           { value: '19', text: 'ef' + ' - ' + '19', selected: false }
         ],
-        resetTriggerValue: '', // If value is falsy, reset searchText & searchItem
         item: {}
       }
     },

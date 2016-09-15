@@ -1,21 +1,32 @@
 <!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
   <div style="width: 500px;">
-    <div>
-      <div>{{item1.value}}</div>
-      <div>{{item1.text}}</div>
+    <div style="margin-top: 20px;">
+      <div>
+        <div>Item is object</div>
+        <div>value : {{item1.value}}</div>
+        <div>text : {{item1.text}}</div>
+      </div>
+      <div style="margin-top: 20px;">
+        <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
+      </div>
+      <div style="margin-top: 20px;">
+        <select-search :select-options="selectOptions" :on-select="selectedItem1" :reset-trigger-value="item1.value"></select-search>
+      </div>
     </div>
-    <div>
-      <select-search :select-options="selectOptions" :on-select="selectedItem1" :reset-trigger-value="searchText"></select-search>
+    
+    <div style="margin-top: 20px;">
+      <div>
+        <div>Item2(item is String) : {{item2}}</div>
+      </div>
+      <div style="margin-top: 20px;">
+        <button type="button" @click="resetValue" class="btn btn-info btn-sm">reset by value</button>
+      </div>
+      <div style="margin-top: 20px;">
+        <select-search :select-options="selectOptions" :on-select="selectedItem2" :reset-trigger-value="item2"></select-search>
+      </div>
     </div>
-    <div style="height: 50px;"></div>
-    <div>
-      <div>{{item2.value}}</div>
-      <div>{{item2.text}}</div>
-    </div>
-    <div>
-      <select-search :select-options="selectOptions" :on-select="selectedItem2" :reset-trigger-value="searchText"></select-search>
-    </div>
+    
   </div>
 
 
@@ -47,9 +58,8 @@
           { value: '18', text: 'ef' + ' - ' + '18', selected: false },
           { value: '19', text: 'ef' + ' - ' + '19', selected: false }
         ],
-        resetTriggerValue: '', // If value is falsy, reset searchText & searchItem
-        item1: {},
-        item2: {}
+        item1: {}, // object item
+        item2: '' // text item
       }
     },
     methods: {
@@ -57,7 +67,13 @@
         this.item1 = item
       },
       selectedItem2 (item) {
-        this.item2 = item
+        this.item2 = item.value
+      },
+      resetObject () {
+        this.item1 = {} // reset by object
+      },
+      resetValue () {
+        this.item2 = ''
       }
     },
     components: {

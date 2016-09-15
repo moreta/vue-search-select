@@ -3,13 +3,13 @@
     <img class="logo" src="./assets/logo.png">
     <div class="linkContainer">
         <div class="link">
-          <a v-link="{ path: '/Basic' }">Search Select Basic example</a>
+          <a v-link="{ path: '/Basic' }">Basic example</a>
         </div>
       <div class="link">
-        <a v-link="{ path: '/Error' }">Search Select Error example</a>
+        <a v-link="{ path: '/Error' }">Error example</a>
       </div>
         <div class="link">
-          <a v-link="{ path: '/Multiple' }">Nested Search select example</a>
+          <a v-link="{ path: '/Reset' }">Reset example</a>
         </div>
 
     </div>

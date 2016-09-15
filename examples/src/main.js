@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import App from './App'
 import BasicSearchSelect from './components/sample/BasicSearchSelect'
 import ErrorSearchSelect from './components/sample/ErrorSearchSelect'
-import MultipleSearchSelect from './components/sample/MultipleSearchSelect'
+import ResetSearchSelect from './components/sample/ResetSearchSelect'
 
 Vue.use(VueRouter)
 var router = new VueRouter()
@@ -15,8 +15,8 @@ router.map({
   '/Error': {
     component: ErrorSearchSelect
   },
-  '/Multiple': {
-    component: MultipleSearchSelect
+  '/Reset': {
+    component: ResetSearchSelect
   }
 })
 router.start(App, '#container')

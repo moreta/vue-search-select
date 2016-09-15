@@ -1,19 +1,19 @@
 <!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
   <div style="width: 500px;">
-    <div>
-      <div>{{item.value}}</div>
-      <div>{{item.text}}</div>
-    </div>
-    <div style="height: 50px;"></div>
-    <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
-    <button type="button" @click="resetValue" class="btn btn-info btn-sm">reset by value</button>
-    <div>
-      <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="item.value"></select-search>
+    <div style="margin-top: 20px;">
+      <div>
+        <div>value : {{item.value}}</div>
+        <div>text : {{item.text}}</div>
+      </div>
+      <div style="margin-top: 30px;">
+        <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
+      </div>
+      <div style="margin-top: 30px;">
+        <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="item.value"></select-search>
+      </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -54,10 +54,7 @@
         this.item = item
       },
       resetObject () {
-        this.item = { value: '' } // reset by object
-      },
-      resetValue () {
-        this.item.value = ''
+        this.item = {} // reset by object
       }
     },
     components: {
