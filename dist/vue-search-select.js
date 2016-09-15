@@ -100,9 +100,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  data: function data() {
 	    return {
 	      showMenu: false,
+	      selectedOption: {},
 	      searchText: '',
-	      mousedownState: false
-	    };
+	      mousedownState: false };
 	  },
 	
 	  computed: {
@@ -136,7 +136,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    changeSearchText: function changeSearchText() {
 	      this.openOptions();
-	      this.onSelect({});
 	    },
 	    openOptions: function openOptions() {
 	      this.showMenu = true;
@@ -144,6 +143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    blurInput: function blurInput() {
 	      if (!this.mousedownState) {
+	        this.searchText = this.selectedOption.text;
 	        this.closeOptions();
 	      }
 	    },
@@ -185,6 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    selectItem: function selectItem(option) {
 	      this.searchText = option.text;
+	      this.selectedOption = option;
 	      this.closeOptions();
 	      this.onSelect(option);
 	    },
