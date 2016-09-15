@@ -66,7 +66,6 @@
             return m
           })
         } else {
-          console.log('!val else')
           this.changeSelectKey(val)
         }
       }
