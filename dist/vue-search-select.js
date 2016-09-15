@@ -87,7 +87,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'selectOptions': {
 	      type: Array
 	    },
-	    'resetTriggerValue': {},
+	    'resetTriggerValue': {
+	      type: String
+	    },
 	    'onSelect': {
 	      type: Function,
 	      default: function _default() {}
@@ -121,10 +123,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    'resetTriggerValue': function resetTriggerValue(val, oldVal) {
 	      if (!val && val !== '') {
-	        this.selectOptions = this.selectOptions.map(function (m) {
-	          m.selected = false;
-	          return m;
-	        });
+	        this.resetSelect();
 	      } else {
 	        this.changeSelectKey(val);
 	      }
@@ -132,7 +131,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  methods: {
 	    resetSelect: function resetSelect() {
+	      this.selectedOption = {};
 	      this.searchText = '';
+	      this.selectOptions = this.selectOptions.map(function (m) {
+	        m.selected = false;
+	        return m;
+	      });
 	    },
 	    changeSearchText: function changeSearchText() {
 	      this.openOptions();
@@ -189,7 +193,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.closeOptions();
 	      this.onSelect(option);
 	    },
-	
 	    changeSelectKey: function changeSelectKey(key) {
 	      var option = this.selectOptions.find(function (o, idx) {
 	        if (o.value === key) {
