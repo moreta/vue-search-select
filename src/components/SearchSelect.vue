@@ -41,8 +41,9 @@
     data () {
       return {
         showMenu: false,
+        selectedOption: {}, // selected Option object
         searchText: '',
-        mousedownState: false
+        mousedownState: false // mousedown on option menu
       }
     },
     computed: {
@@ -76,16 +77,16 @@
       },
       changeSearchText () {
         this.openOptions()
-        this.onSelect({})
       },
-      // inputに cursor
+      // cursor on input
       openOptions () {
         this.showMenu = true
         this.mousedownState = false
       },
-      // blurされた時
+      // blur
       blurInput () {
         if (!this.mousedownState) {
+          this.searchText = this.selectedOption.text
           this.closeOptions()
         }
       },
@@ -134,6 +135,7 @@
       },
       selectItem (option) {
         this.searchText = option.text
+        this.selectedOption = option
         this.closeOptions()
         this.onSelect(option)
       },
