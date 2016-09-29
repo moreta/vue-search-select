@@ -6,9 +6,9 @@
            @keydown.up="prevItem"
            @keydown.down="nextItem"
            @keyup.enter="enterItem"
-           @keyup.delete="changeSearchText"
+           @keyup.delete="resetSelect"
     />
-    <div class="text"></div>
+    <div class="text">{{selectedOption.text}}</div>
     <div class="menu" :class="{ 'visible':showMenu }" tabindex="-1">
       <template v-for="(idx, option) in selectOptions | filterBy searchText in 'text'">
         <div class="item" :class="{ 'selected': option.selected }" @click="selectItem(option)" @mousedown="mousedownItem">
@@ -28,7 +28,7 @@
       'selectOptions': {
         type: Array
       },
-      'resetTriggerValue': {
+      'triggerValue': {
         type: String
       },
       'onSelect': {
@@ -62,15 +62,14 @@
           this.selectItem(selectedItem)
         }
       },
-      'resetTriggerValue': function (val, oldVal) {
-        if (!val && val !== '') {
-//          console.log('reset trigger value if')
-//          console.log(val)
+      'triggerValue': function (val, oldVal) {
+//        console.log('reset trigger value changed')
+//        console.log(val)
+        if (!val) {
           this.resetSelect()
         } else {
-//          console.log('reset trigger value else')
-//          console.log(val)
-          this.changeSelectKey(val)
+
+          this.selectItemByValue(val)
         }
       }
     },
@@ -82,9 +81,7 @@
           m.selected = false
           return m
         })
-      },
-      changeSearchText () {
-        this.openOptions()
+        this.onSelect({})
       },
       // cursor on input
       openOptions () {
@@ -94,7 +91,7 @@
       // blur
       blurInput () {
         if (!this.mousedownState) {
-          this.searchText = this.selectedOption.text
+//          this.searchText = this.selectedOption.text
           this.closeOptions()
         }
       },
@@ -142,24 +139,18 @@
         this.mousedownState = true
       },
       selectItem (option) {
-//        console.log(option.text)
-        this.searchText = option.text
+        this.searchText = '' // reset text when select item
         this.selectedOption = option
         this.closeOptions()
         this.onSelect(option)
       },
-      changeSelectKey (key) {
+      selectItemByValue (key) {
         var option = this.selectOptions.find((o, idx) => {
           if (o.value === key) {
             return true
           }
         })
-        if (option && option.value) {
-          this.searchText = option.text
-        } else {
-          this.searchText = ''
-        }
-        this.closeOptions()
+        this.selectedOption = option
       }
     }
   }

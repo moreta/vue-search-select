@@ -10,7 +10,10 @@
         <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
       </div>
       <div style="margin-top: 30px;">
-        <select-search :select-options="selectOptions" :on-select="selectedItem" :reset-trigger-value="item.value"></select-search>
+        <button type="button" @click="selectObject" class="btn btn-info btn-sm">value set by trigger value</button>
+      </div>
+      <div style="margin-top: 30px;">
+        <select-search :select-options="selectOptions" :on-select="selectedItem" :trigger-value="item.value"></select-search>
       </div>
     </div>
   </div>
@@ -53,8 +56,13 @@
       selectedItem (item) {
         this.item = item
       },
+      // deselect option
       resetObject () {
         this.item = {} // reset by object
+      },
+      // select option from parent component
+      selectObject () {
+        this.item = this.selectOptions[0]
       }
     },
     components: {

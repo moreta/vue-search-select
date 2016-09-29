@@ -11,7 +11,7 @@
         <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
       </div>
       <div style="margin-top: 20px;">
-        <select-search :select-options="selectOptions" :on-select="selectedItem1" :reset-trigger-value="item1.value"></select-search>
+        <select-search :select-options="selectOptions" :on-select="selectedItem1" :trigger-value="item1.value"></select-search>
       </div>
     </div>
     
@@ -23,7 +23,7 @@
         <button type="button" @click="resetValue" class="btn btn-info btn-sm">reset by value</button>
       </div>
       <div style="margin-top: 20px;">
-        <select-search :select-options="selectOptions" :on-select="selectedItem2" :reset-trigger-value="item2"></select-search>
+        <select-search :select-options="selectOptions" :on-select="selectedItem2" :trigger-value="item2"></select-search>
       </div>
     </div>
     
