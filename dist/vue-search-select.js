@@ -87,7 +87,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'selectOptions': {
 	      type: Array
 	    },
-	    'resetTriggerValue': {
+	    'triggerValue': {
 	      type: String
 	    },
 	    'onSelect': {
@@ -121,11 +121,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.selectItem(selectedItem);
 	      }
 	    },
-	    'resetTriggerValue': function resetTriggerValue(val, oldVal) {
-	      if (!val && val !== '') {
+	    'triggerValue': function triggerValue(val, oldVal) {
+	      if (!val) {
 	        this.resetSelect();
 	      } else {
-	        this.changeSelectKey(val);
+	
+	        this.selectItemByValue(val);
 	      }
 	    }
 	  },
@@ -137,9 +138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        m.selected = false;
 	        return m;
 	      });
-	    },
-	    changeSearchText: function changeSearchText() {
-	      this.openOptions();
+	      this.onSelect({});
 	    },
 	    openOptions: function openOptions() {
 	      this.showMenu = true;
@@ -147,7 +146,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    blurInput: function blurInput() {
 	      if (!this.mousedownState) {
-	        this.searchText = this.selectedOption.text;
 	        this.closeOptions();
 	      }
 	    },
@@ -161,9 +159,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (selectedItemIndex === -1) {
 	        this.filteredOptions[0].selected = true;
 	      } else if (selectedItemIndex === 0) {} else {
-	          this.filteredOptions[selectedItemIndex].selected = false;
-	          this.filteredOptions[selectedItemIndex - 1].selected = true;
-	        }
+	        this.filteredOptions[selectedItemIndex].selected = false;
+	        this.filteredOptions[selectedItemIndex - 1].selected = true;
+	      }
 	    },
 	    nextItem: function nextItem() {
 	      var selectedItemIndex = this.filteredOptions.findIndex(function (item) {
@@ -172,9 +170,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (selectedItemIndex === -1) {
 	        this.filteredOptions[0].selected = true;
 	      } else if (selectedItemIndex === this.filteredOptions.length - 1) {} else {
-	          this.filteredOptions[selectedItemIndex].selected = false;
-	          this.filteredOptions[selectedItemIndex + 1].selected = true;
-	        }
+	        this.filteredOptions[selectedItemIndex].selected = false;
+	        this.filteredOptions[selectedItemIndex + 1].selected = true;
+	      }
 	    },
 	    enterItem: function enterItem() {
 	      var selectedItem = this.filteredOptions.find(function (item) {
@@ -188,23 +186,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.mousedownState = true;
 	    },
 	    selectItem: function selectItem(option) {
-	      this.searchText = option.text;
+	      this.searchText = '';
 	      this.selectedOption = option;
 	      this.closeOptions();
 	      this.onSelect(option);
 	    },
-	    changeSelectKey: function changeSelectKey(key) {
+	    selectItemByValue: function selectItemByValue(key) {
 	      var option = this.selectOptions.find(function (o, idx) {
 	        if (o.value === key) {
 	          return true;
 	        }
 	      });
-	      if (option && option.value) {
-	        this.searchText = option.text;
-	      } else {
-	        this.searchText = '';
-	      }
-	      this.closeOptions();
+	      this.selectedOption = option;
 	    }
 	  }
 	};
@@ -218,7 +211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n/*!\n * # Semantic UI 2.1.7 - Dropdown\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Copyright 2015 Contributors\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n/*******************************\n            Dropdown\n*******************************/\n\n.ui.dropdown[_v-bc5491e8] {\n  /*cursor: pointer;*/\n  position: relative;\n  display: inline-block;\n  outline: none;\n  text-align: left;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n/*******************************\n            Content\n*******************************/\n\n/*--------------\n      Menu\n---------------*/\n\n.ui.dropdown .menu[_v-bc5491e8] {\n  cursor: auto;\n  position: absolute;\n  display: none;\n  outline: none;\n  /*top: 100%;*/\n  top: 103%;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  margin: 0em;\n  padding: 0em 0em;\n  background: #FFFFFF;\n  font-size: 1em;\n  text-shadow: none;\n  text-align: left;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n  z-index: 11;\n  will-change: transform, opacity;\n}\n\n.ui.dropdown .menu > *[_v-bc5491e8] {\n  white-space: nowrap;\n}\n\n.ui.dropdown .menu.visible[_v-bc5491e8] {\n  display: block;\n}\n\n/*--------------\n  Hidden Input\n---------------*/\n\n.ui.dropdown > input[_v-bc5491e8]:not(.search):first-child,\n.ui.dropdown > select[_v-bc5491e8] {\n  display: none !important;\n}\n\n/*--------------\n Dropdown Icon\n---------------*/\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8] {\n  position: relative;\n  width: auto;\n  font-size: 0.85714286em;\n  margin: 0em 0em 0em 1em;\n}\n\n.ui.dropdown .menu > .item .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n  float: right;\n  margin: 0em 0em 0em 1em;\n}\n\n.ui.dropdown .menu > .item .dropdown.icon + .text[_v-bc5491e8] {\n  margin-right: 1em;\n}\n\n/*--------------\n      Text\n---------------*/\n\n.ui.dropdown > .text[_v-bc5491e8] {\n  display: inline-block;\n  -webkit-transition: none;\n  transition: none;\n}\n\n/*--------------\n    Menu Item\n---------------*/\n\n.ui.dropdown .menu > .item[_v-bc5491e8] {\n  position: relative;\n  cursor: pointer;\n  display: block;\n  border: none;\n  height: auto;\n  text-align: left;\n  border-top: none;\n  line-height: 1em;\n  color: rgba(0, 0, 0, 0.87);\n  padding: 0.71428571rem 1.14285714rem !important;\n  font-size: 1em;\n  text-transform: none;\n  font-weight: normal;\n  box-shadow: none;\n  -webkit-touch-callout: none;\n}\n\n.ui.dropdown .menu > .item[_v-bc5491e8]:first-child {\n  border-top-width: 0px;\n}\n\n/*--------------\n  Floated Content\n---------------*/\n\n.ui.dropdown > .text > [class*=\"right floated\"][_v-bc5491e8],\n.ui.dropdown .menu .item > [class*=\"right floated\"][_v-bc5491e8] {\n  float: right !important;\n  margin-right: 0em !important;\n  margin-left: 1em !important;\n}\n\n.ui.dropdown > .text > [class*=\"left floated\"][_v-bc5491e8],\n.ui.dropdown .menu .item > [class*=\"left floated\"][_v-bc5491e8] {\n  float: left !important;\n  margin-left: 0em !important;\n  margin-right: 1em !important;\n}\n\n.ui.dropdown .menu .item > .icon.floated[_v-bc5491e8],\n.ui.dropdown .menu .item > .flag.floated[_v-bc5491e8],\n.ui.dropdown .menu .item > .image.floated[_v-bc5491e8],\n.ui.dropdown .menu .item > img.floated[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n/*--------------\n  Menu Divider\n---------------*/\n\n.ui.dropdown .menu > .header[_v-bc5491e8] {\n  margin: 1rem 0rem 0.75rem;\n  padding: 0em 1.14285714rem;\n  color: rgba(0, 0, 0, 0.85);\n  font-size: 0.78571429em;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n\n.ui.dropdown .menu > .divider[_v-bc5491e8] {\n  border-top: 1px solid rgba(34, 36, 38, 0.1);\n  height: 0em;\n  margin: 0.5em 0em;\n}\n\n.ui.dropdown .menu > .input[_v-bc5491e8] {\n  width: auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 1.14285714rem 0.71428571rem;\n  min-width: 10rem;\n}\n\n.ui.dropdown .menu > .header + .input[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n.ui.dropdown .menu > .input:not(.transparent) input[_v-bc5491e8] {\n  padding: 0.5em 1em;\n}\n\n.ui.dropdown .menu > .input:not(.transparent) .button[_v-bc5491e8],\n.ui.dropdown .menu > .input:not(.transparent) .icon[_v-bc5491e8],\n.ui.dropdown .menu > .input:not(.transparent) .label[_v-bc5491e8] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n\n/*-----------------\n  Item Description\n-------------------*/\n\n.ui.dropdown > .text > .description[_v-bc5491e8],\n.ui.dropdown .menu > .item > .description[_v-bc5491e8] {\n  float: right;\n  margin: 0em 0em 0em 1em;\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*-----------------\n       Message\n-------------------*/\n\n.ui.dropdown .menu > .message[_v-bc5491e8] {\n  padding: 0.71428571rem 1.14285714rem;\n  font-weight: normal;\n}\n\n.ui.dropdown .menu > .message[_v-bc5491e8]:not(.ui) {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*--------------\n    Sub Menu\n---------------*/\n\n.ui.dropdown .menu .menu[_v-bc5491e8] {\n  top: 0% !important;\n  left: 100% !important;\n  right: auto !important;\n  margin: 0em 0em 0em -0.5em !important;\n  border-radius: 0.28571429rem !important;\n  z-index: 21 !important;\n}\n\n/* Hide Arrow */\n.ui.dropdown .menu .menu[_v-bc5491e8]:after {\n  display: none;\n}\n\n/*--------------\n   Sub Elements\n---------------*/\n\n/* Icons / Flags / Labels / Image */\n.ui.dropdown > .text > .icon[_v-bc5491e8],\n.ui.dropdown > .text > .label[_v-bc5491e8],\n.ui.dropdown > .text > .flag[_v-bc5491e8],\n.ui.dropdown > .text > img[_v-bc5491e8],\n.ui.dropdown > .text > .image[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n.ui.dropdown .menu > .item > .icon[_v-bc5491e8],\n.ui.dropdown .menu > .item > .label[_v-bc5491e8],\n.ui.dropdown .menu > .item > .flag[_v-bc5491e8],\n.ui.dropdown .menu > .item > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > img[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n.ui.dropdown > .text > .icon[_v-bc5491e8],\n.ui.dropdown > .text > .label[_v-bc5491e8],\n.ui.dropdown > .text > .flag[_v-bc5491e8],\n.ui.dropdown > .text > img[_v-bc5491e8],\n.ui.dropdown > .text > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > .icon[_v-bc5491e8],\n.ui.dropdown .menu > .item > .label[_v-bc5491e8],\n.ui.dropdown .menu > .item > .flag[_v-bc5491e8],\n.ui.dropdown .menu > .item > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > img[_v-bc5491e8] {\n  margin-left: 0em;\n  float: none;\n  margin-right: 0.71428571rem;\n}\n\n/*--------------\n     Image\n---------------*/\n\n.ui.dropdown > .text > img[_v-bc5491e8],\n.ui.dropdown > .text > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > img[_v-bc5491e8] {\n  display: inline-block;\n  vertical-align: middle;\n  width: auto;\n  max-height: 2em;\n}\n\n/*******************************\n            Coupling\n*******************************/\n\n/*--------------\n      Menu\n---------------*/\n\n/* Remove Menu Item Divider */\n.ui.dropdown .ui.menu > .item[_v-bc5491e8]:before,\n.ui.menu .ui.dropdown .menu > .item[_v-bc5491e8]:before {\n  display: none;\n}\n\n/* Prevent Menu Item Border */\n.ui.menu .ui.dropdown .menu .active.item[_v-bc5491e8] {\n  border-left: none;\n}\n\n/* Automatically float dropdown menu right on last menu item */\n.ui.menu .right.menu .dropdown:last-child .menu[_v-bc5491e8],\n.ui.menu .right.dropdown.item .menu[_v-bc5491e8],\n.ui.buttons > .ui.dropdown:last-child .menu[_v-bc5491e8] {\n  left: auto;\n  right: 0em;\n}\n\n/*--------------\n      Label\n---------------*/\n\n/* Dropdown Menu */\n.ui.label.dropdown .menu[_v-bc5491e8] {\n  min-width: 100%;\n}\n\n/*--------------\n     Button\n---------------*/\n\n/* No Margin On Icon Button */\n.ui.dropdown.icon.button > .dropdown.icon[_v-bc5491e8] {\n  margin: 0em;\n}\n\n.ui.button.dropdown .menu[_v-bc5491e8] {\n  min-width: 100%;\n}\n\n/*******************************\n              Types\n*******************************/\n\n/*--------------\n    Selection\n---------------*/\n\n/* Displays like a select box */\n.ui.selection.dropdown[_v-bc5491e8] {\n  cursor: pointer;\n  word-wrap: break-word;\n  line-height: 1em;\n  white-space: normal;\n  outline: 0;\n  -webkit-transform: rotateZ(0deg);\n  transform: rotateZ(0deg);\n  min-width: 14em;\n  /*min-height: 2.7142em;*/\n  width: 100%;\n  background: #FFFFFF;\n  display: inline-block;\n  padding: 0.78571429em 2.6em 0.78571429em 1em;\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n}\n\n.ui.selection.dropdown.visible[_v-bc5491e8],\n.ui.selection.dropdown.active[_v-bc5491e8] {\n  z-index: 10;\n}\n\nselect.ui.dropdown[_v-bc5491e8] {\n  height: 38px;\n  padding: 0.5em;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  visibility: visible;\n}\n\n.ui.selection.dropdown > .search.icon[_v-bc5491e8],\n.ui.selection.dropdown > .delete.icon[_v-bc5491e8],\n.ui.selection.dropdown > .dropdown.icon[_v-bc5491e8] {\n  cursor: pointer;\n  position: absolute;\n  top: auto;\n  width: auto;\n  z-index: 3;\n  margin: -0.78571429em;\n  padding: 0.78571429em;\n  right: 1em;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n/* Compact */\n.ui.compact.selection.dropdown[_v-bc5491e8] {\n  min-width: 0px;\n}\n\n/*  Selection Menu */\n.ui.selection.dropdown .menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  border-top-width: 0px !important;\n  width: auto;\n  outline: none;\n  margin: 0px -1px;\n  min-width: calc(100%);\n  width: calc(100%);\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n.ui.selection.dropdown .menu[_v-bc5491e8]:after,\n.ui.selection.dropdown .menu[_v-bc5491e8]:before {\n  display: none;\n}\n\n/*--------------\n    Message\n---------------*/\n\n.ui.selection.dropdown .menu > .message[_v-bc5491e8] {\n  padding: 0.71428571rem 1.14285714rem;\n}\n\n@media only screen and (max-width: 767px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 7.58571429rem;\n  }\n}\n\n@media only screen and (min-width: 768px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 10.11428571rem;\n  }\n}\n\n@media only screen and (min-width: 992px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 15.17142857rem;\n  }\n}\n\n@media only screen and (min-width: 1920px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 20.22857143rem;\n  }\n}\n\n/* Menu Item */\n.ui.selection.dropdown .menu > .item[_v-bc5491e8] {\n  border-top: 1px solid #FAFAFA;\n  padding: 0.71428571rem 1.14285714rem !important;\n  white-space: normal;\n  word-wrap: normal;\n}\n\n/* Hover */\n.ui.selection.dropdown[_v-bc5491e8]:hover {\n  border-color: rgba(34, 36, 38, 0.35);\n  box-shadow: none;\n}\n\n/* Active */\n.ui.selection.active.dropdown[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n.ui.selection.active.dropdown .menu[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Focus */\n.ui.selection.dropdown[_v-bc5491e8]:focus {\n  border-color: #96C8DA;\n  box-shadow: none;\n}\n\n.ui.selection.dropdown:focus .menu[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Visible */\n.ui.selection.visible.dropdown > .text[_v-bc5491e8]:not(.default) {\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/* Visible Hover */\n.ui.selection.active.dropdown[_v-bc5491e8]:hover {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n.ui.selection.active.dropdown:hover .menu[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Dropdown Icon */\n.ui.active.selection.dropdown > .dropdown.icon[_v-bc5491e8],\n.ui.visible.selection.dropdown > .dropdown.icon[_v-bc5491e8] {\n  opacity: 1;\n  z-index: 3;\n}\n\n/* Connecting Border */\n.ui.active.selection.dropdown[_v-bc5491e8] {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n\n/*--------------\n   Searchable\n---------------*/\n\n/* Search Selection */\n.ui.search.dropdown[_v-bc5491e8] {\n  min-width: '';\n}\n\n/* Search Dropdown */\n.ui.search.dropdown > input.search[_v-bc5491e8] {\n  font-size: 1em;\n  background: none transparent !important;\n  border: none !important;\n  box-shadow: none !important;\n  /*cursor: pointer;*/\n  top: 0em;\n  left: 0em;\n  width: 100%;\n  outline: none;\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n  padding: inherit;\n}\n\n/* Text Layering */\n.ui.search.dropdown > input.search[_v-bc5491e8] {\n  position: absolute;\n  z-index: 2;\n}\n\n.ui.search.dropdown > .text[_v-bc5491e8] {\n  cursor: text;\n  position: relative;\n  z-index: 3;\n}\n\n/* Search Selection */\n.ui.search.selection.dropdown > input.search[_v-bc5491e8] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.6em 0.67861429em 1em;\n}\n\n/* Active/Visible Search */\n.ui.search.dropdown.active > input.search[_v-bc5491e8],\n.ui.search.dropdown.visible > input.search[_v-bc5491e8] {\n  cursor: auto;\n}\n\n.ui.search.dropdown.active > .text[_v-bc5491e8],\n.ui.search.dropdown.visible > .text[_v-bc5491e8] {\n  pointer-events: none;\n}\n\n/* Filtered Text */\n.ui.active.search.dropdown input.search:focus + .text .icon[_v-bc5491e8],\n.ui.active.search.dropdown input.search:focus + .text .flag[_v-bc5491e8] {\n  opacity: 0.45;\n}\n\n.ui.active.search.dropdown input.search:focus + .text[_v-bc5491e8] {\n  color: rgba(0, 0, 0, 0.4) !important;\n}\n\n/* Search Menu */\n.ui.search.dropdown .menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n\n@media only screen and (max-width: 767px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 7.58571429rem;\n  }\n}\n\n@media only screen and (min-width: 768px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 10.11428571rem;\n  }\n}\n\n@media only screen and (min-width: 992px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 15.17142857rem;\n  }\n}\n\n@media only screen and (min-width: 1920px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 20.22857143rem;\n  }\n}\n\n/*--------------\n     Inline\n---------------*/\n\n.ui.inline.dropdown[_v-bc5491e8] {\n  cursor: pointer;\n  display: inline-block;\n  color: inherit;\n}\n\n.ui.inline.dropdown .dropdown.icon[_v-bc5491e8] {\n  margin: 0em 0.5em 0em 0.25em;\n  vertical-align: baseline;\n}\n\n.ui.inline.dropdown > .text[_v-bc5491e8] {\n  font-weight: bold;\n}\n\n.ui.inline.dropdown .menu[_v-bc5491e8] {\n  cursor: auto;\n  margin-top: 0.25em;\n  border-radius: 0.28571429rem;\n}\n\n/*******************************\n            States\n*******************************/\n\n/*--------------------\n        Active\n----------------------*/\n\n/* Menu Item Active */\n.ui.dropdown .menu .active.item[_v-bc5491e8] {\n  background: transparent;\n  font-weight: bold;\n  color: rgba(0, 0, 0, 0.95);\n  box-shadow: none;\n  z-index: 12;\n}\n\n/*--------------------\n        Hover\n----------------------*/\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item[_v-bc5491e8]:hover {\n  background: rgba(0, 0, 0, 0.05);\n  color: rgba(0, 0, 0, 0.95);\n  z-index: 13;\n}\n\n/*--------------------\n       Loading\n---------------------*/\n\n/* Positioning */\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:before,\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:after {\n  left: 30% !important;\n}\n\n.ui.loading.dropdown > i.icon[_v-bc5491e8] {\n  top: 50% !important;\n}\n\n.ui.multiple.loading.dropdown > i.icon[_v-bc5491e8]:before,\n.ui.multiple.loading.dropdown > i.icon[_v-bc5491e8]:after {\n  top: 0% !important;\n  left: 0% !important;\n}\n\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:before {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  border-radius: 500rem;\n  border: 0.2em solid rgba(0, 0, 0, 0.1);\n}\n\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  box-shadow: 0px 0px 0px 1px transparent;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  -webkit-animation: dropdown-spin 0.6s linear;\n  animation: dropdown-spin 0.6s linear;\n  -webkit-animation-iteration-count: infinite;\n  animation-iteration-count: infinite;\n  border-radius: 500rem;\n  border-color: #767676 transparent transparent;\n  border-style: solid;\n  border-width: 0.2em;\n}\n\n/* Coupling */\n.ui.loading.dropdown.button > i.icon[_v-bc5491e8]:before,\n.ui.loading.dropdown.button > i.icon[_v-bc5491e8]:after {\n  display: none;\n}\n\n@-webkit-keyframes dropdown-spin {\n  from {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes dropdown-spin {\n  from {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n/*--------------------\n     Default Text\n----------------------*/\n\n.ui.dropdown > .default.text[_v-bc5491e8],\n.ui.default.dropdown > .text[_v-bc5491e8] {\n  color: rgba(179, 179, 179, 0.7);\n}\n\n.ui.dropdown:hover > .default.text[_v-bc5491e8],\n.ui.default.dropdown:hover > .text[_v-bc5491e8] {\n  color: rgba(179, 179, 179, 0.7);\n}\n\n/*--------------------\n        Loading\n----------------------*/\n\n.ui.loading.dropdown > .text[_v-bc5491e8] {\n  -webkit-transition: none;\n  transition: none;\n}\n\n/* Used To Check Position */\n.ui.dropdown .loading.menu[_v-bc5491e8] {\n  display: block;\n  visibility: hidden;\n  z-index: -1;\n}\n\n/*--------------------\n    Keyboard Select\n----------------------*/\n\n/* Selected Item */\n.ui.dropdown.selected[_v-bc5491e8],\n.ui.dropdown .menu .selected.item[_v-bc5491e8] {\n  background: rgba(0, 0, 0, 0.03);\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*--------------------\n    Search Filtered\n----------------------*/\n\n/* Filtered Item */\n.ui.dropdown > .filtered.text[_v-bc5491e8] {\n  visibility: hidden;\n}\n\n.ui.dropdown .filtered.item[_v-bc5491e8] {\n  display: none !important;\n}\n\n/*--------------------\n        Error\n----------------------*/\n\n.ui.dropdown.error[_v-bc5491e8],\n.ui.dropdown.error > .text[_v-bc5491e8],\n.ui.dropdown.error > .default.text[_v-bc5491e8] {\n  color: #9F3A38;\n}\n\n.ui.selection.dropdown.error[_v-bc5491e8] {\n  background: #FFF6F6;\n  border-color: #E0B4B4;\n}\n\n.ui.selection.dropdown.error[_v-bc5491e8]:hover {\n  border-color: #E0B4B4;\n}\n\n.ui.dropdown.error > .menu[_v-bc5491e8],\n.ui.dropdown.error > .menu .menu[_v-bc5491e8] {\n  border-color: #E0B4B4;\n}\n\n.ui.dropdown.error > .menu > .item[_v-bc5491e8] {\n  color: #9F3A38;\n}\n\n.ui.multiple.selection.error.dropdown > .label[_v-bc5491e8] {\n  border-color: #E0B4B4;\n}\n\n/* Item Hover */\n.ui.dropdown.error > .menu > .item[_v-bc5491e8]:hover {\n  background-color: #FFF2F2;\n}\n\n/* Item Active */\n.ui.dropdown.error > .menu .active.item[_v-bc5491e8] {\n  background-color: #FDCFCF;\n}\n\n/*--------------------\n        Disabled\n----------------------*/\n\n/* Disabled */\n.ui.disabled.dropdown[_v-bc5491e8],\n.ui.dropdown .menu > .disabled.item[_v-bc5491e8] {\n  cursor: default;\n  pointer-events: none;\n  opacity: 0.45;\n}\n\n/*******************************\n           Variations\n*******************************/\n\n/*--------------\n    Direction\n---------------*/\n\n/* Flyout Direction */\n.ui.dropdown .menu[_v-bc5491e8] {\n  left: 0px;\n}\n\n/* Default Side (Right) */\n.ui.dropdown .right.menu > .menu[_v-bc5491e8],\n.ui.dropdown .menu .right.menu[_v-bc5491e8] {\n  left: 100% !important;\n  right: auto !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/* Left Flyout Menu */\n.ui.dropdown > .left.menu .menu[_v-bc5491e8],\n.ui.dropdown .menu .left.menu[_v-bc5491e8] {\n  left: auto !important;\n  right: 100% !important;\n  border-radius: 0.28571429rem !important;\n}\n\n.ui.dropdown .item .left.dropdown.icon[_v-bc5491e8],\n.ui.dropdown .left.menu .item .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n  float: left;\n  margin: 0em 0.71428571rem 0em 0em;\n}\n\n.ui.dropdown .item .left.dropdown.icon[_v-bc5491e8],\n.ui.dropdown .left.menu .item .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n  float: left;\n  margin: 0em 0.71428571rem 0em 0em;\n}\n\n.ui.dropdown .item .left.dropdown.icon + .text[_v-bc5491e8],\n.ui.dropdown .left.menu .item .dropdown.icon + .text[_v-bc5491e8] {\n  margin-left: 1em;\n}\n\n/*--------------\n     Simple\n---------------*/\n\n/*  Selection Menu */\n.ui.scrolling.dropdown .menu[_v-bc5491e8],\n.ui.dropdown .scrolling.menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n\n.ui.scrolling.dropdown .menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  min-width: 100% !important;\n  width: auto !important;\n}\n\n.ui.dropdown .scrolling.menu[_v-bc5491e8] {\n  position: static;\n  overflow-y: auto;\n  border: none;\n  box-shadow: none !important;\n  border-radius: 0 !important;\n  margin: 0 !important;\n  min-width: 100% !important;\n  width: auto !important;\n  border-top: 1px solid rgba(34, 36, 38, 0.15);\n}\n\n.ui.scrolling.dropdown .menu .item.item.item[_v-bc5491e8],\n.ui.dropdown .scrolling.menu > .item.item.item[_v-bc5491e8] {\n  border-top: none;\n  padding-right: calc(1.14285714rem + 17px) !important;\n}\n\n.ui.scrolling.dropdown .menu .item[_v-bc5491e8]:first-child,\n.ui.dropdown .scrolling.menu .item[_v-bc5491e8]:first-child {\n  border-top: none;\n}\n\n.ui.dropdown > .animating.menu .scrolling.menu[_v-bc5491e8],\n.ui.dropdown > .visible.menu .scrolling.menu[_v-bc5491e8] {\n  display: block;\n}\n\n/* Scrollbar in IE */\n@media all and (-ms-high-contrast: none) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    min-width: calc(100% - 17px);\n  }\n}\n\n@media only screen and (max-width: 767px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 9.71428571rem;\n  }\n}\n\n@media only screen and (min-width: 768px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 14.57142857rem;\n  }\n}\n\n@media only screen and (min-width: 992px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 19.42857143rem;\n  }\n}\n\n@media only screen and (min-width: 1920px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 19.42857143rem;\n  }\n}\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n/* Dropdown Carets */\n@font-face {\n  font-family: 'Dropdown';\n  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMggjB5AAAAC8AAAAYGNtYXAPfuIIAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5Zjo82LgAAAFwAAABVGhlYWQAQ88bAAACxAAAADZoaGVhAwcB6QAAAvwAAAAkaG10eAS4ABIAAAMgAAAAIGxvY2EBNgDeAAADQAAAABJtYXhwAAoAFgAAA1QAAAAgbmFtZVcZpu4AAAN0AAABRXBvc3QAAwAAAAAEvAAAACAAAwIAAZAABQAAAUwBZgAAAEcBTAFmAAAA9QAZAIQAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADw2gHg/+D/4AHgACAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIPDa//3//wAAAAAAIPDX//3//wAB/+MPLQADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAIABJQElABMAABM0NzY3BTYXFhUUDwEGJwYvASY1AAUGBwEACAUGBoAFCAcGgAUBEgcGBQEBAQcECQYHfwYBAQZ/BwYAAQAAAG4BJQESABMAADc0PwE2MzIfARYVFAcGIyEiJyY1AAWABgcIBYAGBgUI/wAHBgWABwaABQWABgcHBgUFBgcAAAABABIASQC3AW4AEwAANzQ/ATYXNhcWHQEUBwYnBi8BJjUSBoAFCAcFBgYFBwgFgAbbBwZ/BwEBBwQJ/wgEBwEBB38GBgAAAAABAAAASQClAW4AEwAANxE0NzYzMh8BFhUUDwEGIyInJjUABQYHCAWABgaABQgHBgVbAQAIBQYGgAUIBwWABgYFBwAAAAEAAAABAADZuaKOXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAAAAACgAUAB4AQgBkAIgAqgAAAAEAAAAIABQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAOAAAAAQAAAAAAAgAOAEcAAQAAAAAAAwAOACQAAQAAAAAABAAOAFUAAQAAAAAABQAWAA4AAQAAAAAABgAHADIAAQAAAAAACgA0AGMAAwABBAkAAQAOAAAAAwABBAkAAgAOAEcAAwABBAkAAwAOACQAAwABBAkABAAOAFUAAwABBAkABQAWAA4AAwABBAkABgAOADkAAwABBAkACgA0AGMAaQBjAG8AbQBvAG8AbgBWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AbgBSAGUAZwB1AGwAYQByAGkAYwBvAG0AbwBvAG4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('truetype'), url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVwAAoAAAAABSgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAdkAAAHZLDXE/09TLzIAAALQAAAAYAAAAGAIIweQY21hcAAAAzAAAABMAAAATA9+4ghnYXNwAAADfAAAAAgAAAAIAAAAEGhlYWQAAAOEAAAANgAAADYAQ88baGhlYQAAA7wAAAAkAAAAJAMHAelobXR4AAAD4AAAACAAAAAgBLgAEm1heHAAAAQAAAAABgAAAAYACFAAbmFtZQAABAgAAAFFAAABRVcZpu5wb3N0AAAFUAAAACAAAAAgAAMAAAEABAQAAQEBCGljb21vb24AAQIAAQA6+BwC+BsD+BgEHgoAGVP/i4seCgAZU/+LiwwHi2v4lPh0BR0AAACIDx0AAACNER0AAAAJHQAAAdASAAkBAQgPERMWGyAlKmljb21vb25pY29tb29udTB1MXUyMHVGMEQ3dUYwRDh1RjBEOXVGMERBAAACAYkABgAIAgABAAQABwAKAA0AVgCfAOgBL/yUDvyUDvyUDvuUDvtvi/emFYuQjZCOjo+Pj42Qiwj3lIsFkIuQiY6Hj4iNhouGi4aJh4eHCPsU+xQFiIiGiYaLhouHjYeOCPsU9xQFiI+Jj4uQCA77b4v3FBWLkI2Pjo8I9xT3FAWPjo+NkIuQi5CJjogI9xT7FAWPh42Hi4aLhomHh4eIiIaJhosI+5SLBYaLh42HjoiPiY+LkAgO+92d928Vi5CNkI+OCPcU9xQFjo+QjZCLkIuPiY6Hj4iNhouGCIv7lAWLhomHh4iIh4eJhouGi4aNiI8I+xT3FAWHjomPi5AIDvvdi+YVi/eUBYuQjZCOjo+Pj42Qi5CLkImOhwj3FPsUBY+IjYaLhouGiYeHiAj7FPsUBYiHhomGi4aLh42Hj4iOiY+LkAgO+JQU+JQViwwKAAAAAAMCAAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8NoB4P/g/+AB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDw2v/9//8AAAAAACDw1//9//8AAf/jDy0AAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAA5emozXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAUAAACAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIADgBHAAEAAAAAAAMADgAkAAEAAAAAAAQADgBVAAEAAAAAAAUAFgAOAAEAAAAAAAYABwAyAAEAAAAAAAoANABjAAMAAQQJAAEADgAAAAMAAQQJAAIADgBHAAMAAQQJAAMADgAkAAMAAQQJAAQADgBVAAMAAQQJAAUAFgAOAAMAAQQJAAYADgA5AAMAAQQJAAoANABjAGkAYwBvAG0AbwBvAG4AVgBlAHIAcwBpAG8AbgAgADEALgAwAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG4AUgBlAGcAdQBsAGEAcgBpAGMAbwBtAG8AbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('woff');\n  font-weight: normal;\n  font-style: normal;\n}\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8] {\n  font-family: 'Dropdown';\n  line-height: 1;\n  height: 1em;\n  width: 1.23em;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  font-weight: normal;\n  font-style: normal;\n  text-align: center;\n}\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n}\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8]:before {\n  content: '\\F0D7';\n}\n\n/* Sub Menu */\n.ui.dropdown .menu .item .dropdown.icon[_v-bc5491e8]:before {\n  content: '\\F0DA' ;\n}\n\n.ui.dropdown .item .left.dropdown.icon[_v-bc5491e8]:before,\n.ui.dropdown .left.menu .item .dropdown.icon[_v-bc5491e8]:before {\n  content: \"\\F0D9\" ;\n}\n\n/* Vertical Menu Dropdown */\n.ui.vertical.menu .dropdown.item > .dropdown.icon[_v-bc5491e8]:before {\n  content: \"\\F0DA\" ;\n}\n\n/*******************************\n        User Overrides\n*******************************/\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*!\n * # Semantic UI 2.1.7 - Dropdown\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Copyright 2015 Contributors\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n/*******************************\n            Dropdown\n*******************************/\n\n.ui.dropdown[_v-bc5491e8] {\n  /*cursor: pointer;*/\n  position: relative;\n  display: inline-block;\n  outline: none;\n  text-align: left;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n/*******************************\n            Content\n*******************************/\n\n/*--------------\n      Menu\n---------------*/\n\n.ui.dropdown .menu[_v-bc5491e8] {\n  cursor: auto;\n  position: absolute;\n  display: none;\n  outline: none;\n  /*top: 100%;*/\n  top: 103%;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  margin: 0em;\n  padding: 0em 0em;\n  background: #FFFFFF;\n  font-size: 1em;\n  text-shadow: none;\n  text-align: left;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n  z-index: 11;\n  will-change: transform, opacity;\n}\n\n.ui.dropdown .menu > *[_v-bc5491e8] {\n  white-space: nowrap;\n}\n\n.ui.dropdown .menu.visible[_v-bc5491e8] {\n  display: block;\n}\n\n/*--------------\n  Hidden Input\n---------------*/\n\n.ui.dropdown > input[_v-bc5491e8]:not(.search):first-child,\n.ui.dropdown > select[_v-bc5491e8] {\n  display: none !important;\n}\n\n/*--------------\n Dropdown Icon\n---------------*/\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8] {\n  position: relative;\n  width: auto;\n  font-size: 0.85714286em;\n  margin: 0em 0em 0em 1em;\n}\n\n.ui.dropdown .menu > .item .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n  float: right;\n  margin: 0em 0em 0em 1em;\n}\n\n.ui.dropdown .menu > .item .dropdown.icon + .text[_v-bc5491e8] {\n  margin-right: 1em;\n}\n\n/*--------------\n      Text\n---------------*/\n\n.ui.dropdown > .text[_v-bc5491e8] {\n  display: inline-block;\n  -webkit-transition: none;\n  transition: none;\n}\n\n/*--------------\n    Menu Item\n---------------*/\n\n.ui.dropdown .menu > .item[_v-bc5491e8] {\n  position: relative;\n  cursor: pointer;\n  display: block;\n  border: none;\n  height: auto;\n  text-align: left;\n  border-top: none;\n  line-height: 1em;\n  color: rgba(0, 0, 0, 0.87);\n  padding: 0.71428571rem 1.14285714rem !important;\n  font-size: 1em;\n  text-transform: none;\n  font-weight: normal;\n  box-shadow: none;\n  -webkit-touch-callout: none;\n}\n\n.ui.dropdown .menu > .item[_v-bc5491e8]:first-child {\n  border-top-width: 0px;\n}\n\n/*--------------\n  Floated Content\n---------------*/\n\n.ui.dropdown > .text > [class*=\"right floated\"][_v-bc5491e8],\n.ui.dropdown .menu .item > [class*=\"right floated\"][_v-bc5491e8] {\n  float: right !important;\n  margin-right: 0em !important;\n  margin-left: 1em !important;\n}\n\n.ui.dropdown > .text > [class*=\"left floated\"][_v-bc5491e8],\n.ui.dropdown .menu .item > [class*=\"left floated\"][_v-bc5491e8] {\n  float: left !important;\n  margin-left: 0em !important;\n  margin-right: 1em !important;\n}\n\n.ui.dropdown .menu .item > .icon.floated[_v-bc5491e8],\n.ui.dropdown .menu .item > .flag.floated[_v-bc5491e8],\n.ui.dropdown .menu .item > .image.floated[_v-bc5491e8],\n.ui.dropdown .menu .item > img.floated[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n/*--------------\n  Menu Divider\n---------------*/\n\n.ui.dropdown .menu > .header[_v-bc5491e8] {\n  margin: 1rem 0rem 0.75rem;\n  padding: 0em 1.14285714rem;\n  color: rgba(0, 0, 0, 0.85);\n  font-size: 0.78571429em;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n\n.ui.dropdown .menu > .divider[_v-bc5491e8] {\n  border-top: 1px solid rgba(34, 36, 38, 0.1);\n  height: 0em;\n  margin: 0.5em 0em;\n}\n\n.ui.dropdown .menu > .input[_v-bc5491e8] {\n  width: auto;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 1.14285714rem 0.71428571rem;\n  min-width: 10rem;\n}\n\n.ui.dropdown .menu > .header + .input[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n.ui.dropdown .menu > .input:not(.transparent) input[_v-bc5491e8] {\n  padding: 0.5em 1em;\n}\n\n.ui.dropdown .menu > .input:not(.transparent) .button[_v-bc5491e8],\n.ui.dropdown .menu > .input:not(.transparent) .icon[_v-bc5491e8],\n.ui.dropdown .menu > .input:not(.transparent) .label[_v-bc5491e8] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n\n/*-----------------\n  Item Description\n-------------------*/\n\n.ui.dropdown > .text > .description[_v-bc5491e8],\n.ui.dropdown .menu > .item > .description[_v-bc5491e8] {\n  float: right;\n  margin: 0em 0em 0em 1em;\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*-----------------\n       Message\n-------------------*/\n\n.ui.dropdown .menu > .message[_v-bc5491e8] {\n  padding: 0.71428571rem 1.14285714rem;\n  font-weight: normal;\n}\n\n.ui.dropdown .menu > .message[_v-bc5491e8]:not(.ui) {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*--------------\n    Sub Menu\n---------------*/\n\n.ui.dropdown .menu .menu[_v-bc5491e8] {\n  top: 0% !important;\n  left: 100% !important;\n  right: auto !important;\n  margin: 0em 0em 0em -0.5em !important;\n  border-radius: 0.28571429rem !important;\n  z-index: 21 !important;\n}\n\n/* Hide Arrow */\n.ui.dropdown .menu .menu[_v-bc5491e8]:after {\n  display: none;\n}\n\n/*--------------\n   Sub Elements\n---------------*/\n\n/* Icons / Flags / Labels / Image */\n.ui.dropdown > .text > .icon[_v-bc5491e8],\n.ui.dropdown > .text > .label[_v-bc5491e8],\n.ui.dropdown > .text > .flag[_v-bc5491e8],\n.ui.dropdown > .text > img[_v-bc5491e8],\n.ui.dropdown > .text > .image[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n.ui.dropdown .menu > .item > .icon[_v-bc5491e8],\n.ui.dropdown .menu > .item > .label[_v-bc5491e8],\n.ui.dropdown .menu > .item > .flag[_v-bc5491e8],\n.ui.dropdown .menu > .item > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > img[_v-bc5491e8] {\n  margin-top: 0em;\n}\n\n.ui.dropdown > .text > .icon[_v-bc5491e8],\n.ui.dropdown > .text > .label[_v-bc5491e8],\n.ui.dropdown > .text > .flag[_v-bc5491e8],\n.ui.dropdown > .text > img[_v-bc5491e8],\n.ui.dropdown > .text > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > .icon[_v-bc5491e8],\n.ui.dropdown .menu > .item > .label[_v-bc5491e8],\n.ui.dropdown .menu > .item > .flag[_v-bc5491e8],\n.ui.dropdown .menu > .item > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > img[_v-bc5491e8] {\n  margin-left: 0em;\n  float: none;\n  margin-right: 0.71428571rem;\n}\n\n/*--------------\n     Image\n---------------*/\n\n.ui.dropdown > .text > img[_v-bc5491e8],\n.ui.dropdown > .text > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > .image[_v-bc5491e8],\n.ui.dropdown .menu > .item > img[_v-bc5491e8] {\n  display: inline-block;\n  vertical-align: middle;\n  width: auto;\n  max-height: 2em;\n}\n\n/*******************************\n            Coupling\n*******************************/\n\n/*--------------\n      Menu\n---------------*/\n\n/* Remove Menu Item Divider */\n.ui.dropdown .ui.menu > .item[_v-bc5491e8]:before,\n.ui.menu .ui.dropdown .menu > .item[_v-bc5491e8]:before {\n  display: none;\n}\n\n/* Prevent Menu Item Border */\n.ui.menu .ui.dropdown .menu .active.item[_v-bc5491e8] {\n  border-left: none;\n}\n\n/* Automatically float dropdown menu right on last menu item */\n.ui.menu .right.menu .dropdown:last-child .menu[_v-bc5491e8],\n.ui.menu .right.dropdown.item .menu[_v-bc5491e8],\n.ui.buttons > .ui.dropdown:last-child .menu[_v-bc5491e8] {\n  left: auto;\n  right: 0em;\n}\n\n/*--------------\n      Label\n---------------*/\n\n/* Dropdown Menu */\n.ui.label.dropdown .menu[_v-bc5491e8] {\n  min-width: 100%;\n}\n\n/*--------------\n     Button\n---------------*/\n\n/* No Margin On Icon Button */\n.ui.dropdown.icon.button > .dropdown.icon[_v-bc5491e8] {\n  margin: 0em;\n}\n\n.ui.button.dropdown .menu[_v-bc5491e8] {\n  min-width: 100%;\n}\n\n/*******************************\n              Types\n*******************************/\n\n/*--------------\n    Selection\n---------------*/\n\n/* Displays like a select box */\n.ui.selection.dropdown[_v-bc5491e8] {\n  cursor: pointer;\n  word-wrap: break-word;\n  line-height: 1em;\n  white-space: normal;\n  outline: 0;\n  -webkit-transform: rotateZ(0deg);\n  transform: rotateZ(0deg);\n  min-width: 14em;\n  /*min-height: 2.7142em;*/\n  width: 100%;\n  background: #FFFFFF;\n  display: inline-block;\n  padding: 0.78571429em 2.6em 0.78571429em 1em;\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n}\n\n.ui.selection.dropdown.visible[_v-bc5491e8],\n.ui.selection.dropdown.active[_v-bc5491e8] {\n  z-index: 10;\n}\n\nselect.ui.dropdown[_v-bc5491e8] {\n  height: 38px;\n  padding: 0.5em;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  visibility: visible;\n}\n\n.ui.selection.dropdown > .search.icon[_v-bc5491e8],\n.ui.selection.dropdown > .delete.icon[_v-bc5491e8],\n.ui.selection.dropdown > .dropdown.icon[_v-bc5491e8] {\n  cursor: pointer;\n  position: absolute;\n  top: auto;\n  width: auto;\n  z-index: 3;\n  margin: -0.78571429em;\n  padding: 0.78571429em;\n  right: 1em;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n/* Compact */\n.ui.compact.selection.dropdown[_v-bc5491e8] {\n  min-width: 0px;\n}\n\n/*  Selection Menu */\n.ui.selection.dropdown .menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  border-top-width: 0px !important;\n  width: auto;\n  outline: none;\n  margin: 0px -1px;\n  min-width: calc(100%);\n  width: calc(100%);\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n.ui.selection.dropdown .menu[_v-bc5491e8]:after,\n.ui.selection.dropdown .menu[_v-bc5491e8]:before {\n  display: none;\n}\n\n/*--------------\n    Message\n---------------*/\n\n.ui.selection.dropdown .menu > .message[_v-bc5491e8] {\n  padding: 0.71428571rem 1.14285714rem;\n}\n\n@media only screen and (max-width: 767px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 7.58571429rem;\n  }\n}\n\n@media only screen and (min-width: 768px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 10.11428571rem;\n  }\n}\n\n@media only screen and (min-width: 992px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 15.17142857rem;\n  }\n}\n\n@media only screen and (min-width: 1920px) {\n  .ui.selection.dropdown .menu[_v-bc5491e8] {\n    max-height: 20.22857143rem;\n  }\n}\n\n/* Menu Item */\n.ui.selection.dropdown .menu > .item[_v-bc5491e8] {\n  border-top: 1px solid #FAFAFA;\n  padding: 0.71428571rem 1.14285714rem !important;\n  white-space: normal;\n  word-wrap: normal;\n}\n\n/* Hover */\n.ui.selection.dropdown[_v-bc5491e8]:hover {\n  border-color: rgba(34, 36, 38, 0.35);\n  box-shadow: none;\n}\n\n/* Active */\n.ui.selection.active.dropdown[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n.ui.selection.active.dropdown .menu[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Focus */\n.ui.selection.dropdown[_v-bc5491e8]:focus {\n  border-color: #96C8DA;\n  box-shadow: none;\n}\n\n.ui.selection.dropdown:focus .menu[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Visible */\n.ui.selection.visible.dropdown > .text[_v-bc5491e8]:not(.default) {\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/* Visible Hover */\n.ui.selection.active.dropdown[_v-bc5491e8]:hover {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n.ui.selection.active.dropdown:hover .menu[_v-bc5491e8] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Dropdown Icon */\n.ui.active.selection.dropdown > .dropdown.icon[_v-bc5491e8],\n.ui.visible.selection.dropdown > .dropdown.icon[_v-bc5491e8] {\n  opacity: 1;\n  z-index: 3;\n}\n\n/* Connecting Border */\n.ui.active.selection.dropdown[_v-bc5491e8] {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n\n/*--------------\n   Searchable\n---------------*/\n\n/* Search Selection */\n.ui.search.dropdown[_v-bc5491e8] {\n  min-width: '';\n}\n\n/* Search Dropdown */\n.ui.search.dropdown > input.search[_v-bc5491e8] {\n  font-size: 1em;\n  background: none transparent !important;\n  border: none !important;\n  box-shadow: none !important;\n  /*cursor: pointer;*/\n  top: 0em;\n  left: 0em;\n  width: 100%;\n  outline: none;\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n  padding: inherit;\n}\n\n/* Text Layering */\n.ui.search.dropdown > input.search[_v-bc5491e8] {\n  position: absolute;\n  z-index: 2;\n}\n\n.ui.search.dropdown > .text[_v-bc5491e8] {\n  cursor: text;\n  position: relative;\n  z-index: 3;\n}\n\n/* Search Selection */\n.ui.search.selection.dropdown > input.search[_v-bc5491e8] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.6em 0.67861429em 1em;\n}\n\n/* Active/Visible Search */\n.ui.search.dropdown.active > input.search[_v-bc5491e8],\n.ui.search.dropdown.visible > input.search[_v-bc5491e8] {\n  cursor: auto;\n}\n\n.ui.search.dropdown.active > .text[_v-bc5491e8],\n.ui.search.dropdown.visible > .text[_v-bc5491e8] {\n  pointer-events: none;\n}\n\n/* Filtered Text */\n.ui.active.search.dropdown input.search:focus + .text .icon[_v-bc5491e8],\n.ui.active.search.dropdown input.search:focus + .text .flag[_v-bc5491e8] {\n  opacity: 0.45;\n}\n\n.ui.active.search.dropdown input.search:focus + .text[_v-bc5491e8] {\n  color: rgba(0, 0, 0, 0.4) !important;\n}\n\n/* Search Menu */\n.ui.search.dropdown .menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n\n@media only screen and (max-width: 767px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 7.58571429rem;\n  }\n}\n\n@media only screen and (min-width: 768px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 10.11428571rem;\n  }\n}\n\n@media only screen and (min-width: 992px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 15.17142857rem;\n  }\n}\n\n@media only screen and (min-width: 1920px) {\n  .ui.search.dropdown .menu[_v-bc5491e8] {\n    max-height: 20.22857143rem;\n  }\n}\n\n/*--------------\n     Inline\n---------------*/\n\n.ui.inline.dropdown[_v-bc5491e8] {\n  cursor: pointer;\n  display: inline-block;\n  color: inherit;\n}\n\n.ui.inline.dropdown .dropdown.icon[_v-bc5491e8] {\n  margin: 0em 0.5em 0em 0.25em;\n  vertical-align: baseline;\n}\n\n.ui.inline.dropdown > .text[_v-bc5491e8] {\n  font-weight: bold;\n}\n\n.ui.inline.dropdown .menu[_v-bc5491e8] {\n  cursor: auto;\n  margin-top: 0.25em;\n  border-radius: 0.28571429rem;\n}\n\n/*******************************\n            States\n*******************************/\n\n/*--------------------\n        Active\n----------------------*/\n\n/* Menu Item Active */\n.ui.dropdown .menu .active.item[_v-bc5491e8] {\n  background: transparent;\n  font-weight: bold;\n  color: rgba(0, 0, 0, 0.95);\n  box-shadow: none;\n  z-index: 12;\n}\n\n/*--------------------\n        Hover\n----------------------*/\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item[_v-bc5491e8]:hover {\n  background: rgba(0, 0, 0, 0.05);\n  color: rgba(0, 0, 0, 0.95);\n  z-index: 13;\n}\n\n/*--------------------\n       Loading\n---------------------*/\n\n/* Positioning */\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:before,\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:after {\n  left: 30% !important;\n}\n\n.ui.loading.dropdown > i.icon[_v-bc5491e8] {\n  top: 50% !important;\n}\n\n.ui.multiple.loading.dropdown > i.icon[_v-bc5491e8]:before,\n.ui.multiple.loading.dropdown > i.icon[_v-bc5491e8]:after {\n  top: 0% !important;\n  left: 0% !important;\n}\n\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:before {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  border-radius: 500rem;\n  border: 0.2em solid rgba(0, 0, 0, 0.1);\n}\n\n.ui.loading.dropdown > i.icon[_v-bc5491e8]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  box-shadow: 0px 0px 0px 1px transparent;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  -webkit-animation: dropdown-spin 0.6s linear;\n  animation: dropdown-spin 0.6s linear;\n  -webkit-animation-iteration-count: infinite;\n  animation-iteration-count: infinite;\n  border-radius: 500rem;\n  border-color: #767676 transparent transparent;\n  border-style: solid;\n  border-width: 0.2em;\n}\n\n/* Coupling */\n.ui.loading.dropdown.button > i.icon[_v-bc5491e8]:before,\n.ui.loading.dropdown.button > i.icon[_v-bc5491e8]:after {\n  display: none;\n}\n\n@-webkit-keyframes dropdown-spin {\n  from {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n@keyframes dropdown-spin {\n  from {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n  }\n  to {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n  }\n}\n\n/*--------------------\n     Default Text\n----------------------*/\n\n.ui.dropdown > .default.text[_v-bc5491e8],\n.ui.default.dropdown > .text[_v-bc5491e8] {\n  color: rgba(179, 179, 179, 0.7);\n}\n\n.ui.dropdown:hover > .default.text[_v-bc5491e8],\n.ui.default.dropdown:hover > .text[_v-bc5491e8] {\n  color: rgba(179, 179, 179, 0.7);\n}\n\n/*--------------------\n        Loading\n----------------------*/\n\n.ui.loading.dropdown > .text[_v-bc5491e8] {\n  -webkit-transition: none;\n  transition: none;\n}\n\n/* Used To Check Position */\n.ui.dropdown .loading.menu[_v-bc5491e8] {\n  display: block;\n  visibility: hidden;\n  z-index: -1;\n}\n\n/*--------------------\n    Keyboard Select\n----------------------*/\n\n/* Selected Item */\n.ui.dropdown.selected[_v-bc5491e8],\n.ui.dropdown .menu .selected.item[_v-bc5491e8] {\n  background: rgba(0, 0, 0, 0.03);\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*--------------------\n    Search Filtered\n----------------------*/\n\n/* Filtered Item */\n.ui.dropdown > .filtered.text[_v-bc5491e8] {\n  visibility: hidden;\n}\n\n.ui.dropdown .filtered.item[_v-bc5491e8] {\n  display: none !important;\n}\n\n/*--------------------\n        Error\n----------------------*/\n\n.ui.dropdown.error[_v-bc5491e8],\n.ui.dropdown.error > .text[_v-bc5491e8],\n.ui.dropdown.error > .default.text[_v-bc5491e8] {\n  color: #9F3A38;\n}\n\n.ui.selection.dropdown.error[_v-bc5491e8] {\n  background: #FFF6F6;\n  border-color: #E0B4B4;\n}\n\n.ui.selection.dropdown.error[_v-bc5491e8]:hover {\n  border-color: #E0B4B4;\n}\n\n.ui.dropdown.error > .menu[_v-bc5491e8],\n.ui.dropdown.error > .menu .menu[_v-bc5491e8] {\n  border-color: #E0B4B4;\n}\n\n.ui.dropdown.error > .menu > .item[_v-bc5491e8] {\n  color: #9F3A38;\n}\n\n.ui.multiple.selection.error.dropdown > .label[_v-bc5491e8] {\n  border-color: #E0B4B4;\n}\n\n/* Item Hover */\n.ui.dropdown.error > .menu > .item[_v-bc5491e8]:hover {\n  background-color: #FFF2F2;\n}\n\n/* Item Active */\n.ui.dropdown.error > .menu .active.item[_v-bc5491e8] {\n  background-color: #FDCFCF;\n}\n\n/*--------------------\n        Disabled\n----------------------*/\n\n/* Disabled */\n.ui.disabled.dropdown[_v-bc5491e8],\n.ui.dropdown .menu > .disabled.item[_v-bc5491e8] {\n  cursor: default;\n  pointer-events: none;\n  opacity: 0.45;\n}\n\n/*******************************\n           Variations\n*******************************/\n\n/*--------------\n    Direction\n---------------*/\n\n/* Flyout Direction */\n.ui.dropdown .menu[_v-bc5491e8] {\n  left: 0px;\n}\n\n/* Default Side (Right) */\n.ui.dropdown .right.menu > .menu[_v-bc5491e8],\n.ui.dropdown .menu .right.menu[_v-bc5491e8] {\n  left: 100% !important;\n  right: auto !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/* Left Flyout Menu */\n.ui.dropdown > .left.menu .menu[_v-bc5491e8],\n.ui.dropdown .menu .left.menu[_v-bc5491e8] {\n  left: auto !important;\n  right: 100% !important;\n  border-radius: 0.28571429rem !important;\n}\n\n.ui.dropdown .item .left.dropdown.icon[_v-bc5491e8],\n.ui.dropdown .left.menu .item .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n  float: left;\n  margin: 0em 0.71428571rem 0em 0em;\n}\n\n.ui.dropdown .item .left.dropdown.icon[_v-bc5491e8],\n.ui.dropdown .left.menu .item .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n  float: left;\n  margin: 0em 0.71428571rem 0em 0em;\n}\n\n.ui.dropdown .item .left.dropdown.icon + .text[_v-bc5491e8],\n.ui.dropdown .left.menu .item .dropdown.icon + .text[_v-bc5491e8] {\n  margin-left: 1em;\n}\n\n/*--------------\n     Simple\n---------------*/\n\n/*  Selection Menu */\n.ui.scrolling.dropdown .menu[_v-bc5491e8],\n.ui.dropdown .scrolling.menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n\n.ui.scrolling.dropdown .menu[_v-bc5491e8] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  min-width: 100% !important;\n  width: auto !important;\n}\n\n.ui.dropdown .scrolling.menu[_v-bc5491e8] {\n  position: static;\n  overflow-y: auto;\n  border: none;\n  box-shadow: none !important;\n  border-radius: 0 !important;\n  margin: 0 !important;\n  min-width: 100% !important;\n  width: auto !important;\n  border-top: 1px solid rgba(34, 36, 38, 0.15);\n}\n\n.ui.scrolling.dropdown .menu .item.item.item[_v-bc5491e8],\n.ui.dropdown .scrolling.menu > .item.item.item[_v-bc5491e8] {\n  border-top: none;\n  padding-right: calc(1.14285714rem + 17px) !important;\n}\n\n.ui.scrolling.dropdown .menu .item[_v-bc5491e8]:first-child,\n.ui.dropdown .scrolling.menu .item[_v-bc5491e8]:first-child {\n  border-top: none;\n}\n\n.ui.dropdown > .animating.menu .scrolling.menu[_v-bc5491e8],\n.ui.dropdown > .visible.menu .scrolling.menu[_v-bc5491e8] {\n  display: block;\n}\n\n/* Scrollbar in IE */\n@media all and (-ms-high-contrast: none) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    min-width: calc(100% - 17px);\n  }\n}\n\n@media only screen and (max-width: 767px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 9.71428571rem;\n  }\n}\n\n@media only screen and (min-width: 768px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 14.57142857rem;\n  }\n}\n\n@media only screen and (min-width: 992px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 19.42857143rem;\n  }\n}\n\n@media only screen and (min-width: 1920px) {\n  .ui.scrolling.dropdown .menu[_v-bc5491e8],\n  .ui.dropdown .scrolling.menu[_v-bc5491e8] {\n    max-height: 19.42857143rem;\n  }\n}\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n/* Dropdown Carets */\n@font-face {\n  font-family: 'Dropdown';\n  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMggjB5AAAAC8AAAAYGNtYXAPfuIIAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5Zjo82LgAAAFwAAABVGhlYWQAQ88bAAACxAAAADZoaGVhAwcB6QAAAvwAAAAkaG10eAS4ABIAAAMgAAAAIGxvY2EBNgDeAAADQAAAABJtYXhwAAoAFgAAA1QAAAAgbmFtZVcZpu4AAAN0AAABRXBvc3QAAwAAAAAEvAAAACAAAwIAAZAABQAAAUwBZgAAAEcBTAFmAAAA9QAZAIQAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADw2gHg/+D/4AHgACAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIPDa//3//wAAAAAAIPDX//3//wAB/+MPLQADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAIABJQElABMAABM0NzY3BTYXFhUUDwEGJwYvASY1AAUGBwEACAUGBoAFCAcGgAUBEgcGBQEBAQcECQYHfwYBAQZ/BwYAAQAAAG4BJQESABMAADc0PwE2MzIfARYVFAcGIyEiJyY1AAWABgcIBYAGBgUI/wAHBgWABwaABQWABgcHBgUFBgcAAAABABIASQC3AW4AEwAANzQ/ATYXNhcWHQEUBwYnBi8BJjUSBoAFCAcFBgYFBwgFgAbbBwZ/BwEBBwQJ/wgEBwEBB38GBgAAAAABAAAASQClAW4AEwAANxE0NzYzMh8BFhUUDwEGIyInJjUABQYHCAWABgaABQgHBgVbAQAIBQYGgAUIBwWABgYFBwAAAAEAAAABAADZuaKOXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAAAAACgAUAB4AQgBkAIgAqgAAAAEAAAAIABQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAOAAAAAQAAAAAAAgAOAEcAAQAAAAAAAwAOACQAAQAAAAAABAAOAFUAAQAAAAAABQAWAA4AAQAAAAAABgAHADIAAQAAAAAACgA0AGMAAwABBAkAAQAOAAAAAwABBAkAAgAOAEcAAwABBAkAAwAOACQAAwABBAkABAAOAFUAAwABBAkABQAWAA4AAwABBAkABgAOADkAAwABBAkACgA0AGMAaQBjAG8AbQBvAG8AbgBWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AbgBSAGUAZwB1AGwAYQByAGkAYwBvAG0AbwBvAG4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('truetype'), url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVwAAoAAAAABSgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAdkAAAHZLDXE/09TLzIAAALQAAAAYAAAAGAIIweQY21hcAAAAzAAAABMAAAATA9+4ghnYXNwAAADfAAAAAgAAAAIAAAAEGhlYWQAAAOEAAAANgAAADYAQ88baGhlYQAAA7wAAAAkAAAAJAMHAelobXR4AAAD4AAAACAAAAAgBLgAEm1heHAAAAQAAAAABgAAAAYACFAAbmFtZQAABAgAAAFFAAABRVcZpu5wb3N0AAAFUAAAACAAAAAgAAMAAAEABAQAAQEBCGljb21vb24AAQIAAQA6+BwC+BsD+BgEHgoAGVP/i4seCgAZU/+LiwwHi2v4lPh0BR0AAACIDx0AAACNER0AAAAJHQAAAdASAAkBAQgPERMWGyAlKmljb21vb25pY29tb29udTB1MXUyMHVGMEQ3dUYwRDh1RjBEOXVGMERBAAACAYkABgAIAgABAAQABwAKAA0AVgCfAOgBL/yUDvyUDvyUDvuUDvtvi/emFYuQjZCOjo+Pj42Qiwj3lIsFkIuQiY6Hj4iNhouGi4aJh4eHCPsU+xQFiIiGiYaLhouHjYeOCPsU9xQFiI+Jj4uQCA77b4v3FBWLkI2Pjo8I9xT3FAWPjo+NkIuQi5CJjogI9xT7FAWPh42Hi4aLhomHh4eIiIaJhosI+5SLBYaLh42HjoiPiY+LkAgO+92d928Vi5CNkI+OCPcU9xQFjo+QjZCLkIuPiY6Hj4iNhouGCIv7lAWLhomHh4iIh4eJhouGi4aNiI8I+xT3FAWHjomPi5AIDvvdi+YVi/eUBYuQjZCOjo+Pj42Qi5CLkImOhwj3FPsUBY+IjYaLhouGiYeHiAj7FPsUBYiHhomGi4aLh42Hj4iOiY+LkAgO+JQU+JQViwwKAAAAAAMCAAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8NoB4P/g/+AB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDw2v/9//8AAAAAACDw1//9//8AAf/jDy0AAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAA5emozXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAUAAACAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIADgBHAAEAAAAAAAMADgAkAAEAAAAAAAQADgBVAAEAAAAAAAUAFgAOAAEAAAAAAAYABwAyAAEAAAAAAAoANABjAAMAAQQJAAEADgAAAAMAAQQJAAIADgBHAAMAAQQJAAMADgAkAAMAAQQJAAQADgBVAAMAAQQJAAUAFgAOAAMAAQQJAAYADgA5AAMAAQQJAAoANABjAGkAYwBvAG0AbwBvAG4AVgBlAHIAcwBpAG8AbgAgADEALgAwAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG4AUgBlAGcAdQBsAGEAcgBpAGMAbwBtAG8AbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('woff');\n  font-weight: normal;\n  font-style: normal;\n}\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8] {\n  font-family: 'Dropdown';\n  line-height: 1;\n  height: 1em;\n  width: 1.23em;\n  -webkit-backface-visibility: hidden;\n  backface-visibility: hidden;\n  font-weight: normal;\n  font-style: normal;\n  text-align: center;\n}\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8] {\n  width: auto;\n}\n\n.ui.dropdown > .dropdown.icon[_v-bc5491e8]:before {\n  content: '\\F0D7';\n}\n\n/* Sub Menu */\n.ui.dropdown .menu .item .dropdown.icon[_v-bc5491e8]:before {\n  content: '\\F0DA' ;\n}\n\n.ui.dropdown .item .left.dropdown.icon[_v-bc5491e8]:before,\n.ui.dropdown .left.menu .item .dropdown.icon[_v-bc5491e8]:before {\n  content: \"\\F0D9\" ;\n}\n\n/* Vertical Menu Dropdown */\n.ui.vertical.menu .dropdown.item > .dropdown.icon[_v-bc5491e8]:before {\n  content: \"\\F0DA\" ;\n}\n\n/*******************************\n        User Overrides\n*******************************/\n", ""]);
 	
 	// exports
 
@@ -283,7 +276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<div class=\"ui search dropdown selection\" :class=\"{ 'active':showMenu, 'error': isError }\" _v-bc5491e8=\"\">\n  <i class=\"dropdown icon\" @click=\"openOptions\" _v-bc5491e8=\"\"></i>\n  <input class=\"search\" type=\"text\" autocomplete=\"off\" tabindex=\"0\" v-model=\"searchText\" @focus=\"openOptions\" @blur=\"blurInput\" @keydown.up=\"prevItem\" @keydown.down=\"nextItem\" @keyup.enter=\"enterItem\" @keyup.delete=\"changeSearchText\" _v-bc5491e8=\"\">\n  <div class=\"text\" _v-bc5491e8=\"\"></div>\n  <div class=\"menu\" :class=\"{ 'visible':showMenu }\" tabindex=\"-1\" _v-bc5491e8=\"\">\n    <template v-for=\"(idx, option) in selectOptions | filterBy searchText in 'text'\">\n      <div class=\"item\" :class=\"{ 'selected': option.selected }\" @click=\"selectItem(option)\" @mousedown=\"mousedownItem\" _v-bc5491e8=\"\">\n        {{option.text}}\n      </div>\n    </template>\n  </div>\n</div>\n";
+	module.exports = "\n\n<div class=\"ui search dropdown selection\" :class=\"{ 'active':showMenu, 'error': isError }\" _v-bc5491e8=\"\">\n  <i class=\"dropdown icon\" @click=\"openOptions\" _v-bc5491e8=\"\"></i>\n  <input class=\"search\" type=\"text\" autocomplete=\"off\" tabindex=\"0\" v-model=\"searchText\" @focus=\"openOptions\" @blur=\"blurInput\" @keydown.up=\"prevItem\" @keydown.down=\"nextItem\" @keyup.enter=\"enterItem\" @keyup.delete=\"resetSelect\" _v-bc5491e8=\"\">\n  <div class=\"text\" _v-bc5491e8=\"\">{{selectedOption.text}}</div>\n  <div class=\"menu\" :class=\"{ 'visible':showMenu }\" tabindex=\"-1\" _v-bc5491e8=\"\">\n    <template v-for=\"(idx, option) in selectOptions | filterBy searchText in 'text'\">\n      <div class=\"item\" :class=\"{ 'selected': option.selected }\" @click=\"selectItem(option)\" @mousedown=\"mousedownItem\" _v-bc5491e8=\"\">\n        {{option.text}}\n      </div>\n    </template>\n  </div>\n</div>\n";
 
 /***/ },
 /* 5 */
@@ -557,7 +550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
-	 * Vue.js v1.0.24
+	 * Vue.js v1.0.26
 	 * (c) 2016 Evan You
 	 * Released under the MIT License.
 	 */
@@ -956,10 +949,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	// UA sniffing for working around browser-specific quirks
 	var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+	var isIE = UA && UA.indexOf('trident') > 0;
 	var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
 	var isAndroid = UA && UA.indexOf('android') > 0;
 	var isIos = UA && /(iphone|ipad|ipod|ios)/i.test(UA);
-	var isWechat = UA && UA.indexOf('micromessenger') > 0;
+	var iosVersionMatch = isIos && UA.match(/os ([\d_]+)/);
+	var iosVersion = iosVersionMatch && iosVersionMatch[1].split('_');
+	
+	// detecting iOS UIWebView by indexedDB
+	var hasMutationObserverBug = iosVersion && Number(iosVersion[0]) >= 9 && Number(iosVersion[1]) >= 3 && !window.indexedDB;
 	
 	var transitionProp = undefined;
 	var transitionEndEvent = undefined;
@@ -1000,7 +998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  /* istanbul ignore if */
-	  if (typeof MutationObserver !== 'undefined' && !(isWechat && isIos)) {
+	  if (typeof MutationObserver !== 'undefined' && !hasMutationObserverBug) {
 	    var counter = 1;
 	    var observer = new MutationObserver(nextTickHandler);
 	    var textNode = document.createTextNode(counter);
@@ -1072,12 +1070,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	p.put = function (key, value) {
 	  var removed;
-	  if (this.size === this.limit) {
-	    removed = this.shift();
-	  }
 	
 	  var entry = this.get(key, true);
 	  if (!entry) {
+	    if (this.size === this.limit) {
+	      removed = this.shift();
+	    }
 	    entry = {
 	      key: key
 	    };
@@ -1322,7 +1320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var unsafeOpen = escapeRegex(config.unsafeDelimiters[0]);
 	  var unsafeClose = escapeRegex(config.unsafeDelimiters[1]);
 	  tagRE = new RegExp(unsafeOpen + '((?:.|\\n)+?)' + unsafeClose + '|' + open + '((?:.|\\n)+?)' + close, 'g');
-	  htmlRE = new RegExp('^' + unsafeOpen + '.*' + unsafeClose + '$');
+	  htmlRE = new RegExp('^' + unsafeOpen + '((?:.|\\n)+?)' + unsafeClose + '$');
 	  // reset cache
 	  cache = new Cache(1000);
 	}
@@ -2109,7 +2107,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return (/HTMLUnknownElement/.test(el.toString()) &&
 	        // Chrome returns unknown for several HTML5 elements.
 	        // https://code.google.com/p/chromium/issues/detail?id=540526
-	        !/^(data|time|rtc|rb)$/.test(tag)
+	        // Firefox returns unknown for some "Interactive elements."
+	        !/^(data|time|rtc|rb|details|dialog|summary)$/.test(tag)
 	      );
 	    }
 	  };
@@ -2445,7 +2444,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  if (child.mixins) {
 	    for (var i = 0, l = child.mixins.length; i < l; i++) {
-	      parent = mergeOptions(parent, child.mixins[i], vm);
+	      var mixin = child.mixins[i];
+	      var mixinOptions = mixin.prototype instanceof Vue ? mixin.options : mixin;
+	      parent = mergeOptions(parent, mixinOptions, vm);
 	    }
 	  }
 	  for (key in parent) {
@@ -2873,10 +2874,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		hasProto: hasProto,
 		inBrowser: inBrowser,
 		devtools: devtools,
+		isIE: isIE,
 		isIE9: isIE9,
 		isAndroid: isAndroid,
 		isIos: isIos,
-		isWechat: isWechat,
+		iosVersionMatch: iosVersionMatch,
+		iosVersion: iosVersion,
+		hasMutationObserverBug: hasMutationObserverBug,
 		get transitionProp () { return transitionProp; },
 		get transitionEndEvent () { return transitionEndEvent; },
 		get animationProp () { return animationProp; },
@@ -3364,7 +3368,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var restoreRE = /"(\d+)"/g;
 	var pathTestRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['.*?'\]|\[".*?"\]|\[\d+\]|\[[A-Za-z_$][\w$]*\])*$/;
 	var identRE = /[^\w$\.](?:[A-Za-z_$][\w$]*)/g;
-	var booleanLiteralRE = /^(?:true|false)$/;
+	var literalValueRE$1 = /^(?:true|false|null|undefined|Infinity|NaN)$/;
+	
+	function noop() {}
 	
 	/**
 	 * Save / Rewrite / Restore
@@ -3446,7 +3452,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // save strings and object literal keys
 	  var body = exp.replace(saveRE, save).replace(wsRE, '');
 	  // rewrite all paths
-	  // pad 1 space here becaue the regex matches 1 extra char
+	  // pad 1 space here because the regex matches 1 extra char
 	  body = (' ' + body).replace(identRE, rewrite).replace(restoreRE, restore);
 	  return makeGetterFn(body);
 	}
@@ -3467,7 +3473,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return new Function('scope', 'return ' + body + ';');
 	    /* eslint-enable no-new-func */
 	  } catch (e) {
-	    ("production") !== 'production' && warn('Invalid expression. ' + 'Generated function body: ' + body);
+	    if (false) {
+	      /* istanbul ignore if */
+	      if (e.toString().match(/unsafe-eval|CSP/)) {
+	        warn('It seems you are using the default build of Vue.js in an environment ' + 'with Content Security Policy that prohibits unsafe-eval. ' + 'Use the CSP-compliant build instead: ' + 'http://vuejs.org/guide/installation.html#CSP-compliant-build');
+	      } else {
+	        warn('Invalid expression. ' + 'Generated function body: ' + body);
+	      }
+	    }
+	    return noop;
 	  }
 	}
 	
@@ -3529,8 +3543,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function isSimplePath(exp) {
 	  return pathTestRE.test(exp) &&
-	  // don't treat true/false as paths
-	  !booleanLiteralRE.test(exp) &&
+	  // don't treat literal values as paths
+	  !literalValueRE$1.test(exp) &&
 	  // Math constants e.g. Math.PI, Math.E etc.
 	  exp.slice(0, 5) !== 'Math.';
 	}
@@ -3946,7 +3960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  var isA = isArray(val);
 	  var isO = isObject(val);
-	  if (isA || isO) {
+	  if ((isA || isO) && Object.isExtensible(val)) {
 	    if (val.__ob__) {
 	      var depId = val.__ob__.dep.id;
 	      if (seen.has(depId)) {
@@ -4009,6 +4023,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var tagRE$1 = /<([\w:-]+)/;
 	var entityRE = /&#?\w+?;/;
+	var commentRE = /<!--/;
 	
 	/**
 	 * Convert a string template to a DocumentFragment.
@@ -4031,8 +4046,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var frag = document.createDocumentFragment();
 	  var tagMatch = templateString.match(tagRE$1);
 	  var entityMatch = entityRE.test(templateString);
+	  var commentMatch = commentRE.test(templateString);
 	
-	  if (!tagMatch && !entityMatch) {
+	  if (!tagMatch && !entityMatch && !commentMatch) {
 	    // text only, return a single text node.
 	    frag.appendChild(document.createTextNode(templateString));
 	  } else {
@@ -4999,7 +5015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * the filters. This is passed to and called by the watcher.
 	   *
 	   * It is necessary for this to be called during the
-	   * wathcer's dependency collection phase because we want
+	   * watcher's dependency collection phase because we want
 	   * the v-for to update when the source Object is mutated.
 	   */
 	
@@ -5342,7 +5358,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  update: function update(value) {
-	    this.el.value = _toString(value);
+	    // #3029 only update when the value changes. This prevent
+	    // browsers from overwriting values like selectionStart
+	    value = _toString(value);
+	    if (value !== this.el.value) this.el.value = value;
 	  },
 	
 	  unbind: function unbind() {
@@ -5391,6 +5410,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var select = {
 	
 	  bind: function bind() {
+	    var _this = this;
+	
 	    var self = this;
 	    var el = this.el;
 	
@@ -5422,7 +5443,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // selectedIndex with value -1 to 0 when the element
 	    // is appended to a new parent, therefore we have to
 	    // force a DOM update whenever that happens...
-	    this.vm.$on('hook:attached', this.forceUpdate);
+	    this.vm.$on('hook:attached', function () {
+	      nextTick(_this.forceUpdate);
+	    });
+	    if (!inDoc(el)) {
+	      nextTick(this.forceUpdate);
+	    }
 	  },
 	
 	  update: function update(value) {
@@ -6692,7 +6718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (value === undefined) {
 	    value = getPropDefaultValue(vm, prop);
 	  }
-	  value = coerceProp(prop, value);
+	  value = coerceProp(prop, value, vm);
 	  var coerced = value !== rawValue;
 	  if (!assertProp(prop, value, vm)) {
 	    value = undefined;
@@ -6811,13 +6837,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {*}
 	 */
 	
-	function coerceProp(prop, value) {
+	function coerceProp(prop, value, vm) {
 	  var coerce = prop.options.coerce;
 	  if (!coerce) {
 	    return value;
 	  }
-	  // coerce is a function
-	  return coerce(value);
+	  if (typeof coerce === 'function') {
+	    return coerce(value);
+	  } else {
+	    ("production") !== 'production' && warn('Invalid coerce for prop "' + prop.name + '": expected function, got ' + typeof coerce + '.', vm);
+	    return value;
+	  }
 	}
 	
 	/**
@@ -7349,10 +7379,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // resolve on owner vm
 	    var hooks = resolveAsset(this.vm.$options, 'transitions', id);
 	    id = id || 'v';
+	    oldId = oldId || 'v';
 	    el.__v_trans = new Transition(el, id, hooks, this.vm);
-	    if (oldId) {
-	      removeClass(el, oldId + '-transition');
-	    }
+	    removeClass(el, oldId + '-transition');
 	    addClass(el, id + '-transition');
 	  }
 	};
@@ -7777,7 +7806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (token.html) {
 	            replace(node, parseTemplate(value, true));
 	          } else {
-	            node.data = value;
+	            node.data = _toString(value);
 	          }
 	        } else {
 	          vm._bindDir(token.descriptor, node, host, scope);
@@ -8761,7 +8790,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	}
 	
-	function noop() {}
+	function noop$1() {}
 	
 	/**
 	 * A directive links a DOM element with a piece of data,
@@ -8860,7 +8889,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      };
 	    } else {
-	      this._update = noop;
+	      this._update = noop$1;
 	    }
 	    var preProcess = this._preProcess ? bind(this._preProcess, this) : null;
 	    var postProcess = this._postProcess ? bind(this._postProcess, this) : null;
@@ -10298,7 +10327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  json: {
 	    read: function read(value, indent) {
-	      return typeof value === 'string' ? value : JSON.stringify(value, null, Number(indent) || 2);
+	      return typeof value === 'string' ? value : JSON.stringify(value, null, arguments.length > 1 ? indent : 2);
 	    },
 	    write: function write(value) {
 	      try {
@@ -10371,7 +10400,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  pluralize: function pluralize(value) {
 	    var args = toArray(arguments, 1);
-	    return args.length > 1 ? args[value % 10 - 1] || args[args.length - 1] : args[0] + (value === 1 ? '' : 's');
+	    var length = args.length;
+	    if (length > 1) {
+	      var index = value % 10 - 1;
+	      return index in args ? args[index] : args[length - 1];
+	    } else {
+	      return args[0] + (value === 1 ? '' : 's');
+	    }
 	  },
 	
 	  /**
@@ -10556,7 +10591,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        }
 	        if (type === 'component' && isPlainObject(definition)) {
-	          definition.name = id;
+	          if (!definition.name) {
+	            definition.name = id;
+	          }
 	          definition = Vue.extend(definition);
 	        }
 	        this.options[type + 's'][id] = definition;
@@ -10571,7 +10608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	installGlobalAPI(Vue);
 	
-	Vue.version = '1.0.24';
+	Vue.version = '1.0.26';
 	
 	// devtools global hook
 	/* istanbul ignore next */
