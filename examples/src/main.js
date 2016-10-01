@@ -7,21 +7,22 @@ import ResetSearchSelect from './components/sample/ResetSearchSelect'
 import MultiSearchSelect from './components/sample/MultiSearchSelect'
 
 Vue.use(VueRouter)
-var router = new VueRouter()
 
-router.map({
-  '/Basic': {
-    component: BasicSearchSelect
-  },
-  '/Error': {
-    component: ErrorSearchSelect
-  },
-  '/Reset': {
-    component: ResetSearchSelect
-  },
-  '/Multi': {
-    component: MultiSearchSelect
-  }
+const routes = [
+  { path: '/Basic', component: BasicSearchSelect },
+  { path: '/Error', component: ErrorSearchSelect },
+  { path: '/Reset', component: ResetSearchSelect },
+  { path: '/Multi', component: MultiSearchSelect }
+]
+const router = new VueRouter({
+  routes // short for routes: routes
 })
-router.start(App, '#container')
+
+/* eslint-disable no-new */
+/* eslint-disable no-unused-vars */
+const app = new Vue({
+  el: '#app',
+  render: h => h(App),
+  router
+}).$mount('#app')
 

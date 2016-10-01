@@ -20,7 +20,8 @@
 </template>
 
 <script>
-  import VueSearchSelect from '../../../../src/components/SearchSelect.vue'
+  import 'semantic-ui-icon/icon.css'
+  import MultiVueSearchSelect from '../../../../src/components/MultiSearchSelect.vue'
   export default {
     data () {
       return {
@@ -66,7 +67,7 @@
       }
     },
     components: {
-      'select-search': VueSearchSelect
+      'select-search': MultiVueSearchSelect
     }
   }
 </script>

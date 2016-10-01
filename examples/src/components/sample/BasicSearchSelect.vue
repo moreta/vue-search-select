@@ -1,4 +1,3 @@
-<!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
   <div style="width: 500px;">
     <div style="margin-top: 20px;">

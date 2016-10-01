@@ -3,16 +3,16 @@
     <img class="logo" src="./assets/logo.png">
     <div class="linkContainer">
       <div class="link">
-        <a v-link="{ path: '/Basic' }">Basic</a>
+        <router-link :to="{ path: '/Basic' }">Basic</router-link>
       </div>
       <div class="link">
-        <a v-link="{ path: '/Error' }">Error</a>
+        <router-link :to="{ path: '/Error' }">Error</router-link>
       </div>
       <div class="link">
-        <a v-link="{ path: '/Reset' }">Reset</a>
+        <router-link :to="{ path: '/Reset' }">Reset</router-link>
       </div>
       <div class="link">
-        <a v-link="{ path: '/Reset' }">Multiple</a>
+        <router-link :to="{ path: '/Multi' }">Multiple</router-link>
       </div>
     </div>
     <!-- route outlet -->
@@ -23,11 +23,14 @@
 </template>
 
 <style>
+  
   html {
     height: 100%;
   }
   
   body {
+    font-size: 14px;
+    line-height: 1.4285em;
     display: flex;
     align-items: center;
     justify-content: center;
