@@ -3,25 +3,37 @@
   <div style="width: 500px;">
     <div style="margin-top: 20px;">
       <div>
-        <div>value : {{item.value}}</div>
-        <div>text : {{item.text}}</div>
+        <div>Item is object</div>
+        <div>value : {{item1.value}}</div>
+        <div>text : {{item1.text}}</div>
       </div>
-      <div style="margin-top: 30px;">
+      <div style="margin-top: 20px;">
         <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
       </div>
-      <div style="margin-top: 30px;">
-        <button type="button" @click="selectObject" class="btn btn-info btn-sm">value set by trigger value</button>
-      </div>
-      <div style="margin-top: 30px;">
-        <select-search :select-options="selectOptions" :on-select="selectedItem" :trigger-value="item.value"></select-search>
+      <div style="margin-top: 20px;">
+        <select-search :options="selectOptions" :on-select="selectedItem1" :trigger-value="item1.value"></select-search>
       </div>
     </div>
+    
+    <div style="margin-top: 20px;">
+      <div>
+        <div>Item2(item is String) : {{item2}}</div>
+      </div>
+      <div style="margin-top: 20px;">
+        <button type="button" @click="resetValue" class="btn btn-info btn-sm">reset by value</button>
+      </div>
+      <div style="margin-top: 20px;">
+        <select-search :options="selectOptions" :on-select="selectedItem2" :trigger-value="item2"></select-search>
+      </div>
+    </div>
+    
   </div>
+
+
 </template>
 
 <script>
-  import 'semantic-ui-icon/icon.css'
-  import MultiVueSearchSelect from '../../../../src/components/MultiSearchSelect.vue'
+  import VueSearchSelect from '../../../lib/Basic'
   export default {
     data () {
       return {
@@ -46,28 +58,26 @@
           { value: '18', text: 'ef' + ' - ' + '18', selected: false },
           { value: '19', text: 'ef' + ' - ' + '19', selected: false }
         ],
-        searchText: '', // If value is falsy, reset searchText & searchItem
-        item: {
-          value: '',
-          text: ''
-        }
+        item1: {}, // object item
+        item2: '' // text item
       }
     },
     methods: {
-      selectedItem (item) {
-        this.item = item
+      selectedItem1 (item) {
+        this.item1 = item
       },
-      // deselect option
+      selectedItem2 (item) {
+        this.item2 = item.value
+      },
       resetObject () {
-        this.item = {} // reset by object
+        this.item1 = {} // reset by object
       },
-      // select option from parent component
-      selectObject () {
-        this.item = this.selectOptions[0]
+      resetValue () {
+        this.item2 = ''
       }
     },
     components: {
-      'select-search': MultiVueSearchSelect
+      'select-search': VueSearchSelect
     }
   }
 </script>

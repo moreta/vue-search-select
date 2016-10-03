@@ -49,13 +49,13 @@
       }
     },
     computed: {
-      menuClass() {
+      menuClass () {
         return {
           visible: this.showMenu,
           hidden: !this.showMenu
         }
       },
-      menuStyle() {
+      menuStyle () {
         return {
           display: this.showMenu ? 'block' : 'none'
         }
@@ -71,7 +71,7 @@
       }
     },
     watch: {
-      'selectOptions': function(val, oldVal) {
+      'selectOptions': function (val, oldVal) {
         var selectedItem = val.find(item => {
           return item.selected === true
         })
@@ -79,7 +79,7 @@
           this.selectItem(selectedItem)
         }
       },
-      'triggerValue': function(val, oldVal) {
+      'triggerValue': function (val, oldVal) {
         if (!val) {
           this.resetSelect()
         } else {
@@ -91,20 +91,17 @@
       resetSelect () {
         this.selectedOption = {}
         this.searchText = ''
-        //        this.selectOptions = this.selectOptions.map(m => {
-        //          m.selected = false
-        //          return m
-        //        })
         this.onSelect({})
       },
       // cursor on input
       openOptions () {
-        console.log('open')
         this.showMenu = true
         this.mousedownState = false
       },
       // blur
       blurInput () {
+        console.log('this.mousedownState')
+        console.log(this.mousedownState)
         if (!this.mousedownState) {
           this.closeOptions()
         }

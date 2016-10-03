@@ -2,23 +2,28 @@
 <template>
   <div style="width: 500px;">
     <div style="margin-top: 20px;">
-      <div>
-        <div>{{item.value}}</div>
-        <div>{{item.text}}</div>
+      <div v-for="item in items">
+        <div>value : {{item.value}}</div>
+        <div>text : {{item.text}}</div>
       </div>
-      <div style="margin-top: 30px;"></div>
-      <div>
-        <select-search :select-options="selectOptions" :on-select="selectedItem" :is-error="isError"></select-search>
+      <div style="margin-top: 30px;">
+        <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
+      </div>
+      <div style="margin-top: 30px;">
+        <button type="button" @click="selectObject" class="btn btn-info btn-sm">value set by trigger value</button>
+      </div>
+      <div style="margin-top: 30px;">
+        <select-search :options="selectOptions" :on-select="selectedItem"></select-search>
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
-  import VueSearchSelect from '../../../../src/components/SearchSelect.vue'
-  import _ from 'lodash'
+  import 'semantic-ui-icon/icon.css'
+  import 'semantic-ui-input/input.css'
+  import 'semantic-ui-label/label.css'
+  import VueSearchSelect from '../../../lib/Multi'
   export default {
     data () {
       return {
@@ -43,18 +48,21 @@
           { value: '18', text: 'ef' + ' - ' + '18', selected: false },
           { value: '19', text: 'ef' + ' - ' + '19', selected: false }
         ],
-        item: {}
-      }
-    },
-    computed: {
-      // a computed getter
-      isError () {
-        return _.isEmpty(this.item)
+        searchText: '', // If value is falsy, reset searchText & searchItem
+        items: []
       }
     },
     methods: {
-      selectedItem (item) {
-        this.item = item
+      selectedItem (items) {
+        this.items = items
+      },
+      // deselect option
+      resetObject () {
+        this.items = [] // reset by object
+      },
+      // select option from parent component
+      selectObject () {
+        this.items.push(this.selectOptions[0])
       }
     },
     components: {

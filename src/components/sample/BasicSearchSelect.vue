@@ -12,14 +12,14 @@
         <button type="button" @click="selectObject" class="btn btn-info btn-sm">value set by trigger value</button>
       </div>
       <div style="margin-top: 30px;">
-        <select-search :select-options="selectOptions" :on-select="selectedItem" :trigger-value="item.value"></select-search>
+        <select-search :options="selectOptions" :on-select="selectedItem" :trigger-value="item.value"></select-search>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import VueSearchSelect from '../../../../src/components/SearchSelect.vue'
+  import VueSearchSelect from '../../../lib/Basic'
   export default {
     data () {
       return {

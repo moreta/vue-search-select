@@ -81,9 +81,6 @@ npm install --save vue-search-select
 # Run examples
 
 ```bash
-# go examples directory
-cd examples
-
 # install dependencies
 npm install
 
