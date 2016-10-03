@@ -3,7 +3,7 @@
     <i class="dropdown icon" @click="openOptions"></i>
     <template v-for="(option, idx) in selectedOptions">
       <a class="ui label transition visible" style="display: inline-block !important;">
-        {{option.text}}<i class="delete icon"></i>
+        {{option.text}}<i class="delete icon" @click="deleteItem(option)"></i>
       </a>
     </template>
     <input class="search" autocomplete="off" tabindex="0" v-model="searchText"
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+  import _ from 'lodash'
+  
   export default {
     props: {
       'options': {
@@ -157,9 +159,12 @@
       },
       selectItem (option) {
         this.searchText = '' // reset text when select item
-//        this.selectedOption = option
-        this.selectedOptions.push(option)
+        this.selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
         this.closeOptions()
+        this.onSelect(this.selectedOptions)
+      },
+      deleteItem (option) {
+        this.selectedOptions = _.reject(this.selectedOptions, option)
         this.onSelect(this.selectedOptions)
       },
       selectItemByValue (key) {
