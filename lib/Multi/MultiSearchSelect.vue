@@ -1,20 +1,23 @@
 <template>
-  <div class="ui fluid multiple search selection dropdown" :class="{ 'active visible':showMenu, 'error': isError }">
-    <i class="dropdown icon" @click="openOptions"></i>
+  <div class="ui fluid multiple search selection dropdown"
+       :class="{ 'active visible':showMenu, 'error': isError }"
+       @click="openOptions">
+    <i class="dropdown icon"></i>
     <template v-for="(option, idx) in selectedOptions">
       <a class="ui label transition visible" style="display: inline-block !important;">
         {{option.text}}<i class="delete icon" @click="deleteItem(option)"></i>
       </a>
     </template>
-    <input class="search" autocomplete="off" tabindex="0" v-model="searchText"
-           @focus="openOptions"
+    <input class="search" autocomplete="off" tabindex="0"
+           v-model="searchText"
+           ref="input"
+           :style="inputWidth"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
            @keyup.enter="enterItem"
-           @keyup.delete="resetSelect"
+           @keydown.delete="deleteTextOrLastItem"
     />
-    <div class="text">{{selectedOption.text}}</div>
     <div class="menu" :class="menuClass" :style="menuStyle" tabindex="-1">
       <template v-for="(option, idx) in filteredOptions">
         <div class="item" :class="{ 'selected': option.selected }"
@@ -35,9 +38,6 @@
       'options': {
         type: Array
       },
-      'triggerValue': {
-        type: String
-      },
       'onSelect': {
         type: Function,
         default: () => {}
@@ -50,13 +50,18 @@
     data () {
       return {
         showMenu: false,
-        selectedOption: {}, // selected Option object
+        nonSelectOptions: this.options,
         selectedOptions: [], // selected Option object list
         searchText: '',
         mousedownState: false // mousedown on option menu
       }
     },
     computed: {
+      inputWidth () {
+        return {
+          width: ((this.searchText.length + 1) * 8) + 20 + 'px'
+        }
+      },
       menuClass () {
         return {
           visible: this.showMenu,
@@ -70,11 +75,11 @@
       },
       filteredOptions () {
         if (this.searchText) {
-          return this.options.filter(option => {
+          return this.nonSelectOptions.filter(option => {
             return option.text.match(this.searchText)
           })
         } else {
-          return this.options
+          return this.nonSelectOptions
         }
       }
     },
@@ -86,31 +91,24 @@
         if (selectedItem) {
           this.selectItem(selectedItem)
         }
-      },
-      'triggerValue': function (val, oldVal) {
-        if (!val) {
-          this.resetSelect()
-        } else {
-          this.selectItemByValue(val)
-        }
       }
     },
     methods: {
-      resetSelect () {
-        this.selectedOption = {}
-        this.searchText = ''
-        this.onSelect({})
+      deleteTextOrLastItem () {
+        if (!this.searchText && this.selectedOptions.length > 0) {
+          this.deleteItem(_.last(this.selectedOptions))
+        }
       },
       // cursor on input
       openOptions () {
         this.showMenu = true
         this.mousedownState = false
+        this.$refs.input.focus()
       },
       // blur
       blurInput () {
-        console.log('this.mousedownState')
-        console.log(this.mousedownState)
         if (!this.mousedownState) {
+          this.searchText = ''
           this.closeOptions()
         }
       },
@@ -158,22 +156,15 @@
         this.mousedownState = true
       },
       selectItem (option) {
-        this.searchText = '' // reset text when select item
         this.selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
+        this.nonSelectOptions = _.reject(this.nonSelectOptions, option)
         this.closeOptions()
         this.onSelect(this.selectedOptions)
       },
       deleteItem (option) {
         this.selectedOptions = _.reject(this.selectedOptions, option)
+        this.nonSelectOptions = _.unionWith(this.nonSelectOptions, [option], _.isEqual)
         this.onSelect(this.selectedOptions)
-      },
-      selectItemByValue (key) {
-        var option = this.options.find((o, idx) => {
-          if (o.value === key) {
-            return true
-          }
-        })
-        this.selectedOption = option
       }
     }
   }

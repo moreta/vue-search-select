@@ -1,5 +1,6 @@
 <template>
-  <div class="ui fluid search selection dropdown" :class="{ 'active visible':showMenu, 'error': isError }">
+  <div class="ui fluid search selection dropdown"
+       :class="{ 'active visible':showMenu, 'error': isError }">
     <i class="dropdown icon" @click="openOptions"></i>
     <input class="search" autocomplete="off" tabindex="0" v-model="searchText"
            @focus="openOptions"
@@ -25,7 +26,7 @@
 <script>
   export default {
     props: {
-      'selectOptions': {
+      'options': {
         type: Array
       },
       'triggerValue': {
@@ -62,16 +63,16 @@
       },
       filteredOptions () {
         if (this.searchText) {
-          return this.selectOptions.filter(option => {
+          return this.options.filter(option => {
             return option.text.match(this.searchText)
           })
         } else {
-          return this.selectOptions
+          return this.options
         }
       }
     },
     watch: {
-      'selectOptions': function (val, oldVal) {
+      'options': function (val, oldVal) {
         var selectedItem = val.find(item => {
           return item.selected === true
         })
@@ -100,9 +101,8 @@
       },
       // blur
       blurInput () {
-        console.log('this.mousedownState')
-        console.log(this.mousedownState)
         if (!this.mousedownState) {
+          this.searchText = ''
           this.closeOptions()
         }
       },
@@ -156,7 +156,7 @@
         this.onSelect(option)
       },
       selectItemByValue (key) {
-        var option = this.selectOptions.find((o, idx) => {
+        var option = this.options.find((o, idx) => {
           if (o.value === key) {
             return true
           }

@@ -23,6 +23,8 @@
   import 'semantic-ui-icon/icon.css'
   import 'semantic-ui-input/input.css'
   import 'semantic-ui-label/label.css'
+//  import _ from 'lodash'
+  
   import VueSearchSelect from '../../../lib/Multi'
   export default {
     data () {
@@ -58,7 +60,8 @@
       },
       // deselect option
       resetObject () {
-        this.items = [] // reset by object
+//        _.pullAll(this.items, this.items)
+//        this.items = [] // reset by object
       },
       // select option from parent component
       selectObject () {
