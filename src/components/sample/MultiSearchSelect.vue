@@ -21,10 +21,7 @@
 
 <script>
   import 'semantic-ui-icon/icon.css'
-  import 'semantic-ui-input/input.css'
   import 'semantic-ui-label/label.css'
-//  import _ from 'lodash'
-  
   import VueSearchSelect from '../../../lib/Multi'
   export default {
     data () {

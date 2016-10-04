@@ -2,7 +2,8 @@
 
 A Vue.js search select component.
 
-+ Dependency only vue.js (no jquery and any other npm)
++ Dependency only vue 2.0 & lodash (no jquery and any other npm)
+  + MultiSearchSelect need more dependencies(see below)
 + Design css copy from <https://github.com/Semantic-Org/UI-Dropdown>
 
 ## Version 2.0
@@ -11,6 +12,9 @@ A Vue.js search select component.
 
 + Support Vue.js 2.0
 + MultiSearchSelect
+  + MultiSearchSelect need two semantic-ui dependency (This should be fix)
+    + semantic-ui-icon
+    + semantic-ui-label
 
 ## Demo
 
@@ -26,9 +30,11 @@ npm install --save vue-search-select
 
 ## Basic Example
 
+See More : src/components/sample
+
 ```html
 <template>
-  <select-search :select-options="selectOptions" :on-select="selectedItem" :trigger-value="searchText"></select-search>
+  <select-search :options="selectOptions" :on-select="selectedItem" :trigger-value="searchText"></select-search>
 </template>
 
 <script>
