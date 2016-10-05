@@ -1,48 +1,24 @@
-# vue-search-select
-
-A Vue.js search select component.
-
-+ Dependency only vue 2.0 & lodash (no jquery and any other npm)
-  + MultiSearchSelect need more dependencies(see below)
-+ Design css copy from <https://github.com/Semantic-Org/UI-Dropdown>
-
-## Version 2.0
-
-### New
-
-+ Support Vue.js 2.0
-+ MultiSearchSelect
-  + MultiSearchSelect need two semantic-ui dependency (This should be fix)
-    + semantic-ui-icon
-    + semantic-ui-label
-
-```
-npm install --save semantic-ui-icon semantic-ui-label
-```
-
-## Demo
-
-<http://moreta.github.io/vue-search-select/>
-
-# Usage
-
-## Install
-
-```bash
-npm install --save vue-search-select
-```
-
-## Basic Example
-
-See More Samples : src/components/sample
-
-```html
+<!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
-  <select-search :options="selectOptions" :on-select="selectedItem" :trigger-value="searchText"></select-search>
+  <div style="width: 500px;">
+    <div style="margin-top: 20px;">
+      <div>
+        <div>{{item.value}}</div>
+        <div>{{item.text}}</div>
+      </div>
+      <div style="margin-top: 30px;"></div>
+      <div>
+        <select-search :options="selectOptions" :on-select="selectedItem" :is-error="isError"></select-search>
+      </div>
+    </div>
+  </div>
+
+
 </template>
 
 <script>
-  import { BasicSelect } from 'vue-search-select'
+  import _ from 'lodash'
+  import { BasicSelect } from '../../../lib'
   export default {
     data () {
       return {
@@ -67,24 +43,18 @@ See More Samples : src/components/sample
           { value: '18', text: 'ef' + ' - ' + '18', selected: false },
           { value: '19', text: 'ef' + ' - ' + '19', selected: false }
         ],
-        searchText: '', // If value is falsy, reset searchText & searchItem
-        item: {
-          value: '',
-          text: ''
-        }
+        item: {}
+      }
+    },
+    computed: {
+      // a computed getter
+      isError () {
+        return _.isEmpty(this.item)
       }
     },
     methods: {
       selectedItem (item) {
         this.item = item
-      },
-      // deselect option
-      resetObject () {
-        this.item = {} // reset by object
-      },
-      // select option from parent component
-      selectObject () {
-        this.item = this.selectOptions[0]
       }
     },
     components: {
@@ -92,15 +62,3 @@ See More Samples : src/components/sample
     }
   }
 </script>
-```
-
-
-# Run examples
-
-```bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:9090
-npm run dev
-```

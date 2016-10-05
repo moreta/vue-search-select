@@ -1,48 +1,25 @@
-# vue-search-select
-
-A Vue.js search select component.
-
-+ Dependency only vue 2.0 & lodash (no jquery and any other npm)
-  + MultiSearchSelect need more dependencies(see below)
-+ Design css copy from <https://github.com/Semantic-Org/UI-Dropdown>
-
-## Version 2.0
-
-### New
-
-+ Support Vue.js 2.0
-+ MultiSearchSelect
-  + MultiSearchSelect need two semantic-ui dependency (This should be fix)
-    + semantic-ui-icon
-    + semantic-ui-label
-
-```
-npm install --save semantic-ui-icon semantic-ui-label
-```
-
-## Demo
-
-<http://moreta.github.io/vue-search-select/>
-
-# Usage
-
-## Install
-
-```bash
-npm install --save vue-search-select
-```
-
-## Basic Example
-
-See More Samples : src/components/sample
-
-```html
 <template>
-  <select-search :options="selectOptions" :on-select="selectedItem" :trigger-value="searchText"></select-search>
+  <div style="width: 500px;">
+    <div style="margin-top: 20px;">
+      <div>
+        <div>value : {{item.value}}</div>
+        <div>text : {{item.text}}</div>
+      </div>
+      <div style="margin-top: 30px;">
+        <button type="button" @click="resetObject" class="btn btn-info btn-sm">reset by object</button>
+      </div>
+      <div style="margin-top: 30px;">
+        <button type="button" @click="selectObject" class="btn btn-info btn-sm">value set by trigger value</button>
+      </div>
+      <div style="margin-top: 30px;">
+        <select-search :options="selectOptions" :on-select="selectedItem" :trigger-value="item.value"></select-search>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-  import { BasicSelect } from 'vue-search-select'
+  import { BasicSelect } from '../../../lib'
   export default {
     data () {
       return {
@@ -92,15 +69,3 @@ See More Samples : src/components/sample
     }
   }
 </script>
-```
-
-
-# Run examples
-
-```bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:9090
-npm run dev
-```

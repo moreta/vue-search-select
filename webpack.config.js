@@ -3,11 +3,11 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: {
-    'vue-search-select' : './src/main.js'
+    'vue-search-select' : './lib/index.js'
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, './publish'),
+    publicPath: '/publish/',
     filename: '[name].js',
     library: 'VueSearchSelect',
     libraryTarget: 'umd'
