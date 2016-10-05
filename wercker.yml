@@ -60,7 +60,7 @@ deploy :
           git init
           git add .
           git commit -m "deploy commit from $WERCKER_STARTED_BY"
-          git push -f $GIT_REMOTE gh-pages
+          git push -f $GIT_REMOTE HEAD:gh-pages
   after-steps:
     - slack-notifier:
         url: $SLACK_WEBHOOK_URL
