@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import VueSearchSelect from '../../../lib/Basic'
+  import { BasicSelect } from '../../../lib'
   export default {
     data () {
       return {
@@ -65,7 +65,7 @@
       }
     },
     components: {
-      'select-search': VueSearchSelect
+      'select-search': BasicSelect
     }
   }
 </script>

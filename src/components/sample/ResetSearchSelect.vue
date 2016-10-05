@@ -26,14 +26,14 @@
         <select-search :options="selectOptions" :on-select="selectedItem2" :trigger-value="item2"></select-search>
       </div>
     </div>
-    
+  
   </div>
 
 
 </template>
 
 <script>
-  import VueSearchSelect from '../../../lib/Basic'
+  import { BasicSelect } from '../../../lib'
   export default {
     data () {
       return {
@@ -77,7 +77,7 @@
       }
     },
     components: {
-      'select-search': VueSearchSelect
+      'select-search': BasicSelect
     }
   }
 </script>

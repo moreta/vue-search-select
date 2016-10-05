@@ -22,7 +22,7 @@
 <script>
   import 'semantic-ui-icon/icon.css'
   import 'semantic-ui-label/label.css'
-  import VueSearchSelect from '../../../lib/Multi'
+  import { MultiSelect } from '../../../lib'
   export default {
     data () {
       return {
@@ -66,7 +66,7 @@
       }
     },
     components: {
-      'select-search': VueSearchSelect
+      'select-search': MultiSelect
     }
   }
 </script>

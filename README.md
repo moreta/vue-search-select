@@ -16,6 +16,10 @@ A Vue.js search select component.
     + semantic-ui-icon
     + semantic-ui-label
 
+```
+npm install --save semantic-ui-icon semantic-ui-label
+```
+
 ## Demo
 
 <http://moreta.github.io/vue-search-select/>
@@ -30,7 +34,7 @@ npm install --save vue-search-select
 
 ## Basic Example
 
-See More : src/components/sample
+See More Samples : src/components/sample
 
 ```html
 <template>
@@ -38,7 +42,7 @@ See More : src/components/sample
 </template>
 
 <script>
-  import VueSearchSelect from 'vue-search-select'
+  import { BasicSelect } from 'vue-search-select'
   export default {
     data () {
       return {
@@ -84,7 +88,7 @@ See More : src/components/sample
       }
     },
     components: {
-      'select-search': VueSearchSelect
+      'select-search': BasicSelect
     }
   }
 </script>
