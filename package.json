@@ -17,14 +17,14 @@
   },
   "scripts": {
     "dev": "node build/dev-server.js",
-    "dev:build": "node build/build.js",
+    "docs:build": "node build/build.js",
     "unit": "karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.min.js",
     "release": "bash build/release.sh",
-    "docs:publish": "npm run dev:build && cd dist && git init && git commit --allow-empty -m 'update example' && git add . && git commit -am 'update example' && git push git@github.com:moreta/vue-search-select.git gh-pages --force"
+    "docs:publish": "npm run docs:build && cd dist && git init && git add . && git commit -m 'update example' && git push -f git@github.com:moreta/vue-search-select.git gh-pages"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
