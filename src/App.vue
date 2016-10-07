@@ -9,9 +9,6 @@
         <router-link :to="{ path: '/Error' }">Error</router-link>
       </div>
       <div class="link">
-        <router-link :to="{ path: '/Reset' }">Reset</router-link>
-      </div>
-      <div class="link">
         <router-link :to="{ path: '/Multi' }">Multiple</router-link>
       </div>
     </div>

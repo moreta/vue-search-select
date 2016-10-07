@@ -11,14 +11,9 @@ A Vue.js search select component.
 ### New
 
 + Support Vue.js 2.0
-+ MultiSearchSelect
-  + MultiSearchSelect need two semantic-ui dependency (This should be fix)
-    + semantic-ui-icon
-    + semantic-ui-label
-
-```
-npm install --save semantic-ui-icon semantic-ui-label
-```
++ Two Select Component
+  + BasicSelect
+  + MultiSelect
 
 ## Demo
 

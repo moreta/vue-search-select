@@ -1,17 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App'
-import BasicSearchSelect from './components/sample/BasicSearchSelect'
-import ErrorSearchSelect from './components/sample/ErrorSearchSelect'
-import ResetSearchSelect from './components/sample/ResetSearchSelect'
-import MultiSearchSelect from './components/sample/MultiSearchSelect'
+import BasicSearchSelect from './components/sample/Basic/BasicSearchSelect'
+import ErrorSearchSelect from './components/sample/Basic/ErrorSearchSelect'
+import MultiSearchSelect from './components/sample/Multi/MultiSearchSelect'
 
 Vue.use(VueRouter)
 
 const routes = [
   { path: '/Basic', component: BasicSearchSelect },
   { path: '/Error', component: ErrorSearchSelect },
-  { path: '/Reset', component: ResetSearchSelect },
   { path: '/Multi', component: MultiSearchSelect }
 ]
 const router = new VueRouter({
