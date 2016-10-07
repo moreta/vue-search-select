@@ -56,12 +56,11 @@
       selectedItem (item) {
         this.item = item
       },
-      // deselect option
       reset () {
-        this.item = {} // reset by object
+        this.item = {}
       },
-      // select option from parent component
       selectOption () {
+        // select option from parent component
         this.item = this.options[0]
       }
     },
