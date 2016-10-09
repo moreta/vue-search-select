@@ -1,20 +1,34 @@
-<!-- css copy from https://github.com/Semantic-Org/UI-Dropdown/blob/master/dropdown.css -->
 <template>
-  <div style="width: 500px;">
-    <div style="margin-top: 20px;">
-      <div v-for="item in items">
-        <div>value : {{item.value}}</div>
-        <div>text : {{item.text}}</div>
-      </div>
-      <div style="margin-top: 30px;">
+  <div class="flexbox">
+    <div class="flex-content">
+      <div>
         <button type="button" @click="reset" class="btn btn-info btn-sm">reset</button>
       </div>
-      <div style="margin-top: 30px;">
+      <div>
         <button type="button" @click="selectOption" class="btn btn-info btn-sm">option select from parent</button>
       </div>
-      <div style="margin-top: 30px;">
-        <select-search :options="options" :selected-options="items" :on-select="selectedItem"></select-search>
+      <div>
+        <multi-select :options="options"
+                       :selected-options="items"
+                       @select="onSelect">
+        </multi-select>
       </div>
+    </div>
+    <div class="flex-result">
+      <table class="ui celled table">
+        <thead>
+        <tr>
+          <th>value</th>
+          <th>text</th>
+        </tr>
+        </thead>
+        <tbody v-for="item in items">
+        <tr>
+          <td>{{item.value}}</td>
+          <td>{{item.text}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -38,21 +52,14 @@
           { value: '9', text: 'ef' + ' - ' + '9' },
           { value: '10', text: 'ef' + ' - ' + '10' },
           { value: '11', text: 'ef' + ' - ' + '11' },
-          { value: '12', text: 'ef' + ' - ' + '12' },
-          { value: '13', text: 'ef' + ' - ' + '13' },
-          { value: '14', text: 'ef' + ' - ' + '14' },
-          { value: '15', text: 'ef' + ' - ' + '15' },
-          { value: '16', text: 'ef' + ' - ' + '16' },
-          { value: '17', text: 'ef' + ' - ' + '17' },
-          { value: '18', text: 'ef' + ' - ' + '18' },
-          { value: '19', text: 'ef' + ' - ' + '19' }
+          { value: '12', text: 'ef' + ' - ' + '12' }
         ],
         searchText: '', // If value is falsy, reset searchText & searchItem
         items: []
       }
     },
     methods: {
-      selectedItem (items) {
+      onSelect (items) {
         this.items = items
       },
       // deselect option
@@ -65,7 +72,7 @@
       }
     },
     components: {
-      'select-search': MultiSelect
+      MultiSelect
     }
   }
 </script>

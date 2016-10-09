@@ -3,16 +3,25 @@
 A Vue.js search select component.
 
 + Dependency only vue 2.0 & lodash
-+ Design css copy from <https://github.com/Semantic-Org/UI-Dropdown>
++ Design css use from <https://github.com/Semantic-Org>
 
 ## Version 2.0
 
 ### New
 
 + Support Vue.js 2.0
-+ Two Select Component
++ Three Select Component
   + BasicSelect
   + MultiSelect
+  + ListSelect
+    + Can pass to Component custom list and customize display text
+    + Wrap BasicSelect component
+  + MultiListSelect
+    + ListSelect for MultiSelect
+
+### Updated 2.3.0
+
++ Now vue-search-select use events beyond props
 
 ## Demo
 

@@ -1,64 +1,64 @@
 <template>
   <div id="app">
-    <img class="logo" src="./assets/logo.png">
-    <div class="linkContainer">
-      <div class="link">
-        <router-link :to="{ path: '/Basic' }">Basic</router-link>
-      </div>
-      <div class="link">
-        <router-link :to="{ path: '/Error' }">Error</router-link>
-      </div>
-      <div class="link">
-        <router-link :to="{ path: '/Multi' }">Multiple</router-link>
-      </div>
+    <div class="column row">
+      <img class="logo" src="./assets/logo.png">
     </div>
-    <!-- route outlet -->
-    <div>
-      <router-view></router-view>
+    <div class="flexbox">
+      <div class="flex-menu">
+        <div class="ui vertical menu">
+          <div class="item">
+            <div class="header">Basic</div>
+            <div class="menu">
+              <router-link :to="{ path: '/Basic' }" class="item">Basic</router-link>
+              <router-link :to="{ path: '/ErrorBasic' }" class="item">Error</router-link>
+            </div>
+          </div>
+          <div class="item">
+            <div class="header">List</div>
+            <div class="menu">
+              <router-link :to="{ path: '/List' }" class="item">List</router-link>
+              <router-link :to="{ path: '/CustomTextList' }" class="item">Custom Text List</router-link>
+            </div>
+          </div>
+          <div class="item">
+            <div class="header">Multi</div>
+            <div class="menu">
+              <router-link :to="{ path: '/Multi' }" class="item">Multi</router-link>
+            </div>
+          </div>
+          <div class="item">
+            <div class="header">Multi List</div>
+            <div class="menu">
+              <router-link :to="{ path: '/MultiList' }" class="item">Multi List</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex-content">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 
+<style src="semantic-ui-grid/grid.css"></style>
+<style src="semantic-ui-menu/menu.css"></style>
+<style src="semantic-ui-table/table.css"></style>
 <style>
-  
-  html {
-    height: 100%;
-  }
-  
-  body {
-    font-size: 14px;
-    line-height: 1.4285em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-  
-  #app {
-    color: #2c3e50;
-    margin-top: -100px;
-    max-width: 600px;
-    font-family: Source Sans Pro, Helvetica, sans-serif;
-    text-align: center;
-  }
-  
-  #app a {
-    color: #42b983;
-    text-decoration: none;
-  }
-  
-  .logo {
-    width: 100px;
-    height: 100px
-  }
-  
-  .linkContainer {
+  .flexbox {
     display: flex;
   }
-  
-  .link {
-    flex: 1;
-    padding: 3px;
+  .flex-menu {
+    width: 250px;
   }
-
+  .flex-content {
+    flex-grow: 1;
+  }
+  .flex-result {
+    min-width: 400px;
+    width: 400px;
+  }
+  .flexbox > * {
+    margin: 0 20px;
+  }
 </style>
