@@ -1,56 +1,44 @@
-# vue-search-select
-
-A Vue.js search select component.
-
-+ Dependency only vue 2.0 & lodash
-+ Design css use from <https://github.com/Semantic-Org>
-
-## Version 2.0
-
-### New
-
-+ Support Vue.js 2.0
-+ Three Select Component
-  + BasicSelect
-  + MultiSelect
-  + ListSelect
-    + Can pass to Component custom list and customize display text
-    + Wrap BasicSelect component
-  + MultiListSelect
-    + ListSelect for MultiSelect
-
-### Updated 2.3.0
-
-+ Now vue-search-select use events beyond props
-
-## Demo
-
-<http://moreta.github.io/vue-search-select/>
-
-# Usage
-
-## Install
-
-```bash
-npm install --save vue-search-select
-```
-
-## Basic Example
-
-See More Samples : src/components/sample
-
-```html
 <template>
-  <basic-select :options="options"
-                :selected-option="item"
-                @select="onSelect">
-  </basic-select>
+  <div class="flexbox">
+    <div class="flex-content">
+      <div>
+        <button type="button" @click="reset" class="btn btn-info btn-sm">reset</button>
+      </div>
+      <div>
+        <button type="button" @click="selectOption" class="btn btn-info btn-sm">option select from parent</button>
+      </div>
+      <div>
+        <select-search :options="options"
+                       :selected-option="item"
+                       @select="onSelect"
+                       :is-error="isError">
+        </select-search>
+      </div>
+    </div>
+    <div class="flex-result">
+      <table class="ui celled table">
+        <thead>
+        <tr>
+          <th>value</th>
+          <th>text</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{item.value}}</td>
+          <td>{{item.text}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 
 <script>
-  import { BasicSelect } from 'vue-search-select'
-
-export default {
+  import _ from 'lodash'
+  import { BasicSelect } from '../../../../lib'
+  
+  export default {
     data () {
       return {
         options: [
@@ -74,6 +62,12 @@ export default {
         }
       }
     },
+    computed: {
+      // a computed getter
+      isError () {
+        return _.isEmpty(this.item.value)
+      }
+    },
     methods: {
       onSelect (item) {
         this.item = item
@@ -87,19 +81,7 @@ export default {
       }
     },
     components: {
-      BasicSelect
+      'select-search': BasicSelect
     }
   }
 </script>
-```
-
-
-# Run examples
-
-```bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:9090
-npm run dev
-```
