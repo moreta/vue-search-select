@@ -18,13 +18,14 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "docs:build": "node build/build.js",
+    "docs:publish": "npm run docs:build && cd dist && git init && git add . && git commit -m 'update example' && git push -f git@github.com:moreta/vue-search-select.git gh-pages",
     "unit": "karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.min.js",
-    "release": "bash build/release.sh",
-    "docs:publish": "npm run docs:build && cd dist && git init && git add . && git commit -m 'update example' && git push -f git@github.com:moreta/vue-search-select.git gh-pages"
+    "publish:clean": "rimraf publish",
+    "publish:build": "npm run publish:clean && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.min.js"
+
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -72,6 +73,7 @@
     "nightwatch": "^0.9.8",
     "ora": "^0.3.0",
     "phantomjs-prebuilt": "^2.1.3",
+    "rimraf": "^2.5.4",
     "selenium-server": "2.53.1",
     "semantic-ui-dropdown": "2.2.3",
     "semantic-ui-grid": "^2.2.3",

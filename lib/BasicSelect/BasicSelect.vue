@@ -69,16 +69,6 @@
         }
       }
     },
-    watch: {
-      'options': function (val, oldVal) {
-        var selectedItem = val.find(item => {
-          return item.selected === true
-        })
-        if (selectedItem) {
-          this.selectItem(selectedItem)
-        }
-      }
-    },
     methods: {
       deleteTextOrItem () {
         if (!this.searchText && this.selectedOption) {

@@ -8,6 +8,7 @@ import List from './components/sample/List/List.vue'
 import CustomTextList from './components/sample/List/CustomTextList.vue'
 import Multi from './components/sample/Multi/Multi.vue'
 import MultiList from './components/sample/MultiList/MultiList.vue'
+import ErrorMultiList from './components/sample/MultiList/ErrorMultiList.vue'
 
 Vue.use(VueRouter)
 
@@ -17,7 +18,8 @@ const routes = [
   { path: '/List', component: List },
   { path: '/CustomTextList', component: CustomTextList },
   { path: '/Multi', component: Multi },
-  { path: '/MultiList', component: MultiList }
+  { path: '/MultiList', component: MultiList },
+  { path: '/ErrorMultiList', component: ErrorMultiList }
 ]
 const router = new VueRouter({
   routes // short for routes: routes

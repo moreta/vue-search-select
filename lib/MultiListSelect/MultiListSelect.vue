@@ -1,10 +1,3 @@
-<template>
-  <multi-select :options="options"
-                :selected-options="items"
-                @select="onSelect">
-  </multi-select>
-</template>
-
 <script>
   /* wrap basic component */
   /* event : select */
@@ -12,6 +5,18 @@
   import MultiSelect from '../MultiSelect'
   
   export default {
+    render: function (createElement) {
+      return createElement(MultiSelect, {
+        props: {
+          options: this.options,
+          selectedOptions: this.items,
+          isError: this.isError
+        },
+        on: {
+          select: this.onSelect
+        }
+      })
+    },
     props: {
       'list': {
         type: Array

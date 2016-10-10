@@ -7,7 +7,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './publish'),
-    publicPath: '/publish/',
+    publicPath: './',
     filename: '[name].js',
     library: 'VueSearchSelect',
     libraryTarget: 'umd'
@@ -39,7 +39,7 @@ module.exports = {
         loader: 'url',
         query: {
           limit: 10000,
-          name: '[name].[ext]?[hash]'
+          name: 'assets/img/[name].[ext]?[hash]'
         }
       },
       {
@@ -47,7 +47,7 @@ module.exports = {
         loader: 'url',
         query: {
           limit: 10000,
-          name: '[name].[ext]?[hash]'
+          name: 'assets/fonts/[name].[ext]?[hash]'
         }
       }
     ]

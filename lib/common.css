@@ -22,3 +22,9 @@
 .ui.fluid.dropdown {
   width: auto;
 }
+.ui.label > .delete.icon:after {
+  content: "x";
+  color: #266d4d;
+  font-size: 16px;
+  font-style: normal;
+}

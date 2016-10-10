@@ -1,11 +1,3 @@
-<template>
-  <basic-select :options="options"
-                :selected-option="item"
-                @select="onSelect"
-                :is-error="isError">
-  </basic-select>
-</template>
-
 <script>
   /* wrap basic component */
   /* event : select */
@@ -13,6 +5,18 @@
   import BasicSelect from '../BasicSelect'
   
   export default {
+    render: function (createElement) {
+      return createElement(BasicSelect, {
+        props: {
+          options: this.options,
+          selectedOption: this.item,
+          isError: this.isError
+        },
+        on: {
+          select: this.onSelect
+        }
+      })
+    },
     props: {
       'list': {
         type: Array
@@ -41,7 +45,11 @@
         })
       },
       item () {
-        return { value: this.selectedItem[this.optionValue], text: this.buildText(this.selectedItem) }
+        if (this.selectedItem) {
+          return { value: this.selectedItem[this.optionValue], text: this.buildText(this.selectedItem) }
+        } else {
+          return { value: '', text: '' }
+        }
       }
     },
     methods: {

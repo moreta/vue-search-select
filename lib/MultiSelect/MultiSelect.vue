@@ -50,7 +50,6 @@
     data () {
       return {
         showMenu: false,
-        nonSelectOptions: this.options,
         searchText: '',
         mousedownState: false // mousedown on option menu
       }
@@ -72,6 +71,9 @@
           display: this.showMenu ? 'block' : 'none'
         }
       },
+      nonSelectOptions () {
+        return _.differenceBy(this.options, this.selectedOptions, 'value')
+      },
       filteredOptions () {
         if (this.searchText) {
           return this.nonSelectOptions.filter(option => {
@@ -79,16 +81,6 @@
           })
         } else {
           return this.nonSelectOptions
-        }
-      }
-    },
-    watch: {
-      'options': function (val, oldVal) {
-        var selectedItem = val.find(item => {
-          return item.selected === true
-        })
-        if (selectedItem) {
-          this.selectItem(selectedItem)
         }
       }
     },
@@ -103,7 +95,6 @@
         this.showMenu = true
         this.mousedownState = false
         this.$refs.input.focus()
-        console.log('open option')
       },
       blurInput () {
         common.blurInput(this)
@@ -125,20 +116,16 @@
       },
       selectItem (option) {
         let selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
-        this.nonSelectOptions = _.reject(this.nonSelectOptions, option)
         this.closeOptions()
         this.$emit('select', selectedOptions)
       },
       deleteItem (option) {
         let selectedOptions = _.reject(this.selectedOptions, option)
-        this.nonSelectOptions = _.differenceBy(this.options, selectedOptions, 'value')
         this.$emit('select', selectedOptions)
       }
     }
   }
 </script>
-
-<style scoped src="semantic-ui-icon/icon.css"></style>
 <style scoped src="semantic-ui-label/label.css"></style>
 <style scoped src="semantic-ui-dropdown/dropdown.css"></style>
 <style scoped src="../common.css"></style>

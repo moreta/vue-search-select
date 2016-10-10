@@ -30,6 +30,7 @@
             <div class="header">Multi List</div>
             <div class="menu">
               <router-link :to="{ path: '/MultiList' }" class="item">Multi List</router-link>
+              <router-link :to="{ path: '/ErrorMultiList' }" class="item">Error</router-link>
             </div>
           </div>
         </div>
