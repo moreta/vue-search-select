@@ -1904,9 +1904,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-standard@^6.1.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-6.2.0.tgz#1d2384ee074de6f6b6c0f2bbe976863032565aee"
+eslint-config-vue@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-vue/-/eslint-config-vue-1.1.0.tgz#074706176ce1a46a76d987d5002da9882702d3b1"
 
 eslint-friendly-formatter@^2.0.5:
   version "2.0.6"
