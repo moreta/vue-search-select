@@ -46,12 +46,12 @@
           { value: '4', text: 'cd' + ' - ' + '4' },
           { value: '5', text: 'de' + ' - ' + '5' },
           { value: '6', text: 'ef' + ' - ' + '6' },
-          { value: '7', text: 'ef' + ' - ' + '7' },
-          { value: '8', text: 'ef' + ' - ' + '8' },
-          { value: '9', text: 'ef' + ' - ' + '9' },
           { value: '10', text: 'ef' + ' - ' + '10' },
           { value: '11', text: 'ef' + ' - ' + '11' },
-          { value: '12', text: 'ef' + ' - ' + '12' }
+          { value: '12', text: 'ef' + ' - ' + '12' },
+          { value: '13', text: 'down case' + ' - ' + 'testcase' },
+          { value: '14', text: 'camel case' + ' - ' + 'testCase' },
+          { value: '15', text: 'Capitalize case' + ' - ' + 'Testcase' }
         ],
         searchText: '', // If value is falsy, reset searchText & searchItem
         item: {

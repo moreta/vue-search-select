@@ -62,7 +62,7 @@
       filteredOptions () {
         if (this.searchText) {
           return this.options.filter(option => {
-            return option.text.match(this.searchText)
+            return option.text.match(new RegExp(this.searchText, 'i'))
           })
         } else {
           return this.options
