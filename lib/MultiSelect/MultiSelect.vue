@@ -115,12 +115,12 @@
         common.mousedownItem(this)
       },
       selectItem (option) {
-        let selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
+        const selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
         this.closeOptions()
         this.$emit('select', selectedOptions)
       },
       deleteItem (option) {
-        let selectedOptions = _.reject(this.selectedOptions, option)
+        const selectedOptions = _.reject(this.selectedOptions, option)
         this.$emit('select', selectedOptions)
       }
     }

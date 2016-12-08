@@ -66,7 +66,7 @@
         if (_.isEmpty(options)) {
           this.$emit('select', options)
         } else {
-          let items = this.list.filter((e, i) => {
+          const items = this.list.filter((e, i) => {
             return options.find((option, i) => {
               return e[this.optionValue] === option.value
             })
