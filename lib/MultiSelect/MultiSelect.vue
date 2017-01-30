@@ -117,11 +117,11 @@
       selectItem (option) {
         const selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
         this.closeOptions()
-        this.$emit('select', selectedOptions)
+        this.$emit('select', selectedOptions,option)
       },
       deleteItem (option) {
         const selectedOptions = _.reject(this.selectedOptions, option)
-        this.$emit('select', selectedOptions)
+        this.$emit('select', selectedOptions,option)
       }
     }
   }
