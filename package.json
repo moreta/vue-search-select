@@ -24,7 +24,7 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "publish:clean": "rimraf publish",
-    "publish:build": "npm run publish:clean && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.min.js"
+    "publish:build": "npm run publish:clean && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config.js && cross-env NODE_ENV=production webpack --progress --hide-modules --config  webpack.config_min.js"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import { BasicSelect } from '../../../../lib'
+  import { BasicSelect } from '../../lib'
   
   export default {
     data () {

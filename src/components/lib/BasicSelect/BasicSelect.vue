@@ -109,4 +109,4 @@
 </script>
 
 <style scoped src="semantic-ui-dropdown/dropdown.css"></style>
-<style scoped src="../common.css"></style>
+<!--<style scoped src="../common.css"></style>-->

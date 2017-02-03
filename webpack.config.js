@@ -3,7 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: {
-    'vue-search-select' : './lib/index.js'
+    'vue-search-select' : './src/components/lib/index.js'
   },
   output: {
     path: path.resolve(__dirname, './publish'),
