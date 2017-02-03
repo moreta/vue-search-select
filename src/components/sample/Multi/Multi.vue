@@ -15,20 +15,40 @@
       </div>
     </div>
     <div class="flex-result">
-      <table class="ui celled table">
-        <thead>
-        <tr>
-          <th>value</th>
-          <th>text</th>
-        </tr>
-        </thead>
-        <tbody v-for="item in items">
-        <tr>
-          <td>{{item.value}}</td>
-          <td>{{item.text}}</td>
-        </tr>
-        </tbody>
-      </table>
+      <div>
+        <h4>Last selected Item</h4>
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value</th>
+            <th>text</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{lastSelectItem.value}}</td>
+            <td>{{lastSelectItem.text}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h4>All selected item</h4>
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value</th>
+            <th>text</th>
+          </tr>
+          </thead>
+          <tbody v-for="item in items">
+          <tr>
+            <td>{{item.value}}</td>
+            <td>{{item.text}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -52,15 +72,20 @@
           { value: '9', text: 'ef' + ' - ' + '9' },
           { value: '10', text: 'ef' + ' - ' + '10' },
           { value: '11', text: 'ef' + ' - ' + '11' },
-          { value: '12', text: 'ef' + ' - ' + '12' }
+          { value: '12', text: 'ef' + ' - ' + '12' },
+          { value: '13', text: 'down case' + ' - ' + 'testcase' },
+          { value: '14', text: 'camel case' + ' - ' + 'testCase' },
+          { value: '15', text: 'Capitalize case' + ' - ' + 'Testcase' }
         ],
         searchText: '', // If value is falsy, reset searchText & searchItem
-        items: []
+        items: [],
+        lastSelectItem: {}
       }
     },
     methods: {
-      onSelect (items) {
+      onSelect (items, lastSelectItem) {
         this.items = items
+        this.lastSelectItem = lastSelectItem
       },
       // deselect option
       reset () {

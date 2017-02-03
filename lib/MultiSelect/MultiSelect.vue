@@ -77,7 +77,7 @@
       filteredOptions () {
         if (this.searchText) {
           return this.nonSelectOptions.filter(option => {
-            return option.text.match(this.searchText)
+            return option.text.match(new RegExp(this.searchText, 'i'))
           })
         } else {
           return this.nonSelectOptions
@@ -117,11 +117,11 @@
       selectItem (option) {
         const selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
         this.closeOptions()
-        this.$emit('select', selectedOptions,option)
+        this.$emit('select', selectedOptions, option)
       },
       deleteItem (option) {
         const selectedOptions = _.reject(this.selectedOptions, option)
-        this.$emit('select', selectedOptions,option)
+        this.$emit('select', selectedOptions, option)
       }
     }
   }
