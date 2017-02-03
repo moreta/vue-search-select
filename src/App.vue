@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="column row">
+  <div class="ui fluid container">
+    <div>
       <img class="logo" src="./assets/logo.png">
     </div>
     <div class="flexbox">
@@ -42,9 +42,7 @@
   </div>
 </template>
 
-<style src="semantic-ui-grid/grid.css"></style>
-<style src="semantic-ui-menu/menu.css"></style>
-<style src="semantic-ui-table/table.css"></style>
+<style src="semantic-ui-css/semantic.css"></style>
 <style>
   .flexbox {
     display: flex;

@@ -62,7 +62,7 @@
 
 <script>
   import _ from 'lodash'
-  import { MultiListSelect } from '../../../../lib'
+  import { MultiListSelect } from '../../lib'
   
   export default {
     data () {

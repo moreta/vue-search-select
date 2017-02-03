@@ -55,7 +55,7 @@
 
 <script>
   import _ from 'lodash'
-  import { MultiSelect } from '../../../../lib'
+  import { MultiSelect } from '../../lib'
   
   export default {
     data () {

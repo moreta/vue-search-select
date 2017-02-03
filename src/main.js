@@ -11,6 +11,7 @@ import MultiList from './components/sample/MultiList/MultiList.vue'
 import ErrorMultiList from './components/sample/MultiList/ErrorMultiList.vue'
 
 Vue.use(VueRouter)
+Vue.config.devtools = true
 
 const routes = [
   { path: '/Basic', component: Basic },

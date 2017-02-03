@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { ListSelect } from '../../../../lib'
+  import { ListSelect } from '../../lib'
   
   export default {
     data () {
