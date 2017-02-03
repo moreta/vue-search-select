@@ -62,16 +62,17 @@
           return ''
         }
       },
-      onSelect (options) {
+      onSelect (options, option) {
         if (_.isEmpty(options)) {
-          this.$emit('select', options)
+          this.$emit('select', options, option)
         } else {
           const items = this.list.filter((e, i) => {
-            return options.find((option, i) => {
-              return e[this.optionValue] === option.value
+            return options.find((o, i) => {
+              return e[this.optionValue] === o.value
             })
           })
-          this.$emit('select', items)
+          const item = _.find(this.list, [this.optionValue, option.value])
+          this.$emit('select', items, item)
         }
       }
     },
