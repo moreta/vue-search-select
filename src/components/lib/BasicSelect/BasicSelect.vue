@@ -1,9 +1,8 @@
 <template>
   <div class="ui fluid search selection dropdown"
-       :class="{ 'active visible':showMenu, 'error': isError }">
-    <i class="dropdown icon" @click="openOptions"></i>
-    <input class="search" autocomplete="off" tabindex="0" v-model="searchText"
-           @focus="openOptions"
+       :class="{ 'active visible':showMenu, 'error': isError }" @click="openOptions">
+    <i class="dropdown icon"></i>
+    <input class="search" autocomplete="off" tabindex="0" v-model="searchText" ref="searchInput"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
@@ -14,7 +13,7 @@
     <div class="menu" :class="menuClass" :style="menuStyle" tabindex="-1">
       <template v-for="(option, idx) in filteredOptions">
         <div class="item" :class="{ 'selected': option.selected }"
-             @click="selectItem(option)"
+             @click.stop="selectItem(option)"
              @mousedown="mousedownItem">
           {{option.text}}
         </div>
@@ -78,6 +77,7 @@
       },
       // cursor on input
       openOptions () {
+        this.$refs.searchInput.focus()
         this.showMenu = true
         this.mousedownState = false
       },
