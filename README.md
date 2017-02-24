@@ -21,6 +21,10 @@ A Vue.js search select component.
   + MultiListSelect
     + ListSelect for MultiSelect
 
+### Updated 2.3.6
+
++ Add "placeholder" prop
+
 ### Updated 2.3.4
 
 + MultiSelect's search is case insensitive (BasicSelect also)
@@ -30,7 +34,7 @@ A Vue.js search select component.
 
 + Now vue-search-select use events beyond props
 
-## Demo
+# Demo
 
 <http://moreta.github.io/vue-search-select/>
 
@@ -42,6 +46,12 @@ A Vue.js search select component.
 npm install --save vue-search-select
 ```
 
+or by yarn 
+
+```bash
+yarn add vue-search-select
+```
+
 ## BasicSelect Component Example
 
 See More Samples : src/components/sample
@@ -50,6 +60,7 @@ See More Samples : src/components/sample
 <template>
   <basic-select :options="options"
                 :selected-option="item"
+                placeholder="select item"
                 @select="onSelect">
   </basic-select>
 </template>
@@ -106,6 +117,7 @@ See More Samples : src/components/sample
 <template>
         <multi-select :options="options"
                        :selected-options="items"
+                       placeholder="select item"
                        @select="onSelect">
         </multi-select>
 </template>

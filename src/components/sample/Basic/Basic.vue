@@ -9,8 +9,9 @@
       </div>
       <div>
         <basic-select :options="options"
-                       :selected-option="item"
-                       @select="onSelect">
+                      :selected-option="item"
+                      placeholder="select item"
+                      @select="onSelect">
         </basic-select>
       </div>
     </div>

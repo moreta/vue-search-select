@@ -9,8 +9,9 @@
       </div>
       <div>
         <multi-select :options="options"
-                       :selected-options="items"
-                       @select="onSelect">
+                      :selected-options="items"
+                      placeholder="select item"
+                      @select="onSelect">
         </multi-select>
       </div>
     </div>
