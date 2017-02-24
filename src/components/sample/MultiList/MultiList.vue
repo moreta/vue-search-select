@@ -13,6 +13,7 @@
                            option-text="name"
                            :custom-text="codeAndNameAndDesc"
                            :selected-items="items"
+                           placeholder="select item"
                            @select="onSelect">
         </multi-list-select>
       </div>

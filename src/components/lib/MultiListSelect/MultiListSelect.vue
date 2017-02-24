@@ -10,7 +10,8 @@
         props: {
           options: this.options,
           selectedOptions: this.items,
-          isError: this.isError
+          isError: this.isError,
+          placeholder: this.placeholder
         },
         on: {
           select: this.onSelect
@@ -36,6 +37,10 @@
       'isError': {
         type: Boolean,
         default: false
+      },
+      placeholder: {
+        type: String,
+        default: ''
       }
     },
     computed: {

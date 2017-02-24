@@ -9,7 +9,7 @@
            @keyup.enter="enterItem"
            @keydown.delete="deleteTextOrItem"
     />
-    <div class="text">{{selectedOption.text}}</div>
+    <div class="text" :class="textClass">{{inputText}}</div>
     <div class="menu" :class="menuClass" :style="menuStyle" tabindex="-1">
       <template v-for="(option, idx) in filteredOptions">
         <div class="item" :class="{ 'selected': option.selected }"
@@ -37,6 +37,10 @@
       'isError': {
         type: Boolean,
         default: false
+      },
+      placeholder: {
+        type: String,
+        default: ''
       }
     },
     data () {
@@ -47,6 +51,24 @@
       }
     },
     computed: {
+      inputText () {
+        if (this.searchText) {
+          return ''
+        } else {
+          let text = this.placeholder
+          if (this.selectedOption.text) {
+            text = this.selectedOption.text
+          }
+          return text
+        }
+      },
+      textClass () {
+        if (!this.selectedOption.text && this.placeholder) {
+          return 'default'
+        } else {
+          return ''
+        }
+      },
       menuClass () {
         return {
           visible: this.showMenu,

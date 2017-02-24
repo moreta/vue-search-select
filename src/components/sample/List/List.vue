@@ -12,6 +12,7 @@
                      option-value="code"
                      option-text="name"
                      :selected-item="item"
+                     placeholder="select item"
                      @select="onSelect">
         </list-select>
       </div>
