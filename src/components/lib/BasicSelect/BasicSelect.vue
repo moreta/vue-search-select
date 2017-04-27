@@ -10,7 +10,11 @@
            @keydown.delete="deleteTextOrItem"
     />
     <div class="text" :class="textClass">{{inputText}}</div>
-    <div class="menu" :class="menuClass" :style="menuStyle" tabindex="-1">
+    <div class="menu"
+         @mousedown.prevent
+         :class="menuClass"
+         :style="menuStyle"
+         tabindex="-1">
       <template v-for="(option, idx) in filteredOptions">
         <div class="item" :class="{ 'selected': option.selected }"
              @click.stop="selectItem(option)"
