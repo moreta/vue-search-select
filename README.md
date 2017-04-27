@@ -21,6 +21,11 @@ A Vue.js search select component.
   + MultiListSelect
     + ListSelect for MultiSelect
 
+### Updated 2.3.7 - 2017/04/27
+
++ FEATURE : Add key listener #17
++ FIX : prevent close options when clicks on scrollbar #25
+
 ### Updated 2.3.6
 
 + Add "placeholder" prop
@@ -46,7 +51,7 @@ A Vue.js search select component.
 npm install --save vue-search-select
 ```
 
-or by yarn 
+or by yarn
 
 ```bash
 yarn add vue-search-select
