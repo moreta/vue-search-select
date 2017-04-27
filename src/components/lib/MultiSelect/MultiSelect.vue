@@ -4,11 +4,14 @@
        @click="openOptions">
     <i class="dropdown icon"></i>
     <template v-for="(option, idx) in selectedOptions">
-      <a class="ui label transition visible" style="display: inline-block !important;">
+      <a class="ui label transition visible"
+         style="display: inline-block !important;">
         {{option.text}}<i class="delete icon" @click="deleteItem(option)"></i>
       </a>
     </template>
-    <input class="search" autocomplete="off" tabindex="0"
+    <input class="search"
+           autocomplete="off"
+           tabindex="0"
            v-model="searchText"
            ref="input"
            :style="inputWidth"
@@ -18,16 +21,21 @@
            @keyup.enter="enterItem"
            @keydown.delete="deleteTextOrLastItem"
     />
-    <div class="text" :class="textClass">{{inputText}}</div>
+    <div class="text"
+         :class="textClass">{{inputText}}
+    </div>
     <div class="menu"
+         ref="menu"
          @mousedown.prevent
          :class="menuClass"
          :style="menuStyle"
          tabindex="-1">
       <template v-for="(option, idx) in filteredOptions">
-        <div class="item" :class="{ 'selected': option.selected }"
-             @click="selectItem(option)"
-             @mousedown="mousedownItem">
+        <div class="item"
+             :class="{ 'selected': option.selected, 'current': pointer === idx }"
+             @click.stop="selectItem(option)"
+             @mousedown="mousedownItem"
+             @mouseenter="pointerSet(idx)">
           {{option.text}}
         </div>
       </template>
@@ -41,13 +49,13 @@
   
   export default {
     props: {
-      'options': {
+      options: {
         type: Array
       },
-      'selectedOptions': {
+      selectedOptions: {
         type: Array
       },
-      'isError': {
+      isError: {
         type: Boolean,
         default: false
       },
@@ -60,7 +68,13 @@
       return {
         showMenu: false,
         searchText: '',
-        mousedownState: false // mousedown on option menu
+        mousedownState: false, // mousedown on option menu
+        pointer: 0
+      }
+    },
+    watch: {
+      filteredOptions () {
+        this.pointerAdjust()
       }
     },
     computed: {
@@ -113,11 +127,8 @@
           this.deleteItem(_.last(this.selectedOptions))
         }
       },
-      // cursor on input
       openOptions () {
-        this.showMenu = true
-        this.mousedownState = false
-        this.$refs.input.focus()
+        common.openOptions(this)
       },
       blurInput () {
         common.blurInput(this)
@@ -133,6 +144,12 @@
       },
       enterItem () {
         common.enterItem(this)
+      },
+      pointerSet (index) {
+        common.pointerSet(this, index)
+      },
+      pointerAdjust () {
+        common.pointerAdjust(this)
       },
       mousedownItem () {
         common.mousedownItem(this)
@@ -151,4 +168,9 @@
 </script>
 <style scoped src="semantic-ui-label/label.css"></style>
 <style scoped src="semantic-ui-dropdown/dropdown.css"></style>
-<!--<style scoped src="../common.css"></style>-->
+<style>
+  /* Menu Item Hover for Key event */
+  .ui.dropdown .menu > .item.current {
+    background: rgba(0, 0, 0, 0.05);
+  }
+</style>
