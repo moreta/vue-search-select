@@ -10,7 +10,7 @@ A Vue.js search select component.
 ### New
 
 + Support Vue.js 2.x
-+ Four Select Component
++ Five Select Component
   + BasicSelect
     + simple search select
   + ListSelect
@@ -20,6 +20,17 @@ A Vue.js search select component.
     + search select for multiple select
   + MultiListSelect
     + ListSelect for MultiSelect
+  + ModelSelect
+    + similar BasicSelect
+    + value set through v-model
+    + value can be string or object
+      + If you pass string, onInput set by string
+  + ModelListSelect
+    + ListSelect for ModelSelect
+
+### Updated 2.3.8-alpha.0 - 2017/05/02
+
++ FEATURE : ModelSelect Component
 
 ### Updated 2.3.7 - 2017/04/27
 
@@ -177,6 +188,43 @@ See More Samples : src/components/sample
 </script>
 ```
 
+# Props
+
+
+| Compoent        | Name            | Type     | Defailt                 | Description                |
+| --------------- | --------------- | -------- | ----------------------- | -------------------------- |
+| BasicSelect     | options         | Array    |                         | option list                |
+|                 | selectedOption  | Object   | { value: '', text: '' } | default option             |
+|                 | isError         | Boolean  | false                   | error style                |
+|                 | placeholder     | String   | ''                      |                            |
+| ListSelect      | list            | Array    |                         | option list                |
+|                 | optionValue     | String   |                         | value key                  |
+|                 | optionText      | String   |                         | text key                   |
+|                 | customText      | Function |                         | custome text function      |
+|                 | selectedItem    | Object   |                         | default option(raw object) |
+|                 | isError         | Boolean  | false                   | error style                |
+|                 | placeholder     | String   | ''                      |                            |
+| MultiSelect     | options         | Array    |                         | option list                |
+|                 | selectedOptions | Array    |                         | default option list        |
+|                 | isError         | Boolean  | false                   | error style                |
+|                 | placeholder     | String   | ''                      |                            |
+| MultiListSelect | list            | Array    |                         | option list                |
+|                 | optionValue     | String   |                         | value key                  |
+|                 | optionText      | String   |                         | text key                   |
+|                 | customText      | Function |                         | custome text function      |
+|                 | selectedItems   | Array    |                         | default option(raw object) |
+|                 | isError         | String   | false                   | error style                |
+|                 | placeholder     | String   | ''                      |                            |
+| ModelSelect     | options         | Array    |                         | option list                |
+|                 | isError         | Boolean  | false                   | error style                |
+|                 | placeholder     | String   | ''                      |                            |
+| ModelListSelect | list            | Array    |                         | option list                |
+|                 | optionValue     | String   |                         | value key                  |
+|                 | optionText      | String   |                         | text key                   |
+|                 | customText      | Function |                         | custome text function      |
+|                 | isError         | Boolean  | false                   | error style                |
+|                 | placeholder     | String   | ''                      |                            |
+
 
 # Run examples
 
@@ -187,3 +235,4 @@ yarn install
 # serve with hot reload at localhost:9090
 npm run dev
 ```
+

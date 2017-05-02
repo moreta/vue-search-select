@@ -33,6 +33,13 @@
               <router-link :to="{ path: '/ErrorMultiList' }" class="item">Error</router-link>
             </div>
           </div>
+          <div class="item">
+            <div class="header">Model</div>
+            <div class="menu">
+              <router-link :to="{ path: '/Model' }" class="item">Model</router-link>
+              <router-link :to="{ path: '/ModelList' }" class="item">ModelList</router-link>
+            </div>
+          </div>
         </div>
       </div>
       <div class="flex-content">

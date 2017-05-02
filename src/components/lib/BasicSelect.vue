@@ -1,25 +1,18 @@
 <template>
-  <div class="ui fluid multiple search selection dropdown"
+  <div class="ui fluid search selection dropdown"
        :class="{ 'active visible':showMenu, 'error': isError }"
        @click="openOptions">
     <i class="dropdown icon"></i>
-    <template v-for="(option, idx) in selectedOptions">
-      <a class="ui label transition visible"
-         style="display: inline-block !important;">
-        {{option.text}}<i class="delete icon" @click="deleteItem(option)"></i>
-      </a>
-    </template>
     <input class="search"
            autocomplete="off"
            tabindex="0"
            v-model="searchText"
            ref="input"
-           :style="inputWidth"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
            @keyup.enter="enterItem"
-           @keydown.delete="deleteTextOrLastItem"
+           @keydown.delete="deleteTextOrItem"
     />
     <div class="text"
          :class="textClass">{{inputText}}
@@ -44,16 +37,17 @@
 </template>
 
 <script>
-  import _ from 'lodash'
-  import common from '../common'
+  /* event : select */
+  import common from './common'
   
   export default {
     props: {
       options: {
         type: Array
       },
-      selectedOptions: {
-        type: Array
+      selectedOption: {
+        type: Object,
+        default: () => { return { value: '', text: '' } }
       },
       isError: {
         type: Boolean,
@@ -82,19 +76,18 @@
         if (this.searchText) {
           return ''
         } else {
-          return this.placeholder
+          let text = this.placeholder
+          if (this.selectedOption.text) {
+            text = this.selectedOption.text
+          }
+          return text
         }
       },
       textClass () {
-        if (this.placeholder) {
+        if (!this.selectedOption.text && this.placeholder) {
           return 'default'
         } else {
           return ''
-        }
-      },
-      inputWidth () {
-        return {
-          width: ((this.searchText.length + 1) * 8) + 20 + 'px'
         }
       },
       menuClass () {
@@ -108,23 +101,21 @@
           display: this.showMenu ? 'block' : 'none'
         }
       },
-      nonSelectOptions () {
-        return _.differenceBy(this.options, this.selectedOptions, 'value')
-      },
       filteredOptions () {
         if (this.searchText) {
-          return this.nonSelectOptions.filter(option => {
+          return this.options.filter(option => {
             return option.text.match(new RegExp(this.searchText, 'i'))
           })
         } else {
-          return this.nonSelectOptions
+          return this.options
         }
       }
     },
     methods: {
-      deleteTextOrLastItem () {
-        if (!this.searchText && this.selectedOptions.length > 0) {
-          this.deleteItem(_.last(this.selectedOptions))
+      deleteTextOrItem () {
+        if (!this.searchText && this.selectedOption) {
+          this.selectItem({})
+          this.openOptions()
         }
       },
       openOptions () {
@@ -155,22 +146,22 @@
         common.mousedownItem(this)
       },
       selectItem (option) {
-        const selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
+        this.searchText = '' // reset text when select item
         this.closeOptions()
-        this.$emit('select', selectedOptions, option)
-      },
-      deleteItem (option) {
-        const selectedOptions = _.reject(this.selectedOptions, option)
-        this.$emit('select', selectedOptions, option)
+        this.$emit('select', option)
       }
     }
   }
 </script>
-<style scoped src="semantic-ui-label/label.css"></style>
+
 <style scoped src="semantic-ui-dropdown/dropdown.css"></style>
 <style>
+  /* Menu Item Hover */
+  .ui.dropdown .menu > .item:hover {
+    background: none transparent !important;
+  }
   /* Menu Item Hover for Key event */
   .ui.dropdown .menu > .item.current {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.05) !important;
   }
 </style>
