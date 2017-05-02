@@ -2,7 +2,7 @@
   /* wrap basic component */
   /* event : select */
   import _ from 'lodash'
-  import MultiSelect from '../MultiSelect'
+  import MultiSelect from './MultiSelect.vue'
   
   export default {
     render: function (createElement) {

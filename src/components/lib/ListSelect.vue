@@ -2,7 +2,7 @@
   /* wrap basic component */
   /* event : select */
   import _ from 'lodash'
-  import BasicSelect from '../BasicSelect'
+  import BasicSelect from './BasicSelect.vue'
   
   export default {
     render: function (createElement) {
