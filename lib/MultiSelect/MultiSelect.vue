@@ -45,6 +45,10 @@
       'isError': {
         type: Boolean,
         default: false
+      },
+      'cleanSearch':{
+        type: Boolean,
+        default: true
       }
     },
     data () {
@@ -77,7 +81,13 @@
       filteredOptions () {
         if (this.searchText) {
           return this.nonSelectOptions.filter(option => {
-            return option.text.match(this.searchText)
+            if(this.cleanSearch){
+                var cleanedText = this.accentsTidy(option.text)
+                return cleanedText.match(new RegExp(this.searchText, 'i'))
+            }else{
+                return option.text.match(new RegExp(this.searchText, 'i'))
+            }
+            
           })
         } else {
           return this.nonSelectOptions
@@ -104,9 +114,13 @@
       },
       prevItem () {
         common.prevItem(this)
+        this.closeOptions();
+        this.openOptions();
       },
       nextItem () {
         common.nextItem(this)
+        this.closeOptions();
+        this.openOptions();
       },
       enterItem () {
         common.enterItem(this)
@@ -116,13 +130,29 @@
       },
       selectItem (option) {
         const selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
-        this.closeOptions()
+        this.closeOptions();
+        this.openOptions();
+        this.searchText='';
         this.$emit('select', selectedOptions,option)
       },
       deleteItem (option) {
         const selectedOptions = _.reject(this.selectedOptions, option)
         this.$emit('select', selectedOptions,option)
-      }
+      },
+      accentsTidy(s){
+            var r=s.toString().toLowerCase();
+            r = r.replace(new RegExp("[àáâãäå]", 'g'),"a");
+            r = r.replace(new RegExp("æ", 'g'),"ae");
+            r = r.replace(new RegExp("ç", 'g'),"c");
+            r = r.replace(new RegExp("[èéêë]", 'g'),"e");
+            r = r.replace(new RegExp("[ìíîï]", 'g'),"i");
+            r = r.replace(new RegExp("ñ", 'g'),"n");
+            r = r.replace(new RegExp("[òóôõö]", 'g'),"o");
+            r = r.replace(new RegExp("œ", 'g'),"oe");
+            r = r.replace(new RegExp("[ùúûü]", 'g'),"u");
+            r = r.replace(new RegExp("[ýÿ]", 'g'),"y");
+            return r;
+        }
     }
   }
 </script>
