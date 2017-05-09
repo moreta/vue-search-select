@@ -133,11 +133,11 @@
         this.closeOptions();
         this.openOptions();
         this.searchText='';
-        this.$emit('select', selectedOptions,option)
+        this.$emit('select', selectedOptions,option,'insert')
       },
       deleteItem (option) {
         const selectedOptions = _.reject(this.selectedOptions, option)
-        this.$emit('select', selectedOptions,option)
+        this.$emit('select', selectedOptions,option,'delete')
       },
       accentsTidy(s){
             var r=s.toString().toLowerCase();
