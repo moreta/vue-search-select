@@ -1,21 +1,34 @@
 <template>
   <div class="ui fluid search selection dropdown"
-       :class="{ 'active visible':showMenu, 'error': isError }">
-    <i class="dropdown icon" @click="openOptions"></i>
-    <input class="search" autocomplete="off" tabindex="0" v-model="searchText"
-           @focus="openOptions"
+       :class="{ 'active visible':showMenu, 'error': isError }"
+       @click="openOptions">
+    <i class="dropdown icon"></i>
+    <input class="search"
+           autocomplete="off"
+           tabindex="0"
+           v-model="searchText"
+           ref="input"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
            @keyup.enter="enterItem"
            @keydown.delete="deleteTextOrItem"
     />
-    <div class="text">{{selectedOption.text}}</div>
-    <div class="menu" :class="menuClass" :style="menuStyle" tabindex="-1">
+    <div class="text"
+         :class="textClass">{{inputText}}
+    </div>
+    <div class="menu"
+         ref="menu"
+         @mousedown.prevent
+         :class="menuClass"
+         :style="menuStyle"
+         tabindex="-1">
       <template v-for="(option, idx) in filteredOptions">
-        <div class="item" :class="{ 'selected': option.selected }"
-             @click="selectItem(option)"
-             @mousedown="mousedownItem">
+        <div class="item"
+             :class="{ 'selected': option.selected, 'current': pointer === idx }"
+             @click.stop="selectItem(option)"
+             @mousedown="mousedownItem"
+             @mouseenter="pointerSet(idx)">
           {{option.text}}
         </div>
       </template>
@@ -25,29 +38,58 @@
 
 <script>
   /* event : select */
-  import common from '../common'
+  import common from './common'
+  
   export default {
     props: {
-      'options': {
+      options: {
         type: Array
       },
-      'selectedOption': {
+      selectedOption: {
         type: Object,
         default: () => { return { value: '', text: '' } }
       },
-      'isError': {
+      isError: {
         type: Boolean,
         default: false
+      },
+      placeholder: {
+        type: String,
+        default: ''
       }
     },
     data () {
       return {
         showMenu: false,
         searchText: '',
-        mousedownState: false // mousedown on option menu
+        mousedownState: false, // mousedown on option menu
+        pointer: 0
+      }
+    },
+    watch: {
+      filteredOptions () {
+        this.pointerAdjust()
       }
     },
     computed: {
+      inputText () {
+        if (this.searchText) {
+          return ''
+        } else {
+          let text = this.placeholder
+          if (this.selectedOption.text) {
+            text = this.selectedOption.text
+          }
+          return text
+        }
+      },
+      textClass () {
+        if (!this.selectedOption.text && this.placeholder) {
+          return 'default'
+        } else {
+          return ''
+        }
+      },
       menuClass () {
         return {
           visible: this.showMenu,
@@ -76,10 +118,8 @@
           this.openOptions()
         }
       },
-      // cursor on input
       openOptions () {
-        this.showMenu = true
-        this.mousedownState = false
+        common.openOptions(this)
       },
       blurInput () {
         common.blurInput(this)
@@ -96,6 +136,12 @@
       enterItem () {
         common.enterItem(this)
       },
+      pointerSet (index) {
+        common.pointerSet(this, index)
+      },
+      pointerAdjust () {
+        common.pointerAdjust(this)
+      },
       mousedownItem () {
         common.mousedownItem(this)
       },
@@ -109,4 +155,13 @@
 </script>
 
 <style scoped src="semantic-ui-dropdown/dropdown.css"></style>
-<style scoped src="../common.css"></style>
+<style>
+  /* Menu Item Hover */
+  .ui.dropdown .menu > .item:hover {
+    background: none transparent !important;
+  }
+  /* Menu Item Hover for Key event */
+  .ui.dropdown .menu > .item.current {
+    background: rgba(0, 0, 0, 0.05) !important;
+  }
+</style>

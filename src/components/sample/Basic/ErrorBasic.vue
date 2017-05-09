@@ -36,7 +36,7 @@
 
 <script>
   import _ from 'lodash'
-  import { BasicSelect } from '../../../../lib'
+  import { BasicSelect } from '../../lib'
   
   export default {
     data () {

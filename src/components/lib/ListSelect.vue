@@ -2,15 +2,16 @@
   /* wrap basic component */
   /* event : select */
   import _ from 'lodash'
-  import MultiSelect from '../MultiSelect'
+  import BasicSelect from './BasicSelect.vue'
   
   export default {
     render: function (createElement) {
-      return createElement(MultiSelect, {
+      return createElement(BasicSelect, {
         props: {
           options: this.options,
-          selectedOptions: this.items,
-          isError: this.isError
+          selectedOption: this.item,
+          isError: this.isError,
+          placeholder: this.placeholder
         },
         on: {
           select: this.onSelect
@@ -30,12 +31,16 @@
       'customText': {
         type: Function
       },
-      'selectedItems': {
-        type: Array
+      'selectedItem': {
+        type: Object
       },
       'isError': {
         type: Boolean,
         default: false
+      },
+      placeholder: {
+        type: String,
+        default: ''
       }
     },
     computed: {
@@ -44,10 +49,12 @@
           return { value: e[this.optionValue], text: this.buildText(e) }
         })
       },
-      items () {
-        return this.selectedItems.map((e, i) => {
-          return { value: e[this.optionValue], text: this.buildText(e) }
-        })
+      item () {
+        if (this.selectedItem) {
+          return { value: this.selectedItem[this.optionValue], text: this.buildText(this.selectedItem) }
+        } else {
+          return { value: '', text: '' }
+        }
       }
     },
     methods: {
@@ -62,21 +69,19 @@
           return ''
         }
       },
-      onSelect (options) {
-        if (_.isEmpty(options)) {
-          this.$emit('select', options)
+      onSelect (option) {
+        if (_.isEmpty(option)) {
+          this.$emit('select', option)
         } else {
-          const items = this.list.filter((e, i) => {
-            return options.find((option, i) => {
-              return e[this.optionValue] === option.value
-            })
+          const item = this.list.find((e, i) => {
+            return e[this.optionValue] === option.value
           })
-          this.$emit('select', items)
+          this.$emit('select', item)
         }
       }
     },
     components: {
-      MultiSelect
+      BasicSelect
     }
   }
 </script>

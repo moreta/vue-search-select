@@ -59,23 +59,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.MultiListSelect = exports.ListSelect = exports.MultiSelect = exports.BasicSelect = undefined;
+	exports.ModelListSelect = exports.ModelSelect = exports.MultiListSelect = exports.ListSelect = exports.MultiSelect = exports.BasicSelect = undefined;
 	
-	var _BasicSelect = __webpack_require__(4);
+	var _BasicSelect = __webpack_require__(42);
 	
 	var _BasicSelect2 = _interopRequireDefault(_BasicSelect);
 	
-	var _ListSelect = __webpack_require__(7);
+	var _ListSelect = __webpack_require__(89);
 	
 	var _ListSelect2 = _interopRequireDefault(_ListSelect);
 	
-	var _MultiListSelect = __webpack_require__(8);
+	var _MultiListSelect = __webpack_require__(91);
 	
 	var _MultiListSelect2 = _interopRequireDefault(_MultiListSelect);
 	
-	var _MultiSelect = __webpack_require__(5);
+	var _MultiSelect = __webpack_require__(44);
 	
 	var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
+	
+	var _ModelSelect = __webpack_require__(43);
+	
+	var _ModelSelect2 = _interopRequireDefault(_ModelSelect);
+	
+	var _ModelListSelect = __webpack_require__(90);
+	
+	var _ModelListSelect2 = _interopRequireDefault(_ModelListSelect);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -83,9 +91,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.MultiSelect = _MultiSelect2.default;
 	exports.ListSelect = _ListSelect2.default;
 	exports.MultiListSelect = _MultiListSelect2.default;
+	exports.ModelSelect = _ModelSelect2.default;
+	exports.ModelListSelect = _ModelListSelect2.default;
 
 /***/ },
 /* 1 */
+/***/ function(module, exports) {
+
+	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+	var global = module.exports = typeof window != 'undefined' && window.Math == Math
+	  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	var hasOwnProperty = {}.hasOwnProperty;
+	module.exports = function(it, key){
+	  return hasOwnProperty.call(it, key);
+	};
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// to indexed object, toObject with fallback for non-array-like ES3 strings
+	var IObject = __webpack_require__(61)
+	  , defined = __webpack_require__(18);
+	module.exports = function(it){
+	  return IObject(defined(it));
+	};
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	/*
@@ -141,7 +180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 2 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -363,7 +402,323 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 3 */
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// Thank's IE8 for his funny defineProperty
+	module.exports = !__webpack_require__(11)(function(){
+	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var dP         = __webpack_require__(8)
+	  , createDesc = __webpack_require__(14);
+	module.exports = __webpack_require__(6) ? function(object, key, value){
+	  return dP.f(object, key, createDesc(1, value));
+	} : function(object, key, value){
+	  object[key] = value;
+	  return object;
+	};
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var anObject       = __webpack_require__(10)
+	  , IE8_DOM_DEFINE = __webpack_require__(35)
+	  , toPrimitive    = __webpack_require__(27)
+	  , dP             = Object.defineProperty;
+	
+	exports.f = __webpack_require__(6) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+	  anObject(O);
+	  P = toPrimitive(P, true);
+	  anObject(Attributes);
+	  if(IE8_DOM_DEFINE)try {
+	    return dP(O, P, Attributes);
+	  } catch(e){ /* empty */ }
+	  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+	  if('value' in Attributes)O[P] = Attributes.value;
+	  return O;
+	};
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var store      = __webpack_require__(25)('wks')
+	  , uid        = __webpack_require__(15)
+	  , Symbol     = __webpack_require__(1).Symbol
+	  , USE_SYMBOL = typeof Symbol == 'function';
+	
+	var $exports = module.exports = function(name){
+	  return store[name] || (store[name] =
+	    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+	};
+	
+	$exports.store = store;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(12);
+	module.exports = function(it){
+	  if(!isObject(it))throw TypeError(it + ' is not an object!');
+	  return it;
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	module.exports = function(exec){
+	  try {
+	    return !!exec();
+	  } catch(e){
+	    return true;
+	  }
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  return typeof it === 'object' ? it !== null : typeof it === 'function';
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+	var $keys       = __webpack_require__(40)
+	  , enumBugKeys = __webpack_require__(19);
+	
+	module.exports = Object.keys || function keys(O){
+	  return $keys(O, enumBugKeys);
+	};
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = function(bitmap, value){
+	  return {
+	    enumerable  : !(bitmap & 1),
+	    configurable: !(bitmap & 2),
+	    writable    : !(bitmap & 4),
+	    value       : value
+	  };
+	};
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	var id = 0
+	  , px = Math.random();
+	module.exports = function(key){
+	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+	};
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  openOptions: function openOptions(self) {
+	    self.$refs.input.focus();
+	    self.showMenu = true;
+	    self.mousedownState = false;
+	  },
+	  blurInput: function blurInput(self) {
+	    if (!self.mousedownState) {
+	      self.searchText = '';
+	      self.closeOptions();
+	    }
+	  },
+	  closeOptions: function closeOptions(self) {
+	    self.showMenu = false;
+	  },
+	  prevItem: function prevItem(self) {
+	    var prevIndex = self.pointer - 1;
+	    var prevIndexScrollTop = self.$el.offsetHeight * prevIndex;
+	    if (prevIndex >= 0) {
+	      self.pointer = prevIndex;
+	    }
+	
+	    self.$refs.menu.scrollTop = prevIndexScrollTop;
+	  },
+	  nextItem: function nextItem(self) {
+	    var nextIndex = self.pointer + 1;
+	    var nextIndexScrollTop = self.$el.offsetHeight * nextIndex;
+	    if (nextIndex <= self.filteredOptions.length - 1) {
+	      self.pointer = nextIndex;
+	    }
+	
+	    var currentMenuHeight = self.$refs.menu.offsetHeight;
+	    var currentPage = Math.ceil((self.$refs.menu.scrollTop + self.$el.offsetHeight) / currentMenuHeight);
+	    var itemPage = Math.ceil(nextIndexScrollTop / currentMenuHeight);
+	
+	    if (currentPage !== itemPage) {
+	      self.$refs.menu.scrollTop = (itemPage - 1) * self.$refs.menu.offsetHeight;
+	    }
+	  },
+	  enterItem: function enterItem(self) {
+	    var currentItem = self.filteredOptions[self.pointer];
+	    if (currentItem) {
+	      self.selectItem(currentItem);
+	    }
+	  },
+	  pointerSet: function pointerSet(self, index) {
+	    self.pointer = index;
+	  },
+	  pointerAdjust: function pointerAdjust(self) {
+	    if (self.pointer >= self.filteredOptions.length - 1) {
+	      self.pointer = self.filteredOptions.length ? self.filteredOptions.length - 1 : 0;
+	    }
+	  },
+	  mousedownItem: function mousedownItem(self) {
+	    self.mousedownState = true;
+	  }
+	};
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.4.0'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	// 7.2.1 RequireObjectCoercible(argument)
+	module.exports = function(it){
+	  if(it == undefined)throw TypeError("Can't call method on  " + it);
+	  return it;
+	};
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	// IE 8- don't enum bug keys
+	module.exports = (
+	  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+	).split(',');
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	module.exports = {};
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
+	module.exports = true;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	exports.f = {}.propertyIsEnumerable;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var def = __webpack_require__(8).f
+	  , has = __webpack_require__(2)
+	  , TAG = __webpack_require__(9)('toStringTag');
+	
+	module.exports = function(it, tag, stat){
+	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+	};
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var shared = __webpack_require__(25)('keys')
+	  , uid    = __webpack_require__(15);
+	module.exports = function(key){
+	  return shared[key] || (shared[key] = uid(key));
+	};
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global = __webpack_require__(1)
+	  , SHARED = '__core-js_shared__'
+	  , store  = global[SHARED] || (global[SHARED] = {});
+	module.exports = function(key){
+	  return store[key] || (store[key] = {});
+	};
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	// 7.1.4 ToInteger
+	var ceil  = Math.ceil
+	  , floor = Math.floor;
+	module.exports = function(it){
+	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+	};
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.1 ToPrimitive(input [, PreferredType])
+	var isObject = __webpack_require__(12);
+	// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+	// and the second argument - flag - preferred type is a string
+	module.exports = function(it, S){
+	  if(!isObject(it))return it;
+	  var fn, val;
+	  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+	  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+	  throw TypeError("Can't convert object to primitive value");
+	};
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global         = __webpack_require__(1)
+	  , core           = __webpack_require__(17)
+	  , LIBRARY        = __webpack_require__(21)
+	  , wksExt         = __webpack_require__(29)
+	  , defineProperty = __webpack_require__(8).f;
+	module.exports = function(name){
+	  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+	  if(name.charAt(0) != '_' && !(name in $Symbol))defineProperty($Symbol, name, {value: wksExt.f(name)});
+	};
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports.f = __webpack_require__(9);
+
+/***/ },
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -17451,136 +17806,403 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(29)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(102)(module)))
 
 /***/ },
-/* 4 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	exports.__esModule = true;
 	
-	var _BasicSelect = __webpack_require__(18);
+	var _iterator = __webpack_require__(52);
 	
-	var _BasicSelect2 = _interopRequireDefault(_BasicSelect);
-
+	var _iterator2 = _interopRequireDefault(_iterator);
+	
+	var _symbol = __webpack_require__(51);
+	
+	var _symbol2 = _interopRequireDefault(_symbol);
+	
+	var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj; };
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _BasicSelect2.default;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _MultiSelect = __webpack_require__(21);
-	
-	var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _MultiSelect2.default;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  blurInput: function blurInput(self) {
-	    if (!self.mousedownState) {
-	      self.searchText = '';
-	      self.closeOptions();
-	    }
-	  },
-	  closeOptions: function closeOptions(self) {
-	    self.showMenu = false;
-	  },
-	  prevItem: function prevItem(self) {
-	    var selectedItemIndex = self.filteredOptions.findIndex(function (item) {
-	      return item.selected === true;
-	    });
-	    if (selectedItemIndex === -1) {
-	      self.filteredOptions[0].selected = true;
-	    } else if (selectedItemIndex === 0) {} else {
-	      self.filteredOptions[selectedItemIndex].selected = false;
-	      self.filteredOptions[selectedItemIndex - 1].selected = true;
-	    }
-	  },
-	  nextItem: function nextItem(self) {
-	    var selectedItemIndex = self.filteredOptions.findIndex(function (item) {
-	      return item.selected === true;
-	    });
-	    if (selectedItemIndex === -1) {
-	      self.filteredOptions[0].selected = true;
-	    } else if (selectedItemIndex === self.filteredOptions.length - 1) {} else {
-	      self.filteredOptions[selectedItemIndex].selected = false;
-	      self.filteredOptions[selectedItemIndex + 1].selected = true;
-	    }
-	  },
-	  enterItem: function enterItem(self) {
-	    var selectedItem = self.filteredOptions.find(function (item) {
-	      return item.selected === true;
-	    });
-	    if (selectedItem) {
-	      self.selectItem(selectedItem);
-	    }
-	  },
-	  mousedownItem: function mousedownItem(self) {
-	    self.mousedownState = true;
-	  }
+	exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
+	  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
+	} : function (obj) {
+	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
 	};
 
 /***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/* 32 */
+/***/ function(module, exports) {
 
-	'use strict';
+	var toString = {}.toString;
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _ListSelect = __webpack_require__(19);
-	
-	var _ListSelect2 = _interopRequireDefault(_ListSelect);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _ListSelect2.default;
+	module.exports = function(it){
+	  return toString.call(it).slice(8, -1);
+	};
 
 /***/ },
-/* 8 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _MultiListSelect = __webpack_require__(20);
-	
-	var _MultiListSelect2 = _interopRequireDefault(_MultiListSelect);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	exports.default = _MultiListSelect2.default;
+	var isObject = __webpack_require__(12)
+	  , document = __webpack_require__(1).document
+	  // in old IE typeof document.createElement is 'object'
+	  , is = isObject(document) && isObject(document.createElement);
+	module.exports = function(it){
+	  return is ? document.createElement(it) : {};
+	};
 
 /***/ },
-/* 9 */
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var global    = __webpack_require__(1)
+	  , core      = __webpack_require__(17)
+	  , ctx       = __webpack_require__(58)
+	  , hide      = __webpack_require__(7)
+	  , PROTOTYPE = 'prototype';
+	
+	var $export = function(type, name, source){
+	  var IS_FORCED = type & $export.F
+	    , IS_GLOBAL = type & $export.G
+	    , IS_STATIC = type & $export.S
+	    , IS_PROTO  = type & $export.P
+	    , IS_BIND   = type & $export.B
+	    , IS_WRAP   = type & $export.W
+	    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+	    , expProto  = exports[PROTOTYPE]
+	    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+	    , key, own, out;
+	  if(IS_GLOBAL)source = name;
+	  for(key in source){
+	    // contains in native
+	    own = !IS_FORCED && target && target[key] !== undefined;
+	    if(own && key in exports)continue;
+	    // export native or passed
+	    out = own ? target[key] : source[key];
+	    // prevent global pollution for namespaces
+	    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+	    // bind timers to global for call from export context
+	    : IS_BIND && own ? ctx(out, global)
+	    // wrap global constructors for prevent change them in library
+	    : IS_WRAP && target[key] == out ? (function(C){
+	      var F = function(a, b, c){
+	        if(this instanceof C){
+	          switch(arguments.length){
+	            case 0: return new C;
+	            case 1: return new C(a);
+	            case 2: return new C(a, b);
+	          } return new C(a, b, c);
+	        } return C.apply(this, arguments);
+	      };
+	      F[PROTOTYPE] = C[PROTOTYPE];
+	      return F;
+	    // make static versions for prototype methods
+	    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+	    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+	    if(IS_PROTO){
+	      (exports.virtual || (exports.virtual = {}))[key] = out;
+	      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+	      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+	    }
+	  }
+	};
+	// type bitmap
+	$export.F = 1;   // forced
+	$export.G = 2;   // global
+	$export.S = 4;   // static
+	$export.P = 8;   // proto
+	$export.B = 16;  // bind
+	$export.W = 32;  // wrap
+	$export.U = 64;  // safe
+	$export.R = 128; // real proto method for `library` 
+	module.exports = $export;
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = !__webpack_require__(6) && !__webpack_require__(11)(function(){
+	  return Object.defineProperty(__webpack_require__(33)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+	});
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var LIBRARY        = __webpack_require__(21)
+	  , $export        = __webpack_require__(34)
+	  , redefine       = __webpack_require__(41)
+	  , hide           = __webpack_require__(7)
+	  , has            = __webpack_require__(2)
+	  , Iterators      = __webpack_require__(20)
+	  , $iterCreate    = __webpack_require__(63)
+	  , setToStringTag = __webpack_require__(23)
+	  , getPrototypeOf = __webpack_require__(70)
+	  , ITERATOR       = __webpack_require__(9)('iterator')
+	  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
+	  , FF_ITERATOR    = '@@iterator'
+	  , KEYS           = 'keys'
+	  , VALUES         = 'values';
+	
+	var returnThis = function(){ return this; };
+	
+	module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED){
+	  $iterCreate(Constructor, NAME, next);
+	  var getMethod = function(kind){
+	    if(!BUGGY && kind in proto)return proto[kind];
+	    switch(kind){
+	      case KEYS: return function keys(){ return new Constructor(this, kind); };
+	      case VALUES: return function values(){ return new Constructor(this, kind); };
+	    } return function entries(){ return new Constructor(this, kind); };
+	  };
+	  var TAG        = NAME + ' Iterator'
+	    , DEF_VALUES = DEFAULT == VALUES
+	    , VALUES_BUG = false
+	    , proto      = Base.prototype
+	    , $native    = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
+	    , $default   = $native || getMethod(DEFAULT)
+	    , $entries   = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined
+	    , $anyNative = NAME == 'Array' ? proto.entries || $native : $native
+	    , methods, key, IteratorPrototype;
+	  // Fix native
+	  if($anyNative){
+	    IteratorPrototype = getPrototypeOf($anyNative.call(new Base));
+	    if(IteratorPrototype !== Object.prototype){
+	      // Set @@toStringTag to native iterators
+	      setToStringTag(IteratorPrototype, TAG, true);
+	      // fix for some old engines
+	      if(!LIBRARY && !has(IteratorPrototype, ITERATOR))hide(IteratorPrototype, ITERATOR, returnThis);
+	    }
+	  }
+	  // fix Array#{values, @@iterator}.name in V8 / FF
+	  if(DEF_VALUES && $native && $native.name !== VALUES){
+	    VALUES_BUG = true;
+	    $default = function values(){ return $native.call(this); };
+	  }
+	  // Define iterator
+	  if((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])){
+	    hide(proto, ITERATOR, $default);
+	  }
+	  // Plug for library
+	  Iterators[NAME] = $default;
+	  Iterators[TAG]  = returnThis;
+	  if(DEFAULT){
+	    methods = {
+	      values:  DEF_VALUES ? $default : getMethod(VALUES),
+	      keys:    IS_SET     ? $default : getMethod(KEYS),
+	      entries: $entries
+	    };
+	    if(FORCED)for(key in methods){
+	      if(!(key in proto))redefine(proto, key, methods[key]);
+	    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+	  }
+	  return methods;
+	};
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+	var anObject    = __webpack_require__(10)
+	  , dPs         = __webpack_require__(67)
+	  , enumBugKeys = __webpack_require__(19)
+	  , IE_PROTO    = __webpack_require__(24)('IE_PROTO')
+	  , Empty       = function(){ /* empty */ }
+	  , PROTOTYPE   = 'prototype';
+	
+	// Create object with fake `null` prototype: use iframe Object with cleared prototype
+	var createDict = function(){
+	  // Thrash, waste and sodomy: IE GC bug
+	  var iframe = __webpack_require__(33)('iframe')
+	    , i      = enumBugKeys.length
+	    , lt     = '<'
+	    , gt     = '>'
+	    , iframeDocument;
+	  iframe.style.display = 'none';
+	  __webpack_require__(60).appendChild(iframe);
+	  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+	  // createDict = iframe.contentWindow.Object;
+	  // html.removeChild(iframe);
+	  iframeDocument = iframe.contentWindow.document;
+	  iframeDocument.open();
+	  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+	  iframeDocument.close();
+	  createDict = iframeDocument.F;
+	  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
+	  return createDict();
+	};
+	
+	module.exports = Object.create || function create(O, Properties){
+	  var result;
+	  if(O !== null){
+	    Empty[PROTOTYPE] = anObject(O);
+	    result = new Empty;
+	    Empty[PROTOTYPE] = null;
+	    // add "__proto__" for Object.getPrototypeOf polyfill
+	    result[IE_PROTO] = O;
+	  } else result = createDict();
+	  return Properties === undefined ? result : dPs(result, Properties);
+	};
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+	var $keys      = __webpack_require__(40)
+	  , hiddenKeys = __webpack_require__(19).concat('length', 'prototype');
+	
+	exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
+	  return $keys(O, hiddenKeys);
+	};
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	exports.f = Object.getOwnPropertySymbols;
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var has          = __webpack_require__(2)
+	  , toIObject    = __webpack_require__(3)
+	  , arrayIndexOf = __webpack_require__(57)(false)
+	  , IE_PROTO     = __webpack_require__(24)('IE_PROTO');
+	
+	module.exports = function(object, names){
+	  var O      = toIObject(object)
+	    , i      = 0
+	    , result = []
+	    , key;
+	  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+	  // Don't enum bug & hidden keys
+	  while(names.length > i)if(has(O, key = names[i++])){
+	    ~arrayIndexOf(result, key) || result.push(key);
+	  }
+	  return result;
+	};
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(7);
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+	
+	/* styles */
+	__webpack_require__(99)
+	__webpack_require__(98)
+	
+	/* script */
+	__vue_exports__ = __webpack_require__(45)
+	
+	/* template */
+	var __vue_template__ = __webpack_require__(93)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+	__vue_options__._scopeId = "data-v-3ea70128"
+	
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+	
+	/* styles */
+	__webpack_require__(101)
+	__webpack_require__(100)
+	
+	/* script */
+	__vue_exports__ = __webpack_require__(48)
+	
+	/* template */
+	var __vue_template__ = __webpack_require__(94)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+	__vue_options__._scopeId = "data-v-ce682b3a"
+	
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __vue_exports__, __vue_options__
+	var __vue_styles__ = {}
+	
+	/* styles */
+	__webpack_require__(97)
+	__webpack_require__(96)
+	__webpack_require__(95)
+	
+	/* script */
+	__vue_exports__ = __webpack_require__(50)
+	
+	/* template */
+	var __vue_template__ = __webpack_require__(92)
+	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+	if (
+	  typeof __vue_exports__.default === "object" ||
+	  typeof __vue_exports__.default === "function"
+	) {
+	__vue_options__ = __vue_exports__ = __vue_exports__.default
+	}
+	if (typeof __vue_options__ === "function") {
+	  __vue_options__ = __vue_options__.options
+	}
+	
+	__vue_options__.render = __vue_template__.render
+	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+	__vue_options__._scopeId = "data-v-0cd17073"
+	
+	module.exports = __vue_exports__
+
+
+/***/ },
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17589,7 +18211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _common = __webpack_require__(6);
+	var _common = __webpack_require__(16);
 	
 	var _common2 = _interopRequireDefault(_common);
 	
@@ -17597,28 +18219,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = {
 	  props: {
-	    'options': {
+	    options: {
 	      type: Array
 	    },
-	    'selectedOption': {
+	    selectedOption: {
 	      type: Object,
 	      default: function _default() {
 	        return { value: '', text: '' };
 	      }
 	    },
-	    'isError': {
+	    isError: {
 	      type: Boolean,
 	      default: false
+	    },
+	    placeholder: {
+	      type: String,
+	      default: ''
 	    }
 	  },
 	  data: function data() {
 	    return {
 	      showMenu: false,
 	      searchText: '',
-	      mousedownState: false };
+	      mousedownState: false,
+	      pointer: 0
+	    };
 	  },
 	
+	  watch: {
+	    filteredOptions: function filteredOptions() {
+	      this.pointerAdjust();
+	    }
+	  },
 	  computed: {
+	    inputText: function inputText() {
+	      if (this.searchText) {
+	        return '';
+	      } else {
+	        var text = this.placeholder;
+	        if (this.selectedOption.text) {
+	          text = this.selectedOption.text;
+	        }
+	        return text;
+	      }
+	    },
+	    textClass: function textClass() {
+	      if (!this.selectedOption.text && this.placeholder) {
+	        return 'default';
+	      } else {
+	        return '';
+	      }
+	    },
 	    menuClass: function menuClass() {
 	      return {
 	        visible: this.showMenu,
@@ -17650,8 +18301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    },
 	    openOptions: function openOptions() {
-	      this.showMenu = true;
-	      this.mousedownState = false;
+	      _common2.default.openOptions(this);
 	    },
 	    blurInput: function blurInput() {
 	      _common2.default.blurInput(this);
@@ -17668,6 +18318,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    enterItem: function enterItem() {
 	      _common2.default.enterItem(this);
 	    },
+	    pointerSet: function pointerSet(index) {
+	      _common2.default.pointerSet(this, index);
+	    },
+	    pointerAdjust: function pointerAdjust() {
+	      _common2.default.pointerAdjust(this);
+	    },
 	    mousedownItem: function mousedownItem() {
 	      _common2.default.mousedownItem(this);
 	    },
@@ -17680,7 +18336,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 10 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17689,11 +18345,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _lodash = __webpack_require__(3);
+	var _lodash = __webpack_require__(30);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _BasicSelect = __webpack_require__(4);
+	var _BasicSelect = __webpack_require__(42);
 	
 	var _BasicSelect2 = _interopRequireDefault(_BasicSelect);
 	
@@ -17705,7 +18361,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      props: {
 	        options: this.options,
 	        selectedOption: this.item,
-	        isError: this.isError
+	        isError: this.isError,
+	        placeholder: this.placeholder
 	      },
 	      on: {
 	        select: this.onSelect
@@ -17731,6 +18388,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'isError': {
 	      type: Boolean,
 	      default: false
+	    },
+	    placeholder: {
+	      type: String,
+	      default: ''
 	    }
 	  },
 	  computed: {
@@ -17780,7 +18441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 11 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17789,11 +18450,268 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _lodash = __webpack_require__(3);
+	var _typeof2 = __webpack_require__(31);
+	
+	var _typeof3 = _interopRequireDefault(_typeof2);
+	
+	var _ModelSelect = __webpack_require__(43);
+	
+	var _ModelSelect2 = _interopRequireDefault(_ModelSelect);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	  render: function render(createElement) {
+	    return createElement(_ModelSelect2.default, {
+	      props: {
+	        options: this.options,
+	        value: this.innerValue,
+	        isError: this.isError,
+	        placeholder: this.placeholder
+	      },
+	      on: {
+	        input: this.onInput
+	      }
+	    });
+	  },
+	  props: {
+	    list: {
+	      type: Array
+	    },
+	    optionValue: {
+	      type: String
+	    },
+	    optionText: {
+	      type: String
+	    },
+	    customText: {
+	      type: Function
+	    },
+	    value: {
+	      type: [String, Object]
+	    },
+	    isError: {
+	      type: Boolean,
+	      default: false
+	    },
+	    placeholder: {
+	      type: String,
+	      default: ''
+	    }
+	  },
+	  computed: {
+	    options: function options() {
+	      var _this = this;
+	
+	      return this.list.map(function (e) {
+	        return { value: e[_this.optionValue], text: _this.buildText(e) };
+	      });
+	    },
+	    innerValue: function innerValue() {
+	      if ((0, _typeof3.default)(this.value) === 'object') {
+	        return { value: this.value[this.optionValue], text: this.buildText(this.value) };
+	      } else if (typeof this.value === 'string') {
+	        return this.value;
+	      }
+	    }
+	  },
+	  methods: {
+	    buildText: function buildText(e) {
+	      if (e[this.optionValue]) {
+	        if (this.customText) {
+	          return this.customText(e);
+	        } else {
+	          return e[this.optionText];
+	        }
+	      } else {
+	        return '';
+	      }
+	    },
+	    onInput: function onInput(option) {
+	      var _this2 = this;
+	
+	      if ((typeof option === 'undefined' ? 'undefined' : (0, _typeof3.default)(option)) === 'object') {
+	        var item = this.list.find(function (e) {
+	          return e[_this2.optionValue] === option.value;
+	        });
+	        this.$emit('input', item);
+	      } else if (typeof option === 'string') {
+	        this.$emit('input', option);
+	      }
+	    }
+	  },
+	  components: {
+	    ModelSelect: _ModelSelect2.default
+	  }
+	};
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof2 = __webpack_require__(31);
+	
+	var _typeof3 = _interopRequireDefault(_typeof2);
+	
+	var _common = __webpack_require__(16);
+	
+	var _common2 = _interopRequireDefault(_common);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	  props: {
+	    options: {
+	      type: Array
+	    },
+	    value: {
+	      type: [String, Object]
+	    },
+	    isError: {
+	      type: Boolean,
+	      default: false
+	    },
+	    placeholder: {
+	      type: String,
+	      default: ''
+	    }
+	  },
+	  data: function data() {
+	    return {
+	      showMenu: false,
+	      searchText: '',
+	      mousedownState: false,
+	      pointer: 0
+	    };
+	  },
+	
+	  watch: {
+	    filteredOptions: function filteredOptions() {
+	      this.pointerAdjust();
+	    }
+	  },
+	  computed: {
+	    inputText: function inputText() {
+	      if (this.searchText) {
+	        return '';
+	      } else {
+	        if (this.selectedOption) {
+	          return this.selectedOption.text;
+	        }
+	      }
+	      return '';
+	    },
+	    textClass: function textClass() {
+	      if (!this.selectedOption && this.placeholder) {
+	        return 'default';
+	      } else {
+	        return '';
+	      }
+	    },
+	    menuClass: function menuClass() {
+	      return {
+	        visible: this.showMenu,
+	        hidden: !this.showMenu
+	      };
+	    },
+	    menuStyle: function menuStyle() {
+	      return {
+	        display: this.showMenu ? 'block' : 'none'
+	      };
+	    },
+	    filteredOptions: function filteredOptions() {
+	      var _this = this;
+	
+	      if (this.searchText) {
+	        return this.options.filter(function (option) {
+	          return option.text.match(new RegExp(_this.searchText, 'i'));
+	        });
+	      } else {
+	        return this.options;
+	      }
+	    },
+	    optionValue: function optionValue() {
+	      if ((0, _typeof3.default)(this.value) === 'object') {
+	        return this.value.value;
+	      } else if (typeof this.value === 'string') {
+	        return this.value;
+	      }
+	    },
+	    selectedOption: function selectedOption() {
+	      var _this2 = this;
+	
+	      return this.options.find(function (option) {
+	        return option.value === _this2.optionValue;
+	      });
+	    }
+	  },
+	  methods: {
+	    deleteTextOrItem: function deleteTextOrItem() {
+	      if (!this.searchText && this.value) {
+	        this.selectItem({});
+	        this.openOptions();
+	      }
+	    },
+	    openOptions: function openOptions() {
+	      _common2.default.openOptions(this);
+	    },
+	    blurInput: function blurInput() {
+	      _common2.default.blurInput(this);
+	    },
+	    closeOptions: function closeOptions() {
+	      _common2.default.closeOptions(this);
+	    },
+	    prevItem: function prevItem() {
+	      _common2.default.prevItem(this);
+	    },
+	    nextItem: function nextItem() {
+	      _common2.default.nextItem(this);
+	    },
+	    enterItem: function enterItem() {
+	      _common2.default.enterItem(this);
+	    },
+	    pointerSet: function pointerSet(index) {
+	      _common2.default.pointerSet(this, index);
+	    },
+	    pointerAdjust: function pointerAdjust() {
+	      _common2.default.pointerAdjust(this);
+	    },
+	    mousedownItem: function mousedownItem() {
+	      _common2.default.mousedownItem(this);
+	    },
+	    selectItem: function selectItem(option) {
+	      this.searchText = '';
+	      this.closeOptions();
+	      if ((0, _typeof3.default)(this.value) === 'object') {
+	        this.$emit('input', option);
+	      } else if (typeof this.value === 'string') {
+	        this.$emit('input', option.value);
+	      }
+	    }
+	  }
+	};
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _lodash = __webpack_require__(30);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _MultiSelect = __webpack_require__(5);
+	var _MultiSelect = __webpack_require__(44);
 	
 	var _MultiSelect2 = _interopRequireDefault(_MultiSelect);
 	
@@ -17805,7 +18723,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      props: {
 	        options: this.options,
 	        selectedOptions: this.items,
-	        isError: this.isError
+	        isError: this.isError,
+	        placeholder: this.placeholder
 	      },
 	      on: {
 	        select: this.onSelect
@@ -17831,6 +18750,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'isError': {
 	      type: Boolean,
 	      default: false
+	    },
+	    placeholder: {
+	      type: String,
+	      default: ''
 	    }
 	  },
 	  computed: {
@@ -17861,18 +18784,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return '';
 	      }
 	    },
-	    onSelect: function onSelect(options) {
+	    onSelect: function onSelect(options, option) {
 	      var _this3 = this;
 	
 	      if (_lodash2.default.isEmpty(options)) {
-	        this.$emit('select', options);
+	        this.$emit('select', options, option);
 	      } else {
 	        var items = this.list.filter(function (e, i) {
-	          return options.find(function (option, i) {
-	            return e[_this3.optionValue] === option.value;
+	          return options.find(function (o, i) {
+	            return e[_this3.optionValue] === o.value;
 	          });
 	        });
-	        this.$emit('select', items);
+	        var item = _lodash2.default.find(this.list, [this.optionValue, option.value]);
+	        this.$emit('select', items, item);
 	      }
 	    }
 	  },
@@ -17882,7 +18806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 12 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -17891,11 +18815,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _lodash = __webpack_require__(3);
+	var _lodash = __webpack_require__(30);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _common = __webpack_require__(6);
+	var _common = __webpack_require__(16);
 	
 	var _common2 = _interopRequireDefault(_common);
 	
@@ -17903,25 +18827,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = {
 	  props: {
-	    'options': {
+	    options: {
 	      type: Array
 	    },
-	    'selectedOptions': {
+	    selectedOptions: {
 	      type: Array
 	    },
-	    'isError': {
+	    isError: {
 	      type: Boolean,
 	      default: false
+	    },
+	    placeholder: {
+	      type: String,
+	      default: ''
 	    }
 	  },
 	  data: function data() {
 	    return {
 	      showMenu: false,
 	      searchText: '',
-	      mousedownState: false };
+	      mousedownState: false,
+	      pointer: 0
+	    };
 	  },
 	
+	  watch: {
+	    filteredOptions: function filteredOptions() {
+	      this.pointerAdjust();
+	    }
+	  },
 	  computed: {
+	    inputText: function inputText() {
+	      if (this.searchText) {
+	        return '';
+	      } else {
+	        return this.placeholder;
+	      }
+	    },
+	    textClass: function textClass() {
+	      if (this.placeholder) {
+	        return 'default';
+	      } else {
+	        return '';
+	      }
+	    },
 	    inputWidth: function inputWidth() {
 	      return {
 	        width: (this.searchText.length + 1) * 8 + 20 + 'px'
@@ -17946,7 +18895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      if (this.searchText) {
 	        return this.nonSelectOptions.filter(function (option) {
-	          return option.text.match(_this.searchText);
+	          return option.text.match(new RegExp(_this.searchText, 'i'));
 	        });
 	      } else {
 	        return this.nonSelectOptions;
@@ -17960,9 +18909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    },
 	    openOptions: function openOptions() {
-	      this.showMenu = true;
-	      this.mousedownState = false;
-	      this.$refs.input.focus();
+	      _common2.default.openOptions(this);
 	    },
 	    blurInput: function blurInput() {
 	      _common2.default.blurInput(this);
@@ -17979,107 +18926,849 @@ return /******/ (function(modules) { // webpackBootstrap
 	    enterItem: function enterItem() {
 	      _common2.default.enterItem(this);
 	    },
+	    pointerSet: function pointerSet(index) {
+	      _common2.default.pointerSet(this, index);
+	    },
+	    pointerAdjust: function pointerAdjust() {
+	      _common2.default.pointerAdjust(this);
+	    },
 	    mousedownItem: function mousedownItem() {
 	      _common2.default.mousedownItem(this);
 	    },
 	    selectItem: function selectItem(option) {
 	      var selectedOptions = _lodash2.default.unionWith(this.selectedOptions, [option], _lodash2.default.isEqual);
 	      this.closeOptions();
-	      this.$emit('select', selectedOptions);
+	      this.$emit('select', selectedOptions, option);
 	    },
 	    deleteItem: function deleteItem(option) {
 	      var selectedOptions = _lodash2.default.reject(this.selectedOptions, option);
-	      this.$emit('select', selectedOptions);
+	      this.$emit('select', selectedOptions, option);
 	    }
 	  }
 	};
 
 /***/ },
-/* 13 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(1)();
+	module.exports = { "default": __webpack_require__(53), __esModule: true };
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(54), __esModule: true };
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(78);
+	__webpack_require__(76);
+	__webpack_require__(79);
+	__webpack_require__(80);
+	module.exports = __webpack_require__(17).Symbol;
+
+/***/ },
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(77);
+	__webpack_require__(81);
+	module.exports = __webpack_require__(29).f('iterator');
+
+/***/ },
+/* 55 */
+/***/ function(module, exports) {
+
+	module.exports = function(it){
+	  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+	  return it;
+	};
+
+/***/ },
+/* 56 */
+/***/ function(module, exports) {
+
+	module.exports = function(){ /* empty */ };
+
+/***/ },
+/* 57 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// false -> Array#indexOf
+	// true  -> Array#includes
+	var toIObject = __webpack_require__(3)
+	  , toLength  = __webpack_require__(73)
+	  , toIndex   = __webpack_require__(72);
+	module.exports = function(IS_INCLUDES){
+	  return function($this, el, fromIndex){
+	    var O      = toIObject($this)
+	      , length = toLength(O.length)
+	      , index  = toIndex(fromIndex, length)
+	      , value;
+	    // Array#includes uses SameValueZero equality algorithm
+	    if(IS_INCLUDES && el != el)while(length > index){
+	      value = O[index++];
+	      if(value != value)return true;
+	    // Array#toIndex ignores holes, Array#includes - not
+	    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
+	      if(O[index] === el)return IS_INCLUDES || index || 0;
+	    } return !IS_INCLUDES && -1;
+	  };
+	};
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// optional / simple context binding
+	var aFunction = __webpack_require__(55);
+	module.exports = function(fn, that, length){
+	  aFunction(fn);
+	  if(that === undefined)return fn;
+	  switch(length){
+	    case 1: return function(a){
+	      return fn.call(that, a);
+	    };
+	    case 2: return function(a, b){
+	      return fn.call(that, a, b);
+	    };
+	    case 3: return function(a, b, c){
+	      return fn.call(that, a, b, c);
+	    };
+	  }
+	  return function(/* ...args */){
+	    return fn.apply(that, arguments);
+	  };
+	};
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// all enumerable object keys, includes symbols
+	var getKeys = __webpack_require__(13)
+	  , gOPS    = __webpack_require__(39)
+	  , pIE     = __webpack_require__(22);
+	module.exports = function(it){
+	  var result     = getKeys(it)
+	    , getSymbols = gOPS.f;
+	  if(getSymbols){
+	    var symbols = getSymbols(it)
+	      , isEnum  = pIE.f
+	      , i       = 0
+	      , key;
+	    while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))result.push(key);
+	  } return result;
+	};
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(1).document && document.documentElement;
+
+/***/ },
+/* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for non-array-like ES3 and non-enumerable old V8 strings
+	var cof = __webpack_require__(32);
+	module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+	  return cof(it) == 'String' ? it.split('') : Object(it);
+	};
+
+/***/ },
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.2.2 IsArray(argument)
+	var cof = __webpack_require__(32);
+	module.exports = Array.isArray || function isArray(arg){
+	  return cof(arg) == 'Array';
+	};
+
+/***/ },
+/* 63 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var create         = __webpack_require__(37)
+	  , descriptor     = __webpack_require__(14)
+	  , setToStringTag = __webpack_require__(23)
+	  , IteratorPrototype = {};
+	
+	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+	__webpack_require__(7)(IteratorPrototype, __webpack_require__(9)('iterator'), function(){ return this; });
+	
+	module.exports = function(Constructor, NAME, next){
+	  Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
+	  setToStringTag(Constructor, NAME + ' Iterator');
+	};
+
+/***/ },
+/* 64 */
+/***/ function(module, exports) {
+
+	module.exports = function(done, value){
+	  return {value: value, done: !!done};
+	};
+
+/***/ },
+/* 65 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getKeys   = __webpack_require__(13)
+	  , toIObject = __webpack_require__(3);
+	module.exports = function(object, el){
+	  var O      = toIObject(object)
+	    , keys   = getKeys(O)
+	    , length = keys.length
+	    , index  = 0
+	    , key;
+	  while(length > index)if(O[key = keys[index++]] === el)return key;
+	};
+
+/***/ },
+/* 66 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var META     = __webpack_require__(15)('meta')
+	  , isObject = __webpack_require__(12)
+	  , has      = __webpack_require__(2)
+	  , setDesc  = __webpack_require__(8).f
+	  , id       = 0;
+	var isExtensible = Object.isExtensible || function(){
+	  return true;
+	};
+	var FREEZE = !__webpack_require__(11)(function(){
+	  return isExtensible(Object.preventExtensions({}));
+	});
+	var setMeta = function(it){
+	  setDesc(it, META, {value: {
+	    i: 'O' + ++id, // object ID
+	    w: {}          // weak collections IDs
+	  }});
+	};
+	var fastKey = function(it, create){
+	  // return primitive with prefix
+	  if(!isObject(it))return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+	  if(!has(it, META)){
+	    // can't set metadata to uncaught frozen object
+	    if(!isExtensible(it))return 'F';
+	    // not necessary to add metadata
+	    if(!create)return 'E';
+	    // add missing metadata
+	    setMeta(it);
+	  // return object ID
+	  } return it[META].i;
+	};
+	var getWeak = function(it, create){
+	  if(!has(it, META)){
+	    // can't set metadata to uncaught frozen object
+	    if(!isExtensible(it))return true;
+	    // not necessary to add metadata
+	    if(!create)return false;
+	    // add missing metadata
+	    setMeta(it);
+	  // return hash weak collections IDs
+	  } return it[META].w;
+	};
+	// add metadata on freeze-family methods calling
+	var onFreeze = function(it){
+	  if(FREEZE && meta.NEED && isExtensible(it) && !has(it, META))setMeta(it);
+	  return it;
+	};
+	var meta = module.exports = {
+	  KEY:      META,
+	  NEED:     false,
+	  fastKey:  fastKey,
+	  getWeak:  getWeak,
+	  onFreeze: onFreeze
+	};
+
+/***/ },
+/* 67 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var dP       = __webpack_require__(8)
+	  , anObject = __webpack_require__(10)
+	  , getKeys  = __webpack_require__(13);
+	
+	module.exports = __webpack_require__(6) ? Object.defineProperties : function defineProperties(O, Properties){
+	  anObject(O);
+	  var keys   = getKeys(Properties)
+	    , length = keys.length
+	    , i = 0
+	    , P;
+	  while(length > i)dP.f(O, P = keys[i++], Properties[P]);
+	  return O;
+	};
+
+/***/ },
+/* 68 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var pIE            = __webpack_require__(22)
+	  , createDesc     = __webpack_require__(14)
+	  , toIObject      = __webpack_require__(3)
+	  , toPrimitive    = __webpack_require__(27)
+	  , has            = __webpack_require__(2)
+	  , IE8_DOM_DEFINE = __webpack_require__(35)
+	  , gOPD           = Object.getOwnPropertyDescriptor;
+	
+	exports.f = __webpack_require__(6) ? gOPD : function getOwnPropertyDescriptor(O, P){
+	  O = toIObject(O);
+	  P = toPrimitive(P, true);
+	  if(IE8_DOM_DEFINE)try {
+	    return gOPD(O, P);
+	  } catch(e){ /* empty */ }
+	  if(has(O, P))return createDesc(!pIE.f.call(O, P), O[P]);
+	};
+
+/***/ },
+/* 69 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+	var toIObject = __webpack_require__(3)
+	  , gOPN      = __webpack_require__(38).f
+	  , toString  = {}.toString;
+	
+	var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+	  ? Object.getOwnPropertyNames(window) : [];
+	
+	var getWindowNames = function(it){
+	  try {
+	    return gOPN(it);
+	  } catch(e){
+	    return windowNames.slice();
+	  }
+	};
+	
+	module.exports.f = function getOwnPropertyNames(it){
+	  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
+	};
+
+
+/***/ },
+/* 70 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+	var has         = __webpack_require__(2)
+	  , toObject    = __webpack_require__(74)
+	  , IE_PROTO    = __webpack_require__(24)('IE_PROTO')
+	  , ObjectProto = Object.prototype;
+	
+	module.exports = Object.getPrototypeOf || function(O){
+	  O = toObject(O);
+	  if(has(O, IE_PROTO))return O[IE_PROTO];
+	  if(typeof O.constructor == 'function' && O instanceof O.constructor){
+	    return O.constructor.prototype;
+	  } return O instanceof Object ? ObjectProto : null;
+	};
+
+/***/ },
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(26)
+	  , defined   = __webpack_require__(18);
+	// true  -> String#at
+	// false -> String#codePointAt
+	module.exports = function(TO_STRING){
+	  return function(that, pos){
+	    var s = String(defined(that))
+	      , i = toInteger(pos)
+	      , l = s.length
+	      , a, b;
+	    if(i < 0 || i >= l)return TO_STRING ? '' : undefined;
+	    a = s.charCodeAt(i);
+	    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+	      ? TO_STRING ? s.charAt(i) : a
+	      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+	  };
+	};
+
+/***/ },
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toInteger = __webpack_require__(26)
+	  , max       = Math.max
+	  , min       = Math.min;
+	module.exports = function(index, length){
+	  index = toInteger(index);
+	  return index < 0 ? max(index + length, 0) : min(index, length);
+	};
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.15 ToLength
+	var toInteger = __webpack_require__(26)
+	  , min       = Math.min;
+	module.exports = function(it){
+	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+	};
+
+/***/ },
+/* 74 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(18);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ },
+/* 75 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var addToUnscopables = __webpack_require__(56)
+	  , step             = __webpack_require__(64)
+	  , Iterators        = __webpack_require__(20)
+	  , toIObject        = __webpack_require__(3);
+	
+	// 22.1.3.4 Array.prototype.entries()
+	// 22.1.3.13 Array.prototype.keys()
+	// 22.1.3.29 Array.prototype.values()
+	// 22.1.3.30 Array.prototype[@@iterator]()
+	module.exports = __webpack_require__(36)(Array, 'Array', function(iterated, kind){
+	  this._t = toIObject(iterated); // target
+	  this._i = 0;                   // next index
+	  this._k = kind;                // kind
+	// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , kind  = this._k
+	    , index = this._i++;
+	  if(!O || index >= O.length){
+	    this._t = undefined;
+	    return step(1);
+	  }
+	  if(kind == 'keys'  )return step(0, index);
+	  if(kind == 'values')return step(0, O[index]);
+	  return step(0, [index, O[index]]);
+	}, 'values');
+	
+	// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+	Iterators.Arguments = Iterators.Array;
+	
+	addToUnscopables('keys');
+	addToUnscopables('values');
+	addToUnscopables('entries');
+
+/***/ },
+/* 76 */
+/***/ function(module, exports) {
+
+
+
+/***/ },
+/* 77 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var $at  = __webpack_require__(71)(true);
+	
+	// 21.1.3.27 String.prototype[@@iterator]()
+	__webpack_require__(36)(String, 'String', function(iterated){
+	  this._t = String(iterated); // target
+	  this._i = 0;                // next index
+	// 21.1.5.2.1 %StringIteratorPrototype%.next()
+	}, function(){
+	  var O     = this._t
+	    , index = this._i
+	    , point;
+	  if(index >= O.length)return {value: undefined, done: true};
+	  point = $at(O, index);
+	  this._i += point.length;
+	  return {value: point, done: false};
+	});
+
+/***/ },
+/* 78 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	// ECMAScript 6 symbols shim
+	var global         = __webpack_require__(1)
+	  , has            = __webpack_require__(2)
+	  , DESCRIPTORS    = __webpack_require__(6)
+	  , $export        = __webpack_require__(34)
+	  , redefine       = __webpack_require__(41)
+	  , META           = __webpack_require__(66).KEY
+	  , $fails         = __webpack_require__(11)
+	  , shared         = __webpack_require__(25)
+	  , setToStringTag = __webpack_require__(23)
+	  , uid            = __webpack_require__(15)
+	  , wks            = __webpack_require__(9)
+	  , wksExt         = __webpack_require__(29)
+	  , wksDefine      = __webpack_require__(28)
+	  , keyOf          = __webpack_require__(65)
+	  , enumKeys       = __webpack_require__(59)
+	  , isArray        = __webpack_require__(62)
+	  , anObject       = __webpack_require__(10)
+	  , toIObject      = __webpack_require__(3)
+	  , toPrimitive    = __webpack_require__(27)
+	  , createDesc     = __webpack_require__(14)
+	  , _create        = __webpack_require__(37)
+	  , gOPNExt        = __webpack_require__(69)
+	  , $GOPD          = __webpack_require__(68)
+	  , $DP            = __webpack_require__(8)
+	  , $keys          = __webpack_require__(13)
+	  , gOPD           = $GOPD.f
+	  , dP             = $DP.f
+	  , gOPN           = gOPNExt.f
+	  , $Symbol        = global.Symbol
+	  , $JSON          = global.JSON
+	  , _stringify     = $JSON && $JSON.stringify
+	  , PROTOTYPE      = 'prototype'
+	  , HIDDEN         = wks('_hidden')
+	  , TO_PRIMITIVE   = wks('toPrimitive')
+	  , isEnum         = {}.propertyIsEnumerable
+	  , SymbolRegistry = shared('symbol-registry')
+	  , AllSymbols     = shared('symbols')
+	  , OPSymbols      = shared('op-symbols')
+	  , ObjectProto    = Object[PROTOTYPE]
+	  , USE_NATIVE     = typeof $Symbol == 'function'
+	  , QObject        = global.QObject;
+	// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+	var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+	
+	// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+	var setSymbolDesc = DESCRIPTORS && $fails(function(){
+	  return _create(dP({}, 'a', {
+	    get: function(){ return dP(this, 'a', {value: 7}).a; }
+	  })).a != 7;
+	}) ? function(it, key, D){
+	  var protoDesc = gOPD(ObjectProto, key);
+	  if(protoDesc)delete ObjectProto[key];
+	  dP(it, key, D);
+	  if(protoDesc && it !== ObjectProto)dP(ObjectProto, key, protoDesc);
+	} : dP;
+	
+	var wrap = function(tag){
+	  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
+	  sym._k = tag;
+	  return sym;
+	};
+	
+	var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function(it){
+	  return typeof it == 'symbol';
+	} : function(it){
+	  return it instanceof $Symbol;
+	};
+	
+	var $defineProperty = function defineProperty(it, key, D){
+	  if(it === ObjectProto)$defineProperty(OPSymbols, key, D);
+	  anObject(it);
+	  key = toPrimitive(key, true);
+	  anObject(D);
+	  if(has(AllSymbols, key)){
+	    if(!D.enumerable){
+	      if(!has(it, HIDDEN))dP(it, HIDDEN, createDesc(1, {}));
+	      it[HIDDEN][key] = true;
+	    } else {
+	      if(has(it, HIDDEN) && it[HIDDEN][key])it[HIDDEN][key] = false;
+	      D = _create(D, {enumerable: createDesc(0, false)});
+	    } return setSymbolDesc(it, key, D);
+	  } return dP(it, key, D);
+	};
+	var $defineProperties = function defineProperties(it, P){
+	  anObject(it);
+	  var keys = enumKeys(P = toIObject(P))
+	    , i    = 0
+	    , l = keys.length
+	    , key;
+	  while(l > i)$defineProperty(it, key = keys[i++], P[key]);
+	  return it;
+	};
+	var $create = function create(it, P){
+	  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+	};
+	var $propertyIsEnumerable = function propertyIsEnumerable(key){
+	  var E = isEnum.call(this, key = toPrimitive(key, true));
+	  if(this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key))return false;
+	  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+	};
+	var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key){
+	  it  = toIObject(it);
+	  key = toPrimitive(key, true);
+	  if(it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key))return;
+	  var D = gOPD(it, key);
+	  if(D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key]))D.enumerable = true;
+	  return D;
+	};
+	var $getOwnPropertyNames = function getOwnPropertyNames(it){
+	  var names  = gOPN(toIObject(it))
+	    , result = []
+	    , i      = 0
+	    , key;
+	  while(names.length > i){
+	    if(!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META)result.push(key);
+	  } return result;
+	};
+	var $getOwnPropertySymbols = function getOwnPropertySymbols(it){
+	  var IS_OP  = it === ObjectProto
+	    , names  = gOPN(IS_OP ? OPSymbols : toIObject(it))
+	    , result = []
+	    , i      = 0
+	    , key;
+	  while(names.length > i){
+	    if(has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true))result.push(AllSymbols[key]);
+	  } return result;
+	};
+	
+	// 19.4.1.1 Symbol([description])
+	if(!USE_NATIVE){
+	  $Symbol = function Symbol(){
+	    if(this instanceof $Symbol)throw TypeError('Symbol is not a constructor!');
+	    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
+	    var $set = function(value){
+	      if(this === ObjectProto)$set.call(OPSymbols, value);
+	      if(has(this, HIDDEN) && has(this[HIDDEN], tag))this[HIDDEN][tag] = false;
+	      setSymbolDesc(this, tag, createDesc(1, value));
+	    };
+	    if(DESCRIPTORS && setter)setSymbolDesc(ObjectProto, tag, {configurable: true, set: $set});
+	    return wrap(tag);
+	  };
+	  redefine($Symbol[PROTOTYPE], 'toString', function toString(){
+	    return this._k;
+	  });
+	
+	  $GOPD.f = $getOwnPropertyDescriptor;
+	  $DP.f   = $defineProperty;
+	  __webpack_require__(38).f = gOPNExt.f = $getOwnPropertyNames;
+	  __webpack_require__(22).f  = $propertyIsEnumerable;
+	  __webpack_require__(39).f = $getOwnPropertySymbols;
+	
+	  if(DESCRIPTORS && !__webpack_require__(21)){
+	    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+	  }
+	
+	  wksExt.f = function(name){
+	    return wrap(wks(name));
+	  }
+	}
+	
+	$export($export.G + $export.W + $export.F * !USE_NATIVE, {Symbol: $Symbol});
+	
+	for(var symbols = (
+	  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+	  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
+	).split(','), i = 0; symbols.length > i; )wks(symbols[i++]);
+	
+	for(var symbols = $keys(wks.store), i = 0; symbols.length > i; )wksDefine(symbols[i++]);
+	
+	$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
+	  // 19.4.2.1 Symbol.for(key)
+	  'for': function(key){
+	    return has(SymbolRegistry, key += '')
+	      ? SymbolRegistry[key]
+	      : SymbolRegistry[key] = $Symbol(key);
+	  },
+	  // 19.4.2.5 Symbol.keyFor(sym)
+	  keyFor: function keyFor(key){
+	    if(isSymbol(key))return keyOf(SymbolRegistry, key);
+	    throw TypeError(key + ' is not a symbol!');
+	  },
+	  useSetter: function(){ setter = true; },
+	  useSimple: function(){ setter = false; }
+	});
+	
+	$export($export.S + $export.F * !USE_NATIVE, 'Object', {
+	  // 19.1.2.2 Object.create(O [, Properties])
+	  create: $create,
+	  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+	  defineProperty: $defineProperty,
+	  // 19.1.2.3 Object.defineProperties(O, Properties)
+	  defineProperties: $defineProperties,
+	  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+	  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+	  // 19.1.2.7 Object.getOwnPropertyNames(O)
+	  getOwnPropertyNames: $getOwnPropertyNames,
+	  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+	  getOwnPropertySymbols: $getOwnPropertySymbols
+	});
+	
+	// 24.3.2 JSON.stringify(value [, replacer [, space]])
+	$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function(){
+	  var S = $Symbol();
+	  // MS Edge converts symbol values to JSON as {}
+	  // WebKit converts symbol values to JSON as null
+	  // V8 throws on boxed symbols
+	  return _stringify([S]) != '[null]' || _stringify({a: S}) != '{}' || _stringify(Object(S)) != '{}';
+	})), 'JSON', {
+	  stringify: function stringify(it){
+	    if(it === undefined || isSymbol(it))return; // IE8 returns string on undefined
+	    var args = [it]
+	      , i    = 1
+	      , replacer, $replacer;
+	    while(arguments.length > i)args.push(arguments[i++]);
+	    replacer = args[1];
+	    if(typeof replacer == 'function')$replacer = replacer;
+	    if($replacer || !isArray(replacer))replacer = function(key, value){
+	      if($replacer)value = $replacer.call(this, key, value);
+	      if(!isSymbol(value))return value;
+	    };
+	    args[1] = replacer;
+	    return _stringify.apply($JSON, args);
+	  }
+	});
+	
+	// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
+	$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(7)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+	// 19.4.3.5 Symbol.prototype[@@toStringTag]
+	setToStringTag($Symbol, 'Symbol');
+	// 20.2.1.9 Math[@@toStringTag]
+	setToStringTag(Math, 'Math', true);
+	// 24.3.3 JSON[@@toStringTag]
+	setToStringTag(global.JSON, 'JSON', true);
+
+/***/ },
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(28)('asyncIterator');
+
+/***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(28)('observable');
+
+/***/ },
+/* 81 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(75);
+	var global        = __webpack_require__(1)
+	  , hide          = __webpack_require__(7)
+	  , Iterators     = __webpack_require__(20)
+	  , TO_STRING_TAG = __webpack_require__(9)('toStringTag');
+	
+	for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
+	  var NAME       = collections[i]
+	    , Collection = global[NAME]
+	    , proto      = Collection && Collection.prototype;
+	  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
+	  Iterators[NAME] = Iterators.Array;
+	}
+
+/***/ },
+/* 82 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "\n.ui.dropdown[data-v-013c337e] {\n  min-height: 14px !important;\n}\n.ui.dropdown .text[data-v-013c337e] {\n  font-size: 14px !important;\n}\n.ui.dropdown .menu > .item[data-v-013c337e] {\n  font-size: 14px !important;\n}\n.ui.search.selection.dropdown > input.search[data-v-013c337e] {\n  font-size: 14px !important;\n  line-height: 14px !important;\n}\n.ui.selection.dropdown .menu[data-v-013c337e] {\n  min-width: calc(100%) !important;\n  width: calc(100%) !important;\n}\n.ui.fluid.dropdown[data-v-013c337e] {\n  width: auto;\n}\n.ui.label > .delete.icon[data-v-013c337e]:after {\n  content: \"x\";\n  color: #266d4d;\n  font-size: 16px;\n  font-style: normal;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05);\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 14 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(1)();
+	exports = module.exports = __webpack_require__(4)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "/*!\n * # Semantic UI 2.2.3 - Dropdown\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n            Dropdown\n*******************************/\n.ui.dropdown[data-v-013c337e] {\n  cursor: pointer;\n  position: relative;\n  display: inline-block;\n  outline: none;\n  text-align: left;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n\n/*******************************\n            Content\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n.ui.dropdown .menu[data-v-013c337e] {\n  cursor: auto;\n  position: absolute;\n  display: none;\n  outline: none;\n  top: 100%;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  margin: 0em;\n  padding: 0em 0em;\n  background: #FFFFFF;\n  font-size: 1em;\n  text-shadow: none;\n  text-align: left;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n  z-index: 11;\n  will-change: transform, opacity;\n}\n.ui.dropdown .menu > *[data-v-013c337e] {\n  white-space: nowrap;\n}\n\n/*--------------\n  Hidden Input\n---------------*/\n.ui.dropdown > input[data-v-013c337e]:not(.search):first-child,\n.ui.dropdown > select[data-v-013c337e] {\n  display: none !important;\n}\n\n/*--------------\n Dropdown Icon\n---------------*/\n.ui.dropdown > .dropdown.icon[data-v-013c337e] {\n  position: relative;\n  width: auto;\n  font-size: 0.85714286em;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon[data-v-013c337e] {\n  width: auto;\n  float: right;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon + .text[data-v-013c337e] {\n  margin-right: 1em;\n}\n\n/*--------------\n      Text\n---------------*/\n.ui.dropdown > .text[data-v-013c337e] {\n  display: inline-block;\n  -webkit-transition: none;\n  transition: none;\n}\n\n/*--------------\n    Menu Item\n---------------*/\n.ui.dropdown .menu > .item[data-v-013c337e] {\n  position: relative;\n  cursor: pointer;\n  display: block;\n  border: none;\n  height: auto;\n  text-align: left;\n  border-top: none;\n  line-height: 1em;\n  color: rgba(0, 0, 0, 0.87);\n  padding: 0.78571429rem 1.14285714rem !important;\n  font-size: 1rem;\n  text-transform: none;\n  font-weight: normal;\n  box-shadow: none;\n  -webkit-touch-callout: none;\n}\n.ui.dropdown .menu > .item[data-v-013c337e]:first-child {\n  border-top-width: 0px;\n}\n\n/*--------------\n  Floated Content\n---------------*/\n.ui.dropdown > .text > [class*=\"right floated\"][data-v-013c337e],\n.ui.dropdown .menu .item > [class*=\"right floated\"][data-v-013c337e] {\n  float: right !important;\n  margin-right: 0em !important;\n  margin-left: 1em !important;\n}\n.ui.dropdown > .text > [class*=\"left floated\"][data-v-013c337e],\n.ui.dropdown .menu .item > [class*=\"left floated\"][data-v-013c337e] {\n  float: left !important;\n  margin-left: 0em !important;\n  margin-right: 1em !important;\n}\n.ui.dropdown .menu .item > .icon.floated[data-v-013c337e],\n.ui.dropdown .menu .item > .flag.floated[data-v-013c337e],\n.ui.dropdown .menu .item > .image.floated[data-v-013c337e],\n.ui.dropdown .menu .item > img.floated[data-v-013c337e] {\n  margin-top: 0em;\n}\n\n/*--------------\n  Menu Divider\n---------------*/\n.ui.dropdown .menu > .header[data-v-013c337e] {\n  margin: 1rem 0rem 0.75rem;\n  padding: 0em 1.14285714rem;\n  color: rgba(0, 0, 0, 0.85);\n  font-size: 0.78571429em;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.ui.dropdown .menu > .divider[data-v-013c337e] {\n  border-top: 1px solid rgba(34, 36, 38, 0.1);\n  height: 0em;\n  margin: 0.5em 0em;\n}\n.ui.dropdown .menu > .input[data-v-013c337e] {\n  width: auto;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 1.14285714rem 0.78571429rem;\n  min-width: 10rem;\n}\n.ui.dropdown .menu > .header + .input[data-v-013c337e] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .input:not(.transparent) input[data-v-013c337e] {\n  padding: 0.5em 1em;\n}\n.ui.dropdown .menu > .input:not(.transparent) .button[data-v-013c337e],\n.ui.dropdown .menu > .input:not(.transparent) .icon[data-v-013c337e],\n.ui.dropdown .menu > .input:not(.transparent) .label[data-v-013c337e] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n\n/*-----------------\n  Item Description\n-------------------*/\n.ui.dropdown > .text > .description[data-v-013c337e],\n.ui.dropdown .menu > .item > .description[data-v-013c337e] {\n  float: right;\n  margin: 0em 0em 0em 1em;\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*-----------------\n       Message\n-------------------*/\n.ui.dropdown .menu > .message[data-v-013c337e] {\n  padding: 0.78571429rem 1.14285714rem;\n  font-weight: normal;\n}\n.ui.dropdown .menu > .message[data-v-013c337e]:not(.ui) {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*--------------\n    Sub Menu\n---------------*/\n.ui.dropdown .menu .menu[data-v-013c337e] {\n  top: 0% !important;\n  left: 100% !important;\n  right: auto !important;\n  margin: 0em 0em 0em -0.5em !important;\n  border-radius: 0.28571429rem !important;\n  z-index: 21 !important;\n}\n\n/* Hide Arrow */\n.ui.dropdown .menu .menu[data-v-013c337e]:after {\n  display: none;\n}\n\n/*--------------\n   Sub Elements\n---------------*/\n\n\n/* Icons / Flags / Labels / Image */\n.ui.dropdown > .text > .icon[data-v-013c337e],\n.ui.dropdown > .text > .label[data-v-013c337e],\n.ui.dropdown > .text > .flag[data-v-013c337e],\n.ui.dropdown > .text > img[data-v-013c337e],\n.ui.dropdown > .text > .image[data-v-013c337e] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .item > .icon[data-v-013c337e],\n.ui.dropdown .menu > .item > .label[data-v-013c337e],\n.ui.dropdown .menu > .item > .flag[data-v-013c337e],\n.ui.dropdown .menu > .item > .image[data-v-013c337e],\n.ui.dropdown .menu > .item > img[data-v-013c337e] {\n  margin-top: 0em;\n}\n.ui.dropdown > .text > .icon[data-v-013c337e],\n.ui.dropdown > .text > .label[data-v-013c337e],\n.ui.dropdown > .text > .flag[data-v-013c337e],\n.ui.dropdown > .text > img[data-v-013c337e],\n.ui.dropdown > .text > .image[data-v-013c337e],\n.ui.dropdown .menu > .item > .icon[data-v-013c337e],\n.ui.dropdown .menu > .item > .label[data-v-013c337e],\n.ui.dropdown .menu > .item > .flag[data-v-013c337e],\n.ui.dropdown .menu > .item > .image[data-v-013c337e],\n.ui.dropdown .menu > .item > img[data-v-013c337e] {\n  margin-left: 0em;\n  float: none;\n  margin-right: 0.78571429rem;\n}\n\n/*--------------\n     Image\n---------------*/\n.ui.dropdown > .text > img[data-v-013c337e],\n.ui.dropdown > .text > .image[data-v-013c337e],\n.ui.dropdown .menu > .item > .image[data-v-013c337e],\n.ui.dropdown .menu > .item > img[data-v-013c337e] {\n  display: inline-block;\n  vertical-align: middle;\n  width: auto;\n  max-height: 2em;\n}\n\n\n/*******************************\n            Coupling\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n\n\n/* Remove Menu Item Divider */\n.ui.dropdown .ui.menu > .item[data-v-013c337e]:before,\n.ui.menu .ui.dropdown .menu > .item[data-v-013c337e]:before {\n  display: none;\n}\n\n/* Prevent Menu Item Border */\n.ui.menu .ui.dropdown .menu .active.item[data-v-013c337e] {\n  border-left: none;\n}\n\n/* Automatically float dropdown menu right on last menu item */\n.ui.menu .right.menu .dropdown:last-child .menu[data-v-013c337e],\n.ui.menu .right.dropdown.item .menu[data-v-013c337e],\n.ui.buttons > .ui.dropdown:last-child .menu[data-v-013c337e] {\n  left: auto;\n  right: 0em;\n}\n\n/*--------------\n      Label\n---------------*/\n\n\n/* Dropdown Menu */\n.ui.label.dropdown .menu[data-v-013c337e] {\n  min-width: 100%;\n}\n\n/*--------------\n     Button\n---------------*/\n\n\n/* No Margin On Icon Button */\n.ui.dropdown.icon.button > .dropdown.icon[data-v-013c337e] {\n  margin: 0em;\n}\n.ui.button.dropdown .menu[data-v-013c337e] {\n  min-width: 100%;\n}\n\n\n/*******************************\n              Types\n*******************************/\n\n\n/*--------------\n    Selection\n---------------*/\n\n\n/* Displays like a select box */\n.ui.selection.dropdown[data-v-013c337e] {\n  cursor: pointer;\n  word-wrap: break-word;\n  line-height: 1em;\n  white-space: normal;\n  outline: 0;\n  -webkit-transform: rotateZ(0deg);\n      -ms-transform: rotate(0deg);\n          transform: rotateZ(0deg);\n  min-width: 14em;\n  min-height: 2.7142em;\n  background: #FFFFFF;\n  display: inline-block;\n  padding: 0.78571429em 2.1em 0.78571429em 1em;\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n}\n.ui.selection.dropdown.visible[data-v-013c337e],\n.ui.selection.dropdown.active[data-v-013c337e] {\n  z-index: 10;\n}\nselect.ui.dropdown[data-v-013c337e] {\n  height: 38px;\n  padding: 0.5em;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  visibility: visible;\n}\n.ui.selection.dropdown > .search.icon[data-v-013c337e],\n.ui.selection.dropdown > .delete.icon[data-v-013c337e],\n.ui.selection.dropdown > .dropdown.icon[data-v-013c337e] {\n  cursor: pointer;\n  position: absolute;\n  width: auto;\n  height: auto;\n  line-height: 1.2142em;\n  top: 0.78571429em;\n  right: 1em;\n  z-index: 3;\n  margin: -0.78571429em;\n  padding: 0.78571429em;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n/* Compact */\n.ui.compact.selection.dropdown[data-v-013c337e] {\n  min-width: 0px;\n}\n\n/*  Selection Menu */\n.ui.selection.dropdown .menu[data-v-013c337e] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  border-top-width: 0px !important;\n  width: auto;\n  outline: none;\n  margin: 0px -1px;\n  min-width: calc(100% +  2px );\n  width: calc(100% +  2px );\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.selection.dropdown .menu[data-v-013c337e]:after,\n.ui.selection.dropdown .menu[data-v-013c337e]:before {\n  display: none;\n}\n\n/*--------------\n    Message\n---------------*/\n.ui.selection.dropdown .menu > .message[data-v-013c337e] {\n  padding: 0.78571429rem 1.14285714rem;\n}\n@media only screen and (max-width: 767px) {\n.ui.selection.dropdown .menu[data-v-013c337e] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.selection.dropdown .menu[data-v-013c337e] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.selection.dropdown .menu[data-v-013c337e] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.selection.dropdown .menu[data-v-013c337e] {\n    max-height: 21.37142857rem;\n}\n}\n\n/* Menu Item */\n.ui.selection.dropdown .menu > .item[data-v-013c337e] {\n  border-top: 1px solid #FAFAFA;\n  padding: 0.78571429rem 1.14285714rem !important;\n  white-space: normal;\n  word-wrap: normal;\n}\n\n/* User Item */\n.ui.selection.dropdown .menu > .hidden.addition.item[data-v-013c337e] {\n  display: none;\n}\n\n/* Hover */\n.ui.selection.dropdown[data-v-013c337e]:hover {\n  border-color: rgba(34, 36, 38, 0.35);\n  box-shadow: none;\n}\n\n/* Active */\n.ui.selection.active.dropdown[data-v-013c337e] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown .menu[data-v-013c337e] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Focus */\n.ui.selection.dropdown[data-v-013c337e]:focus {\n  border-color: #96C8DA;\n  box-shadow: none;\n}\n.ui.selection.dropdown:focus .menu[data-v-013c337e] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Visible */\n.ui.selection.visible.dropdown > .text[data-v-013c337e]:not(.default) {\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/* Visible Hover */\n.ui.selection.active.dropdown[data-v-013c337e]:hover {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown:hover .menu[data-v-013c337e] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Dropdown Icon */\n.ui.active.selection.dropdown > .dropdown.icon[data-v-013c337e],\n.ui.visible.selection.dropdown > .dropdown.icon[data-v-013c337e] {\n  opacity: 1;\n  z-index: 3;\n}\n\n/* Connecting Border */\n.ui.active.selection.dropdown[data-v-013c337e] {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n\n/* Empty Connecting Border */\n.ui.active.empty.selection.dropdown[data-v-013c337e] {\n  border-radius: 0.28571429rem !important;\n  box-shadow: none !important;\n}\n.ui.active.empty.selection.dropdown .menu[data-v-013c337e] {\n  border: none !important;\n  box-shadow: none !important;\n}\n\n/*--------------\n   Searchable\n---------------*/\n\n\n/* Search Selection */\n.ui.search.dropdown[data-v-013c337e] {\n  min-width: '';\n}\n\n/* Search Dropdown */\n.ui.search.dropdown > input.search[data-v-013c337e] {\n  background: none transparent !important;\n  border: none !important;\n  box-shadow: none !important;\n  cursor: text;\n  top: 0em;\n  left: 1px;\n  width: 100%;\n  outline: none;\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n  padding: inherit;\n}\n\n/* Text Layering */\n.ui.search.dropdown > input.search[data-v-013c337e] {\n  position: absolute;\n  z-index: 2;\n}\n.ui.search.dropdown > .text[data-v-013c337e] {\n  cursor: text;\n  position: relative;\n  left: 1px;\n  z-index: 3;\n}\n\n/* Search Selection */\n.ui.search.selection.dropdown > input.search[data-v-013c337e] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n}\n\n/* Used to size multi select input to character width */\n.ui.search.selection.dropdown > span.sizer[data-v-013c337e] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n  display: none;\n  white-space: pre;\n}\n\n/* Active/Visible Search */\n.ui.search.dropdown.active > input.search[data-v-013c337e],\n.ui.search.dropdown.visible > input.search[data-v-013c337e] {\n  cursor: auto;\n}\n.ui.search.dropdown.active > .text[data-v-013c337e],\n.ui.search.dropdown.visible > .text[data-v-013c337e] {\n  pointer-events: none;\n}\n\n/* Filtered Text */\n.ui.active.search.dropdown input.search:focus + .text .icon[data-v-013c337e],\n.ui.active.search.dropdown input.search:focus + .text .flag[data-v-013c337e] {\n  opacity: 0.45;\n}\n.ui.active.search.dropdown input.search:focus + .text[data-v-013c337e] {\n  color: rgba(115, 115, 115, 0.87) !important;\n}\n\n/* Search Menu */\n.ui.search.dropdown .menu[data-v-013c337e] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n@media only screen and (max-width: 767px) {\n.ui.search.dropdown .menu[data-v-013c337e] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.search.dropdown .menu[data-v-013c337e] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.search.dropdown .menu[data-v-013c337e] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.search.dropdown .menu[data-v-013c337e] {\n    max-height: 21.37142857rem;\n}\n}\n\n/*--------------\n    Multiple\n---------------*/\n\n\n/* Multiple Selection */\n.ui.multiple.dropdown[data-v-013c337e] {\n  padding: 0.22620476em 2.1em 0.22620476em 0.35714286em;\n}\n.ui.multiple.dropdown .menu[data-v-013c337e] {\n  cursor: auto;\n}\n\n/* Multiple Search Selection */\n.ui.multiple.search.dropdown[data-v-013c337e],\n.ui.multiple.search.dropdown > input.search[data-v-013c337e] {\n  cursor: text;\n}\n\n/* Selection Label */\n.ui.multiple.dropdown > .label[data-v-013c337e] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  display: inline-block;\n  vertical-align: top;\n  white-space: normal;\n  font-size: 1em;\n  padding: 0.35714286em 0.78571429em;\n  margin: 0.14285714rem 0.28571429rem 0.14285714rem 0em;\n  box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;\n}\n\n/* Dropdown Icon */\n.ui.multiple.dropdown .dropdown.icon[data-v-013c337e] {\n  margin: '';\n  padding: '';\n}\n\n/* Text */\n.ui.multiple.dropdown > .text[data-v-013c337e] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.dropdown > .label ~ input.search[data-v-013c337e] {\n  margin-left: 0.14285714em !important;\n}\n.ui.multiple.dropdown > .label ~ .text[data-v-013c337e] {\n  display: none;\n}\n\n/*-----------------\n  Multiple Search\n-----------------*/\n\n\n/* Prompt Text */\n.ui.multiple.search.dropdown > .text[data-v-013c337e] {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: inherit;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.search.dropdown > .label ~ .text[data-v-013c337e] {\n  display: none;\n}\n\n/* Search */\n.ui.multiple.search.dropdown > input.search[data-v-013c337e] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  width: 2.2em;\n  line-height: 1.21428571em;\n}\n\n/*--------------\n     Inline\n---------------*/\n.ui.inline.dropdown[data-v-013c337e] {\n  cursor: pointer;\n  display: inline-block;\n  color: inherit;\n}\n.ui.inline.dropdown .dropdown.icon[data-v-013c337e] {\n  margin: 0em 0.5em 0em 0.21428571em;\n  vertical-align: baseline;\n}\n.ui.inline.dropdown > .text[data-v-013c337e] {\n  font-weight: bold;\n}\n.ui.inline.dropdown .menu[data-v-013c337e] {\n  cursor: auto;\n  margin-top: 0.21428571em;\n  border-radius: 0.28571429rem;\n}\n\n\n/*******************************\n            States\n*******************************/\n\n\n/*--------------------\n        Active\n----------------------*/\n\n\n/* Menu Item Active */\n.ui.dropdown .menu .active.item[data-v-013c337e] {\n  background: transparent;\n  font-weight: bold;\n  color: rgba(0, 0, 0, 0.95);\n  box-shadow: none;\n  z-index: 12;\n}\n\n/*--------------------\n        Hover\n----------------------*/\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item[data-v-013c337e]:hover {\n  background: rgba(0, 0, 0, 0.05);\n  color: rgba(0, 0, 0, 0.95);\n  z-index: 13;\n}\n\n/*--------------------\n       Loading\n---------------------*/\n.ui.loading.dropdown > i.icon[data-v-013c337e] {\n  height: 1em !important;\n  padding: 1.14285714em 1.07142857em !important;\n}\n.ui.loading.dropdown > i.icon[data-v-013c337e]:before {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  border-radius: 500rem;\n  border: 0.2em solid rgba(0, 0, 0, 0.1);\n}\n.ui.loading.dropdown > i.icon[data-v-013c337e]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  box-shadow: 0px 0px 0px 1px transparent;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  -webkit-animation: dropdown-spin 0.6s linear;\n          animation: dropdown-spin 0.6s linear;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  border-radius: 500rem;\n  border-color: #767676 transparent transparent;\n  border-style: solid;\n  border-width: 0.2em;\n}\n\n/* Coupling */\n.ui.loading.dropdown.button > i.icon[data-v-013c337e]:before,\n.ui.loading.dropdown.button > i.icon[data-v-013c337e]:after {\n  display: none;\n}\n@-webkit-keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n\n/*--------------------\n     Default Text\n----------------------*/\n.ui.dropdown:not(.button) > .default.text[data-v-013c337e],\n.ui.default.dropdown:not(.button) > .text[data-v-013c337e] {\n  color: rgba(191, 191, 191, 0.87);\n}\n.ui.dropdown:not(.button) > input:focus + .default.text[data-v-013c337e],\n.ui.default.dropdown:not(.button) > input:focus + .text[data-v-013c337e] {\n  color: rgba(115, 115, 115, 0.87);\n}\n\n/*--------------------\n        Loading\n----------------------*/\n.ui.loading.dropdown > .text[data-v-013c337e] {\n  -webkit-transition: none;\n  transition: none;\n}\n\n/* Used To Check Position */\n.ui.dropdown .loading.menu[data-v-013c337e] {\n  display: block;\n  visibility: hidden;\n  z-index: -1;\n}\n\n/*--------------------\n    Keyboard Select\n----------------------*/\n\n\n/* Selected Item */\n.ui.dropdown.selected[data-v-013c337e],\n.ui.dropdown .menu .selected.item[data-v-013c337e] {\n  background: rgba(0, 0, 0, 0.03);\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*--------------------\n    Search Filtered\n----------------------*/\n\n\n/* Filtered Item */\n.ui.dropdown > .filtered.text[data-v-013c337e] {\n  visibility: hidden;\n}\n.ui.dropdown .filtered.item[data-v-013c337e] {\n  display: none !important;\n}\n\n/*--------------------\n        Error\n----------------------*/\n.ui.dropdown.error[data-v-013c337e],\n.ui.dropdown.error > .text[data-v-013c337e],\n.ui.dropdown.error > .default.text[data-v-013c337e] {\n  color: #9F3A38;\n}\n.ui.selection.dropdown.error[data-v-013c337e] {\n  background: #FFF6F6;\n  border-color: #E0B4B4;\n}\n.ui.selection.dropdown.error[data-v-013c337e]:hover {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu[data-v-013c337e],\n.ui.dropdown.error > .menu .menu[data-v-013c337e] {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu > .item[data-v-013c337e] {\n  color: #9F3A38;\n}\n.ui.multiple.selection.error.dropdown > .label[data-v-013c337e] {\n  border-color: #E0B4B4;\n}\n\n/* Item Hover */\n.ui.dropdown.error > .menu > .item[data-v-013c337e]:hover {\n  background-color: #FFF2F2;\n}\n\n/* Item Active */\n.ui.dropdown.error > .menu .active.item[data-v-013c337e] {\n  background-color: #FDCFCF;\n}\n\n/*--------------------\n        Disabled\n----------------------*/\n\n\n/* Disabled */\n.ui.disabled.dropdown[data-v-013c337e],\n.ui.dropdown .menu > .disabled.item[data-v-013c337e] {\n  cursor: default;\n  pointer-events: none;\n  opacity: 0.45;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*--------------\n    Direction\n---------------*/\n\n\n/* Flyout Direction */\n.ui.dropdown .menu[data-v-013c337e] {\n  left: 0px;\n}\n\n/* Default Side (Right) */\n.ui.dropdown .right.menu > .menu[data-v-013c337e],\n.ui.dropdown .menu .right.menu[data-v-013c337e] {\n  left: 100% !important;\n  right: auto !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/* Left Flyout Menu */\n.ui.dropdown > .left.menu .menu[data-v-013c337e],\n.ui.dropdown .menu .left.menu[data-v-013c337e] {\n  left: auto !important;\n  right: 100% !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-013c337e],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-013c337e] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-013c337e],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-013c337e] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon + .text[data-v-013c337e],\n.ui.dropdown .left.menu .item .dropdown.icon + .text[data-v-013c337e] {\n  margin-left: 1em;\n}\n\n/*--------------\n     Upward\n---------------*/\n\n\n/* Upward Main Menu */\n.ui.upward.dropdown > .menu[data-v-013c337e] {\n  top: auto;\n  bottom: 100%;\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Upward Sub Menu */\n.ui.dropdown .upward.menu[data-v-013c337e] {\n  top: auto !important;\n  bottom: 0 !important;\n}\n\n/* Active Upward */\n.ui.simple.upward.active.dropdown[data-v-013c337e],\n.ui.simple.upward.dropdown[data-v-013c337e]:hover {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em !important;\n}\n.ui.upward.dropdown.button:not(.pointing):not(.floating).active[data-v-013c337e] {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Selection */\n.ui.upward.selection.dropdown .menu[data-v-013c337e] {\n  border-top-width: 1px !important;\n  border-bottom-width: 0px !important;\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n.ui.upward.selection.dropdown[data-v-013c337e]:hover {\n  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.05);\n}\n\n/* Active Upward */\n.ui.active.upward.selection.dropdown[data-v-013c337e] {\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Upward */\n.ui.upward.selection.dropdown.visible[data-v-013c337e] {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Hover Upward */\n.ui.upward.active.selection.dropdown[data-v-013c337e]:hover {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.05);\n}\n.ui.upward.active.selection.dropdown:hover .menu[data-v-013c337e] {\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/*  Selection Menu */\n.ui.scrolling.dropdown .menu[data-v-013c337e],\n.ui.dropdown .scrolling.menu[data-v-013c337e] {\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.ui.scrolling.dropdown .menu[data-v-013c337e] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  min-width: 100% !important;\n  width: auto !important;\n}\n.ui.dropdown .scrolling.menu[data-v-013c337e] {\n  position: static;\n  overflow-y: auto;\n  border: none;\n  box-shadow: none !important;\n  border-radius: 0 !important;\n  margin: 0 !important;\n  min-width: 100% !important;\n  width: auto !important;\n  border-top: 1px solid rgba(34, 36, 38, 0.15);\n}\n.ui.scrolling.dropdown .menu .item.item.item[data-v-013c337e],\n.ui.dropdown .scrolling.menu > .item.item.item[data-v-013c337e] {\n  border-top: none;\n  padding-right: calc( 1.14285714rem  +  17px ) !important;\n}\n.ui.scrolling.dropdown .menu .item[data-v-013c337e]:first-child,\n.ui.dropdown .scrolling.menu .item[data-v-013c337e]:first-child {\n  border-top: none;\n}\n.ui.dropdown > .animating.menu .scrolling.menu[data-v-013c337e],\n.ui.dropdown > .visible.menu .scrolling.menu[data-v-013c337e] {\n  display: block;\n}\n\n/* Scrollbar in IE */\n@media all and (-ms-high-contrast: none) {\n.ui.scrolling.dropdown .menu[data-v-013c337e],\n  .ui.dropdown .scrolling.menu[data-v-013c337e] {\n    min-width: calc(100% -  17px );\n}\n}\n@media only screen and (max-width: 767px) {\n.ui.scrolling.dropdown .menu[data-v-013c337e],\n  .ui.dropdown .scrolling.menu[data-v-013c337e] {\n    max-height: 10.28571429rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.scrolling.dropdown .menu[data-v-013c337e],\n  .ui.dropdown .scrolling.menu[data-v-013c337e] {\n    max-height: 15.42857143rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.scrolling.dropdown .menu[data-v-013c337e],\n  .ui.dropdown .scrolling.menu[data-v-013c337e] {\n    max-height: 20.57142857rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.scrolling.dropdown .menu[data-v-013c337e],\n  .ui.dropdown .scrolling.menu[data-v-013c337e] {\n    max-height: 20.57142857rem;\n}\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/* Displays without javascript */\n.ui.simple.dropdown .menu[data-v-013c337e]:before,\n.ui.simple.dropdown .menu[data-v-013c337e]:after {\n  display: none;\n}\n.ui.simple.dropdown .menu[data-v-013c337e] {\n  position: absolute;\n  display: block;\n  overflow: hidden;\n  top: -9999px !important;\n  opacity: 0;\n  width: 0;\n  height: 0;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.simple.active.dropdown[data-v-013c337e],\n.ui.simple.dropdown[data-v-013c337e]:hover {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n.ui.simple.active.dropdown > .menu[data-v-013c337e],\n.ui.simple.dropdown:hover > .menu[data-v-013c337e] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 100% !important;\n  opacity: 1;\n}\n.ui.simple.dropdown > .menu > .item:active > .menu[data-v-013c337e],\n.ui.simple.dropdown:hover > .menu > .item:hover > .menu[data-v-013c337e] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 0% !important;\n  left: 100% !important;\n  opacity: 1;\n}\n.ui.simple.disabled.dropdown:hover .menu[data-v-013c337e] {\n  display: none;\n  height: 0px;\n  width: 0px;\n  overflow: hidden;\n}\n\n/* Visible */\n.ui.simple.visible.dropdown > .menu[data-v-013c337e] {\n  display: block;\n}\n\n/*--------------\n      Fluid\n---------------*/\n.ui.fluid.dropdown[data-v-013c337e] {\n  display: block;\n  width: 100%;\n  min-width: 0em;\n}\n.ui.fluid.dropdown > .dropdown.icon[data-v-013c337e] {\n  float: right;\n}\n\n/*--------------\n    Floating\n---------------*/\n.ui.floating.dropdown .menu[data-v-013c337e] {\n  left: 0;\n  right: auto;\n  box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15) !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.floating.dropdown > .menu[data-v-013c337e] {\n  margin-top: 0.5em !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/*--------------\n     Pointing\n---------------*/\n.ui.pointing.dropdown > .menu[data-v-013c337e] {\n  top: 100%;\n  margin-top: 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.pointing.dropdown > .menu[data-v-013c337e]:after {\n  display: block;\n  position: absolute;\n  pointer-events: none;\n  content: '';\n  visibility: visible;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n  width: 0.5em;\n  height: 0.5em;\n  box-shadow: -1px -1px 0px 1px rgba(34, 36, 38, 0.15);\n  background: #FFFFFF;\n  z-index: 2;\n}\n.ui.pointing.dropdown > .menu[data-v-013c337e]:after {\n  top: -0.25em;\n  left: 50%;\n  margin: 0em 0em 0em -0.25em;\n}\n\n/* Top Left Pointing */\n.ui.top.left.pointing.dropdown > .menu[data-v-013c337e] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-013c337e] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-013c337e]:after {\n  top: -0.25em;\n  left: 1em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Top Right  Pointing */\n.ui.top.right.pointing.dropdown > .menu[data-v-013c337e] {\n  top: 100%;\n  bottom: auto;\n  right: 0%;\n  left: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.right.pointing.dropdown > .menu[data-v-013c337e]:after {\n  top: -0.25em;\n  left: auto;\n  right: 1em;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Left Pointing */\n.ui.left.pointing.dropdown > .menu[data-v-013c337e] {\n  top: 0%;\n  left: 100%;\n  right: auto;\n  margin: 0em 0em 0em 1em;\n}\n.ui.left.pointing.dropdown > .menu[data-v-013c337e]:after {\n  top: 1em;\n  left: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(-45deg);\n      -ms-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n}\n\n/* Right Pointing */\n.ui.right.pointing.dropdown > .menu[data-v-013c337e] {\n  top: 0%;\n  left: auto;\n  right: 100%;\n  margin: 0em 1em 0em 0em;\n}\n.ui.right.pointing.dropdown > .menu[data-v-013c337e]:after {\n  top: 1em;\n  left: auto;\n  right: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(135deg);\n      -ms-transform: rotate(135deg);\n          transform: rotate(135deg);\n}\n\n/* Bottom Pointing */\n.ui.bottom.pointing.dropdown > .menu[data-v-013c337e] {\n  top: auto;\n  bottom: 100%;\n  left: 0%;\n  right: auto;\n  margin: 0em 0em 1em;\n}\n.ui.bottom.pointing.dropdown > .menu[data-v-013c337e]:after {\n  top: auto;\n  bottom: -0.25em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(-135deg);\n      -ms-transform: rotate(-135deg);\n          transform: rotate(-135deg);\n}\n\n/* Reverse Sub-Menu Direction */\n.ui.bottom.pointing.dropdown > .menu .menu[data-v-013c337e] {\n  top: auto !important;\n  bottom: 0px !important;\n}\n\n/* Bottom Left */\n.ui.bottom.left.pointing.dropdown > .menu[data-v-013c337e] {\n  left: 0%;\n  right: auto;\n}\n.ui.bottom.left.pointing.dropdown > .menu[data-v-013c337e]:after {\n  left: 1em;\n  right: auto;\n}\n\n/* Bottom Right */\n.ui.bottom.right.pointing.dropdown > .menu[data-v-013c337e] {\n  right: 0%;\n  left: auto;\n}\n.ui.bottom.right.pointing.dropdown > .menu[data-v-013c337e]:after {\n  left: auto;\n  right: 1em;\n}\n\n/* Upward pointing */\n.ui.upward.pointing.dropdown > .menu[data-v-013c337e],\n.ui.upward.top.pointing.dropdown > .menu[data-v-013c337e] {\n  top: auto;\n  bottom: 100%;\n  margin: 0em 0em 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.upward.pointing.dropdown > .menu[data-v-013c337e]:after,\n.ui.upward.top.pointing.dropdown > .menu[data-v-013c337e]:after {\n  top: 100%;\n  bottom: auto;\n  box-shadow: 1px 1px 0px 1px rgba(34, 36, 38, 0.15);\n  margin: -0.25em 0em 0em;\n}\n\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n\n/* Dropdown Carets */\n@font-face {\n  font-family: 'Dropdown';\n  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMggjB5AAAAC8AAAAYGNtYXAPfuIIAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5Zjo82LgAAAFwAAABVGhlYWQAQ88bAAACxAAAADZoaGVhAwcB6QAAAvwAAAAkaG10eAS4ABIAAAMgAAAAIGxvY2EBNgDeAAADQAAAABJtYXhwAAoAFgAAA1QAAAAgbmFtZVcZpu4AAAN0AAABRXBvc3QAAwAAAAAEvAAAACAAAwIAAZAABQAAAUwBZgAAAEcBTAFmAAAA9QAZAIQAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADw2gHg/+D/4AHgACAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIPDa//3//wAAAAAAIPDX//3//wAB/+MPLQADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAIABJQElABMAABM0NzY3BTYXFhUUDwEGJwYvASY1AAUGBwEACAUGBoAFCAcGgAUBEgcGBQEBAQcECQYHfwYBAQZ/BwYAAQAAAG4BJQESABMAADc0PwE2MzIfARYVFAcGIyEiJyY1AAWABgcIBYAGBgUI/wAHBgWABwaABQWABgcHBgUFBgcAAAABABIASQC3AW4AEwAANzQ/ATYXNhcWHQEUBwYnBi8BJjUSBoAFCAcFBgYFBwgFgAbbBwZ/BwEBBwQJ/wgEBwEBB38GBgAAAAABAAAASQClAW4AEwAANxE0NzYzMh8BFhUUDwEGIyInJjUABQYHCAWABgaABQgHBgVbAQAIBQYGgAUIBwWABgYFBwAAAAEAAAABAADZuaKOXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAAAAACgAUAB4AQgBkAIgAqgAAAAEAAAAIABQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAOAAAAAQAAAAAAAgAOAEcAAQAAAAAAAwAOACQAAQAAAAAABAAOAFUAAQAAAAAABQAWAA4AAQAAAAAABgAHADIAAQAAAAAACgA0AGMAAwABBAkAAQAOAAAAAwABBAkAAgAOAEcAAwABBAkAAwAOACQAAwABBAkABAAOAFUAAwABBAkABQAWAA4AAwABBAkABgAOADkAAwABBAkACgA0AGMAaQBjAG8AbQBvAG8AbgBWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AbgBSAGUAZwB1AGwAYQByAGkAYwBvAG0AbwBvAG4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('truetype'), url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVwAAoAAAAABSgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAdkAAAHZLDXE/09TLzIAAALQAAAAYAAAAGAIIweQY21hcAAAAzAAAABMAAAATA9+4ghnYXNwAAADfAAAAAgAAAAIAAAAEGhlYWQAAAOEAAAANgAAADYAQ88baGhlYQAAA7wAAAAkAAAAJAMHAelobXR4AAAD4AAAACAAAAAgBLgAEm1heHAAAAQAAAAABgAAAAYACFAAbmFtZQAABAgAAAFFAAABRVcZpu5wb3N0AAAFUAAAACAAAAAgAAMAAAEABAQAAQEBCGljb21vb24AAQIAAQA6+BwC+BsD+BgEHgoAGVP/i4seCgAZU/+LiwwHi2v4lPh0BR0AAACIDx0AAACNER0AAAAJHQAAAdASAAkBAQgPERMWGyAlKmljb21vb25pY29tb29udTB1MXUyMHVGMEQ3dUYwRDh1RjBEOXVGMERBAAACAYkABgAIAgABAAQABwAKAA0AVgCfAOgBL/yUDvyUDvyUDvuUDvtvi/emFYuQjZCOjo+Pj42Qiwj3lIsFkIuQiY6Hj4iNhouGi4aJh4eHCPsU+xQFiIiGiYaLhouHjYeOCPsU9xQFiI+Jj4uQCA77b4v3FBWLkI2Pjo8I9xT3FAWPjo+NkIuQi5CJjogI9xT7FAWPh42Hi4aLhomHh4eIiIaJhosI+5SLBYaLh42HjoiPiY+LkAgO+92d928Vi5CNkI+OCPcU9xQFjo+QjZCLkIuPiY6Hj4iNhouGCIv7lAWLhomHh4iIh4eJhouGi4aNiI8I+xT3FAWHjomPi5AIDvvdi+YVi/eUBYuQjZCOjo+Pj42Qi5CLkImOhwj3FPsUBY+IjYaLhouGiYeHiAj7FPsUBYiHhomGi4aLh42Hj4iOiY+LkAgO+JQU+JQViwwKAAAAAAMCAAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8NoB4P/g/+AB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDw2v/9//8AAAAAACDw1//9//8AAf/jDy0AAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAA5emozXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAUAAACAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIADgBHAAEAAAAAAAMADgAkAAEAAAAAAAQADgBVAAEAAAAAAAUAFgAOAAEAAAAAAAYABwAyAAEAAAAAAAoANABjAAMAAQQJAAEADgAAAAMAAQQJAAIADgBHAAMAAQQJAAMADgAkAAMAAQQJAAQADgBVAAMAAQQJAAUAFgAOAAMAAQQJAAYADgA5AAMAAQQJAAoANABjAGkAYwBvAG0AbwBvAG4AVgBlAHIAcwBpAG8AbgAgADEALgAwAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG4AUgBlAGcAdQBsAGEAcgBpAGMAbwBtAG8AbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('woff');\n  font-weight: normal;\n  font-style: normal;\n}\n.ui.dropdown > .dropdown.icon[data-v-013c337e] {\n  font-family: 'Dropdown';\n  line-height: 1;\n  height: 1em;\n  width: 1.23em;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  font-weight: normal;\n  font-style: normal;\n  text-align: center;\n}\n.ui.dropdown > .dropdown.icon[data-v-013c337e] {\n  width: auto;\n}\n.ui.dropdown > .dropdown.icon[data-v-013c337e]:before {\n  content: '\\F0D7';\n}\n\n/* Sub Menu */\n.ui.dropdown .menu .item .dropdown.icon[data-v-013c337e]:before {\n  content: '\\F0DA' ;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-013c337e]:before,\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-013c337e]:before {\n  content: \"\\F0D9\" ;\n}\n\n/* Vertical Menu Dropdown */\n.ui.vertical.menu .dropdown.item > .dropdown.icon[data-v-013c337e]:before {\n  content: \"\\F0DA\" ;\n}\n/* Icons for Reference\n.dropdown.down.icon {\n  content: \"\\f0d7\";\n}\n.dropdown.up.icon {\n  content: \"\\f0d8\";\n}\n.dropdown.left.icon {\n  content: \"\\f0d9\";\n}\n.dropdown.icon.icon {\n  content: \"\\f0da\";\n}\n*/\n\n\n/*******************************\n        User Overrides\n*******************************/\n\n", ""]);
+	exports.push([module.id, "/*!\n * # Semantic UI 2.2.3 - Dropdown\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n            Dropdown\n*******************************/\n.ui.dropdown[data-v-0cd17073] {\n  cursor: pointer;\n  position: relative;\n  display: inline-block;\n  outline: none;\n  text-align: left;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n\n/*******************************\n            Content\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n.ui.dropdown .menu[data-v-0cd17073] {\n  cursor: auto;\n  position: absolute;\n  display: none;\n  outline: none;\n  top: 100%;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  margin: 0em;\n  padding: 0em 0em;\n  background: #FFFFFF;\n  font-size: 1em;\n  text-shadow: none;\n  text-align: left;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n  z-index: 11;\n  will-change: transform, opacity;\n}\n.ui.dropdown .menu > *[data-v-0cd17073] {\n  white-space: nowrap;\n}\n\n/*--------------\n  Hidden Input\n---------------*/\n.ui.dropdown > input[data-v-0cd17073]:not(.search):first-child,\n.ui.dropdown > select[data-v-0cd17073] {\n  display: none !important;\n}\n\n/*--------------\n Dropdown Icon\n---------------*/\n.ui.dropdown > .dropdown.icon[data-v-0cd17073] {\n  position: relative;\n  width: auto;\n  font-size: 0.85714286em;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon[data-v-0cd17073] {\n  width: auto;\n  float: right;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon + .text[data-v-0cd17073] {\n  margin-right: 1em;\n}\n\n/*--------------\n      Text\n---------------*/\n.ui.dropdown > .text[data-v-0cd17073] {\n  display: inline-block;\n  -webkit-transition: none;\n  transition: none;\n}\n\n/*--------------\n    Menu Item\n---------------*/\n.ui.dropdown .menu > .item[data-v-0cd17073] {\n  position: relative;\n  cursor: pointer;\n  display: block;\n  border: none;\n  height: auto;\n  text-align: left;\n  border-top: none;\n  line-height: 1em;\n  color: rgba(0, 0, 0, 0.87);\n  padding: 0.78571429rem 1.14285714rem !important;\n  font-size: 1rem;\n  text-transform: none;\n  font-weight: normal;\n  box-shadow: none;\n  -webkit-touch-callout: none;\n}\n.ui.dropdown .menu > .item[data-v-0cd17073]:first-child {\n  border-top-width: 0px;\n}\n\n/*--------------\n  Floated Content\n---------------*/\n.ui.dropdown > .text > [class*=\"right floated\"][data-v-0cd17073],\n.ui.dropdown .menu .item > [class*=\"right floated\"][data-v-0cd17073] {\n  float: right !important;\n  margin-right: 0em !important;\n  margin-left: 1em !important;\n}\n.ui.dropdown > .text > [class*=\"left floated\"][data-v-0cd17073],\n.ui.dropdown .menu .item > [class*=\"left floated\"][data-v-0cd17073] {\n  float: left !important;\n  margin-left: 0em !important;\n  margin-right: 1em !important;\n}\n.ui.dropdown .menu .item > .icon.floated[data-v-0cd17073],\n.ui.dropdown .menu .item > .flag.floated[data-v-0cd17073],\n.ui.dropdown .menu .item > .image.floated[data-v-0cd17073],\n.ui.dropdown .menu .item > img.floated[data-v-0cd17073] {\n  margin-top: 0em;\n}\n\n/*--------------\n  Menu Divider\n---------------*/\n.ui.dropdown .menu > .header[data-v-0cd17073] {\n  margin: 1rem 0rem 0.75rem;\n  padding: 0em 1.14285714rem;\n  color: rgba(0, 0, 0, 0.85);\n  font-size: 0.78571429em;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.ui.dropdown .menu > .divider[data-v-0cd17073] {\n  border-top: 1px solid rgba(34, 36, 38, 0.1);\n  height: 0em;\n  margin: 0.5em 0em;\n}\n.ui.dropdown .menu > .input[data-v-0cd17073] {\n  width: auto;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 1.14285714rem 0.78571429rem;\n  min-width: 10rem;\n}\n.ui.dropdown .menu > .header + .input[data-v-0cd17073] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .input:not(.transparent) input[data-v-0cd17073] {\n  padding: 0.5em 1em;\n}\n.ui.dropdown .menu > .input:not(.transparent) .button[data-v-0cd17073],\n.ui.dropdown .menu > .input:not(.transparent) .icon[data-v-0cd17073],\n.ui.dropdown .menu > .input:not(.transparent) .label[data-v-0cd17073] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n\n/*-----------------\n  Item Description\n-------------------*/\n.ui.dropdown > .text > .description[data-v-0cd17073],\n.ui.dropdown .menu > .item > .description[data-v-0cd17073] {\n  float: right;\n  margin: 0em 0em 0em 1em;\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*-----------------\n       Message\n-------------------*/\n.ui.dropdown .menu > .message[data-v-0cd17073] {\n  padding: 0.78571429rem 1.14285714rem;\n  font-weight: normal;\n}\n.ui.dropdown .menu > .message[data-v-0cd17073]:not(.ui) {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*--------------\n    Sub Menu\n---------------*/\n.ui.dropdown .menu .menu[data-v-0cd17073] {\n  top: 0% !important;\n  left: 100% !important;\n  right: auto !important;\n  margin: 0em 0em 0em -0.5em !important;\n  border-radius: 0.28571429rem !important;\n  z-index: 21 !important;\n}\n\n/* Hide Arrow */\n.ui.dropdown .menu .menu[data-v-0cd17073]:after {\n  display: none;\n}\n\n/*--------------\n   Sub Elements\n---------------*/\n\n\n/* Icons / Flags / Labels / Image */\n.ui.dropdown > .text > .icon[data-v-0cd17073],\n.ui.dropdown > .text > .label[data-v-0cd17073],\n.ui.dropdown > .text > .flag[data-v-0cd17073],\n.ui.dropdown > .text > img[data-v-0cd17073],\n.ui.dropdown > .text > .image[data-v-0cd17073] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .item > .icon[data-v-0cd17073],\n.ui.dropdown .menu > .item > .label[data-v-0cd17073],\n.ui.dropdown .menu > .item > .flag[data-v-0cd17073],\n.ui.dropdown .menu > .item > .image[data-v-0cd17073],\n.ui.dropdown .menu > .item > img[data-v-0cd17073] {\n  margin-top: 0em;\n}\n.ui.dropdown > .text > .icon[data-v-0cd17073],\n.ui.dropdown > .text > .label[data-v-0cd17073],\n.ui.dropdown > .text > .flag[data-v-0cd17073],\n.ui.dropdown > .text > img[data-v-0cd17073],\n.ui.dropdown > .text > .image[data-v-0cd17073],\n.ui.dropdown .menu > .item > .icon[data-v-0cd17073],\n.ui.dropdown .menu > .item > .label[data-v-0cd17073],\n.ui.dropdown .menu > .item > .flag[data-v-0cd17073],\n.ui.dropdown .menu > .item > .image[data-v-0cd17073],\n.ui.dropdown .menu > .item > img[data-v-0cd17073] {\n  margin-left: 0em;\n  float: none;\n  margin-right: 0.78571429rem;\n}\n\n/*--------------\n     Image\n---------------*/\n.ui.dropdown > .text > img[data-v-0cd17073],\n.ui.dropdown > .text > .image[data-v-0cd17073],\n.ui.dropdown .menu > .item > .image[data-v-0cd17073],\n.ui.dropdown .menu > .item > img[data-v-0cd17073] {\n  display: inline-block;\n  vertical-align: middle;\n  width: auto;\n  max-height: 2em;\n}\n\n\n/*******************************\n            Coupling\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n\n\n/* Remove Menu Item Divider */\n.ui.dropdown .ui.menu > .item[data-v-0cd17073]:before,\n.ui.menu .ui.dropdown .menu > .item[data-v-0cd17073]:before {\n  display: none;\n}\n\n/* Prevent Menu Item Border */\n.ui.menu .ui.dropdown .menu .active.item[data-v-0cd17073] {\n  border-left: none;\n}\n\n/* Automatically float dropdown menu right on last menu item */\n.ui.menu .right.menu .dropdown:last-child .menu[data-v-0cd17073],\n.ui.menu .right.dropdown.item .menu[data-v-0cd17073],\n.ui.buttons > .ui.dropdown:last-child .menu[data-v-0cd17073] {\n  left: auto;\n  right: 0em;\n}\n\n/*--------------\n      Label\n---------------*/\n\n\n/* Dropdown Menu */\n.ui.label.dropdown .menu[data-v-0cd17073] {\n  min-width: 100%;\n}\n\n/*--------------\n     Button\n---------------*/\n\n\n/* No Margin On Icon Button */\n.ui.dropdown.icon.button > .dropdown.icon[data-v-0cd17073] {\n  margin: 0em;\n}\n.ui.button.dropdown .menu[data-v-0cd17073] {\n  min-width: 100%;\n}\n\n\n/*******************************\n              Types\n*******************************/\n\n\n/*--------------\n    Selection\n---------------*/\n\n\n/* Displays like a select box */\n.ui.selection.dropdown[data-v-0cd17073] {\n  cursor: pointer;\n  word-wrap: break-word;\n  line-height: 1em;\n  white-space: normal;\n  outline: 0;\n  -webkit-transform: rotateZ(0deg);\n      -ms-transform: rotate(0deg);\n          transform: rotateZ(0deg);\n  min-width: 14em;\n  min-height: 2.7142em;\n  background: #FFFFFF;\n  display: inline-block;\n  padding: 0.78571429em 2.1em 0.78571429em 1em;\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n}\n.ui.selection.dropdown.visible[data-v-0cd17073],\n.ui.selection.dropdown.active[data-v-0cd17073] {\n  z-index: 10;\n}\nselect.ui.dropdown[data-v-0cd17073] {\n  height: 38px;\n  padding: 0.5em;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  visibility: visible;\n}\n.ui.selection.dropdown > .search.icon[data-v-0cd17073],\n.ui.selection.dropdown > .delete.icon[data-v-0cd17073],\n.ui.selection.dropdown > .dropdown.icon[data-v-0cd17073] {\n  cursor: pointer;\n  position: absolute;\n  width: auto;\n  height: auto;\n  line-height: 1.2142em;\n  top: 0.78571429em;\n  right: 1em;\n  z-index: 3;\n  margin: -0.78571429em;\n  padding: 0.78571429em;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n/* Compact */\n.ui.compact.selection.dropdown[data-v-0cd17073] {\n  min-width: 0px;\n}\n\n/*  Selection Menu */\n.ui.selection.dropdown .menu[data-v-0cd17073] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  border-top-width: 0px !important;\n  width: auto;\n  outline: none;\n  margin: 0px -1px;\n  min-width: calc(100% +  2px );\n  width: calc(100% +  2px );\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.selection.dropdown .menu[data-v-0cd17073]:after,\n.ui.selection.dropdown .menu[data-v-0cd17073]:before {\n  display: none;\n}\n\n/*--------------\n    Message\n---------------*/\n.ui.selection.dropdown .menu > .message[data-v-0cd17073] {\n  padding: 0.78571429rem 1.14285714rem;\n}\n@media only screen and (max-width: 767px) {\n.ui.selection.dropdown .menu[data-v-0cd17073] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.selection.dropdown .menu[data-v-0cd17073] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.selection.dropdown .menu[data-v-0cd17073] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.selection.dropdown .menu[data-v-0cd17073] {\n    max-height: 21.37142857rem;\n}\n}\n\n/* Menu Item */\n.ui.selection.dropdown .menu > .item[data-v-0cd17073] {\n  border-top: 1px solid #FAFAFA;\n  padding: 0.78571429rem 1.14285714rem !important;\n  white-space: normal;\n  word-wrap: normal;\n}\n\n/* User Item */\n.ui.selection.dropdown .menu > .hidden.addition.item[data-v-0cd17073] {\n  display: none;\n}\n\n/* Hover */\n.ui.selection.dropdown[data-v-0cd17073]:hover {\n  border-color: rgba(34, 36, 38, 0.35);\n  box-shadow: none;\n}\n\n/* Active */\n.ui.selection.active.dropdown[data-v-0cd17073] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown .menu[data-v-0cd17073] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Focus */\n.ui.selection.dropdown[data-v-0cd17073]:focus {\n  border-color: #96C8DA;\n  box-shadow: none;\n}\n.ui.selection.dropdown:focus .menu[data-v-0cd17073] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Visible */\n.ui.selection.visible.dropdown > .text[data-v-0cd17073]:not(.default) {\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/* Visible Hover */\n.ui.selection.active.dropdown[data-v-0cd17073]:hover {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown:hover .menu[data-v-0cd17073] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Dropdown Icon */\n.ui.active.selection.dropdown > .dropdown.icon[data-v-0cd17073],\n.ui.visible.selection.dropdown > .dropdown.icon[data-v-0cd17073] {\n  opacity: 1;\n  z-index: 3;\n}\n\n/* Connecting Border */\n.ui.active.selection.dropdown[data-v-0cd17073] {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n\n/* Empty Connecting Border */\n.ui.active.empty.selection.dropdown[data-v-0cd17073] {\n  border-radius: 0.28571429rem !important;\n  box-shadow: none !important;\n}\n.ui.active.empty.selection.dropdown .menu[data-v-0cd17073] {\n  border: none !important;\n  box-shadow: none !important;\n}\n\n/*--------------\n   Searchable\n---------------*/\n\n\n/* Search Selection */\n.ui.search.dropdown[data-v-0cd17073] {\n  min-width: '';\n}\n\n/* Search Dropdown */\n.ui.search.dropdown > input.search[data-v-0cd17073] {\n  background: none transparent !important;\n  border: none !important;\n  box-shadow: none !important;\n  cursor: text;\n  top: 0em;\n  left: 1px;\n  width: 100%;\n  outline: none;\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n  padding: inherit;\n}\n\n/* Text Layering */\n.ui.search.dropdown > input.search[data-v-0cd17073] {\n  position: absolute;\n  z-index: 2;\n}\n.ui.search.dropdown > .text[data-v-0cd17073] {\n  cursor: text;\n  position: relative;\n  left: 1px;\n  z-index: 3;\n}\n\n/* Search Selection */\n.ui.search.selection.dropdown > input.search[data-v-0cd17073] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n}\n\n/* Used to size multi select input to character width */\n.ui.search.selection.dropdown > span.sizer[data-v-0cd17073] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n  display: none;\n  white-space: pre;\n}\n\n/* Active/Visible Search */\n.ui.search.dropdown.active > input.search[data-v-0cd17073],\n.ui.search.dropdown.visible > input.search[data-v-0cd17073] {\n  cursor: auto;\n}\n.ui.search.dropdown.active > .text[data-v-0cd17073],\n.ui.search.dropdown.visible > .text[data-v-0cd17073] {\n  pointer-events: none;\n}\n\n/* Filtered Text */\n.ui.active.search.dropdown input.search:focus + .text .icon[data-v-0cd17073],\n.ui.active.search.dropdown input.search:focus + .text .flag[data-v-0cd17073] {\n  opacity: 0.45;\n}\n.ui.active.search.dropdown input.search:focus + .text[data-v-0cd17073] {\n  color: rgba(115, 115, 115, 0.87) !important;\n}\n\n/* Search Menu */\n.ui.search.dropdown .menu[data-v-0cd17073] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n@media only screen and (max-width: 767px) {\n.ui.search.dropdown .menu[data-v-0cd17073] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.search.dropdown .menu[data-v-0cd17073] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.search.dropdown .menu[data-v-0cd17073] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.search.dropdown .menu[data-v-0cd17073] {\n    max-height: 21.37142857rem;\n}\n}\n\n/*--------------\n    Multiple\n---------------*/\n\n\n/* Multiple Selection */\n.ui.multiple.dropdown[data-v-0cd17073] {\n  padding: 0.22620476em 2.1em 0.22620476em 0.35714286em;\n}\n.ui.multiple.dropdown .menu[data-v-0cd17073] {\n  cursor: auto;\n}\n\n/* Multiple Search Selection */\n.ui.multiple.search.dropdown[data-v-0cd17073],\n.ui.multiple.search.dropdown > input.search[data-v-0cd17073] {\n  cursor: text;\n}\n\n/* Selection Label */\n.ui.multiple.dropdown > .label[data-v-0cd17073] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  display: inline-block;\n  vertical-align: top;\n  white-space: normal;\n  font-size: 1em;\n  padding: 0.35714286em 0.78571429em;\n  margin: 0.14285714rem 0.28571429rem 0.14285714rem 0em;\n  box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;\n}\n\n/* Dropdown Icon */\n.ui.multiple.dropdown .dropdown.icon[data-v-0cd17073] {\n  margin: '';\n  padding: '';\n}\n\n/* Text */\n.ui.multiple.dropdown > .text[data-v-0cd17073] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.dropdown > .label ~ input.search[data-v-0cd17073] {\n  margin-left: 0.14285714em !important;\n}\n.ui.multiple.dropdown > .label ~ .text[data-v-0cd17073] {\n  display: none;\n}\n\n/*-----------------\n  Multiple Search\n-----------------*/\n\n\n/* Prompt Text */\n.ui.multiple.search.dropdown > .text[data-v-0cd17073] {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: inherit;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.search.dropdown > .label ~ .text[data-v-0cd17073] {\n  display: none;\n}\n\n/* Search */\n.ui.multiple.search.dropdown > input.search[data-v-0cd17073] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  width: 2.2em;\n  line-height: 1.21428571em;\n}\n\n/*--------------\n     Inline\n---------------*/\n.ui.inline.dropdown[data-v-0cd17073] {\n  cursor: pointer;\n  display: inline-block;\n  color: inherit;\n}\n.ui.inline.dropdown .dropdown.icon[data-v-0cd17073] {\n  margin: 0em 0.5em 0em 0.21428571em;\n  vertical-align: baseline;\n}\n.ui.inline.dropdown > .text[data-v-0cd17073] {\n  font-weight: bold;\n}\n.ui.inline.dropdown .menu[data-v-0cd17073] {\n  cursor: auto;\n  margin-top: 0.21428571em;\n  border-radius: 0.28571429rem;\n}\n\n\n/*******************************\n            States\n*******************************/\n\n\n/*--------------------\n        Active\n----------------------*/\n\n\n/* Menu Item Active */\n.ui.dropdown .menu .active.item[data-v-0cd17073] {\n  background: transparent;\n  font-weight: bold;\n  color: rgba(0, 0, 0, 0.95);\n  box-shadow: none;\n  z-index: 12;\n}\n\n/*--------------------\n        Hover\n----------------------*/\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item[data-v-0cd17073]:hover {\n  background: rgba(0, 0, 0, 0.05);\n  color: rgba(0, 0, 0, 0.95);\n  z-index: 13;\n}\n\n/*--------------------\n       Loading\n---------------------*/\n.ui.loading.dropdown > i.icon[data-v-0cd17073] {\n  height: 1em !important;\n  padding: 1.14285714em 1.07142857em !important;\n}\n.ui.loading.dropdown > i.icon[data-v-0cd17073]:before {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  border-radius: 500rem;\n  border: 0.2em solid rgba(0, 0, 0, 0.1);\n}\n.ui.loading.dropdown > i.icon[data-v-0cd17073]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  box-shadow: 0px 0px 0px 1px transparent;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  -webkit-animation: dropdown-spin 0.6s linear;\n          animation: dropdown-spin 0.6s linear;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  border-radius: 500rem;\n  border-color: #767676 transparent transparent;\n  border-style: solid;\n  border-width: 0.2em;\n}\n\n/* Coupling */\n.ui.loading.dropdown.button > i.icon[data-v-0cd17073]:before,\n.ui.loading.dropdown.button > i.icon[data-v-0cd17073]:after {\n  display: none;\n}\n@-webkit-keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n\n/*--------------------\n     Default Text\n----------------------*/\n.ui.dropdown:not(.button) > .default.text[data-v-0cd17073],\n.ui.default.dropdown:not(.button) > .text[data-v-0cd17073] {\n  color: rgba(191, 191, 191, 0.87);\n}\n.ui.dropdown:not(.button) > input:focus + .default.text[data-v-0cd17073],\n.ui.default.dropdown:not(.button) > input:focus + .text[data-v-0cd17073] {\n  color: rgba(115, 115, 115, 0.87);\n}\n\n/*--------------------\n        Loading\n----------------------*/\n.ui.loading.dropdown > .text[data-v-0cd17073] {\n  -webkit-transition: none;\n  transition: none;\n}\n\n/* Used To Check Position */\n.ui.dropdown .loading.menu[data-v-0cd17073] {\n  display: block;\n  visibility: hidden;\n  z-index: -1;\n}\n\n/*--------------------\n    Keyboard Select\n----------------------*/\n\n\n/* Selected Item */\n.ui.dropdown.selected[data-v-0cd17073],\n.ui.dropdown .menu .selected.item[data-v-0cd17073] {\n  background: rgba(0, 0, 0, 0.03);\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*--------------------\n    Search Filtered\n----------------------*/\n\n\n/* Filtered Item */\n.ui.dropdown > .filtered.text[data-v-0cd17073] {\n  visibility: hidden;\n}\n.ui.dropdown .filtered.item[data-v-0cd17073] {\n  display: none !important;\n}\n\n/*--------------------\n        Error\n----------------------*/\n.ui.dropdown.error[data-v-0cd17073],\n.ui.dropdown.error > .text[data-v-0cd17073],\n.ui.dropdown.error > .default.text[data-v-0cd17073] {\n  color: #9F3A38;\n}\n.ui.selection.dropdown.error[data-v-0cd17073] {\n  background: #FFF6F6;\n  border-color: #E0B4B4;\n}\n.ui.selection.dropdown.error[data-v-0cd17073]:hover {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu[data-v-0cd17073],\n.ui.dropdown.error > .menu .menu[data-v-0cd17073] {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu > .item[data-v-0cd17073] {\n  color: #9F3A38;\n}\n.ui.multiple.selection.error.dropdown > .label[data-v-0cd17073] {\n  border-color: #E0B4B4;\n}\n\n/* Item Hover */\n.ui.dropdown.error > .menu > .item[data-v-0cd17073]:hover {\n  background-color: #FFF2F2;\n}\n\n/* Item Active */\n.ui.dropdown.error > .menu .active.item[data-v-0cd17073] {\n  background-color: #FDCFCF;\n}\n\n/*--------------------\n        Disabled\n----------------------*/\n\n\n/* Disabled */\n.ui.disabled.dropdown[data-v-0cd17073],\n.ui.dropdown .menu > .disabled.item[data-v-0cd17073] {\n  cursor: default;\n  pointer-events: none;\n  opacity: 0.45;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*--------------\n    Direction\n---------------*/\n\n\n/* Flyout Direction */\n.ui.dropdown .menu[data-v-0cd17073] {\n  left: 0px;\n}\n\n/* Default Side (Right) */\n.ui.dropdown .right.menu > .menu[data-v-0cd17073],\n.ui.dropdown .menu .right.menu[data-v-0cd17073] {\n  left: 100% !important;\n  right: auto !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/* Left Flyout Menu */\n.ui.dropdown > .left.menu .menu[data-v-0cd17073],\n.ui.dropdown .menu .left.menu[data-v-0cd17073] {\n  left: auto !important;\n  right: 100% !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-0cd17073],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-0cd17073] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-0cd17073],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-0cd17073] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon + .text[data-v-0cd17073],\n.ui.dropdown .left.menu .item .dropdown.icon + .text[data-v-0cd17073] {\n  margin-left: 1em;\n}\n\n/*--------------\n     Upward\n---------------*/\n\n\n/* Upward Main Menu */\n.ui.upward.dropdown > .menu[data-v-0cd17073] {\n  top: auto;\n  bottom: 100%;\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Upward Sub Menu */\n.ui.dropdown .upward.menu[data-v-0cd17073] {\n  top: auto !important;\n  bottom: 0 !important;\n}\n\n/* Active Upward */\n.ui.simple.upward.active.dropdown[data-v-0cd17073],\n.ui.simple.upward.dropdown[data-v-0cd17073]:hover {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em !important;\n}\n.ui.upward.dropdown.button:not(.pointing):not(.floating).active[data-v-0cd17073] {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Selection */\n.ui.upward.selection.dropdown .menu[data-v-0cd17073] {\n  border-top-width: 1px !important;\n  border-bottom-width: 0px !important;\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n.ui.upward.selection.dropdown[data-v-0cd17073]:hover {\n  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.05);\n}\n\n/* Active Upward */\n.ui.active.upward.selection.dropdown[data-v-0cd17073] {\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Upward */\n.ui.upward.selection.dropdown.visible[data-v-0cd17073] {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Hover Upward */\n.ui.upward.active.selection.dropdown[data-v-0cd17073]:hover {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.05);\n}\n.ui.upward.active.selection.dropdown:hover .menu[data-v-0cd17073] {\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/*  Selection Menu */\n.ui.scrolling.dropdown .menu[data-v-0cd17073],\n.ui.dropdown .scrolling.menu[data-v-0cd17073] {\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.ui.scrolling.dropdown .menu[data-v-0cd17073] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  min-width: 100% !important;\n  width: auto !important;\n}\n.ui.dropdown .scrolling.menu[data-v-0cd17073] {\n  position: static;\n  overflow-y: auto;\n  border: none;\n  box-shadow: none !important;\n  border-radius: 0 !important;\n  margin: 0 !important;\n  min-width: 100% !important;\n  width: auto !important;\n  border-top: 1px solid rgba(34, 36, 38, 0.15);\n}\n.ui.scrolling.dropdown .menu .item.item.item[data-v-0cd17073],\n.ui.dropdown .scrolling.menu > .item.item.item[data-v-0cd17073] {\n  border-top: none;\n  padding-right: calc( 1.14285714rem  +  17px ) !important;\n}\n.ui.scrolling.dropdown .menu .item[data-v-0cd17073]:first-child,\n.ui.dropdown .scrolling.menu .item[data-v-0cd17073]:first-child {\n  border-top: none;\n}\n.ui.dropdown > .animating.menu .scrolling.menu[data-v-0cd17073],\n.ui.dropdown > .visible.menu .scrolling.menu[data-v-0cd17073] {\n  display: block;\n}\n\n/* Scrollbar in IE */\n@media all and (-ms-high-contrast: none) {\n.ui.scrolling.dropdown .menu[data-v-0cd17073],\n  .ui.dropdown .scrolling.menu[data-v-0cd17073] {\n    min-width: calc(100% -  17px );\n}\n}\n@media only screen and (max-width: 767px) {\n.ui.scrolling.dropdown .menu[data-v-0cd17073],\n  .ui.dropdown .scrolling.menu[data-v-0cd17073] {\n    max-height: 10.28571429rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.scrolling.dropdown .menu[data-v-0cd17073],\n  .ui.dropdown .scrolling.menu[data-v-0cd17073] {\n    max-height: 15.42857143rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.scrolling.dropdown .menu[data-v-0cd17073],\n  .ui.dropdown .scrolling.menu[data-v-0cd17073] {\n    max-height: 20.57142857rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.scrolling.dropdown .menu[data-v-0cd17073],\n  .ui.dropdown .scrolling.menu[data-v-0cd17073] {\n    max-height: 20.57142857rem;\n}\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/* Displays without javascript */\n.ui.simple.dropdown .menu[data-v-0cd17073]:before,\n.ui.simple.dropdown .menu[data-v-0cd17073]:after {\n  display: none;\n}\n.ui.simple.dropdown .menu[data-v-0cd17073] {\n  position: absolute;\n  display: block;\n  overflow: hidden;\n  top: -9999px !important;\n  opacity: 0;\n  width: 0;\n  height: 0;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.simple.active.dropdown[data-v-0cd17073],\n.ui.simple.dropdown[data-v-0cd17073]:hover {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n.ui.simple.active.dropdown > .menu[data-v-0cd17073],\n.ui.simple.dropdown:hover > .menu[data-v-0cd17073] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 100% !important;\n  opacity: 1;\n}\n.ui.simple.dropdown > .menu > .item:active > .menu[data-v-0cd17073],\n.ui.simple.dropdown:hover > .menu > .item:hover > .menu[data-v-0cd17073] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 0% !important;\n  left: 100% !important;\n  opacity: 1;\n}\n.ui.simple.disabled.dropdown:hover .menu[data-v-0cd17073] {\n  display: none;\n  height: 0px;\n  width: 0px;\n  overflow: hidden;\n}\n\n/* Visible */\n.ui.simple.visible.dropdown > .menu[data-v-0cd17073] {\n  display: block;\n}\n\n/*--------------\n      Fluid\n---------------*/\n.ui.fluid.dropdown[data-v-0cd17073] {\n  display: block;\n  width: 100%;\n  min-width: 0em;\n}\n.ui.fluid.dropdown > .dropdown.icon[data-v-0cd17073] {\n  float: right;\n}\n\n/*--------------\n    Floating\n---------------*/\n.ui.floating.dropdown .menu[data-v-0cd17073] {\n  left: 0;\n  right: auto;\n  box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15) !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.floating.dropdown > .menu[data-v-0cd17073] {\n  margin-top: 0.5em !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/*--------------\n     Pointing\n---------------*/\n.ui.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: 100%;\n  margin-top: 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  display: block;\n  position: absolute;\n  pointer-events: none;\n  content: '';\n  visibility: visible;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n  width: 0.5em;\n  height: 0.5em;\n  box-shadow: -1px -1px 0px 1px rgba(34, 36, 38, 0.15);\n  background: #FFFFFF;\n  z-index: 2;\n}\n.ui.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  top: -0.25em;\n  left: 50%;\n  margin: 0em 0em 0em -0.25em;\n}\n\n/* Top Left Pointing */\n.ui.top.left.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  top: -0.25em;\n  left: 1em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Top Right  Pointing */\n.ui.top.right.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: 100%;\n  bottom: auto;\n  right: 0%;\n  left: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.right.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  top: -0.25em;\n  left: auto;\n  right: 1em;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Left Pointing */\n.ui.left.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: 0%;\n  left: 100%;\n  right: auto;\n  margin: 0em 0em 0em 1em;\n}\n.ui.left.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  top: 1em;\n  left: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(-45deg);\n      -ms-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n}\n\n/* Right Pointing */\n.ui.right.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: 0%;\n  left: auto;\n  right: 100%;\n  margin: 0em 1em 0em 0em;\n}\n.ui.right.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  top: 1em;\n  left: auto;\n  right: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(135deg);\n      -ms-transform: rotate(135deg);\n          transform: rotate(135deg);\n}\n\n/* Bottom Pointing */\n.ui.bottom.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: auto;\n  bottom: 100%;\n  left: 0%;\n  right: auto;\n  margin: 0em 0em 1em;\n}\n.ui.bottom.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  top: auto;\n  bottom: -0.25em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(-135deg);\n      -ms-transform: rotate(-135deg);\n          transform: rotate(-135deg);\n}\n\n/* Reverse Sub-Menu Direction */\n.ui.bottom.pointing.dropdown > .menu .menu[data-v-0cd17073] {\n  top: auto !important;\n  bottom: 0px !important;\n}\n\n/* Bottom Left */\n.ui.bottom.left.pointing.dropdown > .menu[data-v-0cd17073] {\n  left: 0%;\n  right: auto;\n}\n.ui.bottom.left.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  left: 1em;\n  right: auto;\n}\n\n/* Bottom Right */\n.ui.bottom.right.pointing.dropdown > .menu[data-v-0cd17073] {\n  right: 0%;\n  left: auto;\n}\n.ui.bottom.right.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  left: auto;\n  right: 1em;\n}\n\n/* Upward pointing */\n.ui.upward.pointing.dropdown > .menu[data-v-0cd17073],\n.ui.upward.top.pointing.dropdown > .menu[data-v-0cd17073] {\n  top: auto;\n  bottom: 100%;\n  margin: 0em 0em 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.upward.pointing.dropdown > .menu[data-v-0cd17073]:after,\n.ui.upward.top.pointing.dropdown > .menu[data-v-0cd17073]:after {\n  top: 100%;\n  bottom: auto;\n  box-shadow: 1px 1px 0px 1px rgba(34, 36, 38, 0.15);\n  margin: -0.25em 0em 0em;\n}\n\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n\n/* Dropdown Carets */\n@font-face {\n  font-family: 'Dropdown';\n  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMggjB5AAAAC8AAAAYGNtYXAPfuIIAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5Zjo82LgAAAFwAAABVGhlYWQAQ88bAAACxAAAADZoaGVhAwcB6QAAAvwAAAAkaG10eAS4ABIAAAMgAAAAIGxvY2EBNgDeAAADQAAAABJtYXhwAAoAFgAAA1QAAAAgbmFtZVcZpu4AAAN0AAABRXBvc3QAAwAAAAAEvAAAACAAAwIAAZAABQAAAUwBZgAAAEcBTAFmAAAA9QAZAIQAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADw2gHg/+D/4AHgACAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIPDa//3//wAAAAAAIPDX//3//wAB/+MPLQADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAIABJQElABMAABM0NzY3BTYXFhUUDwEGJwYvASY1AAUGBwEACAUGBoAFCAcGgAUBEgcGBQEBAQcECQYHfwYBAQZ/BwYAAQAAAG4BJQESABMAADc0PwE2MzIfARYVFAcGIyEiJyY1AAWABgcIBYAGBgUI/wAHBgWABwaABQWABgcHBgUFBgcAAAABABIASQC3AW4AEwAANzQ/ATYXNhcWHQEUBwYnBi8BJjUSBoAFCAcFBgYFBwgFgAbbBwZ/BwEBBwQJ/wgEBwEBB38GBgAAAAABAAAASQClAW4AEwAANxE0NzYzMh8BFhUUDwEGIyInJjUABQYHCAWABgaABQgHBgVbAQAIBQYGgAUIBwWABgYFBwAAAAEAAAABAADZuaKOXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAAAAACgAUAB4AQgBkAIgAqgAAAAEAAAAIABQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAOAAAAAQAAAAAAAgAOAEcAAQAAAAAAAwAOACQAAQAAAAAABAAOAFUAAQAAAAAABQAWAA4AAQAAAAAABgAHADIAAQAAAAAACgA0AGMAAwABBAkAAQAOAAAAAwABBAkAAgAOAEcAAwABBAkAAwAOACQAAwABBAkABAAOAFUAAwABBAkABQAWAA4AAwABBAkABgAOADkAAwABBAkACgA0AGMAaQBjAG8AbQBvAG8AbgBWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AbgBSAGUAZwB1AGwAYQByAGkAYwBvAG0AbwBvAG4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('truetype'), url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVwAAoAAAAABSgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAdkAAAHZLDXE/09TLzIAAALQAAAAYAAAAGAIIweQY21hcAAAAzAAAABMAAAATA9+4ghnYXNwAAADfAAAAAgAAAAIAAAAEGhlYWQAAAOEAAAANgAAADYAQ88baGhlYQAAA7wAAAAkAAAAJAMHAelobXR4AAAD4AAAACAAAAAgBLgAEm1heHAAAAQAAAAABgAAAAYACFAAbmFtZQAABAgAAAFFAAABRVcZpu5wb3N0AAAFUAAAACAAAAAgAAMAAAEABAQAAQEBCGljb21vb24AAQIAAQA6+BwC+BsD+BgEHgoAGVP/i4seCgAZU/+LiwwHi2v4lPh0BR0AAACIDx0AAACNER0AAAAJHQAAAdASAAkBAQgPERMWGyAlKmljb21vb25pY29tb29udTB1MXUyMHVGMEQ3dUYwRDh1RjBEOXVGMERBAAACAYkABgAIAgABAAQABwAKAA0AVgCfAOgBL/yUDvyUDvyUDvuUDvtvi/emFYuQjZCOjo+Pj42Qiwj3lIsFkIuQiY6Hj4iNhouGi4aJh4eHCPsU+xQFiIiGiYaLhouHjYeOCPsU9xQFiI+Jj4uQCA77b4v3FBWLkI2Pjo8I9xT3FAWPjo+NkIuQi5CJjogI9xT7FAWPh42Hi4aLhomHh4eIiIaJhosI+5SLBYaLh42HjoiPiY+LkAgO+92d928Vi5CNkI+OCPcU9xQFjo+QjZCLkIuPiY6Hj4iNhouGCIv7lAWLhomHh4iIh4eJhouGi4aNiI8I+xT3FAWHjomPi5AIDvvdi+YVi/eUBYuQjZCOjo+Pj42Qi5CLkImOhwj3FPsUBY+IjYaLhouGiYeHiAj7FPsUBYiHhomGi4aLh42Hj4iOiY+LkAgO+JQU+JQViwwKAAAAAAMCAAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8NoB4P/g/+AB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDw2v/9//8AAAAAACDw1//9//8AAf/jDy0AAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAA5emozXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAUAAACAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIADgBHAAEAAAAAAAMADgAkAAEAAAAAAAQADgBVAAEAAAAAAAUAFgAOAAEAAAAAAAYABwAyAAEAAAAAAAoANABjAAMAAQQJAAEADgAAAAMAAQQJAAIADgBHAAMAAQQJAAMADgAkAAMAAQQJAAQADgBVAAMAAQQJAAUAFgAOAAMAAQQJAAYADgA5AAMAAQQJAAoANABjAGkAYwBvAG0AbwBvAG4AVgBlAHIAcwBpAG8AbgAgADEALgAwAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG4AUgBlAGcAdQBsAGEAcgBpAGMAbwBtAG8AbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('woff');\n  font-weight: normal;\n  font-style: normal;\n}\n.ui.dropdown > .dropdown.icon[data-v-0cd17073] {\n  font-family: 'Dropdown';\n  line-height: 1;\n  height: 1em;\n  width: 1.23em;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  font-weight: normal;\n  font-style: normal;\n  text-align: center;\n}\n.ui.dropdown > .dropdown.icon[data-v-0cd17073] {\n  width: auto;\n}\n.ui.dropdown > .dropdown.icon[data-v-0cd17073]:before {\n  content: '\\F0D7';\n}\n\n/* Sub Menu */\n.ui.dropdown .menu .item .dropdown.icon[data-v-0cd17073]:before {\n  content: '\\F0DA' ;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-0cd17073]:before,\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-0cd17073]:before {\n  content: \"\\F0D9\" ;\n}\n\n/* Vertical Menu Dropdown */\n.ui.vertical.menu .dropdown.item > .dropdown.icon[data-v-0cd17073]:before {\n  content: \"\\F0DA\" ;\n}\n/* Icons for Reference\n.dropdown.down.icon {\n  content: \"\\f0d7\";\n}\n.dropdown.up.icon {\n  content: \"\\f0d8\";\n}\n.dropdown.left.icon {\n  content: \"\\f0d9\";\n}\n.dropdown.icon.icon {\n  content: \"\\f0da\";\n}\n*/\n\n\n/*******************************\n        User Overrides\n*******************************/\n\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 15 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(1)();
+	exports = module.exports = __webpack_require__(4)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "/*!\n * # Semantic UI 2.2.3 - Label\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n            Label\n*******************************/\n.ui.label[data-v-013c337e] {\n  display: inline-block;\n  line-height: 1;\n  vertical-align: baseline;\n  margin: 0em 0.14285714em;\n  background-color: #E8E8E8;\n  background-image: none;\n  padding: 0.5833em 0.833em;\n  color: rgba(0, 0, 0, 0.6);\n  text-transform: none;\n  font-weight: bold;\n  border: 0px solid transparent;\n  border-radius: 0.28571429rem;\n  -webkit-transition: background 0.1s ease;\n  transition: background 0.1s ease;\n}\n.ui.label[data-v-013c337e]:first-child {\n  margin-left: 0em;\n}\n.ui.label[data-v-013c337e]:last-child {\n  margin-right: 0em;\n}\n\n/* Link */\na.ui.label[data-v-013c337e] {\n  cursor: pointer;\n}\n\n/* Inside Link */\n.ui.label > a[data-v-013c337e] {\n  cursor: pointer;\n  color: inherit;\n  opacity: 0.5;\n  -webkit-transition: 0.1s opacity ease;\n  transition: 0.1s opacity ease;\n}\n.ui.label > a[data-v-013c337e]:hover {\n  opacity: 1;\n}\n\n/* Image */\n.ui.label > img[data-v-013c337e] {\n  width: auto !important;\n  vertical-align: middle;\n  height: 2.1666em !important;\n}\n\n/* Icon */\n.ui.label > .icon[data-v-013c337e] {\n  width: auto;\n  margin: 0em 0.75em 0em 0em;\n}\n\n/* Detail */\n.ui.label > .detail[data-v-013c337e] {\n  display: inline-block;\n  vertical-align: top;\n  font-weight: bold;\n  margin-left: 1em;\n  opacity: 0.8;\n}\n.ui.label > .detail .icon[data-v-013c337e] {\n  margin: 0em 0.25em 0em 0em;\n}\n\n/* Removable label */\n.ui.label > .close.icon[data-v-013c337e],\n.ui.label > .delete.icon[data-v-013c337e] {\n  cursor: pointer;\n  margin-right: 0em;\n  margin-left: 0.5em;\n  font-size: 0.92857143em;\n  opacity: 0.5;\n  -webkit-transition: background 0.1s ease;\n  transition: background 0.1s ease;\n}\n.ui.label > .delete.icon[data-v-013c337e]:hover {\n  opacity: 1;\n}\n\n/*-------------------\n       Group\n--------------------*/\n.ui.labels > .label[data-v-013c337e] {\n  margin: 0em 0.5em 0.5em 0em;\n}\n\n/*-------------------\n       Coupling\n--------------------*/\n.ui.header > .ui.label[data-v-013c337e] {\n  margin-top: -0.29165em;\n}\n\n/* Remove border radius on attached segment */\n.ui.attached.segment > .ui.top.left.attached.label[data-v-013c337e],\n.ui.bottom.attached.segment > .ui.top.left.attached.label[data-v-013c337e] {\n  border-top-left-radius: 0;\n}\n.ui.attached.segment > .ui.top.right.attached.label[data-v-013c337e],\n.ui.bottom.attached.segment > .ui.top.right.attached.label[data-v-013c337e] {\n  border-top-right-radius: 0;\n}\n.ui.top.attached.segment > .ui.bottom.left.attached.label[data-v-013c337e] {\n  border-bottom-left-radius: 0;\n}\n.ui.top.attached.segment > .ui.bottom.right.attached.label[data-v-013c337e] {\n  border-bottom-right-radius: 0;\n}\n\n/* Padding on next content after a label */\n.ui.top.attached.label:first-child + [data-v-013c337e]:not(.attached),\n.ui.top.attached.label + [class*=\"right floated\"] + *[data-v-013c337e] {\n  margin-top: 2rem !important;\n}\n.ui.bottom.attached.label:first-child ~ [data-v-013c337e]:last-child:not(.attached) {\n  margin-top: 0em;\n  margin-bottom: 2rem !important;\n}\n\n\n/*******************************\n             Types\n*******************************/\n.ui.image.label[data-v-013c337e] {\n  width: auto !important;\n  margin-top: 0em;\n  margin-bottom: 0em;\n  max-width: 9999px;\n  vertical-align: baseline;\n  text-transform: none;\n  background: #E8E8E8;\n  padding: 0.5833em 0.833em 0.5833em 0.5em;\n  border-radius: 0.28571429rem;\n  box-shadow: none;\n}\n.ui.image.label img[data-v-013c337e] {\n  display: inline-block;\n  vertical-align: top;\n  height: 2.1666em;\n  margin: -0.5833em 0.5em -0.5833em -0.5em;\n  border-radius: 0.28571429rem 0em 0em 0.28571429rem;\n}\n.ui.image.label .detail[data-v-013c337e] {\n  background: rgba(0, 0, 0, 0.1);\n  margin: -0.5833em -0.833em -0.5833em 0.5em;\n  padding: 0.5833em 0.833em;\n  border-radius: 0em 0.28571429rem 0.28571429rem 0em;\n}\n\n/*-------------------\n         Tag\n--------------------*/\n.ui.tag.labels .label[data-v-013c337e],\n.ui.tag.label[data-v-013c337e] {\n  margin-left: 1em;\n  position: relative;\n  padding-left: 1.5em;\n  padding-right: 1.5em;\n  border-radius: 0em 0.28571429rem 0.28571429rem 0em;\n  -webkit-transition: none;\n  transition: none;\n}\n.ui.tag.labels .label[data-v-013c337e]:before,\n.ui.tag.label[data-v-013c337e]:before {\n  position: absolute;\n  -webkit-transform: translateY(-50%) translateX(50%) rotate(-45deg);\n      -ms-transform: translateY(-50%) translateX(50%) rotate(-45deg);\n          transform: translateY(-50%) translateX(50%) rotate(-45deg);\n  top: 50%;\n  right: 100%;\n  content: '';\n  background-color: inherit;\n  background-image: none;\n  width: 1.56em;\n  height: 1.56em;\n  -webkit-transition: none;\n  transition: none;\n}\n.ui.tag.labels .label[data-v-013c337e]:after,\n.ui.tag.label[data-v-013c337e]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: -0.25em;\n  margin-top: -0.25em;\n  background-color: #FFFFFF !important;\n  width: 0.5em;\n  height: 0.5em;\n  box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.3);\n  border-radius: 500rem;\n}\n\n/*-------------------\n    Corner Label\n--------------------*/\n.ui.corner.label[data-v-013c337e] {\n  position: absolute;\n  top: 0em;\n  right: 0em;\n  margin: 0em;\n  padding: 0em;\n  text-align: center;\n  border-color: #E8E8E8;\n  width: 4em;\n  height: 4em;\n  z-index: 1;\n  -webkit-transition: border-color 0.1s ease;\n  transition: border-color 0.1s ease;\n}\n\n/* Icon Label */\n.ui.corner.label[data-v-013c337e] {\n  background-color: transparent !important;\n}\n.ui.corner.label[data-v-013c337e]:after {\n  position: absolute;\n  content: \"\";\n  right: 0em;\n  top: 0em;\n  z-index: -1;\n  width: 0em;\n  height: 0em;\n  background-color: transparent !important;\n  border-top: 0em solid transparent;\n  border-right: 4em solid transparent;\n  border-bottom: 4em solid transparent;\n  border-left: 0em solid transparent;\n  border-right-color: inherit;\n  -webkit-transition: border-color 0.1s ease;\n  transition: border-color 0.1s ease;\n}\n.ui.corner.label .icon[data-v-013c337e] {\n  cursor: default;\n  position: relative;\n  top: 0.64285714em;\n  left: 0.78571429em;\n  font-size: 1.14285714em;\n  margin: 0em;\n}\n\n/* Left Corner */\n.ui.left.corner.label[data-v-013c337e],\n.ui.left.corner.label[data-v-013c337e]:after {\n  right: auto;\n  left: 0em;\n}\n.ui.left.corner.label[data-v-013c337e]:after {\n  border-top: 4em solid transparent;\n  border-right: 4em solid transparent;\n  border-bottom: 0em solid transparent;\n  border-left: 0em solid transparent;\n  border-top-color: inherit;\n}\n.ui.left.corner.label .icon[data-v-013c337e] {\n  left: -0.78571429em;\n}\n\n/* Segment */\n.ui.segment > .ui.corner.label[data-v-013c337e] {\n  top: -1px;\n  right: -1px;\n}\n.ui.segment > .ui.left.corner.label[data-v-013c337e] {\n  right: auto;\n  left: -1px;\n}\n\n/*-------------------\n       Ribbon\n--------------------*/\n.ui.ribbon.label[data-v-013c337e] {\n  position: relative;\n  margin: 0em;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  border-radius: 0em 0.28571429rem 0.28571429rem 0em;\n  border-color: rgba(0, 0, 0, 0.15);\n}\n.ui.ribbon.label[data-v-013c337e]:after {\n  position: absolute;\n  content: '';\n  top: 100%;\n  left: 0%;\n  background-color: transparent !important;\n  border-style: solid;\n  border-width: 0em 1.2em 1.2em 0em;\n  border-color: transparent;\n  border-right-color: inherit;\n  width: 0em;\n  height: 0em;\n}\n\n/* Positioning */\n.ui.ribbon.label[data-v-013c337e] {\n  left: calc( -1rem  -  1.2em );\n  margin-right: -1.2em;\n  padding-left: calc( 1rem  +  1.2em );\n  padding-right: 1.2em;\n}\n.ui[class*=\"right ribbon\"].label[data-v-013c337e] {\n  left: calc(100% +  1rem  +  1.2em );\n  padding-left: 1.2em;\n  padding-right: calc( 1rem  +  1.2em );\n}\n\n/* Right Ribbon */\n.ui[class*=\"right ribbon\"].label[data-v-013c337e] {\n  text-align: left;\n  -webkit-transform: translateX(-100%);\n      -ms-transform: translateX(-100%);\n          transform: translateX(-100%);\n  border-radius: 0.28571429rem 0em 0em 0.28571429rem;\n}\n.ui[class*=\"right ribbon\"].label[data-v-013c337e]:after {\n  left: auto;\n  right: 0%;\n  border-style: solid;\n  border-width: 1.2em 1.2em 0em 0em;\n  border-color: transparent;\n  border-top-color: inherit;\n}\n\n/* Inside Table */\n.ui.image > .ribbon.label[data-v-013c337e],\n.ui.card .image > .ribbon.label[data-v-013c337e] {\n  position: absolute;\n  top: 1rem;\n}\n.ui.card .image > .ui.ribbon.label[data-v-013c337e],\n.ui.image > .ui.ribbon.label[data-v-013c337e] {\n  left: calc( 0.05rem  -  1.2em );\n}\n.ui.card .image > .ui[class*=\"right ribbon\"].label[data-v-013c337e],\n.ui.image > .ui[class*=\"right ribbon\"].label[data-v-013c337e] {\n  left: calc(100% +  -0.05rem  +  1.2em );\n  padding-left: 0.833em;\n}\n\n/* Inside Table */\n.ui.table td > .ui.ribbon.label[data-v-013c337e] {\n  left: calc( -0.78571429em  -  1.2em );\n}\n.ui.table td > .ui[class*=\"right ribbon\"].label[data-v-013c337e] {\n  left: calc(100% +  0.78571429em  +  1.2em );\n  padding-left: 0.833em;\n}\n\n/*-------------------\n      Attached\n--------------------*/\n.ui[class*=\"top attached\"].label[data-v-013c337e],\n.ui.attached.label[data-v-013c337e] {\n  width: 100%;\n  position: absolute;\n  margin: 0em;\n  top: 0em;\n  left: 0em;\n  padding: 0.75em 1em;\n  border-radius: 0.21428571rem 0.21428571rem 0em 0em;\n}\n.ui[class*=\"bottom attached\"].label[data-v-013c337e] {\n  top: auto;\n  bottom: 0em;\n  border-radius: 0em 0em 0.21428571rem 0.21428571rem;\n}\n.ui[class*=\"top left attached\"].label[data-v-013c337e] {\n  width: auto;\n  margin-top: 0em !important;\n  border-radius: 0.21428571rem 0em 0.28571429rem 0em;\n}\n.ui[class*=\"top right attached\"].label[data-v-013c337e] {\n  width: auto;\n  left: auto;\n  right: 0em;\n  border-radius: 0em 0.21428571rem 0em 0.28571429rem;\n}\n.ui[class*=\"bottom left attached\"].label[data-v-013c337e] {\n  width: auto;\n  top: auto;\n  bottom: 0em;\n  border-radius: 0em 0.28571429rem 0em 0.21428571rem;\n}\n.ui[class*=\"bottom right attached\"].label[data-v-013c337e] {\n  top: auto;\n  bottom: 0em;\n  left: auto;\n  right: 0em;\n  width: auto;\n  border-radius: 0.28571429rem 0em 0.21428571rem 0em;\n}\n\n\n/*******************************\n             States\n*******************************/\n\n\n/*-------------------\n      Disabled\n--------------------*/\n.ui.label.disabled[data-v-013c337e] {\n  opacity: 0.5;\n}\n\n/*-------------------\n        Hover\n--------------------*/\na.ui.labels .label[data-v-013c337e]:hover,\na.ui.label[data-v-013c337e]:hover {\n  background-color: #E0E0E0;\n  border-color: #E0E0E0;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.8);\n}\n.ui.labels a.label[data-v-013c337e]:hover:before,\na.ui.label[data-v-013c337e]:hover:before {\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/*-------------------\n        Active\n--------------------*/\n.ui.active.label[data-v-013c337e] {\n  background-color: #D0D0D0;\n  border-color: #D0D0D0;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n.ui.active.label[data-v-013c337e]:before {\n  background-color: #D0D0D0;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*-------------------\n     Active Hover\n--------------------*/\na.ui.labels .active.label[data-v-013c337e]:hover,\na.ui.active.label[data-v-013c337e]:hover {\n  background-color: #C8C8C8;\n  border-color: #C8C8C8;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n.ui.labels a.active.label[data-v-013c337e]:ActiveHover:before,\na.ui.active.label[data-v-013c337e]:ActiveHover:before {\n  background-color: #C8C8C8;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*-------------------\n      Visible\n--------------------*/\n.ui.labels.visible .label[data-v-013c337e],\n.ui.label.visible[data-v-013c337e]:not(.dropdown) {\n  display: inline-block !important;\n}\n\n/*-------------------\n      Hidden\n--------------------*/\n.ui.labels.hidden .label[data-v-013c337e],\n.ui.label.hidden[data-v-013c337e] {\n  display: none !important;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*-------------------\n       Colors\n--------------------*/\n\n\n/*--- Red ---*/\n.ui.red.labels .label[data-v-013c337e],\n.ui.red.label[data-v-013c337e] {\n  background-color: #DB2828 !important;\n  border-color: #DB2828 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.red.labels .label[data-v-013c337e]:hover,\na.ui.red.label[data-v-013c337e]:hover {\n  background-color: #d01919 !important;\n  border-color: #d01919 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.red.corner.label[data-v-013c337e],\n.ui.red.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.red.ribbon.label[data-v-013c337e] {\n  border-color: #b21e1e !important;\n}\n\n/* Basic */\n.ui.basic.red.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #DB2828 !important;\n  border-color: #DB2828 !important;\n}\n.ui.basic.red.labels a.label[data-v-013c337e]:hover,\na.ui.basic.red.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #d01919 !important;\n  border-color: #d01919 !important;\n}\n\n/*--- Orange ---*/\n.ui.orange.labels .label[data-v-013c337e],\n.ui.orange.label[data-v-013c337e] {\n  background-color: #F2711C !important;\n  border-color: #F2711C !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.orange.labels .label[data-v-013c337e]:hover,\na.ui.orange.label[data-v-013c337e]:hover {\n  background-color: #f26202 !important;\n  border-color: #f26202 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.orange.corner.label[data-v-013c337e],\n.ui.orange.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.orange.ribbon.label[data-v-013c337e] {\n  border-color: #cf590c !important;\n}\n\n/* Basic */\n.ui.basic.orange.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #F2711C !important;\n  border-color: #F2711C !important;\n}\n.ui.basic.orange.labels a.label[data-v-013c337e]:hover,\na.ui.basic.orange.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #f26202 !important;\n  border-color: #f26202 !important;\n}\n\n/*--- Yellow ---*/\n.ui.yellow.labels .label[data-v-013c337e],\n.ui.yellow.label[data-v-013c337e] {\n  background-color: #FBBD08 !important;\n  border-color: #FBBD08 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.yellow.labels .label[data-v-013c337e]:hover,\na.ui.yellow.label[data-v-013c337e]:hover {\n  background-color: #eaae00 !important;\n  border-color: #eaae00 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.yellow.corner.label[data-v-013c337e],\n.ui.yellow.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.yellow.ribbon.label[data-v-013c337e] {\n  border-color: #cd9903 !important;\n}\n\n/* Basic */\n.ui.basic.yellow.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #FBBD08 !important;\n  border-color: #FBBD08 !important;\n}\n.ui.basic.yellow.labels a.label[data-v-013c337e]:hover,\na.ui.basic.yellow.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #eaae00 !important;\n  border-color: #eaae00 !important;\n}\n\n/*--- Olive ---*/\n.ui.olive.labels .label[data-v-013c337e],\n.ui.olive.label[data-v-013c337e] {\n  background-color: #B5CC18 !important;\n  border-color: #B5CC18 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.olive.labels .label[data-v-013c337e]:hover,\na.ui.olive.label[data-v-013c337e]:hover {\n  background-color: #a7bd0d !important;\n  border-color: #a7bd0d !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.olive.corner.label[data-v-013c337e],\n.ui.olive.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.olive.ribbon.label[data-v-013c337e] {\n  border-color: #198f35 !important;\n}\n\n/* Basic */\n.ui.basic.olive.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #B5CC18 !important;\n  border-color: #B5CC18 !important;\n}\n.ui.basic.olive.labels a.label[data-v-013c337e]:hover,\na.ui.basic.olive.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #a7bd0d !important;\n  border-color: #a7bd0d !important;\n}\n\n/*--- Green ---*/\n.ui.green.labels .label[data-v-013c337e],\n.ui.green.label[data-v-013c337e] {\n  background-color: #21BA45 !important;\n  border-color: #21BA45 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.green.labels .label[data-v-013c337e]:hover,\na.ui.green.label[data-v-013c337e]:hover {\n  background-color: #16ab39 !important;\n  border-color: #16ab39 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.green.corner.label[data-v-013c337e],\n.ui.green.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.green.ribbon.label[data-v-013c337e] {\n  border-color: #198f35 !important;\n}\n\n/* Basic */\n.ui.basic.green.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #21BA45 !important;\n  border-color: #21BA45 !important;\n}\n.ui.basic.green.labels a.label[data-v-013c337e]:hover,\na.ui.basic.green.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #16ab39 !important;\n  border-color: #16ab39 !important;\n}\n\n/*--- Teal ---*/\n.ui.teal.labels .label[data-v-013c337e],\n.ui.teal.label[data-v-013c337e] {\n  background-color: #00B5AD !important;\n  border-color: #00B5AD !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.teal.labels .label[data-v-013c337e]:hover,\na.ui.teal.label[data-v-013c337e]:hover {\n  background-color: #009c95 !important;\n  border-color: #009c95 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.teal.corner.label[data-v-013c337e],\n.ui.teal.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.teal.ribbon.label[data-v-013c337e] {\n  border-color: #00827c !important;\n}\n\n/* Basic */\n.ui.basic.teal.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #00B5AD !important;\n  border-color: #00B5AD !important;\n}\n.ui.basic.teal.labels a.label[data-v-013c337e]:hover,\na.ui.basic.teal.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #009c95 !important;\n  border-color: #009c95 !important;\n}\n\n/*--- Blue ---*/\n.ui.blue.labels .label[data-v-013c337e],\n.ui.blue.label[data-v-013c337e] {\n  background-color: #2185D0 !important;\n  border-color: #2185D0 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.blue.labels .label[data-v-013c337e]:hover,\na.ui.blue.label[data-v-013c337e]:hover {\n  background-color: #1678c2 !important;\n  border-color: #1678c2 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.blue.corner.label[data-v-013c337e],\n.ui.blue.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.blue.ribbon.label[data-v-013c337e] {\n  border-color: #1a69a4 !important;\n}\n\n/* Basic */\n.ui.basic.blue.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #2185D0 !important;\n  border-color: #2185D0 !important;\n}\n.ui.basic.blue.labels a.label[data-v-013c337e]:hover,\na.ui.basic.blue.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #1678c2 !important;\n  border-color: #1678c2 !important;\n}\n\n/*--- Violet ---*/\n.ui.violet.labels .label[data-v-013c337e],\n.ui.violet.label[data-v-013c337e] {\n  background-color: #6435C9 !important;\n  border-color: #6435C9 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.violet.labels .label[data-v-013c337e]:hover,\na.ui.violet.label[data-v-013c337e]:hover {\n  background-color: #5829bb !important;\n  border-color: #5829bb !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.violet.corner.label[data-v-013c337e],\n.ui.violet.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.violet.ribbon.label[data-v-013c337e] {\n  border-color: #502aa1 !important;\n}\n\n/* Basic */\n.ui.basic.violet.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #6435C9 !important;\n  border-color: #6435C9 !important;\n}\n.ui.basic.violet.labels a.label[data-v-013c337e]:hover,\na.ui.basic.violet.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #5829bb !important;\n  border-color: #5829bb !important;\n}\n\n/*--- Purple ---*/\n.ui.purple.labels .label[data-v-013c337e],\n.ui.purple.label[data-v-013c337e] {\n  background-color: #A333C8 !important;\n  border-color: #A333C8 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.purple.labels .label[data-v-013c337e]:hover,\na.ui.purple.label[data-v-013c337e]:hover {\n  background-color: #9627ba !important;\n  border-color: #9627ba !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.purple.corner.label[data-v-013c337e],\n.ui.purple.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.purple.ribbon.label[data-v-013c337e] {\n  border-color: #82299f !important;\n}\n\n/* Basic */\n.ui.basic.purple.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #A333C8 !important;\n  border-color: #A333C8 !important;\n}\n.ui.basic.purple.labels a.label[data-v-013c337e]:hover,\na.ui.basic.purple.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #9627ba !important;\n  border-color: #9627ba !important;\n}\n\n/*--- Pink ---*/\n.ui.pink.labels .label[data-v-013c337e],\n.ui.pink.label[data-v-013c337e] {\n  background-color: #E03997 !important;\n  border-color: #E03997 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.pink.labels .label[data-v-013c337e]:hover,\na.ui.pink.label[data-v-013c337e]:hover {\n  background-color: #e61a8d !important;\n  border-color: #e61a8d !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.pink.corner.label[data-v-013c337e],\n.ui.pink.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.pink.ribbon.label[data-v-013c337e] {\n  border-color: #c71f7e !important;\n}\n\n/* Basic */\n.ui.basic.pink.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #E03997 !important;\n  border-color: #E03997 !important;\n}\n.ui.basic.pink.labels a.label[data-v-013c337e]:hover,\na.ui.basic.pink.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #e61a8d !important;\n  border-color: #e61a8d !important;\n}\n\n/*--- Brown ---*/\n.ui.brown.labels .label[data-v-013c337e],\n.ui.brown.label[data-v-013c337e] {\n  background-color: #A5673F !important;\n  border-color: #A5673F !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.brown.labels .label[data-v-013c337e]:hover,\na.ui.brown.label[data-v-013c337e]:hover {\n  background-color: #975b33 !important;\n  border-color: #975b33 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.brown.corner.label[data-v-013c337e],\n.ui.brown.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.brown.ribbon.label[data-v-013c337e] {\n  border-color: #805031 !important;\n}\n\n/* Basic */\n.ui.basic.brown.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #A5673F !important;\n  border-color: #A5673F !important;\n}\n.ui.basic.brown.labels a.label[data-v-013c337e]:hover,\na.ui.basic.brown.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #975b33 !important;\n  border-color: #975b33 !important;\n}\n\n/*--- Grey ---*/\n.ui.grey.labels .label[data-v-013c337e],\n.ui.grey.label[data-v-013c337e] {\n  background-color: #767676 !important;\n  border-color: #767676 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.grey.labels .label[data-v-013c337e]:hover,\na.ui.grey.label[data-v-013c337e]:hover {\n  background-color: #838383 !important;\n  border-color: #838383 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.grey.corner.label[data-v-013c337e],\n.ui.grey.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.grey.ribbon.label[data-v-013c337e] {\n  border-color: #805031 !important;\n}\n\n/* Basic */\n.ui.basic.grey.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #767676 !important;\n  border-color: #767676 !important;\n}\n.ui.basic.grey.labels a.label[data-v-013c337e]:hover,\na.ui.basic.grey.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #838383 !important;\n  border-color: #838383 !important;\n}\n\n/*--- Black ---*/\n.ui.black.labels .label[data-v-013c337e],\n.ui.black.label[data-v-013c337e] {\n  background-color: #1B1C1D !important;\n  border-color: #1B1C1D !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.black.labels .label[data-v-013c337e]:hover,\na.ui.black.label[data-v-013c337e]:hover {\n  background-color: #27292a !important;\n  border-color: #27292a !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.black.corner.label[data-v-013c337e],\n.ui.black.corner.label[data-v-013c337e]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.black.ribbon.label[data-v-013c337e] {\n  border-color: #805031 !important;\n}\n\n/* Basic */\n.ui.basic.black.label[data-v-013c337e] {\n  background-color: #FFFFFF !important;\n  color: #1B1C1D !important;\n  border-color: #1B1C1D !important;\n}\n.ui.basic.black.labels a.label[data-v-013c337e]:hover,\na.ui.basic.black.label[data-v-013c337e]:hover {\n  background-color: #FFFFFF !important;\n  color: #27292a !important;\n  border-color: #27292a !important;\n}\n\n/*-------------------\n        Basic\n--------------------*/\n.ui.basic.label[data-v-013c337e] {\n  background: none #FFFFFF;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n}\n\n/* Link */\na.ui.basic.label[data-v-013c337e]:hover {\n  text-decoration: none;\n  background: none #FFFFFF;\n  color: #1e70bf;\n  box-shadow: 1px solid rgba(34, 36, 38, 0.15);\n  box-shadow: none;\n}\n\n/* Pointing */\n.ui.basic.pointing.label[data-v-013c337e]:before {\n  border-color: inherit;\n}\n\n/*-------------------\n       Fluid\n--------------------*/\n.ui.label.fluid[data-v-013c337e],\n.ui.fluid.labels > .label[data-v-013c337e] {\n  width: 100%;\n  box-sizing: border-box;\n}\n\n/*-------------------\n       Inverted\n--------------------*/\n.ui.inverted.labels .label[data-v-013c337e],\n.ui.inverted.label[data-v-013c337e] {\n  color: rgba(255, 255, 255, 0.9) !important;\n}\n\n/*-------------------\n     Horizontal\n--------------------*/\n.ui.horizontal.labels .label[data-v-013c337e],\n.ui.horizontal.label[data-v-013c337e] {\n  margin: 0em 0.5em 0em 0em;\n  padding: 0.4em 0.833em;\n  min-width: 3em;\n  text-align: center;\n}\n\n/*-------------------\n       Circular\n--------------------*/\n.ui.circular.labels .label[data-v-013c337e],\n.ui.circular.label[data-v-013c337e] {\n  min-width: 2em;\n  min-height: 2em;\n  padding: 0.5em !important;\n  line-height: 1em;\n  text-align: center;\n  border-radius: 500rem;\n}\n.ui.empty.circular.labels .label[data-v-013c337e],\n.ui.empty.circular.label[data-v-013c337e] {\n  min-width: 0em;\n  min-height: 0em;\n  overflow: hidden;\n  width: 0.5em;\n  height: 0.5em;\n  vertical-align: baseline;\n}\n\n/*-------------------\n       Pointing\n--------------------*/\n.ui.pointing.label[data-v-013c337e] {\n  position: relative;\n}\n.ui.attached.pointing.label[data-v-013c337e] {\n  position: absolute;\n}\n.ui.pointing.label[data-v-013c337e]:before {\n  background-color: inherit;\n  background-image: inherit;\n  border-width: none;\n  border-style: solid;\n  border-color: inherit;\n}\n\n/* Arrow */\n.ui.pointing.label[data-v-013c337e]:before {\n  position: absolute;\n  content: '';\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n  background-image: none;\n  z-index: 2;\n  width: 0.6666em;\n  height: 0.6666em;\n  -webkit-transition: background 0.1s ease;\n  transition: background 0.1s ease;\n}\n\n/*--- Above ---*/\n.ui.pointing.label[data-v-013c337e],\n.ui[class*=\"pointing above\"].label[data-v-013c337e] {\n  margin-top: 1em;\n}\n.ui.pointing.label[data-v-013c337e]:before,\n.ui[class*=\"pointing above\"].label[data-v-013c337e]:before {\n  border-width: 1px 0px 0px 1px;\n  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n          transform: translateX(-50%) translateY(-50%) rotate(45deg);\n  top: 0%;\n  left: 50%;\n}\n\n/*--- Below ---*/\n.ui[class*=\"bottom pointing\"].label[data-v-013c337e],\n.ui[class*=\"pointing below\"].label[data-v-013c337e] {\n  margin-top: 0em;\n  margin-bottom: 1em;\n}\n.ui[class*=\"bottom pointing\"].label[data-v-013c337e]:before,\n.ui[class*=\"pointing below\"].label[data-v-013c337e]:before {\n  border-width: 0px 1px 1px 0px;\n  top: auto;\n  right: auto;\n  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n          transform: translateX(-50%) translateY(-50%) rotate(45deg);\n  top: 100%;\n  left: 50%;\n}\n\n/*--- Left ---*/\n.ui[class*=\"left pointing\"].label[data-v-013c337e] {\n  margin-top: 0em;\n  margin-left: 0.6666em;\n}\n.ui[class*=\"left pointing\"].label[data-v-013c337e]:before {\n  border-width: 0px 0px 1px 1px;\n  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n          transform: translateX(-50%) translateY(-50%) rotate(45deg);\n  bottom: auto;\n  right: auto;\n  top: 50%;\n  left: 0em;\n}\n\n/*--- Right ---*/\n.ui[class*=\"right pointing\"].label[data-v-013c337e] {\n  margin-top: 0em;\n  margin-right: 0.6666em;\n}\n.ui[class*=\"right pointing\"].label[data-v-013c337e]:before {\n  border-width: 1px 1px 0px 0px;\n  -webkit-transform: translateX(50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(50%) translateY(-50%) rotate(45deg);\n          transform: translateX(50%) translateY(-50%) rotate(45deg);\n  top: 50%;\n  right: 0%;\n  bottom: auto;\n  left: auto;\n}\n\n/* Basic Pointing */\n\n/*--- Above ---*/\n.ui.basic.pointing.label[data-v-013c337e]:before,\n.ui.basic[class*=\"pointing above\"].label[data-v-013c337e]:before {\n  margin-top: -1px;\n}\n\n/*--- Below ---*/\n.ui.basic[class*=\"bottom pointing\"].label[data-v-013c337e]:before,\n.ui.basic[class*=\"pointing below\"].label[data-v-013c337e]:before {\n  bottom: auto;\n  top: 100%;\n  margin-top: 1px;\n}\n\n/*--- Left ---*/\n.ui.basic[class*=\"left pointing\"].label[data-v-013c337e]:before {\n  top: 50%;\n  left: -1px;\n}\n\n/*--- Right ---*/\n.ui.basic[class*=\"right pointing\"].label[data-v-013c337e]:before {\n  top: 50%;\n  right: -1px;\n}\n\n/*------------------\n   Floating Label\n-------------------*/\n.ui.floating.label[data-v-013c337e] {\n  position: absolute;\n  z-index: 100;\n  top: -1em;\n  left: 100%;\n  margin: 0em 0em 0em -1.5em !important;\n}\n\n/*-------------------\n        Sizes\n--------------------*/\n.ui.mini.labels .label[data-v-013c337e],\n.ui.mini.label[data-v-013c337e] {\n  font-size: 0.64285714rem;\n}\n.ui.tiny.labels .label[data-v-013c337e],\n.ui.tiny.label[data-v-013c337e] {\n  font-size: 0.71428571rem;\n}\n.ui.small.labels .label[data-v-013c337e],\n.ui.small.label[data-v-013c337e] {\n  font-size: 0.78571429rem;\n}\n.ui.labels .label[data-v-013c337e],\n.ui.label[data-v-013c337e] {\n  font-size: 0.85714286rem;\n}\n.ui.large.labels .label[data-v-013c337e],\n.ui.large.label[data-v-013c337e] {\n  font-size: 1rem;\n}\n.ui.big.labels .label[data-v-013c337e],\n.ui.big.label[data-v-013c337e] {\n  font-size: 1.28571429rem;\n}\n.ui.huge.labels .label[data-v-013c337e],\n.ui.huge.label[data-v-013c337e] {\n  font-size: 1.42857143rem;\n}\n.ui.massive.labels .label[data-v-013c337e],\n.ui.massive.label[data-v-013c337e] {\n  font-size: 1.71428571rem;\n}\n\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n\n\n/*******************************\n         Site Overrides\n*******************************/\n\n", ""]);
+	exports.push([module.id, "/*!\n * # Semantic UI 2.2.3 - Label\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n            Label\n*******************************/\n.ui.label[data-v-0cd17073] {\n  display: inline-block;\n  line-height: 1;\n  vertical-align: baseline;\n  margin: 0em 0.14285714em;\n  background-color: #E8E8E8;\n  background-image: none;\n  padding: 0.5833em 0.833em;\n  color: rgba(0, 0, 0, 0.6);\n  text-transform: none;\n  font-weight: bold;\n  border: 0px solid transparent;\n  border-radius: 0.28571429rem;\n  -webkit-transition: background 0.1s ease;\n  transition: background 0.1s ease;\n}\n.ui.label[data-v-0cd17073]:first-child {\n  margin-left: 0em;\n}\n.ui.label[data-v-0cd17073]:last-child {\n  margin-right: 0em;\n}\n\n/* Link */\na.ui.label[data-v-0cd17073] {\n  cursor: pointer;\n}\n\n/* Inside Link */\n.ui.label > a[data-v-0cd17073] {\n  cursor: pointer;\n  color: inherit;\n  opacity: 0.5;\n  -webkit-transition: 0.1s opacity ease;\n  transition: 0.1s opacity ease;\n}\n.ui.label > a[data-v-0cd17073]:hover {\n  opacity: 1;\n}\n\n/* Image */\n.ui.label > img[data-v-0cd17073] {\n  width: auto !important;\n  vertical-align: middle;\n  height: 2.1666em !important;\n}\n\n/* Icon */\n.ui.label > .icon[data-v-0cd17073] {\n  width: auto;\n  margin: 0em 0.75em 0em 0em;\n}\n\n/* Detail */\n.ui.label > .detail[data-v-0cd17073] {\n  display: inline-block;\n  vertical-align: top;\n  font-weight: bold;\n  margin-left: 1em;\n  opacity: 0.8;\n}\n.ui.label > .detail .icon[data-v-0cd17073] {\n  margin: 0em 0.25em 0em 0em;\n}\n\n/* Removable label */\n.ui.label > .close.icon[data-v-0cd17073],\n.ui.label > .delete.icon[data-v-0cd17073] {\n  cursor: pointer;\n  margin-right: 0em;\n  margin-left: 0.5em;\n  font-size: 0.92857143em;\n  opacity: 0.5;\n  -webkit-transition: background 0.1s ease;\n  transition: background 0.1s ease;\n}\n.ui.label > .delete.icon[data-v-0cd17073]:hover {\n  opacity: 1;\n}\n\n/*-------------------\n       Group\n--------------------*/\n.ui.labels > .label[data-v-0cd17073] {\n  margin: 0em 0.5em 0.5em 0em;\n}\n\n/*-------------------\n       Coupling\n--------------------*/\n.ui.header > .ui.label[data-v-0cd17073] {\n  margin-top: -0.29165em;\n}\n\n/* Remove border radius on attached segment */\n.ui.attached.segment > .ui.top.left.attached.label[data-v-0cd17073],\n.ui.bottom.attached.segment > .ui.top.left.attached.label[data-v-0cd17073] {\n  border-top-left-radius: 0;\n}\n.ui.attached.segment > .ui.top.right.attached.label[data-v-0cd17073],\n.ui.bottom.attached.segment > .ui.top.right.attached.label[data-v-0cd17073] {\n  border-top-right-radius: 0;\n}\n.ui.top.attached.segment > .ui.bottom.left.attached.label[data-v-0cd17073] {\n  border-bottom-left-radius: 0;\n}\n.ui.top.attached.segment > .ui.bottom.right.attached.label[data-v-0cd17073] {\n  border-bottom-right-radius: 0;\n}\n\n/* Padding on next content after a label */\n.ui.top.attached.label:first-child + [data-v-0cd17073]:not(.attached),\n.ui.top.attached.label + [class*=\"right floated\"] + *[data-v-0cd17073] {\n  margin-top: 2rem !important;\n}\n.ui.bottom.attached.label:first-child ~ [data-v-0cd17073]:last-child:not(.attached) {\n  margin-top: 0em;\n  margin-bottom: 2rem !important;\n}\n\n\n/*******************************\n             Types\n*******************************/\n.ui.image.label[data-v-0cd17073] {\n  width: auto !important;\n  margin-top: 0em;\n  margin-bottom: 0em;\n  max-width: 9999px;\n  vertical-align: baseline;\n  text-transform: none;\n  background: #E8E8E8;\n  padding: 0.5833em 0.833em 0.5833em 0.5em;\n  border-radius: 0.28571429rem;\n  box-shadow: none;\n}\n.ui.image.label img[data-v-0cd17073] {\n  display: inline-block;\n  vertical-align: top;\n  height: 2.1666em;\n  margin: -0.5833em 0.5em -0.5833em -0.5em;\n  border-radius: 0.28571429rem 0em 0em 0.28571429rem;\n}\n.ui.image.label .detail[data-v-0cd17073] {\n  background: rgba(0, 0, 0, 0.1);\n  margin: -0.5833em -0.833em -0.5833em 0.5em;\n  padding: 0.5833em 0.833em;\n  border-radius: 0em 0.28571429rem 0.28571429rem 0em;\n}\n\n/*-------------------\n         Tag\n--------------------*/\n.ui.tag.labels .label[data-v-0cd17073],\n.ui.tag.label[data-v-0cd17073] {\n  margin-left: 1em;\n  position: relative;\n  padding-left: 1.5em;\n  padding-right: 1.5em;\n  border-radius: 0em 0.28571429rem 0.28571429rem 0em;\n  -webkit-transition: none;\n  transition: none;\n}\n.ui.tag.labels .label[data-v-0cd17073]:before,\n.ui.tag.label[data-v-0cd17073]:before {\n  position: absolute;\n  -webkit-transform: translateY(-50%) translateX(50%) rotate(-45deg);\n      -ms-transform: translateY(-50%) translateX(50%) rotate(-45deg);\n          transform: translateY(-50%) translateX(50%) rotate(-45deg);\n  top: 50%;\n  right: 100%;\n  content: '';\n  background-color: inherit;\n  background-image: none;\n  width: 1.56em;\n  height: 1.56em;\n  -webkit-transition: none;\n  transition: none;\n}\n.ui.tag.labels .label[data-v-0cd17073]:after,\n.ui.tag.label[data-v-0cd17073]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: -0.25em;\n  margin-top: -0.25em;\n  background-color: #FFFFFF !important;\n  width: 0.5em;\n  height: 0.5em;\n  box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.3);\n  border-radius: 500rem;\n}\n\n/*-------------------\n    Corner Label\n--------------------*/\n.ui.corner.label[data-v-0cd17073] {\n  position: absolute;\n  top: 0em;\n  right: 0em;\n  margin: 0em;\n  padding: 0em;\n  text-align: center;\n  border-color: #E8E8E8;\n  width: 4em;\n  height: 4em;\n  z-index: 1;\n  -webkit-transition: border-color 0.1s ease;\n  transition: border-color 0.1s ease;\n}\n\n/* Icon Label */\n.ui.corner.label[data-v-0cd17073] {\n  background-color: transparent !important;\n}\n.ui.corner.label[data-v-0cd17073]:after {\n  position: absolute;\n  content: \"\";\n  right: 0em;\n  top: 0em;\n  z-index: -1;\n  width: 0em;\n  height: 0em;\n  background-color: transparent !important;\n  border-top: 0em solid transparent;\n  border-right: 4em solid transparent;\n  border-bottom: 4em solid transparent;\n  border-left: 0em solid transparent;\n  border-right-color: inherit;\n  -webkit-transition: border-color 0.1s ease;\n  transition: border-color 0.1s ease;\n}\n.ui.corner.label .icon[data-v-0cd17073] {\n  cursor: default;\n  position: relative;\n  top: 0.64285714em;\n  left: 0.78571429em;\n  font-size: 1.14285714em;\n  margin: 0em;\n}\n\n/* Left Corner */\n.ui.left.corner.label[data-v-0cd17073],\n.ui.left.corner.label[data-v-0cd17073]:after {\n  right: auto;\n  left: 0em;\n}\n.ui.left.corner.label[data-v-0cd17073]:after {\n  border-top: 4em solid transparent;\n  border-right: 4em solid transparent;\n  border-bottom: 0em solid transparent;\n  border-left: 0em solid transparent;\n  border-top-color: inherit;\n}\n.ui.left.corner.label .icon[data-v-0cd17073] {\n  left: -0.78571429em;\n}\n\n/* Segment */\n.ui.segment > .ui.corner.label[data-v-0cd17073] {\n  top: -1px;\n  right: -1px;\n}\n.ui.segment > .ui.left.corner.label[data-v-0cd17073] {\n  right: auto;\n  left: -1px;\n}\n\n/*-------------------\n       Ribbon\n--------------------*/\n.ui.ribbon.label[data-v-0cd17073] {\n  position: relative;\n  margin: 0em;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  border-radius: 0em 0.28571429rem 0.28571429rem 0em;\n  border-color: rgba(0, 0, 0, 0.15);\n}\n.ui.ribbon.label[data-v-0cd17073]:after {\n  position: absolute;\n  content: '';\n  top: 100%;\n  left: 0%;\n  background-color: transparent !important;\n  border-style: solid;\n  border-width: 0em 1.2em 1.2em 0em;\n  border-color: transparent;\n  border-right-color: inherit;\n  width: 0em;\n  height: 0em;\n}\n\n/* Positioning */\n.ui.ribbon.label[data-v-0cd17073] {\n  left: calc( -1rem  -  1.2em );\n  margin-right: -1.2em;\n  padding-left: calc( 1rem  +  1.2em );\n  padding-right: 1.2em;\n}\n.ui[class*=\"right ribbon\"].label[data-v-0cd17073] {\n  left: calc(100% +  1rem  +  1.2em );\n  padding-left: 1.2em;\n  padding-right: calc( 1rem  +  1.2em );\n}\n\n/* Right Ribbon */\n.ui[class*=\"right ribbon\"].label[data-v-0cd17073] {\n  text-align: left;\n  -webkit-transform: translateX(-100%);\n      -ms-transform: translateX(-100%);\n          transform: translateX(-100%);\n  border-radius: 0.28571429rem 0em 0em 0.28571429rem;\n}\n.ui[class*=\"right ribbon\"].label[data-v-0cd17073]:after {\n  left: auto;\n  right: 0%;\n  border-style: solid;\n  border-width: 1.2em 1.2em 0em 0em;\n  border-color: transparent;\n  border-top-color: inherit;\n}\n\n/* Inside Table */\n.ui.image > .ribbon.label[data-v-0cd17073],\n.ui.card .image > .ribbon.label[data-v-0cd17073] {\n  position: absolute;\n  top: 1rem;\n}\n.ui.card .image > .ui.ribbon.label[data-v-0cd17073],\n.ui.image > .ui.ribbon.label[data-v-0cd17073] {\n  left: calc( 0.05rem  -  1.2em );\n}\n.ui.card .image > .ui[class*=\"right ribbon\"].label[data-v-0cd17073],\n.ui.image > .ui[class*=\"right ribbon\"].label[data-v-0cd17073] {\n  left: calc(100% +  -0.05rem  +  1.2em );\n  padding-left: 0.833em;\n}\n\n/* Inside Table */\n.ui.table td > .ui.ribbon.label[data-v-0cd17073] {\n  left: calc( -0.78571429em  -  1.2em );\n}\n.ui.table td > .ui[class*=\"right ribbon\"].label[data-v-0cd17073] {\n  left: calc(100% +  0.78571429em  +  1.2em );\n  padding-left: 0.833em;\n}\n\n/*-------------------\n      Attached\n--------------------*/\n.ui[class*=\"top attached\"].label[data-v-0cd17073],\n.ui.attached.label[data-v-0cd17073] {\n  width: 100%;\n  position: absolute;\n  margin: 0em;\n  top: 0em;\n  left: 0em;\n  padding: 0.75em 1em;\n  border-radius: 0.21428571rem 0.21428571rem 0em 0em;\n}\n.ui[class*=\"bottom attached\"].label[data-v-0cd17073] {\n  top: auto;\n  bottom: 0em;\n  border-radius: 0em 0em 0.21428571rem 0.21428571rem;\n}\n.ui[class*=\"top left attached\"].label[data-v-0cd17073] {\n  width: auto;\n  margin-top: 0em !important;\n  border-radius: 0.21428571rem 0em 0.28571429rem 0em;\n}\n.ui[class*=\"top right attached\"].label[data-v-0cd17073] {\n  width: auto;\n  left: auto;\n  right: 0em;\n  border-radius: 0em 0.21428571rem 0em 0.28571429rem;\n}\n.ui[class*=\"bottom left attached\"].label[data-v-0cd17073] {\n  width: auto;\n  top: auto;\n  bottom: 0em;\n  border-radius: 0em 0.28571429rem 0em 0.21428571rem;\n}\n.ui[class*=\"bottom right attached\"].label[data-v-0cd17073] {\n  top: auto;\n  bottom: 0em;\n  left: auto;\n  right: 0em;\n  width: auto;\n  border-radius: 0.28571429rem 0em 0.21428571rem 0em;\n}\n\n\n/*******************************\n             States\n*******************************/\n\n\n/*-------------------\n      Disabled\n--------------------*/\n.ui.label.disabled[data-v-0cd17073] {\n  opacity: 0.5;\n}\n\n/*-------------------\n        Hover\n--------------------*/\na.ui.labels .label[data-v-0cd17073]:hover,\na.ui.label[data-v-0cd17073]:hover {\n  background-color: #E0E0E0;\n  border-color: #E0E0E0;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.8);\n}\n.ui.labels a.label[data-v-0cd17073]:hover:before,\na.ui.label[data-v-0cd17073]:hover:before {\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/*-------------------\n        Active\n--------------------*/\n.ui.active.label[data-v-0cd17073] {\n  background-color: #D0D0D0;\n  border-color: #D0D0D0;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n.ui.active.label[data-v-0cd17073]:before {\n  background-color: #D0D0D0;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*-------------------\n     Active Hover\n--------------------*/\na.ui.labels .active.label[data-v-0cd17073]:hover,\na.ui.active.label[data-v-0cd17073]:hover {\n  background-color: #C8C8C8;\n  border-color: #C8C8C8;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n.ui.labels a.active.label[data-v-0cd17073]:ActiveHover:before,\na.ui.active.label[data-v-0cd17073]:ActiveHover:before {\n  background-color: #C8C8C8;\n  background-image: none;\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*-------------------\n      Visible\n--------------------*/\n.ui.labels.visible .label[data-v-0cd17073],\n.ui.label.visible[data-v-0cd17073]:not(.dropdown) {\n  display: inline-block !important;\n}\n\n/*-------------------\n      Hidden\n--------------------*/\n.ui.labels.hidden .label[data-v-0cd17073],\n.ui.label.hidden[data-v-0cd17073] {\n  display: none !important;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*-------------------\n       Colors\n--------------------*/\n\n\n/*--- Red ---*/\n.ui.red.labels .label[data-v-0cd17073],\n.ui.red.label[data-v-0cd17073] {\n  background-color: #DB2828 !important;\n  border-color: #DB2828 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.red.labels .label[data-v-0cd17073]:hover,\na.ui.red.label[data-v-0cd17073]:hover {\n  background-color: #d01919 !important;\n  border-color: #d01919 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.red.corner.label[data-v-0cd17073],\n.ui.red.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.red.ribbon.label[data-v-0cd17073] {\n  border-color: #b21e1e !important;\n}\n\n/* Basic */\n.ui.basic.red.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #DB2828 !important;\n  border-color: #DB2828 !important;\n}\n.ui.basic.red.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.red.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #d01919 !important;\n  border-color: #d01919 !important;\n}\n\n/*--- Orange ---*/\n.ui.orange.labels .label[data-v-0cd17073],\n.ui.orange.label[data-v-0cd17073] {\n  background-color: #F2711C !important;\n  border-color: #F2711C !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.orange.labels .label[data-v-0cd17073]:hover,\na.ui.orange.label[data-v-0cd17073]:hover {\n  background-color: #f26202 !important;\n  border-color: #f26202 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.orange.corner.label[data-v-0cd17073],\n.ui.orange.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.orange.ribbon.label[data-v-0cd17073] {\n  border-color: #cf590c !important;\n}\n\n/* Basic */\n.ui.basic.orange.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #F2711C !important;\n  border-color: #F2711C !important;\n}\n.ui.basic.orange.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.orange.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #f26202 !important;\n  border-color: #f26202 !important;\n}\n\n/*--- Yellow ---*/\n.ui.yellow.labels .label[data-v-0cd17073],\n.ui.yellow.label[data-v-0cd17073] {\n  background-color: #FBBD08 !important;\n  border-color: #FBBD08 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.yellow.labels .label[data-v-0cd17073]:hover,\na.ui.yellow.label[data-v-0cd17073]:hover {\n  background-color: #eaae00 !important;\n  border-color: #eaae00 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.yellow.corner.label[data-v-0cd17073],\n.ui.yellow.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.yellow.ribbon.label[data-v-0cd17073] {\n  border-color: #cd9903 !important;\n}\n\n/* Basic */\n.ui.basic.yellow.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #FBBD08 !important;\n  border-color: #FBBD08 !important;\n}\n.ui.basic.yellow.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.yellow.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #eaae00 !important;\n  border-color: #eaae00 !important;\n}\n\n/*--- Olive ---*/\n.ui.olive.labels .label[data-v-0cd17073],\n.ui.olive.label[data-v-0cd17073] {\n  background-color: #B5CC18 !important;\n  border-color: #B5CC18 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.olive.labels .label[data-v-0cd17073]:hover,\na.ui.olive.label[data-v-0cd17073]:hover {\n  background-color: #a7bd0d !important;\n  border-color: #a7bd0d !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.olive.corner.label[data-v-0cd17073],\n.ui.olive.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.olive.ribbon.label[data-v-0cd17073] {\n  border-color: #198f35 !important;\n}\n\n/* Basic */\n.ui.basic.olive.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #B5CC18 !important;\n  border-color: #B5CC18 !important;\n}\n.ui.basic.olive.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.olive.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #a7bd0d !important;\n  border-color: #a7bd0d !important;\n}\n\n/*--- Green ---*/\n.ui.green.labels .label[data-v-0cd17073],\n.ui.green.label[data-v-0cd17073] {\n  background-color: #21BA45 !important;\n  border-color: #21BA45 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.green.labels .label[data-v-0cd17073]:hover,\na.ui.green.label[data-v-0cd17073]:hover {\n  background-color: #16ab39 !important;\n  border-color: #16ab39 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.green.corner.label[data-v-0cd17073],\n.ui.green.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.green.ribbon.label[data-v-0cd17073] {\n  border-color: #198f35 !important;\n}\n\n/* Basic */\n.ui.basic.green.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #21BA45 !important;\n  border-color: #21BA45 !important;\n}\n.ui.basic.green.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.green.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #16ab39 !important;\n  border-color: #16ab39 !important;\n}\n\n/*--- Teal ---*/\n.ui.teal.labels .label[data-v-0cd17073],\n.ui.teal.label[data-v-0cd17073] {\n  background-color: #00B5AD !important;\n  border-color: #00B5AD !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.teal.labels .label[data-v-0cd17073]:hover,\na.ui.teal.label[data-v-0cd17073]:hover {\n  background-color: #009c95 !important;\n  border-color: #009c95 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.teal.corner.label[data-v-0cd17073],\n.ui.teal.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.teal.ribbon.label[data-v-0cd17073] {\n  border-color: #00827c !important;\n}\n\n/* Basic */\n.ui.basic.teal.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #00B5AD !important;\n  border-color: #00B5AD !important;\n}\n.ui.basic.teal.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.teal.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #009c95 !important;\n  border-color: #009c95 !important;\n}\n\n/*--- Blue ---*/\n.ui.blue.labels .label[data-v-0cd17073],\n.ui.blue.label[data-v-0cd17073] {\n  background-color: #2185D0 !important;\n  border-color: #2185D0 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.blue.labels .label[data-v-0cd17073]:hover,\na.ui.blue.label[data-v-0cd17073]:hover {\n  background-color: #1678c2 !important;\n  border-color: #1678c2 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.blue.corner.label[data-v-0cd17073],\n.ui.blue.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.blue.ribbon.label[data-v-0cd17073] {\n  border-color: #1a69a4 !important;\n}\n\n/* Basic */\n.ui.basic.blue.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #2185D0 !important;\n  border-color: #2185D0 !important;\n}\n.ui.basic.blue.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.blue.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #1678c2 !important;\n  border-color: #1678c2 !important;\n}\n\n/*--- Violet ---*/\n.ui.violet.labels .label[data-v-0cd17073],\n.ui.violet.label[data-v-0cd17073] {\n  background-color: #6435C9 !important;\n  border-color: #6435C9 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.violet.labels .label[data-v-0cd17073]:hover,\na.ui.violet.label[data-v-0cd17073]:hover {\n  background-color: #5829bb !important;\n  border-color: #5829bb !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.violet.corner.label[data-v-0cd17073],\n.ui.violet.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.violet.ribbon.label[data-v-0cd17073] {\n  border-color: #502aa1 !important;\n}\n\n/* Basic */\n.ui.basic.violet.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #6435C9 !important;\n  border-color: #6435C9 !important;\n}\n.ui.basic.violet.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.violet.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #5829bb !important;\n  border-color: #5829bb !important;\n}\n\n/*--- Purple ---*/\n.ui.purple.labels .label[data-v-0cd17073],\n.ui.purple.label[data-v-0cd17073] {\n  background-color: #A333C8 !important;\n  border-color: #A333C8 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.purple.labels .label[data-v-0cd17073]:hover,\na.ui.purple.label[data-v-0cd17073]:hover {\n  background-color: #9627ba !important;\n  border-color: #9627ba !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.purple.corner.label[data-v-0cd17073],\n.ui.purple.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.purple.ribbon.label[data-v-0cd17073] {\n  border-color: #82299f !important;\n}\n\n/* Basic */\n.ui.basic.purple.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #A333C8 !important;\n  border-color: #A333C8 !important;\n}\n.ui.basic.purple.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.purple.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #9627ba !important;\n  border-color: #9627ba !important;\n}\n\n/*--- Pink ---*/\n.ui.pink.labels .label[data-v-0cd17073],\n.ui.pink.label[data-v-0cd17073] {\n  background-color: #E03997 !important;\n  border-color: #E03997 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.pink.labels .label[data-v-0cd17073]:hover,\na.ui.pink.label[data-v-0cd17073]:hover {\n  background-color: #e61a8d !important;\n  border-color: #e61a8d !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.pink.corner.label[data-v-0cd17073],\n.ui.pink.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.pink.ribbon.label[data-v-0cd17073] {\n  border-color: #c71f7e !important;\n}\n\n/* Basic */\n.ui.basic.pink.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #E03997 !important;\n  border-color: #E03997 !important;\n}\n.ui.basic.pink.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.pink.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #e61a8d !important;\n  border-color: #e61a8d !important;\n}\n\n/*--- Brown ---*/\n.ui.brown.labels .label[data-v-0cd17073],\n.ui.brown.label[data-v-0cd17073] {\n  background-color: #A5673F !important;\n  border-color: #A5673F !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.brown.labels .label[data-v-0cd17073]:hover,\na.ui.brown.label[data-v-0cd17073]:hover {\n  background-color: #975b33 !important;\n  border-color: #975b33 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.brown.corner.label[data-v-0cd17073],\n.ui.brown.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.brown.ribbon.label[data-v-0cd17073] {\n  border-color: #805031 !important;\n}\n\n/* Basic */\n.ui.basic.brown.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #A5673F !important;\n  border-color: #A5673F !important;\n}\n.ui.basic.brown.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.brown.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #975b33 !important;\n  border-color: #975b33 !important;\n}\n\n/*--- Grey ---*/\n.ui.grey.labels .label[data-v-0cd17073],\n.ui.grey.label[data-v-0cd17073] {\n  background-color: #767676 !important;\n  border-color: #767676 !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.grey.labels .label[data-v-0cd17073]:hover,\na.ui.grey.label[data-v-0cd17073]:hover {\n  background-color: #838383 !important;\n  border-color: #838383 !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.grey.corner.label[data-v-0cd17073],\n.ui.grey.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.grey.ribbon.label[data-v-0cd17073] {\n  border-color: #805031 !important;\n}\n\n/* Basic */\n.ui.basic.grey.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #767676 !important;\n  border-color: #767676 !important;\n}\n.ui.basic.grey.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.grey.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #838383 !important;\n  border-color: #838383 !important;\n}\n\n/*--- Black ---*/\n.ui.black.labels .label[data-v-0cd17073],\n.ui.black.label[data-v-0cd17073] {\n  background-color: #1B1C1D !important;\n  border-color: #1B1C1D !important;\n  color: #FFFFFF !important;\n}\n\n/* Link */\n.ui.black.labels .label[data-v-0cd17073]:hover,\na.ui.black.label[data-v-0cd17073]:hover {\n  background-color: #27292a !important;\n  border-color: #27292a !important;\n  color: #FFFFFF !important;\n}\n\n/* Corner */\n.ui.black.corner.label[data-v-0cd17073],\n.ui.black.corner.label[data-v-0cd17073]:hover {\n  background-color: transparent !important;\n}\n\n/* Ribbon */\n.ui.black.ribbon.label[data-v-0cd17073] {\n  border-color: #805031 !important;\n}\n\n/* Basic */\n.ui.basic.black.label[data-v-0cd17073] {\n  background-color: #FFFFFF !important;\n  color: #1B1C1D !important;\n  border-color: #1B1C1D !important;\n}\n.ui.basic.black.labels a.label[data-v-0cd17073]:hover,\na.ui.basic.black.label[data-v-0cd17073]:hover {\n  background-color: #FFFFFF !important;\n  color: #27292a !important;\n  border-color: #27292a !important;\n}\n\n/*-------------------\n        Basic\n--------------------*/\n.ui.basic.label[data-v-0cd17073] {\n  background: none #FFFFFF;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n}\n\n/* Link */\na.ui.basic.label[data-v-0cd17073]:hover {\n  text-decoration: none;\n  background: none #FFFFFF;\n  color: #1e70bf;\n  box-shadow: 1px solid rgba(34, 36, 38, 0.15);\n  box-shadow: none;\n}\n\n/* Pointing */\n.ui.basic.pointing.label[data-v-0cd17073]:before {\n  border-color: inherit;\n}\n\n/*-------------------\n       Fluid\n--------------------*/\n.ui.label.fluid[data-v-0cd17073],\n.ui.fluid.labels > .label[data-v-0cd17073] {\n  width: 100%;\n  box-sizing: border-box;\n}\n\n/*-------------------\n       Inverted\n--------------------*/\n.ui.inverted.labels .label[data-v-0cd17073],\n.ui.inverted.label[data-v-0cd17073] {\n  color: rgba(255, 255, 255, 0.9) !important;\n}\n\n/*-------------------\n     Horizontal\n--------------------*/\n.ui.horizontal.labels .label[data-v-0cd17073],\n.ui.horizontal.label[data-v-0cd17073] {\n  margin: 0em 0.5em 0em 0em;\n  padding: 0.4em 0.833em;\n  min-width: 3em;\n  text-align: center;\n}\n\n/*-------------------\n       Circular\n--------------------*/\n.ui.circular.labels .label[data-v-0cd17073],\n.ui.circular.label[data-v-0cd17073] {\n  min-width: 2em;\n  min-height: 2em;\n  padding: 0.5em !important;\n  line-height: 1em;\n  text-align: center;\n  border-radius: 500rem;\n}\n.ui.empty.circular.labels .label[data-v-0cd17073],\n.ui.empty.circular.label[data-v-0cd17073] {\n  min-width: 0em;\n  min-height: 0em;\n  overflow: hidden;\n  width: 0.5em;\n  height: 0.5em;\n  vertical-align: baseline;\n}\n\n/*-------------------\n       Pointing\n--------------------*/\n.ui.pointing.label[data-v-0cd17073] {\n  position: relative;\n}\n.ui.attached.pointing.label[data-v-0cd17073] {\n  position: absolute;\n}\n.ui.pointing.label[data-v-0cd17073]:before {\n  background-color: inherit;\n  background-image: inherit;\n  border-width: none;\n  border-style: solid;\n  border-color: inherit;\n}\n\n/* Arrow */\n.ui.pointing.label[data-v-0cd17073]:before {\n  position: absolute;\n  content: '';\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n  background-image: none;\n  z-index: 2;\n  width: 0.6666em;\n  height: 0.6666em;\n  -webkit-transition: background 0.1s ease;\n  transition: background 0.1s ease;\n}\n\n/*--- Above ---*/\n.ui.pointing.label[data-v-0cd17073],\n.ui[class*=\"pointing above\"].label[data-v-0cd17073] {\n  margin-top: 1em;\n}\n.ui.pointing.label[data-v-0cd17073]:before,\n.ui[class*=\"pointing above\"].label[data-v-0cd17073]:before {\n  border-width: 1px 0px 0px 1px;\n  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n          transform: translateX(-50%) translateY(-50%) rotate(45deg);\n  top: 0%;\n  left: 50%;\n}\n\n/*--- Below ---*/\n.ui[class*=\"bottom pointing\"].label[data-v-0cd17073],\n.ui[class*=\"pointing below\"].label[data-v-0cd17073] {\n  margin-top: 0em;\n  margin-bottom: 1em;\n}\n.ui[class*=\"bottom pointing\"].label[data-v-0cd17073]:before,\n.ui[class*=\"pointing below\"].label[data-v-0cd17073]:before {\n  border-width: 0px 1px 1px 0px;\n  top: auto;\n  right: auto;\n  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n          transform: translateX(-50%) translateY(-50%) rotate(45deg);\n  top: 100%;\n  left: 50%;\n}\n\n/*--- Left ---*/\n.ui[class*=\"left pointing\"].label[data-v-0cd17073] {\n  margin-top: 0em;\n  margin-left: 0.6666em;\n}\n.ui[class*=\"left pointing\"].label[data-v-0cd17073]:before {\n  border-width: 0px 0px 1px 1px;\n  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);\n          transform: translateX(-50%) translateY(-50%) rotate(45deg);\n  bottom: auto;\n  right: auto;\n  top: 50%;\n  left: 0em;\n}\n\n/*--- Right ---*/\n.ui[class*=\"right pointing\"].label[data-v-0cd17073] {\n  margin-top: 0em;\n  margin-right: 0.6666em;\n}\n.ui[class*=\"right pointing\"].label[data-v-0cd17073]:before {\n  border-width: 1px 1px 0px 0px;\n  -webkit-transform: translateX(50%) translateY(-50%) rotate(45deg);\n      -ms-transform: translateX(50%) translateY(-50%) rotate(45deg);\n          transform: translateX(50%) translateY(-50%) rotate(45deg);\n  top: 50%;\n  right: 0%;\n  bottom: auto;\n  left: auto;\n}\n\n/* Basic Pointing */\n\n/*--- Above ---*/\n.ui.basic.pointing.label[data-v-0cd17073]:before,\n.ui.basic[class*=\"pointing above\"].label[data-v-0cd17073]:before {\n  margin-top: -1px;\n}\n\n/*--- Below ---*/\n.ui.basic[class*=\"bottom pointing\"].label[data-v-0cd17073]:before,\n.ui.basic[class*=\"pointing below\"].label[data-v-0cd17073]:before {\n  bottom: auto;\n  top: 100%;\n  margin-top: 1px;\n}\n\n/*--- Left ---*/\n.ui.basic[class*=\"left pointing\"].label[data-v-0cd17073]:before {\n  top: 50%;\n  left: -1px;\n}\n\n/*--- Right ---*/\n.ui.basic[class*=\"right pointing\"].label[data-v-0cd17073]:before {\n  top: 50%;\n  right: -1px;\n}\n\n/*------------------\n   Floating Label\n-------------------*/\n.ui.floating.label[data-v-0cd17073] {\n  position: absolute;\n  z-index: 100;\n  top: -1em;\n  left: 100%;\n  margin: 0em 0em 0em -1.5em !important;\n}\n\n/*-------------------\n        Sizes\n--------------------*/\n.ui.mini.labels .label[data-v-0cd17073],\n.ui.mini.label[data-v-0cd17073] {\n  font-size: 0.64285714rem;\n}\n.ui.tiny.labels .label[data-v-0cd17073],\n.ui.tiny.label[data-v-0cd17073] {\n  font-size: 0.71428571rem;\n}\n.ui.small.labels .label[data-v-0cd17073],\n.ui.small.label[data-v-0cd17073] {\n  font-size: 0.78571429rem;\n}\n.ui.labels .label[data-v-0cd17073],\n.ui.label[data-v-0cd17073] {\n  font-size: 0.85714286rem;\n}\n.ui.large.labels .label[data-v-0cd17073],\n.ui.large.label[data-v-0cd17073] {\n  font-size: 1rem;\n}\n.ui.big.labels .label[data-v-0cd17073],\n.ui.big.label[data-v-0cd17073] {\n  font-size: 1.28571429rem;\n}\n.ui.huge.labels .label[data-v-0cd17073],\n.ui.huge.label[data-v-0cd17073] {\n  font-size: 1.42857143rem;\n}\n.ui.massive.labels .label[data-v-0cd17073],\n.ui.massive.label[data-v-0cd17073] {\n  font-size: 1.71428571rem;\n}\n\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n\n\n/*******************************\n         Site Overrides\n*******************************/\n\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 16 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(1)();
+	exports = module.exports = __webpack_require__(4)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "\n.ui.dropdown[data-v-bc4ebfaa] {\n  min-height: 14px !important;\n}\n.ui.dropdown .text[data-v-bc4ebfaa] {\n  font-size: 14px !important;\n}\n.ui.dropdown .menu > .item[data-v-bc4ebfaa] {\n  font-size: 14px !important;\n}\n.ui.search.selection.dropdown > input.search[data-v-bc4ebfaa] {\n  font-size: 14px !important;\n  line-height: 14px !important;\n}\n.ui.selection.dropdown .menu[data-v-bc4ebfaa] {\n  min-width: calc(100%) !important;\n  width: calc(100%) !important;\n}\n.ui.fluid.dropdown[data-v-bc4ebfaa] {\n  width: auto;\n}\n.ui.label > .delete.icon[data-v-bc4ebfaa]:after {\n  content: \"x\";\n  color: #266d4d;\n  font-size: 16px;\n  font-style: normal;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 17 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(1)();
+	exports = module.exports = __webpack_require__(4)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "/*!\n * # Semantic UI 2.2.3 - Dropdown\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n            Dropdown\n*******************************/\n.ui.dropdown[data-v-bc4ebfaa] {\n  cursor: pointer;\n  position: relative;\n  display: inline-block;\n  outline: none;\n  text-align: left;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n\n/*******************************\n            Content\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n.ui.dropdown .menu[data-v-bc4ebfaa] {\n  cursor: auto;\n  position: absolute;\n  display: none;\n  outline: none;\n  top: 100%;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  margin: 0em;\n  padding: 0em 0em;\n  background: #FFFFFF;\n  font-size: 1em;\n  text-shadow: none;\n  text-align: left;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n  z-index: 11;\n  will-change: transform, opacity;\n}\n.ui.dropdown .menu > *[data-v-bc4ebfaa] {\n  white-space: nowrap;\n}\n\n/*--------------\n  Hidden Input\n---------------*/\n.ui.dropdown > input[data-v-bc4ebfaa]:not(.search):first-child,\n.ui.dropdown > select[data-v-bc4ebfaa] {\n  display: none !important;\n}\n\n/*--------------\n Dropdown Icon\n---------------*/\n.ui.dropdown > .dropdown.icon[data-v-bc4ebfaa] {\n  position: relative;\n  width: auto;\n  font-size: 0.85714286em;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon[data-v-bc4ebfaa] {\n  width: auto;\n  float: right;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon + .text[data-v-bc4ebfaa] {\n  margin-right: 1em;\n}\n\n/*--------------\n      Text\n---------------*/\n.ui.dropdown > .text[data-v-bc4ebfaa] {\n  display: inline-block;\n  -webkit-transition: none;\n  transition: none;\n}\n\n/*--------------\n    Menu Item\n---------------*/\n.ui.dropdown .menu > .item[data-v-bc4ebfaa] {\n  position: relative;\n  cursor: pointer;\n  display: block;\n  border: none;\n  height: auto;\n  text-align: left;\n  border-top: none;\n  line-height: 1em;\n  color: rgba(0, 0, 0, 0.87);\n  padding: 0.78571429rem 1.14285714rem !important;\n  font-size: 1rem;\n  text-transform: none;\n  font-weight: normal;\n  box-shadow: none;\n  -webkit-touch-callout: none;\n}\n.ui.dropdown .menu > .item[data-v-bc4ebfaa]:first-child {\n  border-top-width: 0px;\n}\n\n/*--------------\n  Floated Content\n---------------*/\n.ui.dropdown > .text > [class*=\"right floated\"][data-v-bc4ebfaa],\n.ui.dropdown .menu .item > [class*=\"right floated\"][data-v-bc4ebfaa] {\n  float: right !important;\n  margin-right: 0em !important;\n  margin-left: 1em !important;\n}\n.ui.dropdown > .text > [class*=\"left floated\"][data-v-bc4ebfaa],\n.ui.dropdown .menu .item > [class*=\"left floated\"][data-v-bc4ebfaa] {\n  float: left !important;\n  margin-left: 0em !important;\n  margin-right: 1em !important;\n}\n.ui.dropdown .menu .item > .icon.floated[data-v-bc4ebfaa],\n.ui.dropdown .menu .item > .flag.floated[data-v-bc4ebfaa],\n.ui.dropdown .menu .item > .image.floated[data-v-bc4ebfaa],\n.ui.dropdown .menu .item > img.floated[data-v-bc4ebfaa] {\n  margin-top: 0em;\n}\n\n/*--------------\n  Menu Divider\n---------------*/\n.ui.dropdown .menu > .header[data-v-bc4ebfaa] {\n  margin: 1rem 0rem 0.75rem;\n  padding: 0em 1.14285714rem;\n  color: rgba(0, 0, 0, 0.85);\n  font-size: 0.78571429em;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.ui.dropdown .menu > .divider[data-v-bc4ebfaa] {\n  border-top: 1px solid rgba(34, 36, 38, 0.1);\n  height: 0em;\n  margin: 0.5em 0em;\n}\n.ui.dropdown .menu > .input[data-v-bc4ebfaa] {\n  width: auto;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 1.14285714rem 0.78571429rem;\n  min-width: 10rem;\n}\n.ui.dropdown .menu > .header + .input[data-v-bc4ebfaa] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .input:not(.transparent) input[data-v-bc4ebfaa] {\n  padding: 0.5em 1em;\n}\n.ui.dropdown .menu > .input:not(.transparent) .button[data-v-bc4ebfaa],\n.ui.dropdown .menu > .input:not(.transparent) .icon[data-v-bc4ebfaa],\n.ui.dropdown .menu > .input:not(.transparent) .label[data-v-bc4ebfaa] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n\n/*-----------------\n  Item Description\n-------------------*/\n.ui.dropdown > .text > .description[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .description[data-v-bc4ebfaa] {\n  float: right;\n  margin: 0em 0em 0em 1em;\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*-----------------\n       Message\n-------------------*/\n.ui.dropdown .menu > .message[data-v-bc4ebfaa] {\n  padding: 0.78571429rem 1.14285714rem;\n  font-weight: normal;\n}\n.ui.dropdown .menu > .message[data-v-bc4ebfaa]:not(.ui) {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*--------------\n    Sub Menu\n---------------*/\n.ui.dropdown .menu .menu[data-v-bc4ebfaa] {\n  top: 0% !important;\n  left: 100% !important;\n  right: auto !important;\n  margin: 0em 0em 0em -0.5em !important;\n  border-radius: 0.28571429rem !important;\n  z-index: 21 !important;\n}\n\n/* Hide Arrow */\n.ui.dropdown .menu .menu[data-v-bc4ebfaa]:after {\n  display: none;\n}\n\n/*--------------\n   Sub Elements\n---------------*/\n\n\n/* Icons / Flags / Labels / Image */\n.ui.dropdown > .text > .icon[data-v-bc4ebfaa],\n.ui.dropdown > .text > .label[data-v-bc4ebfaa],\n.ui.dropdown > .text > .flag[data-v-bc4ebfaa],\n.ui.dropdown > .text > img[data-v-bc4ebfaa],\n.ui.dropdown > .text > .image[data-v-bc4ebfaa] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .item > .icon[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .label[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .flag[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .image[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > img[data-v-bc4ebfaa] {\n  margin-top: 0em;\n}\n.ui.dropdown > .text > .icon[data-v-bc4ebfaa],\n.ui.dropdown > .text > .label[data-v-bc4ebfaa],\n.ui.dropdown > .text > .flag[data-v-bc4ebfaa],\n.ui.dropdown > .text > img[data-v-bc4ebfaa],\n.ui.dropdown > .text > .image[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .icon[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .label[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .flag[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .image[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > img[data-v-bc4ebfaa] {\n  margin-left: 0em;\n  float: none;\n  margin-right: 0.78571429rem;\n}\n\n/*--------------\n     Image\n---------------*/\n.ui.dropdown > .text > img[data-v-bc4ebfaa],\n.ui.dropdown > .text > .image[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > .image[data-v-bc4ebfaa],\n.ui.dropdown .menu > .item > img[data-v-bc4ebfaa] {\n  display: inline-block;\n  vertical-align: middle;\n  width: auto;\n  max-height: 2em;\n}\n\n\n/*******************************\n            Coupling\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n\n\n/* Remove Menu Item Divider */\n.ui.dropdown .ui.menu > .item[data-v-bc4ebfaa]:before,\n.ui.menu .ui.dropdown .menu > .item[data-v-bc4ebfaa]:before {\n  display: none;\n}\n\n/* Prevent Menu Item Border */\n.ui.menu .ui.dropdown .menu .active.item[data-v-bc4ebfaa] {\n  border-left: none;\n}\n\n/* Automatically float dropdown menu right on last menu item */\n.ui.menu .right.menu .dropdown:last-child .menu[data-v-bc4ebfaa],\n.ui.menu .right.dropdown.item .menu[data-v-bc4ebfaa],\n.ui.buttons > .ui.dropdown:last-child .menu[data-v-bc4ebfaa] {\n  left: auto;\n  right: 0em;\n}\n\n/*--------------\n      Label\n---------------*/\n\n\n/* Dropdown Menu */\n.ui.label.dropdown .menu[data-v-bc4ebfaa] {\n  min-width: 100%;\n}\n\n/*--------------\n     Button\n---------------*/\n\n\n/* No Margin On Icon Button */\n.ui.dropdown.icon.button > .dropdown.icon[data-v-bc4ebfaa] {\n  margin: 0em;\n}\n.ui.button.dropdown .menu[data-v-bc4ebfaa] {\n  min-width: 100%;\n}\n\n\n/*******************************\n              Types\n*******************************/\n\n\n/*--------------\n    Selection\n---------------*/\n\n\n/* Displays like a select box */\n.ui.selection.dropdown[data-v-bc4ebfaa] {\n  cursor: pointer;\n  word-wrap: break-word;\n  line-height: 1em;\n  white-space: normal;\n  outline: 0;\n  -webkit-transform: rotateZ(0deg);\n      -ms-transform: rotate(0deg);\n          transform: rotateZ(0deg);\n  min-width: 14em;\n  min-height: 2.7142em;\n  background: #FFFFFF;\n  display: inline-block;\n  padding: 0.78571429em 2.1em 0.78571429em 1em;\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n}\n.ui.selection.dropdown.visible[data-v-bc4ebfaa],\n.ui.selection.dropdown.active[data-v-bc4ebfaa] {\n  z-index: 10;\n}\nselect.ui.dropdown[data-v-bc4ebfaa] {\n  height: 38px;\n  padding: 0.5em;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  visibility: visible;\n}\n.ui.selection.dropdown > .search.icon[data-v-bc4ebfaa],\n.ui.selection.dropdown > .delete.icon[data-v-bc4ebfaa],\n.ui.selection.dropdown > .dropdown.icon[data-v-bc4ebfaa] {\n  cursor: pointer;\n  position: absolute;\n  width: auto;\n  height: auto;\n  line-height: 1.2142em;\n  top: 0.78571429em;\n  right: 1em;\n  z-index: 3;\n  margin: -0.78571429em;\n  padding: 0.78571429em;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n/* Compact */\n.ui.compact.selection.dropdown[data-v-bc4ebfaa] {\n  min-width: 0px;\n}\n\n/*  Selection Menu */\n.ui.selection.dropdown .menu[data-v-bc4ebfaa] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  border-top-width: 0px !important;\n  width: auto;\n  outline: none;\n  margin: 0px -1px;\n  min-width: calc(100% +  2px );\n  width: calc(100% +  2px );\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.selection.dropdown .menu[data-v-bc4ebfaa]:after,\n.ui.selection.dropdown .menu[data-v-bc4ebfaa]:before {\n  display: none;\n}\n\n/*--------------\n    Message\n---------------*/\n.ui.selection.dropdown .menu > .message[data-v-bc4ebfaa] {\n  padding: 0.78571429rem 1.14285714rem;\n}\n@media only screen and (max-width: 767px) {\n.ui.selection.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.selection.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.selection.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.selection.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 21.37142857rem;\n}\n}\n\n/* Menu Item */\n.ui.selection.dropdown .menu > .item[data-v-bc4ebfaa] {\n  border-top: 1px solid #FAFAFA;\n  padding: 0.78571429rem 1.14285714rem !important;\n  white-space: normal;\n  word-wrap: normal;\n}\n\n/* User Item */\n.ui.selection.dropdown .menu > .hidden.addition.item[data-v-bc4ebfaa] {\n  display: none;\n}\n\n/* Hover */\n.ui.selection.dropdown[data-v-bc4ebfaa]:hover {\n  border-color: rgba(34, 36, 38, 0.35);\n  box-shadow: none;\n}\n\n/* Active */\n.ui.selection.active.dropdown[data-v-bc4ebfaa] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown .menu[data-v-bc4ebfaa] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Focus */\n.ui.selection.dropdown[data-v-bc4ebfaa]:focus {\n  border-color: #96C8DA;\n  box-shadow: none;\n}\n.ui.selection.dropdown:focus .menu[data-v-bc4ebfaa] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Visible */\n.ui.selection.visible.dropdown > .text[data-v-bc4ebfaa]:not(.default) {\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/* Visible Hover */\n.ui.selection.active.dropdown[data-v-bc4ebfaa]:hover {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown:hover .menu[data-v-bc4ebfaa] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Dropdown Icon */\n.ui.active.selection.dropdown > .dropdown.icon[data-v-bc4ebfaa],\n.ui.visible.selection.dropdown > .dropdown.icon[data-v-bc4ebfaa] {\n  opacity: 1;\n  z-index: 3;\n}\n\n/* Connecting Border */\n.ui.active.selection.dropdown[data-v-bc4ebfaa] {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n\n/* Empty Connecting Border */\n.ui.active.empty.selection.dropdown[data-v-bc4ebfaa] {\n  border-radius: 0.28571429rem !important;\n  box-shadow: none !important;\n}\n.ui.active.empty.selection.dropdown .menu[data-v-bc4ebfaa] {\n  border: none !important;\n  box-shadow: none !important;\n}\n\n/*--------------\n   Searchable\n---------------*/\n\n\n/* Search Selection */\n.ui.search.dropdown[data-v-bc4ebfaa] {\n  min-width: '';\n}\n\n/* Search Dropdown */\n.ui.search.dropdown > input.search[data-v-bc4ebfaa] {\n  background: none transparent !important;\n  border: none !important;\n  box-shadow: none !important;\n  cursor: text;\n  top: 0em;\n  left: 1px;\n  width: 100%;\n  outline: none;\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n  padding: inherit;\n}\n\n/* Text Layering */\n.ui.search.dropdown > input.search[data-v-bc4ebfaa] {\n  position: absolute;\n  z-index: 2;\n}\n.ui.search.dropdown > .text[data-v-bc4ebfaa] {\n  cursor: text;\n  position: relative;\n  left: 1px;\n  z-index: 3;\n}\n\n/* Search Selection */\n.ui.search.selection.dropdown > input.search[data-v-bc4ebfaa] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n}\n\n/* Used to size multi select input to character width */\n.ui.search.selection.dropdown > span.sizer[data-v-bc4ebfaa] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n  display: none;\n  white-space: pre;\n}\n\n/* Active/Visible Search */\n.ui.search.dropdown.active > input.search[data-v-bc4ebfaa],\n.ui.search.dropdown.visible > input.search[data-v-bc4ebfaa] {\n  cursor: auto;\n}\n.ui.search.dropdown.active > .text[data-v-bc4ebfaa],\n.ui.search.dropdown.visible > .text[data-v-bc4ebfaa] {\n  pointer-events: none;\n}\n\n/* Filtered Text */\n.ui.active.search.dropdown input.search:focus + .text .icon[data-v-bc4ebfaa],\n.ui.active.search.dropdown input.search:focus + .text .flag[data-v-bc4ebfaa] {\n  opacity: 0.45;\n}\n.ui.active.search.dropdown input.search:focus + .text[data-v-bc4ebfaa] {\n  color: rgba(115, 115, 115, 0.87) !important;\n}\n\n/* Search Menu */\n.ui.search.dropdown .menu[data-v-bc4ebfaa] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n@media only screen and (max-width: 767px) {\n.ui.search.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.search.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.search.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.search.dropdown .menu[data-v-bc4ebfaa] {\n    max-height: 21.37142857rem;\n}\n}\n\n/*--------------\n    Multiple\n---------------*/\n\n\n/* Multiple Selection */\n.ui.multiple.dropdown[data-v-bc4ebfaa] {\n  padding: 0.22620476em 2.1em 0.22620476em 0.35714286em;\n}\n.ui.multiple.dropdown .menu[data-v-bc4ebfaa] {\n  cursor: auto;\n}\n\n/* Multiple Search Selection */\n.ui.multiple.search.dropdown[data-v-bc4ebfaa],\n.ui.multiple.search.dropdown > input.search[data-v-bc4ebfaa] {\n  cursor: text;\n}\n\n/* Selection Label */\n.ui.multiple.dropdown > .label[data-v-bc4ebfaa] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  display: inline-block;\n  vertical-align: top;\n  white-space: normal;\n  font-size: 1em;\n  padding: 0.35714286em 0.78571429em;\n  margin: 0.14285714rem 0.28571429rem 0.14285714rem 0em;\n  box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;\n}\n\n/* Dropdown Icon */\n.ui.multiple.dropdown .dropdown.icon[data-v-bc4ebfaa] {\n  margin: '';\n  padding: '';\n}\n\n/* Text */\n.ui.multiple.dropdown > .text[data-v-bc4ebfaa] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.dropdown > .label ~ input.search[data-v-bc4ebfaa] {\n  margin-left: 0.14285714em !important;\n}\n.ui.multiple.dropdown > .label ~ .text[data-v-bc4ebfaa] {\n  display: none;\n}\n\n/*-----------------\n  Multiple Search\n-----------------*/\n\n\n/* Prompt Text */\n.ui.multiple.search.dropdown > .text[data-v-bc4ebfaa] {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: inherit;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.search.dropdown > .label ~ .text[data-v-bc4ebfaa] {\n  display: none;\n}\n\n/* Search */\n.ui.multiple.search.dropdown > input.search[data-v-bc4ebfaa] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  width: 2.2em;\n  line-height: 1.21428571em;\n}\n\n/*--------------\n     Inline\n---------------*/\n.ui.inline.dropdown[data-v-bc4ebfaa] {\n  cursor: pointer;\n  display: inline-block;\n  color: inherit;\n}\n.ui.inline.dropdown .dropdown.icon[data-v-bc4ebfaa] {\n  margin: 0em 0.5em 0em 0.21428571em;\n  vertical-align: baseline;\n}\n.ui.inline.dropdown > .text[data-v-bc4ebfaa] {\n  font-weight: bold;\n}\n.ui.inline.dropdown .menu[data-v-bc4ebfaa] {\n  cursor: auto;\n  margin-top: 0.21428571em;\n  border-radius: 0.28571429rem;\n}\n\n\n/*******************************\n            States\n*******************************/\n\n\n/*--------------------\n        Active\n----------------------*/\n\n\n/* Menu Item Active */\n.ui.dropdown .menu .active.item[data-v-bc4ebfaa] {\n  background: transparent;\n  font-weight: bold;\n  color: rgba(0, 0, 0, 0.95);\n  box-shadow: none;\n  z-index: 12;\n}\n\n/*--------------------\n        Hover\n----------------------*/\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item[data-v-bc4ebfaa]:hover {\n  background: rgba(0, 0, 0, 0.05);\n  color: rgba(0, 0, 0, 0.95);\n  z-index: 13;\n}\n\n/*--------------------\n       Loading\n---------------------*/\n.ui.loading.dropdown > i.icon[data-v-bc4ebfaa] {\n  height: 1em !important;\n  padding: 1.14285714em 1.07142857em !important;\n}\n.ui.loading.dropdown > i.icon[data-v-bc4ebfaa]:before {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  border-radius: 500rem;\n  border: 0.2em solid rgba(0, 0, 0, 0.1);\n}\n.ui.loading.dropdown > i.icon[data-v-bc4ebfaa]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  box-shadow: 0px 0px 0px 1px transparent;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  -webkit-animation: dropdown-spin 0.6s linear;\n          animation: dropdown-spin 0.6s linear;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  border-radius: 500rem;\n  border-color: #767676 transparent transparent;\n  border-style: solid;\n  border-width: 0.2em;\n}\n\n/* Coupling */\n.ui.loading.dropdown.button > i.icon[data-v-bc4ebfaa]:before,\n.ui.loading.dropdown.button > i.icon[data-v-bc4ebfaa]:after {\n  display: none;\n}\n@-webkit-keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n\n/*--------------------\n     Default Text\n----------------------*/\n.ui.dropdown:not(.button) > .default.text[data-v-bc4ebfaa],\n.ui.default.dropdown:not(.button) > .text[data-v-bc4ebfaa] {\n  color: rgba(191, 191, 191, 0.87);\n}\n.ui.dropdown:not(.button) > input:focus + .default.text[data-v-bc4ebfaa],\n.ui.default.dropdown:not(.button) > input:focus + .text[data-v-bc4ebfaa] {\n  color: rgba(115, 115, 115, 0.87);\n}\n\n/*--------------------\n        Loading\n----------------------*/\n.ui.loading.dropdown > .text[data-v-bc4ebfaa] {\n  -webkit-transition: none;\n  transition: none;\n}\n\n/* Used To Check Position */\n.ui.dropdown .loading.menu[data-v-bc4ebfaa] {\n  display: block;\n  visibility: hidden;\n  z-index: -1;\n}\n\n/*--------------------\n    Keyboard Select\n----------------------*/\n\n\n/* Selected Item */\n.ui.dropdown.selected[data-v-bc4ebfaa],\n.ui.dropdown .menu .selected.item[data-v-bc4ebfaa] {\n  background: rgba(0, 0, 0, 0.03);\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*--------------------\n    Search Filtered\n----------------------*/\n\n\n/* Filtered Item */\n.ui.dropdown > .filtered.text[data-v-bc4ebfaa] {\n  visibility: hidden;\n}\n.ui.dropdown .filtered.item[data-v-bc4ebfaa] {\n  display: none !important;\n}\n\n/*--------------------\n        Error\n----------------------*/\n.ui.dropdown.error[data-v-bc4ebfaa],\n.ui.dropdown.error > .text[data-v-bc4ebfaa],\n.ui.dropdown.error > .default.text[data-v-bc4ebfaa] {\n  color: #9F3A38;\n}\n.ui.selection.dropdown.error[data-v-bc4ebfaa] {\n  background: #FFF6F6;\n  border-color: #E0B4B4;\n}\n.ui.selection.dropdown.error[data-v-bc4ebfaa]:hover {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu[data-v-bc4ebfaa],\n.ui.dropdown.error > .menu .menu[data-v-bc4ebfaa] {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu > .item[data-v-bc4ebfaa] {\n  color: #9F3A38;\n}\n.ui.multiple.selection.error.dropdown > .label[data-v-bc4ebfaa] {\n  border-color: #E0B4B4;\n}\n\n/* Item Hover */\n.ui.dropdown.error > .menu > .item[data-v-bc4ebfaa]:hover {\n  background-color: #FFF2F2;\n}\n\n/* Item Active */\n.ui.dropdown.error > .menu .active.item[data-v-bc4ebfaa] {\n  background-color: #FDCFCF;\n}\n\n/*--------------------\n        Disabled\n----------------------*/\n\n\n/* Disabled */\n.ui.disabled.dropdown[data-v-bc4ebfaa],\n.ui.dropdown .menu > .disabled.item[data-v-bc4ebfaa] {\n  cursor: default;\n  pointer-events: none;\n  opacity: 0.45;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*--------------\n    Direction\n---------------*/\n\n\n/* Flyout Direction */\n.ui.dropdown .menu[data-v-bc4ebfaa] {\n  left: 0px;\n}\n\n/* Default Side (Right) */\n.ui.dropdown .right.menu > .menu[data-v-bc4ebfaa],\n.ui.dropdown .menu .right.menu[data-v-bc4ebfaa] {\n  left: 100% !important;\n  right: auto !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/* Left Flyout Menu */\n.ui.dropdown > .left.menu .menu[data-v-bc4ebfaa],\n.ui.dropdown .menu .left.menu[data-v-bc4ebfaa] {\n  left: auto !important;\n  right: 100% !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-bc4ebfaa],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-bc4ebfaa] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-bc4ebfaa],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-bc4ebfaa] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon + .text[data-v-bc4ebfaa],\n.ui.dropdown .left.menu .item .dropdown.icon + .text[data-v-bc4ebfaa] {\n  margin-left: 1em;\n}\n\n/*--------------\n     Upward\n---------------*/\n\n\n/* Upward Main Menu */\n.ui.upward.dropdown > .menu[data-v-bc4ebfaa] {\n  top: auto;\n  bottom: 100%;\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Upward Sub Menu */\n.ui.dropdown .upward.menu[data-v-bc4ebfaa] {\n  top: auto !important;\n  bottom: 0 !important;\n}\n\n/* Active Upward */\n.ui.simple.upward.active.dropdown[data-v-bc4ebfaa],\n.ui.simple.upward.dropdown[data-v-bc4ebfaa]:hover {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em !important;\n}\n.ui.upward.dropdown.button:not(.pointing):not(.floating).active[data-v-bc4ebfaa] {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Selection */\n.ui.upward.selection.dropdown .menu[data-v-bc4ebfaa] {\n  border-top-width: 1px !important;\n  border-bottom-width: 0px !important;\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n.ui.upward.selection.dropdown[data-v-bc4ebfaa]:hover {\n  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.05);\n}\n\n/* Active Upward */\n.ui.active.upward.selection.dropdown[data-v-bc4ebfaa] {\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Upward */\n.ui.upward.selection.dropdown.visible[data-v-bc4ebfaa] {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Hover Upward */\n.ui.upward.active.selection.dropdown[data-v-bc4ebfaa]:hover {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.05);\n}\n.ui.upward.active.selection.dropdown:hover .menu[data-v-bc4ebfaa] {\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/*  Selection Menu */\n.ui.scrolling.dropdown .menu[data-v-bc4ebfaa],\n.ui.dropdown .scrolling.menu[data-v-bc4ebfaa] {\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.ui.scrolling.dropdown .menu[data-v-bc4ebfaa] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  min-width: 100% !important;\n  width: auto !important;\n}\n.ui.dropdown .scrolling.menu[data-v-bc4ebfaa] {\n  position: static;\n  overflow-y: auto;\n  border: none;\n  box-shadow: none !important;\n  border-radius: 0 !important;\n  margin: 0 !important;\n  min-width: 100% !important;\n  width: auto !important;\n  border-top: 1px solid rgba(34, 36, 38, 0.15);\n}\n.ui.scrolling.dropdown .menu .item.item.item[data-v-bc4ebfaa],\n.ui.dropdown .scrolling.menu > .item.item.item[data-v-bc4ebfaa] {\n  border-top: none;\n  padding-right: calc( 1.14285714rem  +  17px ) !important;\n}\n.ui.scrolling.dropdown .menu .item[data-v-bc4ebfaa]:first-child,\n.ui.dropdown .scrolling.menu .item[data-v-bc4ebfaa]:first-child {\n  border-top: none;\n}\n.ui.dropdown > .animating.menu .scrolling.menu[data-v-bc4ebfaa],\n.ui.dropdown > .visible.menu .scrolling.menu[data-v-bc4ebfaa] {\n  display: block;\n}\n\n/* Scrollbar in IE */\n@media all and (-ms-high-contrast: none) {\n.ui.scrolling.dropdown .menu[data-v-bc4ebfaa],\n  .ui.dropdown .scrolling.menu[data-v-bc4ebfaa] {\n    min-width: calc(100% -  17px );\n}\n}\n@media only screen and (max-width: 767px) {\n.ui.scrolling.dropdown .menu[data-v-bc4ebfaa],\n  .ui.dropdown .scrolling.menu[data-v-bc4ebfaa] {\n    max-height: 10.28571429rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.scrolling.dropdown .menu[data-v-bc4ebfaa],\n  .ui.dropdown .scrolling.menu[data-v-bc4ebfaa] {\n    max-height: 15.42857143rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.scrolling.dropdown .menu[data-v-bc4ebfaa],\n  .ui.dropdown .scrolling.menu[data-v-bc4ebfaa] {\n    max-height: 20.57142857rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.scrolling.dropdown .menu[data-v-bc4ebfaa],\n  .ui.dropdown .scrolling.menu[data-v-bc4ebfaa] {\n    max-height: 20.57142857rem;\n}\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/* Displays without javascript */\n.ui.simple.dropdown .menu[data-v-bc4ebfaa]:before,\n.ui.simple.dropdown .menu[data-v-bc4ebfaa]:after {\n  display: none;\n}\n.ui.simple.dropdown .menu[data-v-bc4ebfaa] {\n  position: absolute;\n  display: block;\n  overflow: hidden;\n  top: -9999px !important;\n  opacity: 0;\n  width: 0;\n  height: 0;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.simple.active.dropdown[data-v-bc4ebfaa],\n.ui.simple.dropdown[data-v-bc4ebfaa]:hover {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n.ui.simple.active.dropdown > .menu[data-v-bc4ebfaa],\n.ui.simple.dropdown:hover > .menu[data-v-bc4ebfaa] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 100% !important;\n  opacity: 1;\n}\n.ui.simple.dropdown > .menu > .item:active > .menu[data-v-bc4ebfaa],\n.ui.simple.dropdown:hover > .menu > .item:hover > .menu[data-v-bc4ebfaa] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 0% !important;\n  left: 100% !important;\n  opacity: 1;\n}\n.ui.simple.disabled.dropdown:hover .menu[data-v-bc4ebfaa] {\n  display: none;\n  height: 0px;\n  width: 0px;\n  overflow: hidden;\n}\n\n/* Visible */\n.ui.simple.visible.dropdown > .menu[data-v-bc4ebfaa] {\n  display: block;\n}\n\n/*--------------\n      Fluid\n---------------*/\n.ui.fluid.dropdown[data-v-bc4ebfaa] {\n  display: block;\n  width: 100%;\n  min-width: 0em;\n}\n.ui.fluid.dropdown > .dropdown.icon[data-v-bc4ebfaa] {\n  float: right;\n}\n\n/*--------------\n    Floating\n---------------*/\n.ui.floating.dropdown .menu[data-v-bc4ebfaa] {\n  left: 0;\n  right: auto;\n  box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15) !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.floating.dropdown > .menu[data-v-bc4ebfaa] {\n  margin-top: 0.5em !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/*--------------\n     Pointing\n---------------*/\n.ui.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: 100%;\n  margin-top: 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  display: block;\n  position: absolute;\n  pointer-events: none;\n  content: '';\n  visibility: visible;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n  width: 0.5em;\n  height: 0.5em;\n  box-shadow: -1px -1px 0px 1px rgba(34, 36, 38, 0.15);\n  background: #FFFFFF;\n  z-index: 2;\n}\n.ui.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  top: -0.25em;\n  left: 50%;\n  margin: 0em 0em 0em -0.25em;\n}\n\n/* Top Left Pointing */\n.ui.top.left.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  top: -0.25em;\n  left: 1em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Top Right  Pointing */\n.ui.top.right.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: 100%;\n  bottom: auto;\n  right: 0%;\n  left: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.right.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  top: -0.25em;\n  left: auto;\n  right: 1em;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Left Pointing */\n.ui.left.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: 0%;\n  left: 100%;\n  right: auto;\n  margin: 0em 0em 0em 1em;\n}\n.ui.left.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  top: 1em;\n  left: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(-45deg);\n      -ms-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n}\n\n/* Right Pointing */\n.ui.right.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: 0%;\n  left: auto;\n  right: 100%;\n  margin: 0em 1em 0em 0em;\n}\n.ui.right.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  top: 1em;\n  left: auto;\n  right: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(135deg);\n      -ms-transform: rotate(135deg);\n          transform: rotate(135deg);\n}\n\n/* Bottom Pointing */\n.ui.bottom.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: auto;\n  bottom: 100%;\n  left: 0%;\n  right: auto;\n  margin: 0em 0em 1em;\n}\n.ui.bottom.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  top: auto;\n  bottom: -0.25em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(-135deg);\n      -ms-transform: rotate(-135deg);\n          transform: rotate(-135deg);\n}\n\n/* Reverse Sub-Menu Direction */\n.ui.bottom.pointing.dropdown > .menu .menu[data-v-bc4ebfaa] {\n  top: auto !important;\n  bottom: 0px !important;\n}\n\n/* Bottom Left */\n.ui.bottom.left.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  left: 0%;\n  right: auto;\n}\n.ui.bottom.left.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  left: 1em;\n  right: auto;\n}\n\n/* Bottom Right */\n.ui.bottom.right.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  right: 0%;\n  left: auto;\n}\n.ui.bottom.right.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  left: auto;\n  right: 1em;\n}\n\n/* Upward pointing */\n.ui.upward.pointing.dropdown > .menu[data-v-bc4ebfaa],\n.ui.upward.top.pointing.dropdown > .menu[data-v-bc4ebfaa] {\n  top: auto;\n  bottom: 100%;\n  margin: 0em 0em 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.upward.pointing.dropdown > .menu[data-v-bc4ebfaa]:after,\n.ui.upward.top.pointing.dropdown > .menu[data-v-bc4ebfaa]:after {\n  top: 100%;\n  bottom: auto;\n  box-shadow: 1px 1px 0px 1px rgba(34, 36, 38, 0.15);\n  margin: -0.25em 0em 0em;\n}\n\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n\n/* Dropdown Carets */\n@font-face {\n  font-family: 'Dropdown';\n  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMggjB5AAAAC8AAAAYGNtYXAPfuIIAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5Zjo82LgAAAFwAAABVGhlYWQAQ88bAAACxAAAADZoaGVhAwcB6QAAAvwAAAAkaG10eAS4ABIAAAMgAAAAIGxvY2EBNgDeAAADQAAAABJtYXhwAAoAFgAAA1QAAAAgbmFtZVcZpu4AAAN0AAABRXBvc3QAAwAAAAAEvAAAACAAAwIAAZAABQAAAUwBZgAAAEcBTAFmAAAA9QAZAIQAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADw2gHg/+D/4AHgACAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIPDa//3//wAAAAAAIPDX//3//wAB/+MPLQADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAIABJQElABMAABM0NzY3BTYXFhUUDwEGJwYvASY1AAUGBwEACAUGBoAFCAcGgAUBEgcGBQEBAQcECQYHfwYBAQZ/BwYAAQAAAG4BJQESABMAADc0PwE2MzIfARYVFAcGIyEiJyY1AAWABgcIBYAGBgUI/wAHBgWABwaABQWABgcHBgUFBgcAAAABABIASQC3AW4AEwAANzQ/ATYXNhcWHQEUBwYnBi8BJjUSBoAFCAcFBgYFBwgFgAbbBwZ/BwEBBwQJ/wgEBwEBB38GBgAAAAABAAAASQClAW4AEwAANxE0NzYzMh8BFhUUDwEGIyInJjUABQYHCAWABgaABQgHBgVbAQAIBQYGgAUIBwWABgYFBwAAAAEAAAABAADZuaKOXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAAAAACgAUAB4AQgBkAIgAqgAAAAEAAAAIABQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAOAAAAAQAAAAAAAgAOAEcAAQAAAAAAAwAOACQAAQAAAAAABAAOAFUAAQAAAAAABQAWAA4AAQAAAAAABgAHADIAAQAAAAAACgA0AGMAAwABBAkAAQAOAAAAAwABBAkAAgAOAEcAAwABBAkAAwAOACQAAwABBAkABAAOAFUAAwABBAkABQAWAA4AAwABBAkABgAOADkAAwABBAkACgA0AGMAaQBjAG8AbQBvAG8AbgBWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AbgBSAGUAZwB1AGwAYQByAGkAYwBvAG0AbwBvAG4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('truetype'), url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVwAAoAAAAABSgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAdkAAAHZLDXE/09TLzIAAALQAAAAYAAAAGAIIweQY21hcAAAAzAAAABMAAAATA9+4ghnYXNwAAADfAAAAAgAAAAIAAAAEGhlYWQAAAOEAAAANgAAADYAQ88baGhlYQAAA7wAAAAkAAAAJAMHAelobXR4AAAD4AAAACAAAAAgBLgAEm1heHAAAAQAAAAABgAAAAYACFAAbmFtZQAABAgAAAFFAAABRVcZpu5wb3N0AAAFUAAAACAAAAAgAAMAAAEABAQAAQEBCGljb21vb24AAQIAAQA6+BwC+BsD+BgEHgoAGVP/i4seCgAZU/+LiwwHi2v4lPh0BR0AAACIDx0AAACNER0AAAAJHQAAAdASAAkBAQgPERMWGyAlKmljb21vb25pY29tb29udTB1MXUyMHVGMEQ3dUYwRDh1RjBEOXVGMERBAAACAYkABgAIAgABAAQABwAKAA0AVgCfAOgBL/yUDvyUDvyUDvuUDvtvi/emFYuQjZCOjo+Pj42Qiwj3lIsFkIuQiY6Hj4iNhouGi4aJh4eHCPsU+xQFiIiGiYaLhouHjYeOCPsU9xQFiI+Jj4uQCA77b4v3FBWLkI2Pjo8I9xT3FAWPjo+NkIuQi5CJjogI9xT7FAWPh42Hi4aLhomHh4eIiIaJhosI+5SLBYaLh42HjoiPiY+LkAgO+92d928Vi5CNkI+OCPcU9xQFjo+QjZCLkIuPiY6Hj4iNhouGCIv7lAWLhomHh4iIh4eJhouGi4aNiI8I+xT3FAWHjomPi5AIDvvdi+YVi/eUBYuQjZCOjo+Pj42Qi5CLkImOhwj3FPsUBY+IjYaLhouGiYeHiAj7FPsUBYiHhomGi4aLh42Hj4iOiY+LkAgO+JQU+JQViwwKAAAAAAMCAAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8NoB4P/g/+AB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDw2v/9//8AAAAAACDw1//9//8AAf/jDy0AAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAA5emozXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAUAAACAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIADgBHAAEAAAAAAAMADgAkAAEAAAAAAAQADgBVAAEAAAAAAAUAFgAOAAEAAAAAAAYABwAyAAEAAAAAAAoANABjAAMAAQQJAAEADgAAAAMAAQQJAAIADgBHAAMAAQQJAAMADgAkAAMAAQQJAAQADgBVAAMAAQQJAAUAFgAOAAMAAQQJAAYADgA5AAMAAQQJAAoANABjAGkAYwBvAG0AbwBvAG4AVgBlAHIAcwBpAG8AbgAgADEALgAwAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG4AUgBlAGcAdQBsAGEAcgBpAGMAbwBtAG8AbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('woff');\n  font-weight: normal;\n  font-style: normal;\n}\n.ui.dropdown > .dropdown.icon[data-v-bc4ebfaa] {\n  font-family: 'Dropdown';\n  line-height: 1;\n  height: 1em;\n  width: 1.23em;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  font-weight: normal;\n  font-style: normal;\n  text-align: center;\n}\n.ui.dropdown > .dropdown.icon[data-v-bc4ebfaa] {\n  width: auto;\n}\n.ui.dropdown > .dropdown.icon[data-v-bc4ebfaa]:before {\n  content: '\\F0D7';\n}\n\n/* Sub Menu */\n.ui.dropdown .menu .item .dropdown.icon[data-v-bc4ebfaa]:before {\n  content: '\\F0DA' ;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-bc4ebfaa]:before,\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-bc4ebfaa]:before {\n  content: \"\\F0D9\" ;\n}\n\n/* Vertical Menu Dropdown */\n.ui.vertical.menu .dropdown.item > .dropdown.icon[data-v-bc4ebfaa]:before {\n  content: \"\\F0DA\" ;\n}\n/* Icons for Reference\n.dropdown.down.icon {\n  content: \"\\f0d7\";\n}\n.dropdown.up.icon {\n  content: \"\\f0d8\";\n}\n.dropdown.left.icon {\n  content: \"\\f0d9\";\n}\n.dropdown.icon.icon {\n  content: \"\\f0da\";\n}\n*/\n\n\n/*******************************\n        User Overrides\n*******************************/\n\n", ""]);
+	exports.push([module.id, "/*!\n * # Semantic UI 2.2.3 - Dropdown\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n            Dropdown\n*******************************/\n.ui.dropdown[data-v-3ea70128] {\n  cursor: pointer;\n  position: relative;\n  display: inline-block;\n  outline: none;\n  text-align: left;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n\n/*******************************\n            Content\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n.ui.dropdown .menu[data-v-3ea70128] {\n  cursor: auto;\n  position: absolute;\n  display: none;\n  outline: none;\n  top: 100%;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  margin: 0em;\n  padding: 0em 0em;\n  background: #FFFFFF;\n  font-size: 1em;\n  text-shadow: none;\n  text-align: left;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n  z-index: 11;\n  will-change: transform, opacity;\n}\n.ui.dropdown .menu > *[data-v-3ea70128] {\n  white-space: nowrap;\n}\n\n/*--------------\n  Hidden Input\n---------------*/\n.ui.dropdown > input[data-v-3ea70128]:not(.search):first-child,\n.ui.dropdown > select[data-v-3ea70128] {\n  display: none !important;\n}\n\n/*--------------\n Dropdown Icon\n---------------*/\n.ui.dropdown > .dropdown.icon[data-v-3ea70128] {\n  position: relative;\n  width: auto;\n  font-size: 0.85714286em;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon[data-v-3ea70128] {\n  width: auto;\n  float: right;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon + .text[data-v-3ea70128] {\n  margin-right: 1em;\n}\n\n/*--------------\n      Text\n---------------*/\n.ui.dropdown > .text[data-v-3ea70128] {\n  display: inline-block;\n  -webkit-transition: none;\n  transition: none;\n}\n\n/*--------------\n    Menu Item\n---------------*/\n.ui.dropdown .menu > .item[data-v-3ea70128] {\n  position: relative;\n  cursor: pointer;\n  display: block;\n  border: none;\n  height: auto;\n  text-align: left;\n  border-top: none;\n  line-height: 1em;\n  color: rgba(0, 0, 0, 0.87);\n  padding: 0.78571429rem 1.14285714rem !important;\n  font-size: 1rem;\n  text-transform: none;\n  font-weight: normal;\n  box-shadow: none;\n  -webkit-touch-callout: none;\n}\n.ui.dropdown .menu > .item[data-v-3ea70128]:first-child {\n  border-top-width: 0px;\n}\n\n/*--------------\n  Floated Content\n---------------*/\n.ui.dropdown > .text > [class*=\"right floated\"][data-v-3ea70128],\n.ui.dropdown .menu .item > [class*=\"right floated\"][data-v-3ea70128] {\n  float: right !important;\n  margin-right: 0em !important;\n  margin-left: 1em !important;\n}\n.ui.dropdown > .text > [class*=\"left floated\"][data-v-3ea70128],\n.ui.dropdown .menu .item > [class*=\"left floated\"][data-v-3ea70128] {\n  float: left !important;\n  margin-left: 0em !important;\n  margin-right: 1em !important;\n}\n.ui.dropdown .menu .item > .icon.floated[data-v-3ea70128],\n.ui.dropdown .menu .item > .flag.floated[data-v-3ea70128],\n.ui.dropdown .menu .item > .image.floated[data-v-3ea70128],\n.ui.dropdown .menu .item > img.floated[data-v-3ea70128] {\n  margin-top: 0em;\n}\n\n/*--------------\n  Menu Divider\n---------------*/\n.ui.dropdown .menu > .header[data-v-3ea70128] {\n  margin: 1rem 0rem 0.75rem;\n  padding: 0em 1.14285714rem;\n  color: rgba(0, 0, 0, 0.85);\n  font-size: 0.78571429em;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.ui.dropdown .menu > .divider[data-v-3ea70128] {\n  border-top: 1px solid rgba(34, 36, 38, 0.1);\n  height: 0em;\n  margin: 0.5em 0em;\n}\n.ui.dropdown .menu > .input[data-v-3ea70128] {\n  width: auto;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 1.14285714rem 0.78571429rem;\n  min-width: 10rem;\n}\n.ui.dropdown .menu > .header + .input[data-v-3ea70128] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .input:not(.transparent) input[data-v-3ea70128] {\n  padding: 0.5em 1em;\n}\n.ui.dropdown .menu > .input:not(.transparent) .button[data-v-3ea70128],\n.ui.dropdown .menu > .input:not(.transparent) .icon[data-v-3ea70128],\n.ui.dropdown .menu > .input:not(.transparent) .label[data-v-3ea70128] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n\n/*-----------------\n  Item Description\n-------------------*/\n.ui.dropdown > .text > .description[data-v-3ea70128],\n.ui.dropdown .menu > .item > .description[data-v-3ea70128] {\n  float: right;\n  margin: 0em 0em 0em 1em;\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*-----------------\n       Message\n-------------------*/\n.ui.dropdown .menu > .message[data-v-3ea70128] {\n  padding: 0.78571429rem 1.14285714rem;\n  font-weight: normal;\n}\n.ui.dropdown .menu > .message[data-v-3ea70128]:not(.ui) {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*--------------\n    Sub Menu\n---------------*/\n.ui.dropdown .menu .menu[data-v-3ea70128] {\n  top: 0% !important;\n  left: 100% !important;\n  right: auto !important;\n  margin: 0em 0em 0em -0.5em !important;\n  border-radius: 0.28571429rem !important;\n  z-index: 21 !important;\n}\n\n/* Hide Arrow */\n.ui.dropdown .menu .menu[data-v-3ea70128]:after {\n  display: none;\n}\n\n/*--------------\n   Sub Elements\n---------------*/\n\n\n/* Icons / Flags / Labels / Image */\n.ui.dropdown > .text > .icon[data-v-3ea70128],\n.ui.dropdown > .text > .label[data-v-3ea70128],\n.ui.dropdown > .text > .flag[data-v-3ea70128],\n.ui.dropdown > .text > img[data-v-3ea70128],\n.ui.dropdown > .text > .image[data-v-3ea70128] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .item > .icon[data-v-3ea70128],\n.ui.dropdown .menu > .item > .label[data-v-3ea70128],\n.ui.dropdown .menu > .item > .flag[data-v-3ea70128],\n.ui.dropdown .menu > .item > .image[data-v-3ea70128],\n.ui.dropdown .menu > .item > img[data-v-3ea70128] {\n  margin-top: 0em;\n}\n.ui.dropdown > .text > .icon[data-v-3ea70128],\n.ui.dropdown > .text > .label[data-v-3ea70128],\n.ui.dropdown > .text > .flag[data-v-3ea70128],\n.ui.dropdown > .text > img[data-v-3ea70128],\n.ui.dropdown > .text > .image[data-v-3ea70128],\n.ui.dropdown .menu > .item > .icon[data-v-3ea70128],\n.ui.dropdown .menu > .item > .label[data-v-3ea70128],\n.ui.dropdown .menu > .item > .flag[data-v-3ea70128],\n.ui.dropdown .menu > .item > .image[data-v-3ea70128],\n.ui.dropdown .menu > .item > img[data-v-3ea70128] {\n  margin-left: 0em;\n  float: none;\n  margin-right: 0.78571429rem;\n}\n\n/*--------------\n     Image\n---------------*/\n.ui.dropdown > .text > img[data-v-3ea70128],\n.ui.dropdown > .text > .image[data-v-3ea70128],\n.ui.dropdown .menu > .item > .image[data-v-3ea70128],\n.ui.dropdown .menu > .item > img[data-v-3ea70128] {\n  display: inline-block;\n  vertical-align: middle;\n  width: auto;\n  max-height: 2em;\n}\n\n\n/*******************************\n            Coupling\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n\n\n/* Remove Menu Item Divider */\n.ui.dropdown .ui.menu > .item[data-v-3ea70128]:before,\n.ui.menu .ui.dropdown .menu > .item[data-v-3ea70128]:before {\n  display: none;\n}\n\n/* Prevent Menu Item Border */\n.ui.menu .ui.dropdown .menu .active.item[data-v-3ea70128] {\n  border-left: none;\n}\n\n/* Automatically float dropdown menu right on last menu item */\n.ui.menu .right.menu .dropdown:last-child .menu[data-v-3ea70128],\n.ui.menu .right.dropdown.item .menu[data-v-3ea70128],\n.ui.buttons > .ui.dropdown:last-child .menu[data-v-3ea70128] {\n  left: auto;\n  right: 0em;\n}\n\n/*--------------\n      Label\n---------------*/\n\n\n/* Dropdown Menu */\n.ui.label.dropdown .menu[data-v-3ea70128] {\n  min-width: 100%;\n}\n\n/*--------------\n     Button\n---------------*/\n\n\n/* No Margin On Icon Button */\n.ui.dropdown.icon.button > .dropdown.icon[data-v-3ea70128] {\n  margin: 0em;\n}\n.ui.button.dropdown .menu[data-v-3ea70128] {\n  min-width: 100%;\n}\n\n\n/*******************************\n              Types\n*******************************/\n\n\n/*--------------\n    Selection\n---------------*/\n\n\n/* Displays like a select box */\n.ui.selection.dropdown[data-v-3ea70128] {\n  cursor: pointer;\n  word-wrap: break-word;\n  line-height: 1em;\n  white-space: normal;\n  outline: 0;\n  -webkit-transform: rotateZ(0deg);\n      -ms-transform: rotate(0deg);\n          transform: rotateZ(0deg);\n  min-width: 14em;\n  min-height: 2.7142em;\n  background: #FFFFFF;\n  display: inline-block;\n  padding: 0.78571429em 2.1em 0.78571429em 1em;\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n}\n.ui.selection.dropdown.visible[data-v-3ea70128],\n.ui.selection.dropdown.active[data-v-3ea70128] {\n  z-index: 10;\n}\nselect.ui.dropdown[data-v-3ea70128] {\n  height: 38px;\n  padding: 0.5em;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  visibility: visible;\n}\n.ui.selection.dropdown > .search.icon[data-v-3ea70128],\n.ui.selection.dropdown > .delete.icon[data-v-3ea70128],\n.ui.selection.dropdown > .dropdown.icon[data-v-3ea70128] {\n  cursor: pointer;\n  position: absolute;\n  width: auto;\n  height: auto;\n  line-height: 1.2142em;\n  top: 0.78571429em;\n  right: 1em;\n  z-index: 3;\n  margin: -0.78571429em;\n  padding: 0.78571429em;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n/* Compact */\n.ui.compact.selection.dropdown[data-v-3ea70128] {\n  min-width: 0px;\n}\n\n/*  Selection Menu */\n.ui.selection.dropdown .menu[data-v-3ea70128] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  border-top-width: 0px !important;\n  width: auto;\n  outline: none;\n  margin: 0px -1px;\n  min-width: calc(100% +  2px );\n  width: calc(100% +  2px );\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.selection.dropdown .menu[data-v-3ea70128]:after,\n.ui.selection.dropdown .menu[data-v-3ea70128]:before {\n  display: none;\n}\n\n/*--------------\n    Message\n---------------*/\n.ui.selection.dropdown .menu > .message[data-v-3ea70128] {\n  padding: 0.78571429rem 1.14285714rem;\n}\n@media only screen and (max-width: 767px) {\n.ui.selection.dropdown .menu[data-v-3ea70128] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.selection.dropdown .menu[data-v-3ea70128] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.selection.dropdown .menu[data-v-3ea70128] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.selection.dropdown .menu[data-v-3ea70128] {\n    max-height: 21.37142857rem;\n}\n}\n\n/* Menu Item */\n.ui.selection.dropdown .menu > .item[data-v-3ea70128] {\n  border-top: 1px solid #FAFAFA;\n  padding: 0.78571429rem 1.14285714rem !important;\n  white-space: normal;\n  word-wrap: normal;\n}\n\n/* User Item */\n.ui.selection.dropdown .menu > .hidden.addition.item[data-v-3ea70128] {\n  display: none;\n}\n\n/* Hover */\n.ui.selection.dropdown[data-v-3ea70128]:hover {\n  border-color: rgba(34, 36, 38, 0.35);\n  box-shadow: none;\n}\n\n/* Active */\n.ui.selection.active.dropdown[data-v-3ea70128] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown .menu[data-v-3ea70128] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Focus */\n.ui.selection.dropdown[data-v-3ea70128]:focus {\n  border-color: #96C8DA;\n  box-shadow: none;\n}\n.ui.selection.dropdown:focus .menu[data-v-3ea70128] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Visible */\n.ui.selection.visible.dropdown > .text[data-v-3ea70128]:not(.default) {\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/* Visible Hover */\n.ui.selection.active.dropdown[data-v-3ea70128]:hover {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown:hover .menu[data-v-3ea70128] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Dropdown Icon */\n.ui.active.selection.dropdown > .dropdown.icon[data-v-3ea70128],\n.ui.visible.selection.dropdown > .dropdown.icon[data-v-3ea70128] {\n  opacity: 1;\n  z-index: 3;\n}\n\n/* Connecting Border */\n.ui.active.selection.dropdown[data-v-3ea70128] {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n\n/* Empty Connecting Border */\n.ui.active.empty.selection.dropdown[data-v-3ea70128] {\n  border-radius: 0.28571429rem !important;\n  box-shadow: none !important;\n}\n.ui.active.empty.selection.dropdown .menu[data-v-3ea70128] {\n  border: none !important;\n  box-shadow: none !important;\n}\n\n/*--------------\n   Searchable\n---------------*/\n\n\n/* Search Selection */\n.ui.search.dropdown[data-v-3ea70128] {\n  min-width: '';\n}\n\n/* Search Dropdown */\n.ui.search.dropdown > input.search[data-v-3ea70128] {\n  background: none transparent !important;\n  border: none !important;\n  box-shadow: none !important;\n  cursor: text;\n  top: 0em;\n  left: 1px;\n  width: 100%;\n  outline: none;\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n  padding: inherit;\n}\n\n/* Text Layering */\n.ui.search.dropdown > input.search[data-v-3ea70128] {\n  position: absolute;\n  z-index: 2;\n}\n.ui.search.dropdown > .text[data-v-3ea70128] {\n  cursor: text;\n  position: relative;\n  left: 1px;\n  z-index: 3;\n}\n\n/* Search Selection */\n.ui.search.selection.dropdown > input.search[data-v-3ea70128] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n}\n\n/* Used to size multi select input to character width */\n.ui.search.selection.dropdown > span.sizer[data-v-3ea70128] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n  display: none;\n  white-space: pre;\n}\n\n/* Active/Visible Search */\n.ui.search.dropdown.active > input.search[data-v-3ea70128],\n.ui.search.dropdown.visible > input.search[data-v-3ea70128] {\n  cursor: auto;\n}\n.ui.search.dropdown.active > .text[data-v-3ea70128],\n.ui.search.dropdown.visible > .text[data-v-3ea70128] {\n  pointer-events: none;\n}\n\n/* Filtered Text */\n.ui.active.search.dropdown input.search:focus + .text .icon[data-v-3ea70128],\n.ui.active.search.dropdown input.search:focus + .text .flag[data-v-3ea70128] {\n  opacity: 0.45;\n}\n.ui.active.search.dropdown input.search:focus + .text[data-v-3ea70128] {\n  color: rgba(115, 115, 115, 0.87) !important;\n}\n\n/* Search Menu */\n.ui.search.dropdown .menu[data-v-3ea70128] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n@media only screen and (max-width: 767px) {\n.ui.search.dropdown .menu[data-v-3ea70128] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.search.dropdown .menu[data-v-3ea70128] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.search.dropdown .menu[data-v-3ea70128] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.search.dropdown .menu[data-v-3ea70128] {\n    max-height: 21.37142857rem;\n}\n}\n\n/*--------------\n    Multiple\n---------------*/\n\n\n/* Multiple Selection */\n.ui.multiple.dropdown[data-v-3ea70128] {\n  padding: 0.22620476em 2.1em 0.22620476em 0.35714286em;\n}\n.ui.multiple.dropdown .menu[data-v-3ea70128] {\n  cursor: auto;\n}\n\n/* Multiple Search Selection */\n.ui.multiple.search.dropdown[data-v-3ea70128],\n.ui.multiple.search.dropdown > input.search[data-v-3ea70128] {\n  cursor: text;\n}\n\n/* Selection Label */\n.ui.multiple.dropdown > .label[data-v-3ea70128] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  display: inline-block;\n  vertical-align: top;\n  white-space: normal;\n  font-size: 1em;\n  padding: 0.35714286em 0.78571429em;\n  margin: 0.14285714rem 0.28571429rem 0.14285714rem 0em;\n  box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;\n}\n\n/* Dropdown Icon */\n.ui.multiple.dropdown .dropdown.icon[data-v-3ea70128] {\n  margin: '';\n  padding: '';\n}\n\n/* Text */\n.ui.multiple.dropdown > .text[data-v-3ea70128] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.dropdown > .label ~ input.search[data-v-3ea70128] {\n  margin-left: 0.14285714em !important;\n}\n.ui.multiple.dropdown > .label ~ .text[data-v-3ea70128] {\n  display: none;\n}\n\n/*-----------------\n  Multiple Search\n-----------------*/\n\n\n/* Prompt Text */\n.ui.multiple.search.dropdown > .text[data-v-3ea70128] {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: inherit;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.search.dropdown > .label ~ .text[data-v-3ea70128] {\n  display: none;\n}\n\n/* Search */\n.ui.multiple.search.dropdown > input.search[data-v-3ea70128] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  width: 2.2em;\n  line-height: 1.21428571em;\n}\n\n/*--------------\n     Inline\n---------------*/\n.ui.inline.dropdown[data-v-3ea70128] {\n  cursor: pointer;\n  display: inline-block;\n  color: inherit;\n}\n.ui.inline.dropdown .dropdown.icon[data-v-3ea70128] {\n  margin: 0em 0.5em 0em 0.21428571em;\n  vertical-align: baseline;\n}\n.ui.inline.dropdown > .text[data-v-3ea70128] {\n  font-weight: bold;\n}\n.ui.inline.dropdown .menu[data-v-3ea70128] {\n  cursor: auto;\n  margin-top: 0.21428571em;\n  border-radius: 0.28571429rem;\n}\n\n\n/*******************************\n            States\n*******************************/\n\n\n/*--------------------\n        Active\n----------------------*/\n\n\n/* Menu Item Active */\n.ui.dropdown .menu .active.item[data-v-3ea70128] {\n  background: transparent;\n  font-weight: bold;\n  color: rgba(0, 0, 0, 0.95);\n  box-shadow: none;\n  z-index: 12;\n}\n\n/*--------------------\n        Hover\n----------------------*/\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item[data-v-3ea70128]:hover {\n  background: rgba(0, 0, 0, 0.05);\n  color: rgba(0, 0, 0, 0.95);\n  z-index: 13;\n}\n\n/*--------------------\n       Loading\n---------------------*/\n.ui.loading.dropdown > i.icon[data-v-3ea70128] {\n  height: 1em !important;\n  padding: 1.14285714em 1.07142857em !important;\n}\n.ui.loading.dropdown > i.icon[data-v-3ea70128]:before {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  border-radius: 500rem;\n  border: 0.2em solid rgba(0, 0, 0, 0.1);\n}\n.ui.loading.dropdown > i.icon[data-v-3ea70128]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  box-shadow: 0px 0px 0px 1px transparent;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  -webkit-animation: dropdown-spin 0.6s linear;\n          animation: dropdown-spin 0.6s linear;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  border-radius: 500rem;\n  border-color: #767676 transparent transparent;\n  border-style: solid;\n  border-width: 0.2em;\n}\n\n/* Coupling */\n.ui.loading.dropdown.button > i.icon[data-v-3ea70128]:before,\n.ui.loading.dropdown.button > i.icon[data-v-3ea70128]:after {\n  display: none;\n}\n@-webkit-keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n\n/*--------------------\n     Default Text\n----------------------*/\n.ui.dropdown:not(.button) > .default.text[data-v-3ea70128],\n.ui.default.dropdown:not(.button) > .text[data-v-3ea70128] {\n  color: rgba(191, 191, 191, 0.87);\n}\n.ui.dropdown:not(.button) > input:focus + .default.text[data-v-3ea70128],\n.ui.default.dropdown:not(.button) > input:focus + .text[data-v-3ea70128] {\n  color: rgba(115, 115, 115, 0.87);\n}\n\n/*--------------------\n        Loading\n----------------------*/\n.ui.loading.dropdown > .text[data-v-3ea70128] {\n  -webkit-transition: none;\n  transition: none;\n}\n\n/* Used To Check Position */\n.ui.dropdown .loading.menu[data-v-3ea70128] {\n  display: block;\n  visibility: hidden;\n  z-index: -1;\n}\n\n/*--------------------\n    Keyboard Select\n----------------------*/\n\n\n/* Selected Item */\n.ui.dropdown.selected[data-v-3ea70128],\n.ui.dropdown .menu .selected.item[data-v-3ea70128] {\n  background: rgba(0, 0, 0, 0.03);\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*--------------------\n    Search Filtered\n----------------------*/\n\n\n/* Filtered Item */\n.ui.dropdown > .filtered.text[data-v-3ea70128] {\n  visibility: hidden;\n}\n.ui.dropdown .filtered.item[data-v-3ea70128] {\n  display: none !important;\n}\n\n/*--------------------\n        Error\n----------------------*/\n.ui.dropdown.error[data-v-3ea70128],\n.ui.dropdown.error > .text[data-v-3ea70128],\n.ui.dropdown.error > .default.text[data-v-3ea70128] {\n  color: #9F3A38;\n}\n.ui.selection.dropdown.error[data-v-3ea70128] {\n  background: #FFF6F6;\n  border-color: #E0B4B4;\n}\n.ui.selection.dropdown.error[data-v-3ea70128]:hover {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu[data-v-3ea70128],\n.ui.dropdown.error > .menu .menu[data-v-3ea70128] {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu > .item[data-v-3ea70128] {\n  color: #9F3A38;\n}\n.ui.multiple.selection.error.dropdown > .label[data-v-3ea70128] {\n  border-color: #E0B4B4;\n}\n\n/* Item Hover */\n.ui.dropdown.error > .menu > .item[data-v-3ea70128]:hover {\n  background-color: #FFF2F2;\n}\n\n/* Item Active */\n.ui.dropdown.error > .menu .active.item[data-v-3ea70128] {\n  background-color: #FDCFCF;\n}\n\n/*--------------------\n        Disabled\n----------------------*/\n\n\n/* Disabled */\n.ui.disabled.dropdown[data-v-3ea70128],\n.ui.dropdown .menu > .disabled.item[data-v-3ea70128] {\n  cursor: default;\n  pointer-events: none;\n  opacity: 0.45;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*--------------\n    Direction\n---------------*/\n\n\n/* Flyout Direction */\n.ui.dropdown .menu[data-v-3ea70128] {\n  left: 0px;\n}\n\n/* Default Side (Right) */\n.ui.dropdown .right.menu > .menu[data-v-3ea70128],\n.ui.dropdown .menu .right.menu[data-v-3ea70128] {\n  left: 100% !important;\n  right: auto !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/* Left Flyout Menu */\n.ui.dropdown > .left.menu .menu[data-v-3ea70128],\n.ui.dropdown .menu .left.menu[data-v-3ea70128] {\n  left: auto !important;\n  right: 100% !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-3ea70128],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-3ea70128] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-3ea70128],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-3ea70128] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon + .text[data-v-3ea70128],\n.ui.dropdown .left.menu .item .dropdown.icon + .text[data-v-3ea70128] {\n  margin-left: 1em;\n}\n\n/*--------------\n     Upward\n---------------*/\n\n\n/* Upward Main Menu */\n.ui.upward.dropdown > .menu[data-v-3ea70128] {\n  top: auto;\n  bottom: 100%;\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Upward Sub Menu */\n.ui.dropdown .upward.menu[data-v-3ea70128] {\n  top: auto !important;\n  bottom: 0 !important;\n}\n\n/* Active Upward */\n.ui.simple.upward.active.dropdown[data-v-3ea70128],\n.ui.simple.upward.dropdown[data-v-3ea70128]:hover {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em !important;\n}\n.ui.upward.dropdown.button:not(.pointing):not(.floating).active[data-v-3ea70128] {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Selection */\n.ui.upward.selection.dropdown .menu[data-v-3ea70128] {\n  border-top-width: 1px !important;\n  border-bottom-width: 0px !important;\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n.ui.upward.selection.dropdown[data-v-3ea70128]:hover {\n  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.05);\n}\n\n/* Active Upward */\n.ui.active.upward.selection.dropdown[data-v-3ea70128] {\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Upward */\n.ui.upward.selection.dropdown.visible[data-v-3ea70128] {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Hover Upward */\n.ui.upward.active.selection.dropdown[data-v-3ea70128]:hover {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.05);\n}\n.ui.upward.active.selection.dropdown:hover .menu[data-v-3ea70128] {\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/*  Selection Menu */\n.ui.scrolling.dropdown .menu[data-v-3ea70128],\n.ui.dropdown .scrolling.menu[data-v-3ea70128] {\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.ui.scrolling.dropdown .menu[data-v-3ea70128] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  min-width: 100% !important;\n  width: auto !important;\n}\n.ui.dropdown .scrolling.menu[data-v-3ea70128] {\n  position: static;\n  overflow-y: auto;\n  border: none;\n  box-shadow: none !important;\n  border-radius: 0 !important;\n  margin: 0 !important;\n  min-width: 100% !important;\n  width: auto !important;\n  border-top: 1px solid rgba(34, 36, 38, 0.15);\n}\n.ui.scrolling.dropdown .menu .item.item.item[data-v-3ea70128],\n.ui.dropdown .scrolling.menu > .item.item.item[data-v-3ea70128] {\n  border-top: none;\n  padding-right: calc( 1.14285714rem  +  17px ) !important;\n}\n.ui.scrolling.dropdown .menu .item[data-v-3ea70128]:first-child,\n.ui.dropdown .scrolling.menu .item[data-v-3ea70128]:first-child {\n  border-top: none;\n}\n.ui.dropdown > .animating.menu .scrolling.menu[data-v-3ea70128],\n.ui.dropdown > .visible.menu .scrolling.menu[data-v-3ea70128] {\n  display: block;\n}\n\n/* Scrollbar in IE */\n@media all and (-ms-high-contrast: none) {\n.ui.scrolling.dropdown .menu[data-v-3ea70128],\n  .ui.dropdown .scrolling.menu[data-v-3ea70128] {\n    min-width: calc(100% -  17px );\n}\n}\n@media only screen and (max-width: 767px) {\n.ui.scrolling.dropdown .menu[data-v-3ea70128],\n  .ui.dropdown .scrolling.menu[data-v-3ea70128] {\n    max-height: 10.28571429rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.scrolling.dropdown .menu[data-v-3ea70128],\n  .ui.dropdown .scrolling.menu[data-v-3ea70128] {\n    max-height: 15.42857143rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.scrolling.dropdown .menu[data-v-3ea70128],\n  .ui.dropdown .scrolling.menu[data-v-3ea70128] {\n    max-height: 20.57142857rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.scrolling.dropdown .menu[data-v-3ea70128],\n  .ui.dropdown .scrolling.menu[data-v-3ea70128] {\n    max-height: 20.57142857rem;\n}\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/* Displays without javascript */\n.ui.simple.dropdown .menu[data-v-3ea70128]:before,\n.ui.simple.dropdown .menu[data-v-3ea70128]:after {\n  display: none;\n}\n.ui.simple.dropdown .menu[data-v-3ea70128] {\n  position: absolute;\n  display: block;\n  overflow: hidden;\n  top: -9999px !important;\n  opacity: 0;\n  width: 0;\n  height: 0;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.simple.active.dropdown[data-v-3ea70128],\n.ui.simple.dropdown[data-v-3ea70128]:hover {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n.ui.simple.active.dropdown > .menu[data-v-3ea70128],\n.ui.simple.dropdown:hover > .menu[data-v-3ea70128] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 100% !important;\n  opacity: 1;\n}\n.ui.simple.dropdown > .menu > .item:active > .menu[data-v-3ea70128],\n.ui.simple.dropdown:hover > .menu > .item:hover > .menu[data-v-3ea70128] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 0% !important;\n  left: 100% !important;\n  opacity: 1;\n}\n.ui.simple.disabled.dropdown:hover .menu[data-v-3ea70128] {\n  display: none;\n  height: 0px;\n  width: 0px;\n  overflow: hidden;\n}\n\n/* Visible */\n.ui.simple.visible.dropdown > .menu[data-v-3ea70128] {\n  display: block;\n}\n\n/*--------------\n      Fluid\n---------------*/\n.ui.fluid.dropdown[data-v-3ea70128] {\n  display: block;\n  width: 100%;\n  min-width: 0em;\n}\n.ui.fluid.dropdown > .dropdown.icon[data-v-3ea70128] {\n  float: right;\n}\n\n/*--------------\n    Floating\n---------------*/\n.ui.floating.dropdown .menu[data-v-3ea70128] {\n  left: 0;\n  right: auto;\n  box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15) !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.floating.dropdown > .menu[data-v-3ea70128] {\n  margin-top: 0.5em !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/*--------------\n     Pointing\n---------------*/\n.ui.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: 100%;\n  margin-top: 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  display: block;\n  position: absolute;\n  pointer-events: none;\n  content: '';\n  visibility: visible;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n  width: 0.5em;\n  height: 0.5em;\n  box-shadow: -1px -1px 0px 1px rgba(34, 36, 38, 0.15);\n  background: #FFFFFF;\n  z-index: 2;\n}\n.ui.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  top: -0.25em;\n  left: 50%;\n  margin: 0em 0em 0em -0.25em;\n}\n\n/* Top Left Pointing */\n.ui.top.left.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  top: -0.25em;\n  left: 1em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Top Right  Pointing */\n.ui.top.right.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: 100%;\n  bottom: auto;\n  right: 0%;\n  left: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.right.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  top: -0.25em;\n  left: auto;\n  right: 1em;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Left Pointing */\n.ui.left.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: 0%;\n  left: 100%;\n  right: auto;\n  margin: 0em 0em 0em 1em;\n}\n.ui.left.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  top: 1em;\n  left: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(-45deg);\n      -ms-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n}\n\n/* Right Pointing */\n.ui.right.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: 0%;\n  left: auto;\n  right: 100%;\n  margin: 0em 1em 0em 0em;\n}\n.ui.right.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  top: 1em;\n  left: auto;\n  right: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(135deg);\n      -ms-transform: rotate(135deg);\n          transform: rotate(135deg);\n}\n\n/* Bottom Pointing */\n.ui.bottom.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: auto;\n  bottom: 100%;\n  left: 0%;\n  right: auto;\n  margin: 0em 0em 1em;\n}\n.ui.bottom.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  top: auto;\n  bottom: -0.25em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(-135deg);\n      -ms-transform: rotate(-135deg);\n          transform: rotate(-135deg);\n}\n\n/* Reverse Sub-Menu Direction */\n.ui.bottom.pointing.dropdown > .menu .menu[data-v-3ea70128] {\n  top: auto !important;\n  bottom: 0px !important;\n}\n\n/* Bottom Left */\n.ui.bottom.left.pointing.dropdown > .menu[data-v-3ea70128] {\n  left: 0%;\n  right: auto;\n}\n.ui.bottom.left.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  left: 1em;\n  right: auto;\n}\n\n/* Bottom Right */\n.ui.bottom.right.pointing.dropdown > .menu[data-v-3ea70128] {\n  right: 0%;\n  left: auto;\n}\n.ui.bottom.right.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  left: auto;\n  right: 1em;\n}\n\n/* Upward pointing */\n.ui.upward.pointing.dropdown > .menu[data-v-3ea70128],\n.ui.upward.top.pointing.dropdown > .menu[data-v-3ea70128] {\n  top: auto;\n  bottom: 100%;\n  margin: 0em 0em 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.upward.pointing.dropdown > .menu[data-v-3ea70128]:after,\n.ui.upward.top.pointing.dropdown > .menu[data-v-3ea70128]:after {\n  top: 100%;\n  bottom: auto;\n  box-shadow: 1px 1px 0px 1px rgba(34, 36, 38, 0.15);\n  margin: -0.25em 0em 0em;\n}\n\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n\n/* Dropdown Carets */\n@font-face {\n  font-family: 'Dropdown';\n  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMggjB5AAAAC8AAAAYGNtYXAPfuIIAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5Zjo82LgAAAFwAAABVGhlYWQAQ88bAAACxAAAADZoaGVhAwcB6QAAAvwAAAAkaG10eAS4ABIAAAMgAAAAIGxvY2EBNgDeAAADQAAAABJtYXhwAAoAFgAAA1QAAAAgbmFtZVcZpu4AAAN0AAABRXBvc3QAAwAAAAAEvAAAACAAAwIAAZAABQAAAUwBZgAAAEcBTAFmAAAA9QAZAIQAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADw2gHg/+D/4AHgACAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIPDa//3//wAAAAAAIPDX//3//wAB/+MPLQADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAIABJQElABMAABM0NzY3BTYXFhUUDwEGJwYvASY1AAUGBwEACAUGBoAFCAcGgAUBEgcGBQEBAQcECQYHfwYBAQZ/BwYAAQAAAG4BJQESABMAADc0PwE2MzIfARYVFAcGIyEiJyY1AAWABgcIBYAGBgUI/wAHBgWABwaABQWABgcHBgUFBgcAAAABABIASQC3AW4AEwAANzQ/ATYXNhcWHQEUBwYnBi8BJjUSBoAFCAcFBgYFBwgFgAbbBwZ/BwEBBwQJ/wgEBwEBB38GBgAAAAABAAAASQClAW4AEwAANxE0NzYzMh8BFhUUDwEGIyInJjUABQYHCAWABgaABQgHBgVbAQAIBQYGgAUIBwWABgYFBwAAAAEAAAABAADZuaKOXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAAAAACgAUAB4AQgBkAIgAqgAAAAEAAAAIABQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAOAAAAAQAAAAAAAgAOAEcAAQAAAAAAAwAOACQAAQAAAAAABAAOAFUAAQAAAAAABQAWAA4AAQAAAAAABgAHADIAAQAAAAAACgA0AGMAAwABBAkAAQAOAAAAAwABBAkAAgAOAEcAAwABBAkAAwAOACQAAwABBAkABAAOAFUAAwABBAkABQAWAA4AAwABBAkABgAOADkAAwABBAkACgA0AGMAaQBjAG8AbQBvAG8AbgBWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AbgBSAGUAZwB1AGwAYQByAGkAYwBvAG0AbwBvAG4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('truetype'), url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVwAAoAAAAABSgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAdkAAAHZLDXE/09TLzIAAALQAAAAYAAAAGAIIweQY21hcAAAAzAAAABMAAAATA9+4ghnYXNwAAADfAAAAAgAAAAIAAAAEGhlYWQAAAOEAAAANgAAADYAQ88baGhlYQAAA7wAAAAkAAAAJAMHAelobXR4AAAD4AAAACAAAAAgBLgAEm1heHAAAAQAAAAABgAAAAYACFAAbmFtZQAABAgAAAFFAAABRVcZpu5wb3N0AAAFUAAAACAAAAAgAAMAAAEABAQAAQEBCGljb21vb24AAQIAAQA6+BwC+BsD+BgEHgoAGVP/i4seCgAZU/+LiwwHi2v4lPh0BR0AAACIDx0AAACNER0AAAAJHQAAAdASAAkBAQgPERMWGyAlKmljb21vb25pY29tb29udTB1MXUyMHVGMEQ3dUYwRDh1RjBEOXVGMERBAAACAYkABgAIAgABAAQABwAKAA0AVgCfAOgBL/yUDvyUDvyUDvuUDvtvi/emFYuQjZCOjo+Pj42Qiwj3lIsFkIuQiY6Hj4iNhouGi4aJh4eHCPsU+xQFiIiGiYaLhouHjYeOCPsU9xQFiI+Jj4uQCA77b4v3FBWLkI2Pjo8I9xT3FAWPjo+NkIuQi5CJjogI9xT7FAWPh42Hi4aLhomHh4eIiIaJhosI+5SLBYaLh42HjoiPiY+LkAgO+92d928Vi5CNkI+OCPcU9xQFjo+QjZCLkIuPiY6Hj4iNhouGCIv7lAWLhomHh4iIh4eJhouGi4aNiI8I+xT3FAWHjomPi5AIDvvdi+YVi/eUBYuQjZCOjo+Pj42Qi5CLkImOhwj3FPsUBY+IjYaLhouGiYeHiAj7FPsUBYiHhomGi4aLh42Hj4iOiY+LkAgO+JQU+JQViwwKAAAAAAMCAAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8NoB4P/g/+AB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDw2v/9//8AAAAAACDw1//9//8AAf/jDy0AAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAA5emozXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAUAAACAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIADgBHAAEAAAAAAAMADgAkAAEAAAAAAAQADgBVAAEAAAAAAAUAFgAOAAEAAAAAAAYABwAyAAEAAAAAAAoANABjAAMAAQQJAAEADgAAAAMAAQQJAAIADgBHAAMAAQQJAAMADgAkAAMAAQQJAAQADgBVAAMAAQQJAAUAFgAOAAMAAQQJAAYADgA5AAMAAQQJAAoANABjAGkAYwBvAG0AbwBvAG4AVgBlAHIAcwBpAG8AbgAgADEALgAwAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG4AUgBlAGcAdQBsAGEAcgBpAGMAbwBtAG8AbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('woff');\n  font-weight: normal;\n  font-style: normal;\n}\n.ui.dropdown > .dropdown.icon[data-v-3ea70128] {\n  font-family: 'Dropdown';\n  line-height: 1;\n  height: 1em;\n  width: 1.23em;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  font-weight: normal;\n  font-style: normal;\n  text-align: center;\n}\n.ui.dropdown > .dropdown.icon[data-v-3ea70128] {\n  width: auto;\n}\n.ui.dropdown > .dropdown.icon[data-v-3ea70128]:before {\n  content: '\\F0D7';\n}\n\n/* Sub Menu */\n.ui.dropdown .menu .item .dropdown.icon[data-v-3ea70128]:before {\n  content: '\\F0DA' ;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-3ea70128]:before,\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-3ea70128]:before {\n  content: \"\\F0D9\" ;\n}\n\n/* Vertical Menu Dropdown */\n.ui.vertical.menu .dropdown.item > .dropdown.icon[data-v-3ea70128]:before {\n  content: \"\\F0DA\" ;\n}\n/* Icons for Reference\n.dropdown.down.icon {\n  content: \"\\f0d7\";\n}\n.dropdown.up.icon {\n  content: \"\\f0d8\";\n}\n.dropdown.left.icon {\n  content: \"\\f0d9\";\n}\n.dropdown.icon.icon {\n  content: \"\\f0da\";\n}\n*/\n\n\n/*******************************\n        User Overrides\n*******************************/\n\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 18 */
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(4)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "/*!\n * # Semantic UI 2.2.3 - Dropdown\n * http://github.com/semantic-org/semantic-ui/\n *\n *\n * Released under the MIT license\n * http://opensource.org/licenses/MIT\n *\n */\n\n\n/*******************************\n            Dropdown\n*******************************/\n.ui.dropdown[data-v-ce682b3a] {\n  cursor: pointer;\n  position: relative;\n  display: inline-block;\n  outline: none;\n  text-align: left;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\n}\n\n\n/*******************************\n            Content\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n.ui.dropdown .menu[data-v-ce682b3a] {\n  cursor: auto;\n  position: absolute;\n  display: none;\n  outline: none;\n  top: 100%;\n  min-width: -webkit-max-content;\n  min-width: -moz-max-content;\n  min-width: max-content;\n  margin: 0em;\n  padding: 0em 0em;\n  background: #FFFFFF;\n  font-size: 1em;\n  text-shadow: none;\n  text-align: left;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n  z-index: 11;\n  will-change: transform, opacity;\n}\n.ui.dropdown .menu > *[data-v-ce682b3a] {\n  white-space: nowrap;\n}\n\n/*--------------\n  Hidden Input\n---------------*/\n.ui.dropdown > input[data-v-ce682b3a]:not(.search):first-child,\n.ui.dropdown > select[data-v-ce682b3a] {\n  display: none !important;\n}\n\n/*--------------\n Dropdown Icon\n---------------*/\n.ui.dropdown > .dropdown.icon[data-v-ce682b3a] {\n  position: relative;\n  width: auto;\n  font-size: 0.85714286em;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon[data-v-ce682b3a] {\n  width: auto;\n  float: right;\n  margin: 0em 0em 0em 1em;\n}\n.ui.dropdown .menu > .item .dropdown.icon + .text[data-v-ce682b3a] {\n  margin-right: 1em;\n}\n\n/*--------------\n      Text\n---------------*/\n.ui.dropdown > .text[data-v-ce682b3a] {\n  display: inline-block;\n  -webkit-transition: none;\n  transition: none;\n}\n\n/*--------------\n    Menu Item\n---------------*/\n.ui.dropdown .menu > .item[data-v-ce682b3a] {\n  position: relative;\n  cursor: pointer;\n  display: block;\n  border: none;\n  height: auto;\n  text-align: left;\n  border-top: none;\n  line-height: 1em;\n  color: rgba(0, 0, 0, 0.87);\n  padding: 0.78571429rem 1.14285714rem !important;\n  font-size: 1rem;\n  text-transform: none;\n  font-weight: normal;\n  box-shadow: none;\n  -webkit-touch-callout: none;\n}\n.ui.dropdown .menu > .item[data-v-ce682b3a]:first-child {\n  border-top-width: 0px;\n}\n\n/*--------------\n  Floated Content\n---------------*/\n.ui.dropdown > .text > [class*=\"right floated\"][data-v-ce682b3a],\n.ui.dropdown .menu .item > [class*=\"right floated\"][data-v-ce682b3a] {\n  float: right !important;\n  margin-right: 0em !important;\n  margin-left: 1em !important;\n}\n.ui.dropdown > .text > [class*=\"left floated\"][data-v-ce682b3a],\n.ui.dropdown .menu .item > [class*=\"left floated\"][data-v-ce682b3a] {\n  float: left !important;\n  margin-left: 0em !important;\n  margin-right: 1em !important;\n}\n.ui.dropdown .menu .item > .icon.floated[data-v-ce682b3a],\n.ui.dropdown .menu .item > .flag.floated[data-v-ce682b3a],\n.ui.dropdown .menu .item > .image.floated[data-v-ce682b3a],\n.ui.dropdown .menu .item > img.floated[data-v-ce682b3a] {\n  margin-top: 0em;\n}\n\n/*--------------\n  Menu Divider\n---------------*/\n.ui.dropdown .menu > .header[data-v-ce682b3a] {\n  margin: 1rem 0rem 0.75rem;\n  padding: 0em 1.14285714rem;\n  color: rgba(0, 0, 0, 0.85);\n  font-size: 0.78571429em;\n  font-weight: bold;\n  text-transform: uppercase;\n}\n.ui.dropdown .menu > .divider[data-v-ce682b3a] {\n  border-top: 1px solid rgba(34, 36, 38, 0.1);\n  height: 0em;\n  margin: 0.5em 0em;\n}\n.ui.dropdown .menu > .input[data-v-ce682b3a] {\n  width: auto;\n  display: -webkit-box;\n  display: -webkit-flex;\n  display: -ms-flexbox;\n  display: flex;\n  margin: 1.14285714rem 0.78571429rem;\n  min-width: 10rem;\n}\n.ui.dropdown .menu > .header + .input[data-v-ce682b3a] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .input:not(.transparent) input[data-v-ce682b3a] {\n  padding: 0.5em 1em;\n}\n.ui.dropdown .menu > .input:not(.transparent) .button[data-v-ce682b3a],\n.ui.dropdown .menu > .input:not(.transparent) .icon[data-v-ce682b3a],\n.ui.dropdown .menu > .input:not(.transparent) .label[data-v-ce682b3a] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n\n/*-----------------\n  Item Description\n-------------------*/\n.ui.dropdown > .text > .description[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .description[data-v-ce682b3a] {\n  float: right;\n  margin: 0em 0em 0em 1em;\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*-----------------\n       Message\n-------------------*/\n.ui.dropdown .menu > .message[data-v-ce682b3a] {\n  padding: 0.78571429rem 1.14285714rem;\n  font-weight: normal;\n}\n.ui.dropdown .menu > .message[data-v-ce682b3a]:not(.ui) {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n/*--------------\n    Sub Menu\n---------------*/\n.ui.dropdown .menu .menu[data-v-ce682b3a] {\n  top: 0% !important;\n  left: 100% !important;\n  right: auto !important;\n  margin: 0em 0em 0em -0.5em !important;\n  border-radius: 0.28571429rem !important;\n  z-index: 21 !important;\n}\n\n/* Hide Arrow */\n.ui.dropdown .menu .menu[data-v-ce682b3a]:after {\n  display: none;\n}\n\n/*--------------\n   Sub Elements\n---------------*/\n\n\n/* Icons / Flags / Labels / Image */\n.ui.dropdown > .text > .icon[data-v-ce682b3a],\n.ui.dropdown > .text > .label[data-v-ce682b3a],\n.ui.dropdown > .text > .flag[data-v-ce682b3a],\n.ui.dropdown > .text > img[data-v-ce682b3a],\n.ui.dropdown > .text > .image[data-v-ce682b3a] {\n  margin-top: 0em;\n}\n.ui.dropdown .menu > .item > .icon[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .label[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .flag[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .image[data-v-ce682b3a],\n.ui.dropdown .menu > .item > img[data-v-ce682b3a] {\n  margin-top: 0em;\n}\n.ui.dropdown > .text > .icon[data-v-ce682b3a],\n.ui.dropdown > .text > .label[data-v-ce682b3a],\n.ui.dropdown > .text > .flag[data-v-ce682b3a],\n.ui.dropdown > .text > img[data-v-ce682b3a],\n.ui.dropdown > .text > .image[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .icon[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .label[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .flag[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .image[data-v-ce682b3a],\n.ui.dropdown .menu > .item > img[data-v-ce682b3a] {\n  margin-left: 0em;\n  float: none;\n  margin-right: 0.78571429rem;\n}\n\n/*--------------\n     Image\n---------------*/\n.ui.dropdown > .text > img[data-v-ce682b3a],\n.ui.dropdown > .text > .image[data-v-ce682b3a],\n.ui.dropdown .menu > .item > .image[data-v-ce682b3a],\n.ui.dropdown .menu > .item > img[data-v-ce682b3a] {\n  display: inline-block;\n  vertical-align: middle;\n  width: auto;\n  max-height: 2em;\n}\n\n\n/*******************************\n            Coupling\n*******************************/\n\n\n/*--------------\n      Menu\n---------------*/\n\n\n/* Remove Menu Item Divider */\n.ui.dropdown .ui.menu > .item[data-v-ce682b3a]:before,\n.ui.menu .ui.dropdown .menu > .item[data-v-ce682b3a]:before {\n  display: none;\n}\n\n/* Prevent Menu Item Border */\n.ui.menu .ui.dropdown .menu .active.item[data-v-ce682b3a] {\n  border-left: none;\n}\n\n/* Automatically float dropdown menu right on last menu item */\n.ui.menu .right.menu .dropdown:last-child .menu[data-v-ce682b3a],\n.ui.menu .right.dropdown.item .menu[data-v-ce682b3a],\n.ui.buttons > .ui.dropdown:last-child .menu[data-v-ce682b3a] {\n  left: auto;\n  right: 0em;\n}\n\n/*--------------\n      Label\n---------------*/\n\n\n/* Dropdown Menu */\n.ui.label.dropdown .menu[data-v-ce682b3a] {\n  min-width: 100%;\n}\n\n/*--------------\n     Button\n---------------*/\n\n\n/* No Margin On Icon Button */\n.ui.dropdown.icon.button > .dropdown.icon[data-v-ce682b3a] {\n  margin: 0em;\n}\n.ui.button.dropdown .menu[data-v-ce682b3a] {\n  min-width: 100%;\n}\n\n\n/*******************************\n              Types\n*******************************/\n\n\n/*--------------\n    Selection\n---------------*/\n\n\n/* Displays like a select box */\n.ui.selection.dropdown[data-v-ce682b3a] {\n  cursor: pointer;\n  word-wrap: break-word;\n  line-height: 1em;\n  white-space: normal;\n  outline: 0;\n  -webkit-transform: rotateZ(0deg);\n      -ms-transform: rotate(0deg);\n          transform: rotateZ(0deg);\n  min-width: 14em;\n  min-height: 2.7142em;\n  background: #FFFFFF;\n  display: inline-block;\n  padding: 0.78571429em 2.1em 0.78571429em 1em;\n  color: rgba(0, 0, 0, 0.87);\n  box-shadow: none;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  border-radius: 0.28571429rem;\n  -webkit-transition: box-shadow 0.1s ease, width 0.1s ease;\n  transition: box-shadow 0.1s ease, width 0.1s ease;\n}\n.ui.selection.dropdown.visible[data-v-ce682b3a],\n.ui.selection.dropdown.active[data-v-ce682b3a] {\n  z-index: 10;\n}\nselect.ui.dropdown[data-v-ce682b3a] {\n  height: 38px;\n  padding: 0.5em;\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  visibility: visible;\n}\n.ui.selection.dropdown > .search.icon[data-v-ce682b3a],\n.ui.selection.dropdown > .delete.icon[data-v-ce682b3a],\n.ui.selection.dropdown > .dropdown.icon[data-v-ce682b3a] {\n  cursor: pointer;\n  position: absolute;\n  width: auto;\n  height: auto;\n  line-height: 1.2142em;\n  top: 0.78571429em;\n  right: 1em;\n  z-index: 3;\n  margin: -0.78571429em;\n  padding: 0.78571429em;\n  opacity: 0.8;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n\n/* Compact */\n.ui.compact.selection.dropdown[data-v-ce682b3a] {\n  min-width: 0px;\n}\n\n/*  Selection Menu */\n.ui.selection.dropdown .menu[data-v-ce682b3a] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  border-top-width: 0px !important;\n  width: auto;\n  outline: none;\n  margin: 0px -1px;\n  min-width: calc(100% +  2px );\n  width: calc(100% +  2px );\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.selection.dropdown .menu[data-v-ce682b3a]:after,\n.ui.selection.dropdown .menu[data-v-ce682b3a]:before {\n  display: none;\n}\n\n/*--------------\n    Message\n---------------*/\n.ui.selection.dropdown .menu > .message[data-v-ce682b3a] {\n  padding: 0.78571429rem 1.14285714rem;\n}\n@media only screen and (max-width: 767px) {\n.ui.selection.dropdown .menu[data-v-ce682b3a] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.selection.dropdown .menu[data-v-ce682b3a] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.selection.dropdown .menu[data-v-ce682b3a] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.selection.dropdown .menu[data-v-ce682b3a] {\n    max-height: 21.37142857rem;\n}\n}\n\n/* Menu Item */\n.ui.selection.dropdown .menu > .item[data-v-ce682b3a] {\n  border-top: 1px solid #FAFAFA;\n  padding: 0.78571429rem 1.14285714rem !important;\n  white-space: normal;\n  word-wrap: normal;\n}\n\n/* User Item */\n.ui.selection.dropdown .menu > .hidden.addition.item[data-v-ce682b3a] {\n  display: none;\n}\n\n/* Hover */\n.ui.selection.dropdown[data-v-ce682b3a]:hover {\n  border-color: rgba(34, 36, 38, 0.35);\n  box-shadow: none;\n}\n\n/* Active */\n.ui.selection.active.dropdown[data-v-ce682b3a] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown .menu[data-v-ce682b3a] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Focus */\n.ui.selection.dropdown[data-v-ce682b3a]:focus {\n  border-color: #96C8DA;\n  box-shadow: none;\n}\n.ui.selection.dropdown:focus .menu[data-v-ce682b3a] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Visible */\n.ui.selection.visible.dropdown > .text[data-v-ce682b3a]:not(.default) {\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.8);\n}\n\n/* Visible Hover */\n.ui.selection.active.dropdown[data-v-ce682b3a]:hover {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n.ui.selection.active.dropdown:hover .menu[data-v-ce682b3a] {\n  border-color: #96C8DA;\n  box-shadow: 0px 2px 3px 0px rgba(34, 36, 38, 0.15);\n}\n\n/* Dropdown Icon */\n.ui.active.selection.dropdown > .dropdown.icon[data-v-ce682b3a],\n.ui.visible.selection.dropdown > .dropdown.icon[data-v-ce682b3a] {\n  opacity: 1;\n  z-index: 3;\n}\n\n/* Connecting Border */\n.ui.active.selection.dropdown[data-v-ce682b3a] {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n\n/* Empty Connecting Border */\n.ui.active.empty.selection.dropdown[data-v-ce682b3a] {\n  border-radius: 0.28571429rem !important;\n  box-shadow: none !important;\n}\n.ui.active.empty.selection.dropdown .menu[data-v-ce682b3a] {\n  border: none !important;\n  box-shadow: none !important;\n}\n\n/*--------------\n   Searchable\n---------------*/\n\n\n/* Search Selection */\n.ui.search.dropdown[data-v-ce682b3a] {\n  min-width: '';\n}\n\n/* Search Dropdown */\n.ui.search.dropdown > input.search[data-v-ce682b3a] {\n  background: none transparent !important;\n  border: none !important;\n  box-shadow: none !important;\n  cursor: text;\n  top: 0em;\n  left: 1px;\n  width: 100%;\n  outline: none;\n  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);\n  padding: inherit;\n}\n\n/* Text Layering */\n.ui.search.dropdown > input.search[data-v-ce682b3a] {\n  position: absolute;\n  z-index: 2;\n}\n.ui.search.dropdown > .text[data-v-ce682b3a] {\n  cursor: text;\n  position: relative;\n  left: 1px;\n  z-index: 3;\n}\n\n/* Search Selection */\n.ui.search.selection.dropdown > input.search[data-v-ce682b3a] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n}\n\n/* Used to size multi select input to character width */\n.ui.search.selection.dropdown > span.sizer[data-v-ce682b3a] {\n  line-height: 1.2142em;\n  padding: 0.67861429em 2.1em 0.67861429em 1em;\n  display: none;\n  white-space: pre;\n}\n\n/* Active/Visible Search */\n.ui.search.dropdown.active > input.search[data-v-ce682b3a],\n.ui.search.dropdown.visible > input.search[data-v-ce682b3a] {\n  cursor: auto;\n}\n.ui.search.dropdown.active > .text[data-v-ce682b3a],\n.ui.search.dropdown.visible > .text[data-v-ce682b3a] {\n  pointer-events: none;\n}\n\n/* Filtered Text */\n.ui.active.search.dropdown input.search:focus + .text .icon[data-v-ce682b3a],\n.ui.active.search.dropdown input.search:focus + .text .flag[data-v-ce682b3a] {\n  opacity: 0.45;\n}\n.ui.active.search.dropdown input.search:focus + .text[data-v-ce682b3a] {\n  color: rgba(115, 115, 115, 0.87) !important;\n}\n\n/* Search Menu */\n.ui.search.dropdown .menu[data-v-ce682b3a] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n@media only screen and (max-width: 767px) {\n.ui.search.dropdown .menu[data-v-ce682b3a] {\n    max-height: 8.01428571rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.search.dropdown .menu[data-v-ce682b3a] {\n    max-height: 10.68571429rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.search.dropdown .menu[data-v-ce682b3a] {\n    max-height: 16.02857143rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.search.dropdown .menu[data-v-ce682b3a] {\n    max-height: 21.37142857rem;\n}\n}\n\n/*--------------\n    Multiple\n---------------*/\n\n\n/* Multiple Selection */\n.ui.multiple.dropdown[data-v-ce682b3a] {\n  padding: 0.22620476em 2.1em 0.22620476em 0.35714286em;\n}\n.ui.multiple.dropdown .menu[data-v-ce682b3a] {\n  cursor: auto;\n}\n\n/* Multiple Search Selection */\n.ui.multiple.search.dropdown[data-v-ce682b3a],\n.ui.multiple.search.dropdown > input.search[data-v-ce682b3a] {\n  cursor: text;\n}\n\n/* Selection Label */\n.ui.multiple.dropdown > .label[data-v-ce682b3a] {\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  display: inline-block;\n  vertical-align: top;\n  white-space: normal;\n  font-size: 1em;\n  padding: 0.35714286em 0.78571429em;\n  margin: 0.14285714rem 0.28571429rem 0.14285714rem 0em;\n  box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;\n}\n\n/* Dropdown Icon */\n.ui.multiple.dropdown .dropdown.icon[data-v-ce682b3a] {\n  margin: '';\n  padding: '';\n}\n\n/* Text */\n.ui.multiple.dropdown > .text[data-v-ce682b3a] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.dropdown > .label ~ input.search[data-v-ce682b3a] {\n  margin-left: 0.14285714em !important;\n}\n.ui.multiple.dropdown > .label ~ .text[data-v-ce682b3a] {\n  display: none;\n}\n\n/*-----------------\n  Multiple Search\n-----------------*/\n\n\n/* Prompt Text */\n.ui.multiple.search.dropdown > .text[data-v-ce682b3a] {\n  display: inline-block;\n  position: absolute;\n  top: 0;\n  left: 0;\n  padding: inherit;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  line-height: 1.21428571em;\n}\n.ui.multiple.search.dropdown > .label ~ .text[data-v-ce682b3a] {\n  display: none;\n}\n\n/* Search */\n.ui.multiple.search.dropdown > input.search[data-v-ce682b3a] {\n  position: static;\n  padding: 0;\n  max-width: 100%;\n  margin: 0.45240952em 0em 0.45240952em 0.64285714em;\n  width: 2.2em;\n  line-height: 1.21428571em;\n}\n\n/*--------------\n     Inline\n---------------*/\n.ui.inline.dropdown[data-v-ce682b3a] {\n  cursor: pointer;\n  display: inline-block;\n  color: inherit;\n}\n.ui.inline.dropdown .dropdown.icon[data-v-ce682b3a] {\n  margin: 0em 0.5em 0em 0.21428571em;\n  vertical-align: baseline;\n}\n.ui.inline.dropdown > .text[data-v-ce682b3a] {\n  font-weight: bold;\n}\n.ui.inline.dropdown .menu[data-v-ce682b3a] {\n  cursor: auto;\n  margin-top: 0.21428571em;\n  border-radius: 0.28571429rem;\n}\n\n\n/*******************************\n            States\n*******************************/\n\n\n/*--------------------\n        Active\n----------------------*/\n\n\n/* Menu Item Active */\n.ui.dropdown .menu .active.item[data-v-ce682b3a] {\n  background: transparent;\n  font-weight: bold;\n  color: rgba(0, 0, 0, 0.95);\n  box-shadow: none;\n  z-index: 12;\n}\n\n/*--------------------\n        Hover\n----------------------*/\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item[data-v-ce682b3a]:hover {\n  background: rgba(0, 0, 0, 0.05);\n  color: rgba(0, 0, 0, 0.95);\n  z-index: 13;\n}\n\n/*--------------------\n       Loading\n---------------------*/\n.ui.loading.dropdown > i.icon[data-v-ce682b3a] {\n  height: 1em !important;\n  padding: 1.14285714em 1.07142857em !important;\n}\n.ui.loading.dropdown > i.icon[data-v-ce682b3a]:before {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  border-radius: 500rem;\n  border: 0.2em solid rgba(0, 0, 0, 0.1);\n}\n.ui.loading.dropdown > i.icon[data-v-ce682b3a]:after {\n  position: absolute;\n  content: '';\n  top: 50%;\n  left: 50%;\n  box-shadow: 0px 0px 0px 1px transparent;\n  margin: -0.64285714em 0em 0em -0.64285714em;\n  width: 1.28571429em;\n  height: 1.28571429em;\n  -webkit-animation: dropdown-spin 0.6s linear;\n          animation: dropdown-spin 0.6s linear;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n  border-radius: 500rem;\n  border-color: #767676 transparent transparent;\n  border-style: solid;\n  border-width: 0.2em;\n}\n\n/* Coupling */\n.ui.loading.dropdown.button > i.icon[data-v-ce682b3a]:before,\n.ui.loading.dropdown.button > i.icon[data-v-ce682b3a]:after {\n  display: none;\n}\n@-webkit-keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n@keyframes dropdown-spin {\nfrom {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg);\n}\nto {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg);\n}\n}\n\n/*--------------------\n     Default Text\n----------------------*/\n.ui.dropdown:not(.button) > .default.text[data-v-ce682b3a],\n.ui.default.dropdown:not(.button) > .text[data-v-ce682b3a] {\n  color: rgba(191, 191, 191, 0.87);\n}\n.ui.dropdown:not(.button) > input:focus + .default.text[data-v-ce682b3a],\n.ui.default.dropdown:not(.button) > input:focus + .text[data-v-ce682b3a] {\n  color: rgba(115, 115, 115, 0.87);\n}\n\n/*--------------------\n        Loading\n----------------------*/\n.ui.loading.dropdown > .text[data-v-ce682b3a] {\n  -webkit-transition: none;\n  transition: none;\n}\n\n/* Used To Check Position */\n.ui.dropdown .loading.menu[data-v-ce682b3a] {\n  display: block;\n  visibility: hidden;\n  z-index: -1;\n}\n\n/*--------------------\n    Keyboard Select\n----------------------*/\n\n\n/* Selected Item */\n.ui.dropdown.selected[data-v-ce682b3a],\n.ui.dropdown .menu .selected.item[data-v-ce682b3a] {\n  background: rgba(0, 0, 0, 0.03);\n  color: rgba(0, 0, 0, 0.95);\n}\n\n/*--------------------\n    Search Filtered\n----------------------*/\n\n\n/* Filtered Item */\n.ui.dropdown > .filtered.text[data-v-ce682b3a] {\n  visibility: hidden;\n}\n.ui.dropdown .filtered.item[data-v-ce682b3a] {\n  display: none !important;\n}\n\n/*--------------------\n        Error\n----------------------*/\n.ui.dropdown.error[data-v-ce682b3a],\n.ui.dropdown.error > .text[data-v-ce682b3a],\n.ui.dropdown.error > .default.text[data-v-ce682b3a] {\n  color: #9F3A38;\n}\n.ui.selection.dropdown.error[data-v-ce682b3a] {\n  background: #FFF6F6;\n  border-color: #E0B4B4;\n}\n.ui.selection.dropdown.error[data-v-ce682b3a]:hover {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu[data-v-ce682b3a],\n.ui.dropdown.error > .menu .menu[data-v-ce682b3a] {\n  border-color: #E0B4B4;\n}\n.ui.dropdown.error > .menu > .item[data-v-ce682b3a] {\n  color: #9F3A38;\n}\n.ui.multiple.selection.error.dropdown > .label[data-v-ce682b3a] {\n  border-color: #E0B4B4;\n}\n\n/* Item Hover */\n.ui.dropdown.error > .menu > .item[data-v-ce682b3a]:hover {\n  background-color: #FFF2F2;\n}\n\n/* Item Active */\n.ui.dropdown.error > .menu .active.item[data-v-ce682b3a] {\n  background-color: #FDCFCF;\n}\n\n/*--------------------\n        Disabled\n----------------------*/\n\n\n/* Disabled */\n.ui.disabled.dropdown[data-v-ce682b3a],\n.ui.dropdown .menu > .disabled.item[data-v-ce682b3a] {\n  cursor: default;\n  pointer-events: none;\n  opacity: 0.45;\n}\n\n\n/*******************************\n           Variations\n*******************************/\n\n\n/*--------------\n    Direction\n---------------*/\n\n\n/* Flyout Direction */\n.ui.dropdown .menu[data-v-ce682b3a] {\n  left: 0px;\n}\n\n/* Default Side (Right) */\n.ui.dropdown .right.menu > .menu[data-v-ce682b3a],\n.ui.dropdown .menu .right.menu[data-v-ce682b3a] {\n  left: 100% !important;\n  right: auto !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/* Left Flyout Menu */\n.ui.dropdown > .left.menu .menu[data-v-ce682b3a],\n.ui.dropdown .menu .left.menu[data-v-ce682b3a] {\n  left: auto !important;\n  right: 100% !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-ce682b3a],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-ce682b3a] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-ce682b3a],\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-ce682b3a] {\n  width: auto;\n  float: left;\n  margin: 0em 0.78571429rem 0em 0em;\n}\n.ui.dropdown .item .left.dropdown.icon + .text[data-v-ce682b3a],\n.ui.dropdown .left.menu .item .dropdown.icon + .text[data-v-ce682b3a] {\n  margin-left: 1em;\n}\n\n/*--------------\n     Upward\n---------------*/\n\n\n/* Upward Main Menu */\n.ui.upward.dropdown > .menu[data-v-ce682b3a] {\n  top: auto;\n  bottom: 100%;\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Upward Sub Menu */\n.ui.dropdown .upward.menu[data-v-ce682b3a] {\n  top: auto !important;\n  bottom: 0 !important;\n}\n\n/* Active Upward */\n.ui.simple.upward.active.dropdown[data-v-ce682b3a],\n.ui.simple.upward.dropdown[data-v-ce682b3a]:hover {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em !important;\n}\n.ui.upward.dropdown.button:not(.pointing):not(.floating).active[data-v-ce682b3a] {\n  border-radius: 0.28571429rem 0.28571429rem 0em 0em;\n}\n\n/* Selection */\n.ui.upward.selection.dropdown .menu[data-v-ce682b3a] {\n  border-top-width: 1px !important;\n  border-bottom-width: 0px !important;\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n.ui.upward.selection.dropdown[data-v-ce682b3a]:hover {\n  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.05);\n}\n\n/* Active Upward */\n.ui.active.upward.selection.dropdown[data-v-ce682b3a] {\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Upward */\n.ui.upward.selection.dropdown.visible[data-v-ce682b3a] {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.08);\n  border-radius: 0em 0em 0.28571429rem 0.28571429rem !important;\n}\n\n/* Visible Hover Upward */\n.ui.upward.active.selection.dropdown[data-v-ce682b3a]:hover {\n  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.05);\n}\n.ui.upward.active.selection.dropdown:hover .menu[data-v-ce682b3a] {\n  box-shadow: 0px -2px 3px 0px rgba(0, 0, 0, 0.08);\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/*  Selection Menu */\n.ui.scrolling.dropdown .menu[data-v-ce682b3a],\n.ui.dropdown .scrolling.menu[data-v-ce682b3a] {\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n.ui.scrolling.dropdown .menu[data-v-ce682b3a] {\n  overflow-x: hidden;\n  overflow-y: auto;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  -webkit-overflow-scrolling: touch;\n  min-width: 100% !important;\n  width: auto !important;\n}\n.ui.dropdown .scrolling.menu[data-v-ce682b3a] {\n  position: static;\n  overflow-y: auto;\n  border: none;\n  box-shadow: none !important;\n  border-radius: 0 !important;\n  margin: 0 !important;\n  min-width: 100% !important;\n  width: auto !important;\n  border-top: 1px solid rgba(34, 36, 38, 0.15);\n}\n.ui.scrolling.dropdown .menu .item.item.item[data-v-ce682b3a],\n.ui.dropdown .scrolling.menu > .item.item.item[data-v-ce682b3a] {\n  border-top: none;\n  padding-right: calc( 1.14285714rem  +  17px ) !important;\n}\n.ui.scrolling.dropdown .menu .item[data-v-ce682b3a]:first-child,\n.ui.dropdown .scrolling.menu .item[data-v-ce682b3a]:first-child {\n  border-top: none;\n}\n.ui.dropdown > .animating.menu .scrolling.menu[data-v-ce682b3a],\n.ui.dropdown > .visible.menu .scrolling.menu[data-v-ce682b3a] {\n  display: block;\n}\n\n/* Scrollbar in IE */\n@media all and (-ms-high-contrast: none) {\n.ui.scrolling.dropdown .menu[data-v-ce682b3a],\n  .ui.dropdown .scrolling.menu[data-v-ce682b3a] {\n    min-width: calc(100% -  17px );\n}\n}\n@media only screen and (max-width: 767px) {\n.ui.scrolling.dropdown .menu[data-v-ce682b3a],\n  .ui.dropdown .scrolling.menu[data-v-ce682b3a] {\n    max-height: 10.28571429rem;\n}\n}\n@media only screen and (min-width: 768px) {\n.ui.scrolling.dropdown .menu[data-v-ce682b3a],\n  .ui.dropdown .scrolling.menu[data-v-ce682b3a] {\n    max-height: 15.42857143rem;\n}\n}\n@media only screen and (min-width: 992px) {\n.ui.scrolling.dropdown .menu[data-v-ce682b3a],\n  .ui.dropdown .scrolling.menu[data-v-ce682b3a] {\n    max-height: 20.57142857rem;\n}\n}\n@media only screen and (min-width: 1920px) {\n.ui.scrolling.dropdown .menu[data-v-ce682b3a],\n  .ui.dropdown .scrolling.menu[data-v-ce682b3a] {\n    max-height: 20.57142857rem;\n}\n}\n\n/*--------------\n     Simple\n---------------*/\n\n\n/* Displays without javascript */\n.ui.simple.dropdown .menu[data-v-ce682b3a]:before,\n.ui.simple.dropdown .menu[data-v-ce682b3a]:after {\n  display: none;\n}\n.ui.simple.dropdown .menu[data-v-ce682b3a] {\n  position: absolute;\n  display: block;\n  overflow: hidden;\n  top: -9999px !important;\n  opacity: 0;\n  width: 0;\n  height: 0;\n  -webkit-transition: opacity 0.1s ease;\n  transition: opacity 0.1s ease;\n}\n.ui.simple.active.dropdown[data-v-ce682b3a],\n.ui.simple.dropdown[data-v-ce682b3a]:hover {\n  border-bottom-left-radius: 0em !important;\n  border-bottom-right-radius: 0em !important;\n}\n.ui.simple.active.dropdown > .menu[data-v-ce682b3a],\n.ui.simple.dropdown:hover > .menu[data-v-ce682b3a] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 100% !important;\n  opacity: 1;\n}\n.ui.simple.dropdown > .menu > .item:active > .menu[data-v-ce682b3a],\n.ui.simple.dropdown:hover > .menu > .item:hover > .menu[data-v-ce682b3a] {\n  overflow: visible;\n  width: auto;\n  height: auto;\n  top: 0% !important;\n  left: 100% !important;\n  opacity: 1;\n}\n.ui.simple.disabled.dropdown:hover .menu[data-v-ce682b3a] {\n  display: none;\n  height: 0px;\n  width: 0px;\n  overflow: hidden;\n}\n\n/* Visible */\n.ui.simple.visible.dropdown > .menu[data-v-ce682b3a] {\n  display: block;\n}\n\n/*--------------\n      Fluid\n---------------*/\n.ui.fluid.dropdown[data-v-ce682b3a] {\n  display: block;\n  width: 100%;\n  min-width: 0em;\n}\n.ui.fluid.dropdown > .dropdown.icon[data-v-ce682b3a] {\n  float: right;\n}\n\n/*--------------\n    Floating\n---------------*/\n.ui.floating.dropdown .menu[data-v-ce682b3a] {\n  left: 0;\n  right: auto;\n  box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.15) !important;\n  border-radius: 0.28571429rem !important;\n}\n.ui.floating.dropdown > .menu[data-v-ce682b3a] {\n  margin-top: 0.5em !important;\n  border-radius: 0.28571429rem !important;\n}\n\n/*--------------\n     Pointing\n---------------*/\n.ui.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: 100%;\n  margin-top: 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  display: block;\n  position: absolute;\n  pointer-events: none;\n  content: '';\n  visibility: visible;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n  width: 0.5em;\n  height: 0.5em;\n  box-shadow: -1px -1px 0px 1px rgba(34, 36, 38, 0.15);\n  background: #FFFFFF;\n  z-index: 2;\n}\n.ui.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  top: -0.25em;\n  left: 50%;\n  margin: 0em 0em 0em -0.25em;\n}\n\n/* Top Left Pointing */\n.ui.top.left.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: 100%;\n  bottom: auto;\n  left: 0%;\n  right: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.left.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  top: -0.25em;\n  left: 1em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Top Right  Pointing */\n.ui.top.right.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: 100%;\n  bottom: auto;\n  right: 0%;\n  left: auto;\n  margin: 1em 0em 0em;\n}\n.ui.top.right.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  top: -0.25em;\n  left: auto;\n  right: 1em;\n  margin: 0em;\n  -webkit-transform: rotate(45deg);\n      -ms-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n/* Left Pointing */\n.ui.left.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: 0%;\n  left: 100%;\n  right: auto;\n  margin: 0em 0em 0em 1em;\n}\n.ui.left.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  top: 1em;\n  left: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(-45deg);\n      -ms-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n}\n\n/* Right Pointing */\n.ui.right.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: 0%;\n  left: auto;\n  right: 100%;\n  margin: 0em 1em 0em 0em;\n}\n.ui.right.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  top: 1em;\n  left: auto;\n  right: -0.25em;\n  margin: 0em 0em 0em 0em;\n  -webkit-transform: rotate(135deg);\n      -ms-transform: rotate(135deg);\n          transform: rotate(135deg);\n}\n\n/* Bottom Pointing */\n.ui.bottom.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: auto;\n  bottom: 100%;\n  left: 0%;\n  right: auto;\n  margin: 0em 0em 1em;\n}\n.ui.bottom.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  top: auto;\n  bottom: -0.25em;\n  right: auto;\n  margin: 0em;\n  -webkit-transform: rotate(-135deg);\n      -ms-transform: rotate(-135deg);\n          transform: rotate(-135deg);\n}\n\n/* Reverse Sub-Menu Direction */\n.ui.bottom.pointing.dropdown > .menu .menu[data-v-ce682b3a] {\n  top: auto !important;\n  bottom: 0px !important;\n}\n\n/* Bottom Left */\n.ui.bottom.left.pointing.dropdown > .menu[data-v-ce682b3a] {\n  left: 0%;\n  right: auto;\n}\n.ui.bottom.left.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  left: 1em;\n  right: auto;\n}\n\n/* Bottom Right */\n.ui.bottom.right.pointing.dropdown > .menu[data-v-ce682b3a] {\n  right: 0%;\n  left: auto;\n}\n.ui.bottom.right.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  left: auto;\n  right: 1em;\n}\n\n/* Upward pointing */\n.ui.upward.pointing.dropdown > .menu[data-v-ce682b3a],\n.ui.upward.top.pointing.dropdown > .menu[data-v-ce682b3a] {\n  top: auto;\n  bottom: 100%;\n  margin: 0em 0em 0.78571429rem;\n  border-radius: 0.28571429rem;\n}\n.ui.upward.pointing.dropdown > .menu[data-v-ce682b3a]:after,\n.ui.upward.top.pointing.dropdown > .menu[data-v-ce682b3a]:after {\n  top: 100%;\n  bottom: auto;\n  box-shadow: 1px 1px 0px 1px rgba(34, 36, 38, 0.15);\n  margin: -0.25em 0em 0em;\n}\n\n\n/*******************************\n         Theme Overrides\n*******************************/\n\n\n/* Dropdown Carets */\n@font-face {\n  font-family: 'Dropdown';\n  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMggjB5AAAAC8AAAAYGNtYXAPfuIIAAABHAAAAExnYXNwAAAAEAAAAWgAAAAIZ2x5Zjo82LgAAAFwAAABVGhlYWQAQ88bAAACxAAAADZoaGVhAwcB6QAAAvwAAAAkaG10eAS4ABIAAAMgAAAAIGxvY2EBNgDeAAADQAAAABJtYXhwAAoAFgAAA1QAAAAgbmFtZVcZpu4AAAN0AAABRXBvc3QAAwAAAAAEvAAAACAAAwIAAZAABQAAAUwBZgAAAEcBTAFmAAAA9QAZAIQAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAAADw2gHg/+D/4AHgACAAAAABAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEADgAAAAKAAgAAgACAAEAIPDa//3//wAAAAAAIPDX//3//wAB/+MPLQADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAIABJQElABMAABM0NzY3BTYXFhUUDwEGJwYvASY1AAUGBwEACAUGBoAFCAcGgAUBEgcGBQEBAQcECQYHfwYBAQZ/BwYAAQAAAG4BJQESABMAADc0PwE2MzIfARYVFAcGIyEiJyY1AAWABgcIBYAGBgUI/wAHBgWABwaABQWABgcHBgUFBgcAAAABABIASQC3AW4AEwAANzQ/ATYXNhcWHQEUBwYnBi8BJjUSBoAFCAcFBgYFBwgFgAbbBwZ/BwEBBwQJ/wgEBwEBB38GBgAAAAABAAAASQClAW4AEwAANxE0NzYzMh8BFhUUDwEGIyInJjUABQYHCAWABgaABQgHBgVbAQAIBQYGgAUIBwWABgYFBwAAAAEAAAABAADZuaKOXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAAAAACgAUAB4AQgBkAIgAqgAAAAEAAAAIABQAAQAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAOAK4AAQAAAAAAAQAOAAAAAQAAAAAAAgAOAEcAAQAAAAAAAwAOACQAAQAAAAAABAAOAFUAAQAAAAAABQAWAA4AAQAAAAAABgAHADIAAQAAAAAACgA0AGMAAwABBAkAAQAOAAAAAwABBAkAAgAOAEcAAwABBAkAAwAOACQAAwABBAkABAAOAFUAAwABBAkABQAWAA4AAwABBAkABgAOADkAAwABBAkACgA0AGMAaQBjAG8AbQBvAG8AbgBWAGUAcgBzAGkAbwBuACAAMQAuADAAaQBjAG8AbQBvAG8Abmljb21vb24AaQBjAG8AbQBvAG8AbgBSAGUAZwB1AGwAYQByAGkAYwBvAG0AbwBvAG4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('truetype'), url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAVwAAoAAAAABSgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAAA9AAAAdkAAAHZLDXE/09TLzIAAALQAAAAYAAAAGAIIweQY21hcAAAAzAAAABMAAAATA9+4ghnYXNwAAADfAAAAAgAAAAIAAAAEGhlYWQAAAOEAAAANgAAADYAQ88baGhlYQAAA7wAAAAkAAAAJAMHAelobXR4AAAD4AAAACAAAAAgBLgAEm1heHAAAAQAAAAABgAAAAYACFAAbmFtZQAABAgAAAFFAAABRVcZpu5wb3N0AAAFUAAAACAAAAAgAAMAAAEABAQAAQEBCGljb21vb24AAQIAAQA6+BwC+BsD+BgEHgoAGVP/i4seCgAZU/+LiwwHi2v4lPh0BR0AAACIDx0AAACNER0AAAAJHQAAAdASAAkBAQgPERMWGyAlKmljb21vb25pY29tb29udTB1MXUyMHVGMEQ3dUYwRDh1RjBEOXVGMERBAAACAYkABgAIAgABAAQABwAKAA0AVgCfAOgBL/yUDvyUDvyUDvuUDvtvi/emFYuQjZCOjo+Pj42Qiwj3lIsFkIuQiY6Hj4iNhouGi4aJh4eHCPsU+xQFiIiGiYaLhouHjYeOCPsU9xQFiI+Jj4uQCA77b4v3FBWLkI2Pjo8I9xT3FAWPjo+NkIuQi5CJjogI9xT7FAWPh42Hi4aLhomHh4eIiIaJhosI+5SLBYaLh42HjoiPiY+LkAgO+92d928Vi5CNkI+OCPcU9xQFjo+QjZCLkIuPiY6Hj4iNhouGCIv7lAWLhomHh4iIh4eJhouGi4aNiI8I+xT3FAWHjomPi5AIDvvdi+YVi/eUBYuQjZCOjo+Pj42Qi5CLkImOhwj3FPsUBY+IjYaLhouGiYeHiAj7FPsUBYiHhomGi4aLh42Hj4iOiY+LkAgO+JQU+JQViwwKAAAAAAMCAAGQAAUAAAFMAWYAAABHAUwBZgAAAPUAGQCEAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA8NoB4P/g/+AB4AAgAAAAAQAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAA4AAAACgAIAAIAAgABACDw2v/9//8AAAAAACDw1//9//8AAf/jDy0AAwABAAAAAAAAAAAAAAABAAH//wAPAAEAAAABAAA5emozXw889QALAgAAAAAA0ABHWAAAAADQAEdYAAAAAAElAW4AAAAIAAIAAAAAAAAAAQAAAeD/4AAAAgAAAAAAASUAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAAAAASUAAAElAAAAtwASALcAAAAAUAAACAAAAAAADgCuAAEAAAAAAAEADgAAAAEAAAAAAAIADgBHAAEAAAAAAAMADgAkAAEAAAAAAAQADgBVAAEAAAAAAAUAFgAOAAEAAAAAAAYABwAyAAEAAAAAAAoANABjAAMAAQQJAAEADgAAAAMAAQQJAAIADgBHAAMAAQQJAAMADgAkAAMAAQQJAAQADgBVAAMAAQQJAAUAFgAOAAMAAQQJAAYADgA5AAMAAQQJAAoANABjAGkAYwBvAG0AbwBvAG4AVgBlAHIAcwBpAG8AbgAgADEALgAwAGkAYwBvAG0AbwBvAG5pY29tb29uAGkAYwBvAG0AbwBvAG4AUgBlAGcAdQBsAGEAcgBpAGMAbwBtAG8AbwBuAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA) format('woff');\n  font-weight: normal;\n  font-style: normal;\n}\n.ui.dropdown > .dropdown.icon[data-v-ce682b3a] {\n  font-family: 'Dropdown';\n  line-height: 1;\n  height: 1em;\n  width: 1.23em;\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  font-weight: normal;\n  font-style: normal;\n  text-align: center;\n}\n.ui.dropdown > .dropdown.icon[data-v-ce682b3a] {\n  width: auto;\n}\n.ui.dropdown > .dropdown.icon[data-v-ce682b3a]:before {\n  content: '\\F0D7';\n}\n\n/* Sub Menu */\n.ui.dropdown .menu .item .dropdown.icon[data-v-ce682b3a]:before {\n  content: '\\F0DA' ;\n}\n.ui.dropdown .item .left.dropdown.icon[data-v-ce682b3a]:before,\n.ui.dropdown .left.menu .item .dropdown.icon[data-v-ce682b3a]:before {\n  content: \"\\F0D9\" ;\n}\n\n/* Vertical Menu Dropdown */\n.ui.vertical.menu .dropdown.item > .dropdown.icon[data-v-ce682b3a]:before {\n  content: \"\\F0DA\" ;\n}\n/* Icons for Reference\n.dropdown.down.icon {\n  content: \"\\f0d7\";\n}\n.dropdown.up.icon {\n  content: \"\\f0d8\";\n}\n.dropdown.left.icon {\n  content: \"\\f0d9\";\n}\n.dropdown.icon.icon {\n  content: \"\\f0da\";\n}\n*/\n\n\n/*******************************\n        User Overrides\n*******************************/\n\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 	
-	/* styles */
-	__webpack_require__(28)
-	__webpack_require__(27)
-	
 	/* script */
-	__vue_exports__ = __webpack_require__(9)
-	
-	/* template */
-	var __vue_template__ = __webpack_require__(23)
+	__vue_exports__ = __webpack_require__(46)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -18091,22 +19780,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  __vue_options__ = __vue_options__.options
 	}
 	
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-bc4ebfaa"
 	
 	module.exports = __vue_exports__
 
 
 /***/ },
-/* 19 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 	
 	/* script */
-	__vue_exports__ = __webpack_require__(10)
+	__vue_exports__ = __webpack_require__(47)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -18123,14 +19809,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __vue_exports__, __vue_options__
 	var __vue_styles__ = {}
 	
 	/* script */
-	__vue_exports__ = __webpack_require__(11)
+	__vue_exports__ = __webpack_require__(49)
 	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
 	if (
 	  typeof __vue_exports__.default === "object" ||
@@ -18147,42 +19833,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __vue_exports__, __vue_options__
-	var __vue_styles__ = {}
-	
-	/* styles */
-	__webpack_require__(26)
-	__webpack_require__(25)
-	__webpack_require__(24)
-	
-	/* script */
-	__vue_exports__ = __webpack_require__(12)
-	
-	/* template */
-	var __vue_template__ = __webpack_require__(22)
-	__vue_options__ = __vue_exports__ = __vue_exports__ || {}
-	if (
-	  typeof __vue_exports__.default === "object" ||
-	  typeof __vue_exports__.default === "function"
-	) {
-	__vue_options__ = __vue_exports__ = __vue_exports__.default
-	}
-	if (typeof __vue_options__ === "function") {
-	  __vue_options__ = __vue_options__.options
-	}
-	
-	__vue_options__.render = __vue_template__.render
-	__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-	__vue_options__._scopeId = "data-v-013c337e"
-	
-	module.exports = __vue_exports__
-
-
-/***/ },
-/* 22 */
+/* 92 */
 /***/ function(module, exports) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -18249,30 +19900,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }), _vm._v(" "), _c('div', {
+	    staticClass: "text",
+	    class: _vm.textClass
+	  }, [_vm._v(_vm._s(_vm.inputText) + "\n  ")]), _vm._v(" "), _c('div', {
+	    ref: "menu",
 	    staticClass: "menu",
 	    class: _vm.menuClass,
 	    style: (_vm.menuStyle),
 	    attrs: {
 	      "tabindex": "-1"
+	    },
+	    on: {
+	      "mousedown": function($event) {
+	        $event.preventDefault();
+	      }
 	    }
 	  }, [_vm._l((_vm.filteredOptions), function(option, idx) {
 	    return [_c('div', {
 	      staticClass: "item",
 	      class: {
-	        'selected': option.selected
+	        'selected': option.selected, 'current': _vm.pointer === idx
 	      },
 	      on: {
 	        "click": function($event) {
+	          $event.stopPropagation();
 	          _vm.selectItem(option)
 	        },
-	        "mousedown": _vm.mousedownItem
+	        "mousedown": _vm.mousedownItem,
+	        "mouseenter": function($event) {
+	          _vm.pointerSet(idx)
+	        }
 	      }
 	    }, [_vm._v("\n        " + _vm._s(option.text) + "\n      ")])]
 	  })], 2)], 2)
 	},staticRenderFns: []}
 
 /***/ },
-/* 23 */
+/* 93 */
 /***/ function(module, exports) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -18280,12 +19944,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    staticClass: "ui fluid search selection dropdown",
 	    class: {
 	      'active visible': _vm.showMenu, 'error': _vm.isError
-	    }
-	  }, [_c('i', {
-	    staticClass: "dropdown icon",
+	    },
 	    on: {
 	      "click": _vm.openOptions
 	    }
+	  }, [_c('i', {
+	    staticClass: "dropdown icon"
 	  }), _vm._v(" "), _c('input', {
 	    directives: [{
 	      name: "model",
@@ -18293,6 +19957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      value: (_vm.searchText),
 	      expression: "searchText"
 	    }],
+	    ref: "input",
 	    staticClass: "search",
 	    attrs: {
 	      "autocomplete": "off",
@@ -18302,7 +19967,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      "value": _vm._s(_vm.searchText)
 	    },
 	    on: {
-	      "focus": _vm.openOptions,
 	      "blur": _vm.blurInput,
 	      "keydown": [function($event) {
 	        if (_vm._k($event.keyCode, "up", 38)) { return; }
@@ -18324,48 +19988,147 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }), _vm._v(" "), _c('div', {
-	    staticClass: "text"
-	  }, [_vm._v(_vm._s(_vm.selectedOption.text))]), _vm._v(" "), _c('div', {
+	    staticClass: "text",
+	    class: _vm.textClass
+	  }, [_vm._v(_vm._s(_vm.inputText) + "\n  ")]), _vm._v(" "), _c('div', {
+	    ref: "menu",
 	    staticClass: "menu",
 	    class: _vm.menuClass,
 	    style: (_vm.menuStyle),
 	    attrs: {
 	      "tabindex": "-1"
+	    },
+	    on: {
+	      "mousedown": function($event) {
+	        $event.preventDefault();
+	      }
 	    }
 	  }, [_vm._l((_vm.filteredOptions), function(option, idx) {
 	    return [_c('div', {
 	      staticClass: "item",
 	      class: {
-	        'selected': option.selected
+	        'selected': option.selected, 'current': _vm.pointer === idx
 	      },
 	      on: {
 	        "click": function($event) {
+	          $event.stopPropagation();
 	          _vm.selectItem(option)
 	        },
-	        "mousedown": _vm.mousedownItem
+	        "mousedown": _vm.mousedownItem,
+	        "mouseenter": function($event) {
+	          _vm.pointerSet(idx)
+	        }
 	      }
 	    }, [_vm._v("\n        " + _vm._s(option.text) + "\n      ")])]
 	  })], 2)])
 	},staticRenderFns: []}
 
 /***/ },
-/* 24 */
+/* 94 */
+/***/ function(module, exports) {
+
+	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+	  return _c('div', {
+	    staticClass: "ui fluid search selection dropdown",
+	    class: {
+	      'active visible': _vm.showMenu, 'error': _vm.isError
+	    },
+	    on: {
+	      "click": _vm.openOptions
+	    }
+	  }, [_c('i', {
+	    staticClass: "dropdown icon"
+	  }), _vm._v(" "), _c('input', {
+	    directives: [{
+	      name: "model",
+	      rawName: "v-model",
+	      value: (_vm.searchText),
+	      expression: "searchText"
+	    }],
+	    ref: "input",
+	    staticClass: "search",
+	    attrs: {
+	      "autocomplete": "off",
+	      "tabindex": "0"
+	    },
+	    domProps: {
+	      "value": _vm._s(_vm.searchText)
+	    },
+	    on: {
+	      "blur": _vm.blurInput,
+	      "keydown": [function($event) {
+	        if (_vm._k($event.keyCode, "up", 38)) { return; }
+	        _vm.prevItem($event)
+	      }, function($event) {
+	        if (_vm._k($event.keyCode, "down", 40)) { return; }
+	        _vm.nextItem($event)
+	      }, function($event) {
+	        if (_vm._k($event.keyCode, "delete", [8, 46])) { return; }
+	        _vm.deleteTextOrItem($event)
+	      }],
+	      "keyup": function($event) {
+	        if (_vm._k($event.keyCode, "enter", 13)) { return; }
+	        _vm.enterItem($event)
+	      },
+	      "input": function($event) {
+	        if ($event.target.composing) { return; }
+	        _vm.searchText = $event.target.value
+	      }
+	    }
+	  }), _vm._v(" "), _c('div', {
+	    staticClass: "text",
+	    class: _vm.textClass
+	  }, [_vm._v(_vm._s(_vm.inputText) + "\n  ")]), _vm._v(" "), _c('div', {
+	    ref: "menu",
+	    staticClass: "menu",
+	    class: _vm.menuClass,
+	    style: (_vm.menuStyle),
+	    attrs: {
+	      "tabindex": "-1"
+	    },
+	    on: {
+	      "mousedown": function($event) {
+	        $event.preventDefault();
+	      }
+	    }
+	  }, [_vm._l((_vm.filteredOptions), function(option, idx) {
+	    return [_c('div', {
+	      staticClass: "item",
+	      class: {
+	        'selected': option.selected, 'current': _vm.pointer === idx
+	      },
+	      on: {
+	        "click": function($event) {
+	          $event.stopPropagation();
+	          _vm.selectItem(option)
+	        },
+	        "mousedown": _vm.mousedownItem,
+	        "mouseenter": function($event) {
+	          _vm.pointerSet(idx)
+	        }
+	      }
+	    }, [_vm._v("\n        " + _vm._s(option.text) + "\n      ")])]
+	  })], 2)])
+	},staticRenderFns: []}
+
+/***/ },
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(13);
+	var content = __webpack_require__(82);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2)(content, {});
+	var update = __webpack_require__(5)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-013c337e&scoped=true!./common.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-013c337e&scoped=true!./common.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-0cd17073!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=2!./MultiSelect.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-0cd17073!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=2!./MultiSelect.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18375,23 +20138,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 25 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(14);
+	var content = __webpack_require__(83);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2)(content, {});
+	var update = __webpack_require__(5)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-013c337e&scoped=true!./dropdown.css", function() {
-				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-013c337e&scoped=true!./dropdown.css");
+			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-0cd17073&scoped=true!./dropdown.css", function() {
+				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-0cd17073&scoped=true!./dropdown.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18401,23 +20164,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 26 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(15);
+	var content = __webpack_require__(84);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2)(content, {});
+	var update = __webpack_require__(5)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-013c337e&scoped=true!./label.css", function() {
-				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-013c337e&scoped=true!./label.css");
+			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-0cd17073&scoped=true!./label.css", function() {
+				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-0cd17073&scoped=true!./label.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18427,23 +20190,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 27 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(16);
+	var content = __webpack_require__(85);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2)(content, {});
+	var update = __webpack_require__(5)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-bc4ebfaa&scoped=true!./common.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-bc4ebfaa&scoped=true!./common.css");
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3ea70128!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./BasicSelect.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-3ea70128!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./BasicSelect.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18453,23 +20216,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 28 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(17);
+	var content = __webpack_require__(86);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(2)(content, {});
+	var update = __webpack_require__(5)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-bc4ebfaa&scoped=true!./dropdown.css", function() {
-				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-bc4ebfaa&scoped=true!./dropdown.css");
+			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-3ea70128&scoped=true!./dropdown.css", function() {
+				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-3ea70128&scoped=true!./dropdown.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -18479,7 +20242,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 29 */
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(87);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(5)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-ce682b3a!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./ModelSelect.vue", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-ce682b3a!./../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./ModelSelect.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(88);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(5)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-ce682b3a&scoped=true!./dropdown.css", function() {
+				var newContent = require("!!./../css-loader/index.js!./../vue-loader/lib/style-rewriter.js?id=data-v-ce682b3a&scoped=true!./dropdown.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 102 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {

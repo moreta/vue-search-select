@@ -12,6 +12,7 @@
                      option-value="code"
                      option-text="name"
                      :selected-item="item"
+                     placeholder="select item"
                      @select="onSelect">
         </list-select>
       </div>
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-  import { ListSelect } from '../../../../lib'
+  import { ListSelect } from '../../lib'
   
   export default {
     data () {

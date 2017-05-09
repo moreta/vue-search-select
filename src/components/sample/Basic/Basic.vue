@@ -9,8 +9,9 @@
       </div>
       <div>
         <basic-select :options="options"
-                       :selected-option="item"
-                       @select="onSelect">
+                      :selected-option="item"
+                      placeholder="select item"
+                      @select="onSelect">
         </basic-select>
       </div>
     </div>
@@ -34,7 +35,7 @@
 </template>
 
 <script>
-  import { BasicSelect } from '../../../../lib'
+  import { BasicSelect } from '../../lib'
   
   export default {
     data () {
@@ -51,7 +52,16 @@
           { value: '12', text: 'ef' + ' - ' + '12' },
           { value: '13', text: 'down case' + ' - ' + 'testcase' },
           { value: '14', text: 'camel case' + ' - ' + 'testCase' },
-          { value: '15', text: 'Capitalize case' + ' - ' + 'Testcase' }
+          { value: '15', text: 'Capitalize case' + ' - ' + 'Testcase' },
+          { value: '16', text: 'more a' + ' - ' + '1' },
+          { value: '17', text: 'more a' + ' - ' + '2' },
+          { value: '18', text: 'more a' + ' - ' + '3' },
+          { value: '19', text: 'more a' + ' - ' + '4' },
+          { value: '20', text: 'more a' + ' - ' + '5' },
+          { value: '21', text: 'more a' + ' - ' + '6' },
+          { value: '22', text: 'more a' + ' - ' + '7' },
+          { value: '23', text: 'more a' + ' - ' + '8' },
+          { value: '24', text: 'more a' + ' - ' + '9' }
         ],
         searchText: '', // If value is falsy, reset searchText & searchItem
         item: {

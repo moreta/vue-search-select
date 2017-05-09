@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="column row">
+  <div class="ui fluid container">
+    <div>
       <img class="logo" src="./assets/logo.png">
     </div>
     <div class="flexbox">
@@ -33,6 +33,13 @@
               <router-link :to="{ path: '/ErrorMultiList' }" class="item">Error</router-link>
             </div>
           </div>
+          <div class="item">
+            <div class="header">Model</div>
+            <div class="menu">
+              <router-link :to="{ path: '/Model' }" class="item">Model</router-link>
+              <router-link :to="{ path: '/ModelList' }" class="item">ModelList</router-link>
+            </div>
+          </div>
         </div>
       </div>
       <div class="flex-content">
@@ -42,9 +49,7 @@
   </div>
 </template>
 
-<style src="semantic-ui-grid/grid.css"></style>
-<style src="semantic-ui-menu/menu.css"></style>
-<style src="semantic-ui-table/table.css"></style>
+<style src="semantic-ui-css/semantic.css"></style>
 <style>
   .flexbox {
     display: flex;
