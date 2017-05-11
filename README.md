@@ -28,9 +28,13 @@ A Vue.js search select component.
   + ModelListSelect
     + ListSelect for ModelSelect
 
-### Updated 2.3.8-alpha.0 - 2017/05/02
+### Updated 2.3.8-alpha.1
 
-+ FEATURE : ModelSelect Component
++ merge PR #31, #32
+
+### Updated 2.3.8-alpha.0
+
++ FEATURE : ModelSelect Component. use v-model!
 
 ### Updated 2.3.7 - 2017/04/27
 
@@ -45,10 +49,6 @@ A Vue.js search select component.
 
 + MultiSelect's search is case insensitive (BasicSelect also)
 + MultiSelect and MultiListSelect emit last selected item.(pr#19)
-
-### Updated 2.3.0
-
-+ Now vue-search-select use events beyond props
 
 # Demo
 
@@ -66,6 +66,14 @@ or by yarn
 
 ```bash
 yarn add vue-search-select
+```
+
+### Install alpha version
+
+```
+yarn add vue-search-select@alpha
+# or
+yarn add vue-search-select@2.3.8-alpha.1
 ```
 
 ## BasicSelect Component Example
