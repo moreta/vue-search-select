@@ -18837,6 +18837,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      type: Boolean,
 	      default: false
 	    },
+	    cleanSearch: {
+	      type: Boolean,
+	      default: true
+	    },
 	    placeholder: {
 	      type: String,
 	      default: ''
@@ -18895,7 +18899,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      if (this.searchText) {
 	        return this.nonSelectOptions.filter(function (option) {
-	          return option.text.match(new RegExp(_this.searchText, 'i'));
+	          if (_this.cleanSearch) {
+	            var cleanedText = _this.accentsTidy(option.text);
+	            return cleanedText.match(new RegExp(_this.searchText, 'i'));
+	          } else {
+	            return option.text.match(new RegExp(_this.searchText, 'i'));
+	          }
 	        });
 	      } else {
 	        return this.nonSelectOptions;
@@ -18919,9 +18928,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    prevItem: function prevItem() {
 	      _common2.default.prevItem(this);
+	      this.closeOptions();
+	      this.openOptions();
 	    },
 	    nextItem: function nextItem() {
 	      _common2.default.nextItem(this);
+	      this.closeOptions();
+	      this.openOptions();
 	    },
 	    enterItem: function enterItem() {
 	      _common2.default.enterItem(this);
@@ -18938,11 +18951,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    selectItem: function selectItem(option) {
 	      var selectedOptions = _lodash2.default.unionWith(this.selectedOptions, [option], _lodash2.default.isEqual);
 	      this.closeOptions();
-	      this.$emit('select', selectedOptions, option);
+	      this.openOptions();
+	      this.searchText = '';
+	      this.$emit('select', selectedOptions, option, 'insert');
 	    },
 	    deleteItem: function deleteItem(option) {
 	      var selectedOptions = _lodash2.default.reject(this.selectedOptions, option);
-	      this.$emit('select', selectedOptions, option);
+	      this.$emit('select', selectedOptions, option, 'delete');
+	    },
+	    accentsTidy: function accentsTidy(s) {
+	      var r = s.toString().toLowerCase();
+	      r = r.replace(new RegExp('[àáâãäå]', 'g'), 'a');
+	      r = r.replace(new RegExp('æ', 'g'), 'ae');
+	      r = r.replace(new RegExp('ç', 'g'), 'c');
+	      r = r.replace(new RegExp('[èéêë]', 'g'), 'e');
+	      r = r.replace(new RegExp('[ìíîï]', 'g'), 'i');
+	      r = r.replace(new RegExp('ñ', 'g'), 'n');
+	      r = r.replace(new RegExp('[òóôõö]', 'g'), 'o');
+	      r = r.replace(new RegExp('œ', 'g'), 'oe');
+	      r = r.replace(new RegExp('[ùúûü]', 'g'), 'u');
+	      r = r.replace(new RegExp('[ýÿ]', 'g'), 'y');
+	      return r;
 	    }
 	  }
 	};
@@ -19671,7 +19700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05);\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05);\n}\n", ""]);
 	
 	// exports
 
