@@ -102,7 +102,7 @@
   },
   "peerDependencies": {
     "lodash": "^4.0.0",
-    "vue": "2.1.x"
+    "vue": "^2.1.0"
   },
   "engines": {
     "node": ">= 4.0.0",
