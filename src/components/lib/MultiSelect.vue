@@ -20,6 +20,8 @@
            @keydown.down="nextItem"
            @keyup.enter="enterItem"
            @keydown.delete="deleteTextOrLastItem"
+           @keydown.esc="closeOptions"
+           @keydown.anyKeyCode="openOptions"
     />
     <div class="text"
          :class="textClass">{{inputText}}
@@ -170,7 +172,6 @@
       selectItem (option) {
         const selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
         this.closeOptions()
-        this.openOptions()
         this.searchText = ''
         this.$emit('select', selectedOptions, option, 'insert')
       },
