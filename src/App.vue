@@ -11,6 +11,7 @@
             <div class="menu">
               <router-link :to="{ path: '/Basic' }" class="item">Basic</router-link>
               <router-link :to="{ path: '/ErrorBasic' }" class="item">Error</router-link>
+              <router-link :to="{ path: '/CustomFilter' }" class="item">Custom Filter</router-link>
             </div>
           </div>
           <div class="item">

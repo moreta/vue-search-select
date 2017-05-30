@@ -39,7 +39,7 @@
 <script>
   /* event : select */
   import common from './common'
-  
+
   export default {
     props: {
       options: {
@@ -56,6 +56,12 @@
       placeholder: {
         type: String,
         default: ''
+      },
+      filterPredicate: {
+        type: Function,
+        default: (option, inputText) => {
+          return option.text.match(new RegExp(inputText, 'i'))
+        }
       }
     },
     data () {
@@ -103,8 +109,12 @@
       },
       filteredOptions () {
         if (this.searchText) {
-          return this.options.filter(option => {
-            return option.text.match(new RegExp(this.searchText, 'i'))
+          return this.options.filter((option) => {
+            try {
+              return this.filterPredicate(option, this.searchText)
+            } catch (e) {
+              return true
+            }
           })
         } else {
           return this.options
