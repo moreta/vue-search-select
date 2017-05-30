@@ -18235,6 +18235,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    placeholder: {
 	      type: String,
 	      default: ''
+	    },
+	    filterPredicate: {
+	      type: Function,
+	      default: function _default(option, inputText) {
+	        return option.text.match(new RegExp(inputText, 'i'));
+	      }
 	    }
 	  },
 	  data: function data() {
@@ -18286,7 +18292,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      if (this.searchText) {
 	        return this.options.filter(function (option) {
-	          return option.text.match(new RegExp(_this.searchText, 'i'));
+	          try {
+	            return _this.filterPredicate(option, _this.searchText);
+	          } catch (e) {
+	            return true;
+	          }
 	        });
 	      } else {
 	        return this.options;
@@ -18362,7 +18372,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        options: this.options,
 	        selectedOption: this.item,
 	        isError: this.isError,
-	        placeholder: this.placeholder
+	        placeholder: this.placeholder,
+	        filterPredicate: this.filterPredicate
 	      },
 	      on: {
 	        select: this.onSelect
@@ -18370,28 +18381,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  },
 	  props: {
-	    'list': {
+	    list: {
 	      type: Array
 	    },
-	    'optionValue': {
+	    optionValue: {
 	      type: String
 	    },
-	    'optionText': {
+	    optionText: {
 	      type: String
 	    },
-	    'customText': {
+	    customText: {
 	      type: Function
 	    },
-	    'selectedItem': {
+	    selectedItem: {
 	      type: Object
 	    },
-	    'isError': {
+	    isError: {
 	      type: Boolean,
 	      default: false
 	    },
 	    placeholder: {
 	      type: String,
 	      default: ''
+	    },
+	    filterPredicate: {
+	      type: Function,
+	      default: function _default(option, inputText) {
+	        return option.text.match(new RegExp(inputText, 'i'));
+	      }
 	    }
 	  },
 	  computed: {
@@ -18467,7 +18484,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        options: this.options,
 	        value: this.innerValue,
 	        isError: this.isError,
-	        placeholder: this.placeholder
+	        placeholder: this.placeholder,
+	        filterPredicate: this.filterPredicate
 	      },
 	      on: {
 	        input: this.onInput
@@ -18497,6 +18515,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    placeholder: {
 	      type: String,
 	      default: ''
+	    },
+	    filterPredicate: {
+	      type: Function,
+	      default: function _default(option, inputText) {
+	        return option.text.match(new RegExp(inputText, 'i'));
+	      }
 	    }
 	  },
 	  computed: {
@@ -18580,6 +18604,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    placeholder: {
 	      type: String,
 	      default: ''
+	    },
+	    filterPredicate: {
+	      type: Function,
+	      default: function _default(option, inputText) {
+	        return option.text.match(new RegExp(inputText, 'i'));
+	      }
 	    }
 	  },
 	  data: function data() {
@@ -18630,7 +18660,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      if (this.searchText) {
 	        return this.options.filter(function (option) {
-	          return option.text.match(new RegExp(_this.searchText, 'i'));
+	          try {
+	            return _this.filterPredicate(option, _this.searchText);
+	          } catch (e) {
+	            return true;
+	          }
 	        });
 	      } else {
 	        return this.options;
@@ -18724,7 +18758,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        options: this.options,
 	        selectedOptions: this.items,
 	        isError: this.isError,
-	        placeholder: this.placeholder
+	        placeholder: this.placeholder,
+	        filterPredicate: this.filterPredicate
 	      },
 	      on: {
 	        select: this.onSelect
@@ -18951,7 +18986,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    selectItem: function selectItem(option) {
 	      var selectedOptions = _lodash2.default.unionWith(this.selectedOptions, [option], _lodash2.default.isEqual);
 	      this.closeOptions();
-	      this.openOptions();
 	      this.searchText = '';
 	      this.$emit('select', selectedOptions, option, 'insert');
 	    },
@@ -19700,7 +19734,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05);\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05);\n}\n", ""]);
 	
 	// exports
 
@@ -19742,7 +19776,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
 	
 	// exports
 
@@ -19770,7 +19804,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
 	
 	// exports
 
@@ -19918,6 +19952,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, function($event) {
 	        if (_vm._k($event.keyCode, "delete", [8, 46])) { return; }
 	        _vm.deleteTextOrLastItem($event)
+	      }, function($event) {
+	        if (_vm._k($event.keyCode, "esc", 27)) { return; }
+	        _vm.closeOptions($event)
+	      }, function($event) {
+	        if (_vm._k($event.keyCode, "anyKeyCode")) { return; }
+	        _vm.openOptions($event)
 	      }],
 	      "keyup": function($event) {
 	        if (_vm._k($event.keyCode, "enter", 13)) { return; }
