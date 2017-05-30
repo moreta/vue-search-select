@@ -19,28 +19,34 @@
       })
     },
     props: {
-      'list': {
+      list: {
         type: Array
       },
-      'optionValue': {
+      optionValue: {
         type: String
       },
-      'optionText': {
+      optionText: {
         type: String
       },
-      'customText': {
+      customText: {
         type: Function
       },
-      'selectedItem': {
+      selectedItem: {
         type: Object
       },
-      'isError': {
+      isError: {
         type: Boolean,
         default: false
       },
       placeholder: {
         type: String,
         default: ''
+      },
+      filterPredicate: {
+        type: Function,
+        default: (option, inputText) => {
+          return option.text.match(new RegExp(inputText, 'i'))
+        }
       }
     },
     computed: {
