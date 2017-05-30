@@ -7,8 +7,6 @@ A Vue.js search select component.
 
 ## Version 2.x
 
-### New
-
 + Support Vue.js 2.x
 + Five Select Component
   + BasicSelect
@@ -20,35 +18,19 @@ A Vue.js search select component.
     + search select for multiple select
   + MultiListSelect
     + ListSelect for MultiSelect
-  + ModelSelect
+  + ModelSelect (from v2.3.8)
     + similar BasicSelect
     + value set through v-model
     + value can be string or object
       + If you pass string, onInput set by string
-  + ModelListSelect
+  + ModelListSelect (from v2.3.8)
     + ListSelect for ModelSelect
 
-### Updated 2.3.8-alpha.1
+### Updated 2.3.8
 
-+ merge PR #31, #32
++ merge PR #31, #32, #33, #34
++ Add ModelSelect, ModelListSelect
 
-### Updated 2.3.8-alpha.0
-
-+ FEATURE : ModelSelect Component. use v-model!
-
-### Updated 2.3.7 - 2017/04/27
-
-+ FEATURE : Add key listener #17
-+ FIX : prevent close options when clicks on scrollbar #25
-
-### Updated 2.3.6
-
-+ Add "placeholder" prop
-
-### Updated 2.3.4
-
-+ MultiSelect's search is case insensitive (BasicSelect also)
-+ MultiSelect and MultiListSelect emit last selected item.(pr#19)
 
 # Demo
 
@@ -100,14 +82,7 @@ See More Samples : src/components/sample
           { value: '2', text: 'ab' + ' - ' + '2' },
           { value: '3', text: 'bc' + ' - ' + '3' },
           { value: '4', text: 'cd' + ' - ' + '4' },
-          { value: '5', text: 'de' + ' - ' + '5' },
-          { value: '6', text: 'ef' + ' - ' + '6' },
-          { value: '10', text: 'ef' + ' - ' + '10' },
-          { value: '11', text: 'ef' + ' - ' + '11' },
-          { value: '12', text: 'ef' + ' - ' + '12' },
-          { value: '13', text: 'down case' + ' - ' + 'testcase' },
-          { value: '14', text: 'camel case' + ' - ' + 'testCase' },
-          { value: '15', text: 'Capitalize case' + ' - ' + 'Testcase' }
+          { value: '5', text: 'de' + ' - ' + '5' }
         ],
         searchText: '', // If value is falsy, reset searchText & searchItem
         item: {
@@ -158,17 +133,7 @@ See More Samples : src/components/sample
           { value: '2', text: 'ab' + ' - ' + '2' },
           { value: '3', text: 'bc' + ' - ' + '3' },
           { value: '4', text: 'cd' + ' - ' + '4' },
-          { value: '5', text: 'de' + ' - ' + '5' },
-          { value: '6', text: 'ef' + ' - ' + '6' },
-          { value: '7', text: 'ef' + ' - ' + '7' },
-          { value: '8', text: 'ef' + ' - ' + '8' },
-          { value: '9', text: 'ef' + ' - ' + '9' },
-          { value: '10', text: 'ef' + ' - ' + '10' },
-          { value: '11', text: 'ef' + ' - ' + '11' },
-          { value: '12', text: 'ef' + ' - ' + '12' },
-          { value: '13', text: 'down case' + ' - ' + 'testcase' },
-          { value: '14', text: 'camel case' + ' - ' + 'testCase' },
-          { value: '15', text: 'Capitalize case' + ' - ' + 'Testcase' }
+          { value: '5', text: 'de' + ' - ' + '5' }
         ],
         searchText: '', // If value is falsy, reset searchText & searchItem
         items: [],
@@ -196,43 +161,114 @@ See More Samples : src/components/sample
 </script>
 ```
 
+## ModelSelect Component Example
+
+```html
+<template>
+        <!-- object value -->
+        <model-select :options="options"
+                                v-model="item"
+                                placeholder="select item">
+         </model-select>
+
+         <!-- string value -->
+         <model-select :options="options2"
+                                 v-model="item2"
+                                 placeholder="select item2">
+         </model-select>
+</template>
+
+<script>
+  import { ModelSelect } from 'vue-search-select'
+
+  export default {
+    data () {
+      return {
+        options: [
+          { value: '1', text: 'aa' + ' - ' + '1' },
+          { value: '2', text: 'ab' + ' - ' + '2' },
+          { value: '3', text: 'bc' + ' - ' + '3' },
+          { value: '4', text: 'cd' + ' - ' + '4' },
+          { value: '5', text: 'de' + ' - ' + '5' }
+        ],
+        item: {
+          value: '',
+          text: ''
+        },
+        options2: [
+          { value: '1', text: 'aa' + ' - ' + '1' },
+          { value: '2', text: 'ab' + ' - ' + '2' },
+          { value: '3', text: 'bc' + ' - ' + '3' },
+          { value: '4', text: 'cd' + ' - ' + '4' },
+          { value: '5', text: 'de' + ' - ' + '5' }
+        ],
+        item2: ''
+      }
+    },
+    methods: {
+      reset () {
+        this.item = {}
+      },
+      selectOption () {
+        // select option from parent component
+        this.item = this.options[0]
+      },
+      reset2 () {
+        this.item2 = ''
+      },
+      selectOption2 () {
+        // select option from parent component
+        this.item2 = this.options2[0].value
+      }
+    },
+    components: {
+      ModelSelect
+    }
+  }
+</script>
+```
+
 # Props
 
-
-| Compoent        | Name            | Type     | Defailt                 | Description                |
-| --------------- | --------------- | -------- | ----------------------- | -------------------------- |
-| BasicSelect     | options         | Array    |                         | option list                |
-|                 | selectedOption  | Object   | { value: '', text: '' } | default option             |
-|                 | isError         | Boolean  | false                   | error style                |
-|                 | placeholder     | String   | ''                      |                            |
-| ListSelect      | list            | Array    |                         | option list                |
-|                 | optionValue     | String   |                         | value key                  |
-|                 | optionText      | String   |                         | text key                   |
-|                 | customText      | Function |                         | custome text function      |
-|                 | selectedItem    | Object   |                         | default option(raw object) |
-|                 | isError         | Boolean  | false                   | error style                |
-|                 | placeholder     | String   | ''                      |                            |
-| MultiSelect     | options         | Array    |                         | option list                |
-|                 | selectedOptions | Array    |                         | default option list        |
-|                 | isError         | Boolean  | false                   | error style                |
-|                 | placeholder     | String   | ''                      |                            |
-| MultiListSelect | list            | Array    |                         | option list                |
-|                 | optionValue     | String   |                         | value key                  |
-|                 | optionText      | String   |                         | text key                   |
-|                 | customText      | Function |                         | custome text function      |
-|                 | selectedItems   | Array    |                         | default option(raw object) |
-|                 | isError         | String   | false                   | error style                |
-|                 | placeholder     | String   | ''                      |                            |
-| ModelSelect     | options         | Array    |                         | option list                |
-|                 | isError         | Boolean  | false                   | error style                |
-|                 | placeholder     | String   | ''                      |                            |
-| ModelListSelect | list            | Array    |                         | option list                |
-|                 | optionValue     | String   |                         | value key                  |
-|                 | optionText      | String   |                         | text key                   |
-|                 | customText      | Function |                         | custome text function      |
-|                 | isError         | Boolean  | false                   | error style                |
-|                 | placeholder     | String   | ''                      |                            |
-
+| Compoent        | Name            | Type     | Defailt                    | Description                |
+|-----------------|-----------------|----------|----------------------------|----------------------------|
+| BasicSelect     | options         | Array    |                            | option list                |
+|                 | selectedOption  | Object   | { value: '', text: '' }    | default option             |
+|                 | isError         | Boolean  | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+| ListSelect      | list            | Array    |                            | option list                |
+|                 | optionValue     | String   |                            | value key                  |
+|                 | optionText      | String   |                            | text key                   |
+|                 | customText      | Function |                            | custome text function      |
+|                 | selectedItem    | Object   |                            | default option(raw object) |
+|                 | isError         | Boolean  | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+| MultiSelect     | options         | Array    |                            | option list                |
+|                 | selectedOptions | Array    |                            | default option list        |
+|                 | isError         | Boolean  | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+| MultiListSelect | list            | Array    |                            | option list                |
+|                 | optionValue     | String   |                            | value key                  |
+|                 | optionText      | String   |                            | text key                   |
+|                 | customText      | Function |                            | custome text function      |
+|                 | selectedItems   | Array    |                            | default option(raw object) |
+|                 | isError         | String   | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+| ModelSelect     | options         | Array    |                            | option list                |
+|                 | isError         | Boolean  | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+| ModelListSelect | list            | Array    |                            | option list                |
+|                 | optionValue     | String   |                            | value key                  |
+|                 | optionText      | String   |                            | text key                   |
+|                 | customText      | Function |                            | custome text function      |
+|                 | isError         | Boolean  | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 
 # Run examples
 
@@ -241,6 +277,6 @@ See More Samples : src/components/sample
 yarn install
 
 # serve with hot reload at localhost:9090
-npm run dev
+yarn run dev
 ```
 
