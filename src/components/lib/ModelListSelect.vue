@@ -9,7 +9,8 @@
           options: this.options,
           value: this.innerValue,
           isError: this.isError,
-          placeholder: this.placeholder
+          placeholder: this.placeholder,
+          filterPredicate: this.filterPredicate
         },
         on: {
           input: this.onInput
@@ -39,6 +40,12 @@
       placeholder: {
         type: String,
         default: ''
+      },
+      filterPredicate: {
+        type: Function,
+        default: (option, inputText) => {
+          return option.text.match(new RegExp(inputText, 'i'))
+        }
       }
     },
     computed: {

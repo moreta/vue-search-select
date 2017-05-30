@@ -11,7 +11,8 @@
           options: this.options,
           selectedOption: this.item,
           isError: this.isError,
-          placeholder: this.placeholder
+          placeholder: this.placeholder,
+          filterPredicate: this.filterPredicate
         },
         on: {
           select: this.onSelect
