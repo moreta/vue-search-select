@@ -48,8 +48,10 @@
 <script>
   import _ from 'lodash'
   import common from './common'
+  import commonMixin from './commonMixin'
   
   export default {
+    mixins: [commonMixin],
     props: {
       options: {
         type: Array
@@ -57,17 +59,9 @@
       selectedOptions: {
         type: Array
       },
-      isError: {
-        type: Boolean,
-        default: false
-      },
       cleanSearch: {
         type: Boolean,
         default: true
-      },
-      placeholder: {
-        type: String,
-        default: ''
       }
     },
     data () {
@@ -120,11 +114,14 @@
       filteredOptions () {
         if (this.searchText) {
           return this.nonSelectOptions.filter(option => {
-            if (this.cleanSearch) {
-              var cleanedText = this.accentsTidy(option.text)
-              return cleanedText.match(new RegExp(this.searchText, 'i'))
-            } else {
-              return option.text.match(new RegExp(this.searchText, 'i'))
+            try {
+              if (this.cleanSearch) {
+                return this.filterPredicate(this.accentsTidy(option.text), this.searchText)
+              } else {
+                return this.filterPredicate(option.text, this.searchText)
+              }
+            } catch (e) {
+              return true
             }
           })
         } else {

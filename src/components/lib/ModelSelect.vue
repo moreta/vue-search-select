@@ -37,30 +37,17 @@
 </template>
 
 <script>
-  /* event : select */
   import common from './common'
+  import commonMixin from './commonMixin'
   
   export default {
+    mixins: [commonMixin],
     props: {
       options: {
         type: Array
       },
       value: {
         type: [String, Object]
-      },
-      isError: {
-        type: Boolean,
-        default: false
-      },
-      placeholder: {
-        type: String,
-        default: ''
-      },
-      filterPredicate: {
-        type: Function,
-        default: (option, inputText) => {
-          return option.text.match(new RegExp(inputText, 'i'))
-        }
       }
     },
     data () {
@@ -109,7 +96,7 @@
         if (this.searchText) {
           return this.options.filter((option) => {
             try {
-              return this.filterPredicate(option, this.searchText)
+              return this.filterPredicate(option.text, this.searchText)
             } catch (e) {
               return true
             }
