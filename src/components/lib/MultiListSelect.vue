@@ -3,8 +3,10 @@
   /* event : select */
   import _ from 'lodash'
   import MultiSelect from './MultiSelect.vue'
+  import commonMixin from './commonMixin'
   
   export default {
+    mixins: [commonMixin],
     render: function (createElement) {
       return createElement(MultiSelect, {
         props: {
@@ -20,28 +22,20 @@
       })
     },
     props: {
-      'list': {
+      list: {
         type: Array
       },
-      'optionValue': {
+      optionValue: {
         type: String
       },
-      'optionText': {
+      optionText: {
         type: String
       },
-      'customText': {
+      customText: {
         type: Function
       },
-      'selectedItems': {
+      selectedItems: {
         type: Array
-      },
-      'isError': {
-        type: Boolean,
-        default: false
-      },
-      placeholder: {
-        type: String,
-        default: ''
       }
     },
     computed: {

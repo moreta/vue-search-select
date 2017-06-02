@@ -82,8 +82,8 @@
         // select option from parent component
         this.item = this.options[0]
       },
-      startsWithPredicate (option, inputText) {
-        return option.text.startsWith(inputText)
+      startsWithPredicate (text, inputText) {
+        return text.startsWith(inputText)
       }
     },
     components: {

@@ -39,8 +39,10 @@
 <script>
   /* event : select */
   import common from './common'
-
+  import commonMixin from './commonMixin'
+  
   export default {
+    mixins: [commonMixin],
     props: {
       options: {
         type: Array
@@ -48,20 +50,6 @@
       selectedOption: {
         type: Object,
         default: () => { return { value: '', text: '' } }
-      },
-      isError: {
-        type: Boolean,
-        default: false
-      },
-      placeholder: {
-        type: String,
-        default: ''
-      },
-      filterPredicate: {
-        type: Function,
-        default: (option, inputText) => {
-          return option.text.match(new RegExp(inputText, 'i'))
-        }
       }
     },
     data () {
@@ -111,7 +99,7 @@
         if (this.searchText) {
           return this.options.filter((option) => {
             try {
-              return this.filterPredicate(option, this.searchText)
+              return this.filterPredicate(option.text, this.searchText)
             } catch (e) {
               return true
             }
@@ -170,6 +158,7 @@
   .ui.dropdown .menu > .item:hover {
     background: none transparent !important;
   }
+  
   /* Menu Item Hover for Key event */
   .ui.dropdown .menu > .item.current {
     background: rgba(0, 0, 0, 0.05) !important;

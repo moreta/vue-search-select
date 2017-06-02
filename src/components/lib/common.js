@@ -71,5 +71,13 @@ export default {
   },
   mousedownItem (self) {
     self.mousedownState = true
+  },
+  /**
+   * for RegExp escape
+   *
+   * @param str
+   */
+  escapedRegExp (str) {
+    return new RegExp(str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
   }
 }

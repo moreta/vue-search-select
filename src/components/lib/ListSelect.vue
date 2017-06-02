@@ -1,10 +1,11 @@
 <script>
   /* wrap basic component */
-  /* event : select */
   import _ from 'lodash'
   import BasicSelect from './BasicSelect.vue'
+  import commonMixin from './commonMixin'
   
   export default {
+    mixins: [commonMixin],
     render: function (createElement) {
       return createElement(BasicSelect, {
         props: {
@@ -34,20 +35,6 @@
       },
       selectedItem: {
         type: Object
-      },
-      isError: {
-        type: Boolean,
-        default: false
-      },
-      placeholder: {
-        type: String,
-        default: ''
-      },
-      filterPredicate: {
-        type: Function,
-        default: (option, inputText) => {
-          return option.text.match(new RegExp(inputText, 'i'))
-        }
       }
     },
     computed: {
