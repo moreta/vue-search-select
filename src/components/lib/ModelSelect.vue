@@ -11,7 +11,7 @@
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
-           @keyup.enter="enterItem"
+           @keyup.enter.prevent="enterItem"
            @keydown.delete="deleteTextOrItem"
     />
     <div class="text"
