@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>Object type model</h3>
     <div class="flexbox">
       <div class="flex-content">
         <div>
@@ -32,6 +33,7 @@
         </table>
       </div>
     </div>
+    <h3>String type model</h3>
     <div class="flexbox">
       <div class="flex-content">
         <div>
@@ -57,6 +59,37 @@
           <tbody>
           <tr>
             <td>{{item2}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <h3>Number type model</h3>
+    <div class="flexbox">
+      <div class="flex-content">
+        <div>
+          <button type="button" @click="reset3" class="btn btn-info btn-sm">reset</button>
+        </div>
+        <div>
+          <button type="button" @click="selectOption3" class="btn btn-info btn-sm">option select from parent</button>
+        </div>
+        <div>
+          <model-select :options="options3"
+                        v-model="item3"
+                        placeholder="select item3">
+          </model-select>
+        </div>
+      </div>
+      <div class="flex-result">
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{item3}}</td>
           </tr>
           </tbody>
         </table>
@@ -121,7 +154,13 @@
           { value: '23', text: 'more a' + ' - ' + '8' },
           { value: '24', text: 'more a' + ' - ' + '9' }
         ],
-        item2: ''
+        item2: '',
+        options3: [
+          { value: 0, text: 'aa' + ' - ' + '0' },
+          { value: 1, text: 'aa' + ' - ' + '1' },
+          { value: 2, text: 'ab' + ' - ' + '2' }
+        ],
+        item3: 0
       }
     },
     methods: {
@@ -138,6 +177,13 @@
       selectOption2 () {
         // select option from parent component
         this.item2 = this.options2[0].value
+      },
+      reset3 () {
+        this.item3 = ''
+      },
+      selectOption3 () {
+        // select option from parent component
+        this.item3 = this.options3[0].value
       }
     },
     components: {
