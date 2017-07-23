@@ -18611,7 +18611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      type: Array
 	    },
 	    value: {
-	      type: [String, Object]
+	      type: [String, Number, Object]
 	    }
 	  },
 	  data: function data() {
@@ -18675,7 +18675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    optionValue: function optionValue() {
 	      if ((0, _typeof3.default)(this.value) === 'object') {
 	        return this.value.value;
-	      } else if (typeof this.value === 'string') {
+	      } else {
 	        return this.value;
 	      }
 	    },
@@ -18726,7 +18726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.closeOptions();
 	      if ((0, _typeof3.default)(this.value) === 'object') {
 	        this.$emit('input', option);
-	      } else if (typeof this.value === 'string') {
+	      } else {
 	        this.$emit('input', option.value);
 	      }
 	    }
