@@ -230,7 +230,7 @@ See More Samples : src/components/sample
 
 # Props
 
-| Compoent        | Name            | Type     | Defailt                    | Description                |
+| Compoent        | Name            | Type     | Default                    | Description                |
 |-----------------|-----------------|----------|----------------------------|----------------------------|
 | BasicSelect     | options         | Array    |                            | option list                |
 |                 | selectedOption  | Object   | { value: '', text: '' }    | default option             |
