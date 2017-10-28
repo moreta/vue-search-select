@@ -6,7 +6,7 @@ import Basic from './components/sample/Basic/Basic.vue'
 import ErrorBasic from './components/sample/Basic/ErrorBasic.vue'
 import CustomFilter from './components/sample/Basic/CustomFilter.vue'
 import List from './components/sample/List/List.vue'
-import CustomTextList from './components/sample/List/CustomTextList.vue'
+import ListCustomText from './components/sample/List/ListCustomText.vue'
 import Multi from './components/sample/Multi/Multi.vue'
 import MultiList from './components/sample/MultiList/MultiList.vue'
 import ErrorMultiList from './components/sample/MultiList/ErrorMultiList.vue'
@@ -26,7 +26,7 @@ const routes = [
   { path: '/ErrorBasic', component: ErrorBasic },
   { path: '/CustomFilter', component: CustomFilter },
   { path: '/List', component: List },
-  { path: '/CustomTextList', component: CustomTextList },
+  { path: '/ListCustomText', component: ListCustomText },
   { path: '/Multi', component: Multi },
   { path: '/MultiList', component: MultiList },
   { path: '/ErrorMultiList', component: ErrorMultiList },

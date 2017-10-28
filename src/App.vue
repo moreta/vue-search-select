@@ -15,31 +15,21 @@
             </div>
           </div>
           <div class="item">
-            <div class="header">Basic</div>
-            <div class="menu">
-              <router-link :to="{ path: '/Basic' }" class="item">Basic</router-link>
-              <router-link :to="{ path: '/ErrorBasic' }" class="item">Error</router-link>
-              <router-link :to="{ path: '/CustomFilter' }" class="item">Custom Filter</router-link>
-            </div>
-          </div>
-          <div class="item">
-            <div class="header">List</div>
-            <div class="menu">
-              <router-link :to="{ path: '/List' }" class="item">List</router-link>
-              <router-link :to="{ path: '/CustomTextList' }" class="item">Custom Text List</router-link>
-            </div>
-          </div>
-          <div class="item">
             <div class="header">Multi</div>
             <div class="menu">
               <router-link :to="{ path: '/Multi' }" class="item">Multi</router-link>
+              <router-link :to="{ path: '/MultiList' }" class="item">Multi List</router-link>
+              <router-link :to="{ path: '/ErrorMultiList' }" class="item">Error</router-link>
             </div>
           </div>
           <div class="item">
-            <div class="header">Multi List</div>
+            <div class="header">Basic</div>
             <div class="menu">
-              <router-link :to="{ path: '/MultiList' }" class="item">Multi List</router-link>
-              <router-link :to="{ path: '/ErrorMultiList' }" class="item">Error</router-link>
+              <router-link :to="{ path: '/Basic' }" class="item">Basic</router-link>
+              <router-link :to="{ path: '/ErrorBasic' }" class="item">Basic Error</router-link>
+              <router-link :to="{ path: '/CustomFilter' }" class="item">Basic Custom Filter</router-link>
+              <router-link :to="{ path: '/List' }" class="item">List</router-link>
+              <router-link :to="{ path: '/ListCustomText' }" class="item">List Custom Text</router-link>
             </div>
           </div>
         </div>
