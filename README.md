@@ -32,6 +32,7 @@ A Vue.js search select component.
 + emit searchText(text on input field) with @searchchange event #37
   + this useful for ajax search (see ModelAjax.vue sample)
 + ModelListSelect reset bug fix #46
++ select option open when cursor focused #42 
 
 
 # Demo
