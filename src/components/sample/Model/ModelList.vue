@@ -14,11 +14,14 @@
                              option-value="code"
                              option-text="name"
                              :custom-text="codeAndNameAndDesc"
-                             placeholder="select item">
+                             placeholder="select item"
+                             @searchchange="printSearchText">
           </model-list-select>
         </div>
       </div>
       <div class="flex-result">
+        <h4>input text(searchText)</h4>
+        <p>{{searchText}}</p>
         <table class="ui celled table">
           <thead>
           <tr>
@@ -92,6 +95,7 @@
           name: '',
           desc: ''
         },
+        searchText: '',
         options2: [
           { code: '01', name: 'aa', desc: 'desc01' },
           { code: '02', name: 'ab', desc: 'desc02' },
@@ -120,6 +124,9 @@
       selectOption2 () {
         // select option from parent component
         this.stringItem = this.options[0].code
+      },
+      printSearchText (searchText) {
+        this.searchText = searchText
       }
     },
     components: {

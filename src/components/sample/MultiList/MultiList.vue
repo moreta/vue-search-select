@@ -14,12 +14,15 @@
                            :custom-text="codeAndNameAndDesc"
                            :selected-items="items"
                            placeholder="select item"
-                           @select="onSelect">
+                           @select="onSelect"
+                           @searchchange="printSearchText">
         </multi-list-select>
       </div>
     </div>
     <div class="flex-result">
       <div>
+        <h4>input text(searchText)</h4>
+        <p>{{searchText}}</p>
         <h4>Last selected Item</h4>
         <table class="ui celled table">
           <thead>
@@ -80,7 +83,8 @@
           { code: '12', name: 'capitalize case', desc: 'Capitalize case' + ' - ' + 'Testcase' }
         ],
         items: [],
-        lastSelectItem: {}
+        lastSelectItem: {},
+        searchText: ''
       }
     },
     methods: {
@@ -96,6 +100,9 @@
       },
       selectItem () {
         this.items = _.unionWith(this.items, [this.someList[0]], _.isEqual)
+      },
+      printSearchText (searchText) {
+        this.searchText = searchText
       }
     },
     components: {

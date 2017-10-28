@@ -7,6 +7,14 @@
       <div class="flex-menu">
         <div class="ui vertical menu">
           <div class="item">
+            <div class="header">Model (value by v-model)</div>
+            <div class="menu">
+              <router-link :to="{ path: '/Model' }" class="item">Model</router-link>
+              <router-link :to="{ path: '/ModelList' }" class="item">ModelList</router-link>
+              <router-link :to="{ path: '/ModelAjax' }" class="item">ModelAjax</router-link>
+            </div>
+          </div>
+          <div class="item">
             <div class="header">Basic</div>
             <div class="menu">
               <router-link :to="{ path: '/Basic' }" class="item">Basic</router-link>
@@ -32,13 +40,6 @@
             <div class="menu">
               <router-link :to="{ path: '/MultiList' }" class="item">Multi List</router-link>
               <router-link :to="{ path: '/ErrorMultiList' }" class="item">Error</router-link>
-            </div>
-          </div>
-          <div class="item">
-            <div class="header">Model</div>
-            <div class="menu">
-              <router-link :to="{ path: '/Model' }" class="item">Model</router-link>
-              <router-link :to="{ path: '/ModelList' }" class="item">ModelList</router-link>
             </div>
           </div>
         </div>

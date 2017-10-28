@@ -12,6 +12,7 @@ import MultiList from './components/sample/MultiList/MultiList.vue'
 import ErrorMultiList from './components/sample/MultiList/ErrorMultiList.vue'
 import Model from './components/sample/Model/Model.vue'
 import ModelList from './components/sample/Model/ModelList.vue'
+import ModelAjax from './components/sample/Model/ModelAjax.vue'
 
 Vue.use(VueRouter)
 Vue.config.devtools = true
@@ -30,7 +31,8 @@ const routes = [
   { path: '/MultiList', component: MultiList },
   { path: '/ErrorMultiList', component: ErrorMultiList },
   { path: '/Model', component: Model },
-  { path: '/ModelList', component: ModelList }
+  { path: '/ModelList', component: ModelList },
+  { path: '/ModelAjax', component: ModelAjax }
 ]
 const router = new VueRouter({
   routes // short for routes: routes

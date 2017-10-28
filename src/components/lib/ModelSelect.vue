@@ -39,10 +39,10 @@
 
 <script>
   import common from './common'
-  import commonMixin from './commonMixin'
+  import { baseMixin, commonMixin } from './mixins'
   
   export default {
-    mixins: [commonMixin],
+    mixins: [baseMixin, commonMixin],
     props: {
       options: {
         type: Array
@@ -57,11 +57,6 @@
         searchText: '',
         mousedownState: false, // mousedown on option menu
         pointer: 0
-      }
-    },
-    watch: {
-      filteredOptions () {
-        this.pointerAdjust()
       }
     },
     computed: {

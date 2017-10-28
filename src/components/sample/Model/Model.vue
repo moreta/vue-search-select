@@ -12,11 +12,14 @@
         <div>
           <model-select :options="options"
                         v-model="item"
-                        placeholder="select item">
+                        placeholder="select item"
+                        @searchchange="printSearchText">
           </model-select>
         </div>
       </div>
       <div class="flex-result">
+        <h4>input text(searchText)</h4>
+        <p>{{searchText}}</p>
         <table class="ui celled table">
           <thead>
           <tr>
@@ -131,6 +134,7 @@
           value: '',
           text: ''
         },
+        searchText: '',
         options2: [
           { value: '1', text: 'aa' + ' - ' + '1' },
           { value: '2', text: 'ab' + ' - ' + '2' },
@@ -184,6 +188,9 @@
       selectOption3 () {
         // select option from parent component
         this.item3 = this.options3[0].value
+      },
+      printSearchText (searchText) {
+        this.searchText = searchText
       }
     },
     components: {

@@ -1,7 +1,7 @@
 <script>
   /* wrap basic component */
   import ModelSelect from './ModelSelect.vue'
-  import commonMixin from './commonMixin'
+  import { commonMixin } from './mixins'
   
   export default {
     mixins: [commonMixin],
@@ -15,7 +15,8 @@
           filterPredicate: this.filterPredicate
         },
         on: {
-          input: this.onInput
+          input: this.onInput,
+          searchchange: (searchText) => this.$emit('searchchange', searchText)
         }
       })
     },
