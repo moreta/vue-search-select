@@ -3,7 +3,7 @@
   /* event : select */
   import _ from 'lodash'
   import MultiSelect from './MultiSelect.vue'
-  import commonMixin from './commonMixin'
+  import { commonMixin } from './mixins'
   
   export default {
     mixins: [commonMixin],
@@ -17,7 +17,8 @@
           filterPredicate: this.filterPredicate
         },
         on: {
-          select: this.onSelect
+          select: this.onSelect,
+          searchchange: (searchText) => this.$emit('searchchange', searchText)
         }
       })
     },
@@ -63,7 +64,7 @@
         }
       },
       onSelect (options, option) {
-        if (_.isEmpty(options)) {
+        if (Object.keys(option).length === 0 && option.constructor === Object) {
           this.$emit('select', options, option)
         } else {
           const items = this.list.filter((e, i) => {

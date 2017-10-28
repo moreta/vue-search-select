@@ -1,13 +1,15 @@
 <template>
   <div class="ui fluid search selection dropdown"
        :class="{ 'active visible':showMenu, 'error': isError }"
-       @click="openOptions">
+       @click="openOptions"
+       @focus="openOptions">
     <i class="dropdown icon"></i>
     <input class="search"
            autocomplete="off"
            tabindex="0"
            v-model="searchText"
            ref="input"
+           @focus.prevent="openOptions"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
@@ -39,10 +41,10 @@
 
 <script>
   import common from './common'
-  import commonMixin from './commonMixin'
+  import { baseMixin, commonMixin } from './mixins'
   
   export default {
-    mixins: [commonMixin],
+    mixins: [baseMixin, commonMixin],
     props: {
       options: {
         type: Array
@@ -57,11 +59,6 @@
         searchText: '',
         mousedownState: false, // mousedown on option menu
         pointer: 0
-      }
-    },
-    watch: {
-      filteredOptions () {
-        this.pointerAdjust()
       }
     },
     computed: {
@@ -159,7 +156,11 @@
         if (typeof this.value === 'object') {
           this.$emit('input', option)
         } else {
-          this.$emit('input', option.value)
+          if (option.value) {
+            this.$emit('input', option.value)
+          } else {
+            this.$emit('input', '')
+          }
         }
       }
     }
