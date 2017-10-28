@@ -9,6 +9,13 @@ A Vue.js search select component.
 
 + Support Vue.js 2.x
 + Five Select Component
+  + ModelSelect (from v2.3.8)
+    + similar BasicSelect
+    + value set through v-model
+    + value can be string or object
+      + If you pass string, onInput set by string
+  + ModelListSelect (from v2.3.8)
+    + ListSelect for ModelSelect
   + BasicSelect
     + simple search select
   + ListSelect
@@ -18,18 +25,13 @@ A Vue.js search select component.
     + search select for multiple select
   + MultiListSelect
     + ListSelect for MultiSelect
-  + ModelSelect (from v2.3.8)
-    + similar BasicSelect
-    + value set through v-model
-    + value can be string or object
-      + If you pass string, onInput set by string
-  + ModelListSelect (from v2.3.8)
-    + ListSelect for ModelSelect
 
-### Updated 2.3.8
 
-+ merge PR #31, #32, #33, #34
-+ Add ModelSelect, ModelListSelect
+### Updated 2.4.0
+
++ emit searchText(text on input field) with @searchchange event #37
+  + this useful for ajax search (see ModelAjax.vue sample)
++ ModelListSelect reset bug fix #46
 
 
 # Demo
@@ -58,9 +60,78 @@ yarn add vue-search-select@alpha
 yarn add vue-search-select@2.3.8-alpha.1
 ```
 
-## BasicSelect Component Example
+# Sample code
 
-See More Samples : src/components/sample
+See All Samples : src/components/sample
+
+## ModelSelect Component Example
+
+```html
+<template>
+        <!-- object value -->
+        <model-select :options="options"
+                                v-model="item"
+                                placeholder="select item">
+         </model-select>
+
+         <!-- string value -->
+         <model-select :options="options2"
+                                 v-model="item2"
+                                 placeholder="select item2">
+         </model-select>
+</template>
+
+<script>
+  import { ModelSelect } from 'vue-search-select'
+
+  export default {
+    data () {
+      return {
+        options: [
+          { value: '1', text: 'aa' + ' - ' + '1' },
+          { value: '2', text: 'ab' + ' - ' + '2' },
+          { value: '3', text: 'bc' + ' - ' + '3' },
+          { value: '4', text: 'cd' + ' - ' + '4' },
+          { value: '5', text: 'de' + ' - ' + '5' }
+        ],
+        item: {
+          value: '',
+          text: ''
+        },
+        options2: [
+          { value: '1', text: 'aa' + ' - ' + '1' },
+          { value: '2', text: 'ab' + ' - ' + '2' },
+          { value: '3', text: 'bc' + ' - ' + '3' },
+          { value: '4', text: 'cd' + ' - ' + '4' },
+          { value: '5', text: 'de' + ' - ' + '5' }
+        ],
+        item2: ''
+      }
+    },
+    methods: {
+      reset () {
+        this.item = {}
+      },
+      selectOption () {
+        // select option from parent component
+        this.item = this.options[0]
+      },
+      reset2 () {
+        this.item2 = ''
+      },
+      selectOption2 () {
+        // select option from parent component
+        this.item2 = this.options2[0].value
+      }
+    },
+    components: {
+      ModelSelect
+    }
+  }
+</script>
+```
+
+## BasicSelect Component Example
 
 ```html
 <template>
@@ -161,77 +232,21 @@ See More Samples : src/components/sample
 </script>
 ```
 
-## ModelSelect Component Example
-
-```html
-<template>
-        <!-- object value -->
-        <model-select :options="options"
-                                v-model="item"
-                                placeholder="select item">
-         </model-select>
-
-         <!-- string value -->
-         <model-select :options="options2"
-                                 v-model="item2"
-                                 placeholder="select item2">
-         </model-select>
-</template>
-
-<script>
-  import { ModelSelect } from 'vue-search-select'
-
-  export default {
-    data () {
-      return {
-        options: [
-          { value: '1', text: 'aa' + ' - ' + '1' },
-          { value: '2', text: 'ab' + ' - ' + '2' },
-          { value: '3', text: 'bc' + ' - ' + '3' },
-          { value: '4', text: 'cd' + ' - ' + '4' },
-          { value: '5', text: 'de' + ' - ' + '5' }
-        ],
-        item: {
-          value: '',
-          text: ''
-        },
-        options2: [
-          { value: '1', text: 'aa' + ' - ' + '1' },
-          { value: '2', text: 'ab' + ' - ' + '2' },
-          { value: '3', text: 'bc' + ' - ' + '3' },
-          { value: '4', text: 'cd' + ' - ' + '4' },
-          { value: '5', text: 'de' + ' - ' + '5' }
-        ],
-        item2: ''
-      }
-    },
-    methods: {
-      reset () {
-        this.item = {}
-      },
-      selectOption () {
-        // select option from parent component
-        this.item = this.options[0]
-      },
-      reset2 () {
-        this.item2 = ''
-      },
-      selectOption2 () {
-        // select option from parent component
-        this.item2 = this.options2[0].value
-      }
-    },
-    components: {
-      ModelSelect
-    }
-  }
-</script>
-```
-
 # Props
 
 | Component       | Name            | Type     | Default                    | Description                |
 |-----------------|-----------------|----------|----------------------------|----------------------------|
+| ModelSelect     | options         | Array    |                            | option list                |
+|                 | isError         | Boolean  | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+| ModelListSelect | list            | Array    |                            | option list                |
+|                 | optionValue     | String   |                            | value key                  |
+|                 | optionText      | String   |                            | text key                   |
+|                 | customText      | Function |                            | custom text function      |
+|                 | isError         | Boolean  | false                      | error style                |
+|                 | placeholder     | String   | ''                         |                            |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 | BasicSelect     | options         | Array    |                            | option list                |
 |                 | selectedOption  | Object   | { value: '', text: '' }    | default option             |
 |                 | isError         | Boolean  | false                      | error style                |
@@ -240,7 +255,7 @@ See More Samples : src/components/sample
 | ListSelect      | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
 |                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custome text function      |
+|                 | customText      | Function |                            | custom text function      |
 |                 | selectedItem    | Object   |                            | default option(raw object) |
 |                 | isError         | Boolean  | false                      | error style                |
 |                 | placeholder     | String   | ''                         |                            |
@@ -253,22 +268,12 @@ See More Samples : src/components/sample
 | MultiListSelect | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
 |                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custome text function      |
+|                 | customText      | Function |                            | custom text function      |
 |                 | selectedItems   | Array    |                            | default option(raw object) |
 |                 | isError         | String   | false                      | error style                |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-| ModelSelect     | options         | Array    |                            | option list                |
-|                 | isError         | Boolean  | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-| ModelListSelect | list            | Array    |                            | option list                |
-|                 | optionValue     | String   |                            | value key                  |
-|                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custome text function      |
-|                 | isError         | Boolean  | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+
 
 # Run examples
 
