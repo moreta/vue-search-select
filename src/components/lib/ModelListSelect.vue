@@ -33,8 +33,9 @@
       customText: {
         type: Function
       },
+      /* null also object */
       value: {
-        type: [String, Object]
+        type: [String, Number, Object]
       }
     },
     computed: {
@@ -45,8 +46,14 @@
       },
       innerValue () {
         if (typeof this.value === 'object') {
-          return { value: this.value[this.optionValue], text: this.buildText(this.value) }
+          if (this.value) {
+            return { value: this.value[this.optionValue], text: this.buildText(this.value) }
+          } else {
+            return { value: '', text: '' }
+          }
         } else if (typeof this.value === 'string') {
+          return this.value
+        } else if (typeof this.value === 'number') {
           return this.value
         }
       }
@@ -64,7 +71,9 @@
         }
       },
       onInput (option) {
-        if (typeof option === 'object') {
+        if (Object.keys(option).length === 0 && option.constructor === Object) {
+          this.$emit('input', option)
+        } else if (typeof option === 'object') {
           const item = this.list.find(e => {
             return e[this.optionValue] === option.value
           })

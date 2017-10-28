@@ -64,7 +64,7 @@
         }
       },
       onSelect (options, option) {
-        if (_.isEmpty(options)) {
+        if (Object.keys(option).length === 0 && option.constructor === Object) {
           this.$emit('select', options, option)
         } else {
           const items = this.list.filter((e, i) => {

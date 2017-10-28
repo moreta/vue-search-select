@@ -1,6 +1,5 @@
 <script>
   /* wrap basic component */
-  import _ from 'lodash'
   import BasicSelect from './BasicSelect.vue'
   import { commonMixin } from './mixins'
   
@@ -65,7 +64,7 @@
         }
       },
       onSelect (option) {
-        if (_.isEmpty(option)) {
+        if (Object.keys(option).length === 0 && option.constructor === Object) {
           this.$emit('select', option)
         } else {
           const item = this.list.find((e, i) => {

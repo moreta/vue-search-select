@@ -47,7 +47,7 @@
       </div>
       <div class="flex-result">
         <h4>input text(searchText)</h4>
-        <p>{{searchText}}</p>
+        <p>{{searchText2}}</p>
         <table class="ui celled table">
           <thead>
           <tr>
@@ -81,9 +81,10 @@
       return {
         countries: [],
         selectedCountry: {},
+        searchText: '',
         animations: [],
         selectedAnimation: {},
-        searchText: ''
+        searchText2: ''
       }
     },
     created () {
@@ -91,12 +92,13 @@
     },
     methods: {
       searchCountry (searchText) {
+        this.searchText = searchText
         ajaxFindCountry(searchText).then(response => {
           this.countries = response
         })
       },
       printSearchText (searchText) {
-        this.searchText = searchText
+        this.searchText2 = searchText
       },
       /**
        * api : https://qiita.com/AKB428/items/64938febfd4dcf6ea698

@@ -154,7 +154,11 @@
         if (typeof this.value === 'object') {
           this.$emit('input', option)
         } else {
-          this.$emit('input', option.value)
+          if (option.value) {
+            this.$emit('input', option.value)
+          } else {
+            this.$emit('input', '')
+          }
         }
       }
     }
