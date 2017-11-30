@@ -104,7 +104,7 @@
         }
       },
       optionValue () {
-        if (typeof this.value === 'object') {
+        if (typeof this.value === 'object' && this.value !== null) {
           return this.value.value
         } else {
           return this.value
