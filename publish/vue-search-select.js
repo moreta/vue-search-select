@@ -18788,7 +18788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    selectItem: function selectItem(option) {
 	      this.searchText = '';
 	      this.closeOptions();
-	      if ((0, _typeof3.default)(this.value) === 'object') {
+	      if ((0, _typeof3.default)(this.value) === 'object' && this.value) {
 	        this.$emit('input', option);
 	      } else {
 	        if (option.value) {

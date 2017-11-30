@@ -153,7 +153,7 @@
       selectItem (option) {
         this.searchText = ''
         this.closeOptions()
-        if (typeof this.value === 'object') {
+        if (typeof this.value === 'object' && this.value) {
           this.$emit('input', option)
         } else {
           if (option.value) {
