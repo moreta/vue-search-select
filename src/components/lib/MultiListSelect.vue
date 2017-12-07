@@ -31,6 +31,9 @@
       optionText: {
         type: String
       },
+      optionTextTag: {
+        type: String
+      },
       customText: {
         type: Function
       },
@@ -41,12 +44,20 @@
     computed: {
       options () {
         return this.list.map((e, i) => {
-          return { value: e[this.optionValue], text: this.buildText(e) }
+          return {
+            value: e[this.optionValue],
+            text: this.buildText(e),
+            textTag: this.buildTextTag(e)
+          }
         })
       },
       items () {
         return this.selectedItems.map((e, i) => {
-          return { value: e[this.optionValue], text: this.buildText(e) }
+          return {
+            value: e[this.optionValue],
+            text: this.buildText(e),
+            textTag: this.buildTextTag(e)
+          }
         })
       }
     },
@@ -61,6 +72,9 @@
         } else {
           return ''
         }
+      },
+      buildTextTag (e) {
+        return e[this.optionTextTag] === undefined ? this.buildText(e) : e[this.optionTextTag]
       },
       onSelect (options, option) {
         if (_.isEmpty(options)) {
