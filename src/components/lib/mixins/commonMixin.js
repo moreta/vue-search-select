@@ -1,6 +1,6 @@
-import common from './common'
+import { escapedRegExp } from '../utils'
 
-// define a mixin object
+/* mixin for all */
 export default {
   props: {
     isError: {
@@ -14,7 +14,7 @@ export default {
     filterPredicate: {
       type: Function,
       default: (text, inputText) => {
-        return text.match(common.escapedRegExp(inputText))
+        return text.match(escapedRegExp(inputText))
       }
     }
   }

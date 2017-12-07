@@ -1,6 +1,6 @@
 {
   "name": "vue-search-select",
-  "version": "2.3.12",
+  "version": "2.4.0",
   "description": "A Vue.js search select form component",
   "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
+    "axios": "^0.17.0",
     "babel-core": "^6.0.0",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.0.0",

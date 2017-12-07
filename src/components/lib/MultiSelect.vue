@@ -1,7 +1,8 @@
 <template>
   <div class="ui fluid multiple search selection dropdown"
        :class="{ 'active visible':showMenu, 'error': isError }"
-       @click="openOptions">
+       @click="openOptions"
+       @focus="openOptions">
     <i class="dropdown icon"></i>
     <template v-for="(option, idx) in selectedOptions">
       <a class="ui label transition visible"
@@ -15,6 +16,7 @@
            v-model="searchText"
            ref="input"
            :style="inputWidth"
+           @focus.prevent="openOptions"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
@@ -49,10 +51,10 @@
 <script>
   import _ from 'lodash'
   import common from './common'
-  import commonMixin from './commonMixin'
+  import { baseMixin, commonMixin } from './mixins'
   
   export default {
-    mixins: [commonMixin],
+    mixins: [baseMixin, commonMixin],
     props: {
       options: {
         type: Array
@@ -71,11 +73,6 @@
         searchText: '',
         mousedownState: false, // mousedown on option menu
         pointer: 0
-      }
-    },
-    watch: {
-      filteredOptions () {
-        this.pointerAdjust()
       }
     },
     computed: {
