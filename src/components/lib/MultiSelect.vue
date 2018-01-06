@@ -7,7 +7,7 @@
     <template v-for="(option, idx) in selectedOptions">
       <a class="ui label transition visible"
          style="display: inline-block !important;">
-        {{option.text}}<i class="delete icon" @click="deleteItem(option)"></i>
+        {{option.textTag}}<i class="delete icon" @click="deleteItem(option)"></i>
       </a>
     </template>
     <input class="search"

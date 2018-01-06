@@ -234,47 +234,46 @@ See All Samples : src/components/sample
 ```
 
 # Props
-
-| Component       | Name            | Type     | Default                    | Description                |
-|-----------------|-----------------|----------|----------------------------|----------------------------|
-| ModelSelect     | options         | Array    |                            | option list                |
-|                 | isError         | Boolean  | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-| ModelListSelect | list            | Array    |                            | option list                |
-|                 | optionValue     | String   |                            | value key                  |
-|                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custom text function      |
-|                 | isError         | Boolean  | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-| BasicSelect     | options         | Array    |                            | option list                |
-|                 | selectedOption  | Object   | { value: '', text: '' }    | default option             |
-|                 | isError         | Boolean  | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-| ListSelect      | list            | Array    |                            | option list                |
-|                 | optionValue     | String   |                            | value key                  |
-|                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custom text function      |
-|                 | selectedItem    | Object   |                            | default option(raw object) |
-|                 | isError         | Boolean  | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-| MultiSelect     | options         | Array    |                            | option list                |
-|                 | selectedOptions | Array    |                            | default option list        |
-|                 | isError         | Boolean  | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-| MultiListSelect | list            | Array    |                            | option list                |
-|                 | optionValue     | String   |                            | value key                  |
-|                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custom text function      |
-|                 | selectedItems   | Array    |                            | default option(raw object) |
-|                 | isError         | String   | false                      | error style                |
-|                 | placeholder     | String   | ''                         |                            |
-|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
-
+| Component       | Name            | Type     | Default                    | Description                       |
+|-----------------|-----------------|----------|----------------------------|---------------------------------  |
+| BasicSelect     | options         | Array    |                            | option list                       |
+|                 | selectedOption  | Object   | { value: '', text: '' }    | default option                    |
+|                 | isError         | Boolean  | false                      | error style                       |
+|                 | placeholder     | String   | ''                         |                                   |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                                   |
+| ListSelect      | list            | Array    |                            | option list                       |
+|                 | optionValue     | String   |                            | value key                         |
+|                 | optionText      | String   |                            | text key                          |
+|                 | customText      | Function |                            | custome text function             |
+|                 | selectedItem    | Object   |                            | default option(raw object)        |
+|                 | isError         | Boolean  | false                      | error style                       |
+|                 | placeholder     | String   | ''                         |                                   |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                                   |
+| MultiSelect     | options         | Array    |                            | option list                       |
+|                 | selectedOptions | Array    |                            | default option list               |
+|                 | isError         | Boolean  | false                      | error style                       |
+|                 | placeholder     | String   | ''                         |                                   |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                                   |
+| MultiListSelect | list            | Array    |                            | option list                       |
+|                 | optionValue     | String   |                            | value key                         |
+|                 | optionText      | String   |                            | text key                          |
+|                 | optionTextTag   | String   |                            | text will be displayed in the tag |
+|                 | customText      | Function |                            | custome text function             |
+|                 | selectedItems   | Array    |                            | default option(raw object)        |
+|                 | isError         | String   | false                      | error style                       |
+|                 | placeholder     | String   | ''                         |                                   |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                                   |
+| ModelSelect     | options         | Array    |                            | option list                       |
+|                 | isError         | Boolean  | false                      | error style                       |
+|                 | placeholder     | String   | ''                         |                                   |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                                   |
+| ModelListSelect | list            | Array    |                            | option list                       |
+|                 | optionValue     | String   |                            | value key                         |
+|                 | optionText      | String   |                            | text key                          |
+|                 | customText      | Function |                            | custome text function             |
+|                 | isError         | Boolean  | false                      | error style                       |
+|                 | placeholder     | String   | ''                         |                                   |
+|                 | filterPredicate | String   | new RegExp(inputText, 'i') |                                   |
 
 # Run examples
 
