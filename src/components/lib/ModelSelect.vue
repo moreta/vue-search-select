@@ -10,6 +10,7 @@
            v-model="searchText"
            ref="input"
            @focus.prevent="openOptions"
+           @keyup.esc="closeOptions"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"

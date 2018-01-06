@@ -17,14 +17,13 @@
            ref="input"
            :style="inputWidth"
            @focus.prevent="openOptions"
+           @keyup.esc="closeOptions"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
            @keydown.enter.prevent=""
            @keyup.enter.prevent="enterItem"
            @keydown.delete="deleteTextOrLastItem"
-           @keydown.esc="closeOptions"
-           @keydown.anyKeyCode="openOptions"
     />
     <div class="text"
          :class="textClass">{{inputText}}
