@@ -1,7 +1,7 @@
 <script>
   /* wrap basic component */
   /* event : select */
-  import _ from 'lodash'
+  import find from 'lodash/find'
   import MultiSelect from './MultiSelect.vue'
   import { commonMixin } from './mixins'
   
@@ -75,7 +75,7 @@
               return e[this.optionValue] === o.value
             })
           })
-          const item = _.find(this.list, [this.optionValue, option.value])
+          const item = find(this.list, [this.optionValue, option.value])
           this.$emit('select', items, item)
         }
       }

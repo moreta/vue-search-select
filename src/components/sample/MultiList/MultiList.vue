@@ -65,7 +65,8 @@
 </template>
 
 <script>
-  import _ from 'lodash'
+  import unionWith from 'lodash/unionWith'
+  import isEqual from 'lodash/isEqual'
   import { MultiListSelect } from '../../lib'
   
   export default {
@@ -99,7 +100,7 @@
         this.items = [] // reset
       },
       selectItem () {
-        this.items = _.unionWith(this.items, [this.someList[0]], _.isEqual)
+        this.items = unionWith(this.items, [this.someList[0]], isEqual)
       },
       printSearchText (searchText) {
         this.searchText = searchText

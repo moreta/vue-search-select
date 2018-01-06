@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import _ from 'lodash'
+  import isEmpty from 'lodash/isEmpty'
   import { BasicSelect } from '../../lib'
   
   export default {
@@ -65,7 +65,7 @@
     computed: {
       // a computed getter
       isError () {
-        return _.isEmpty(this.item.value)
+        return isEmpty(this.item.value)
       }
     },
     methods: {

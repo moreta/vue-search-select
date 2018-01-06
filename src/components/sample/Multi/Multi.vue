@@ -55,7 +55,8 @@
 </template>
 
 <script>
-  import _ from 'lodash'
+  import unionWith from 'lodash/unionWith'
+  import isEqual from 'lodash/isEqual'
   import { MultiSelect } from '../../lib'
   
   export default {
@@ -94,7 +95,7 @@
       },
       // select option from parent component
       selectOption () {
-        this.items = _.unionWith(this.items, [this.options[0]], _.isEqual)
+        this.items = unionWith(this.items, [this.options[0]], isEqual)
       }
     },
     components: {
