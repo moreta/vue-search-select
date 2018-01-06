@@ -1,6 +1,6 @@
 <template>
   <div class="ui fluid multiple search selection dropdown"
-       :class="{ 'active visible':showMenu, 'error': isError }"
+       :class="{ 'active visible':showMenu, 'error': isError, 'disabled': isDisabled }"
        @click="openOptions"
        @focus="openOptions">
     <i class="dropdown icon"></i>
@@ -68,9 +68,6 @@
       cleanSearch: {
         type: Boolean,
         default: true
-      },
-      placeholder: {
-        type: String
       }
     },
     data () {

@@ -27,13 +27,9 @@ A Vue.js search select component.
     + ListSelect for MultiSelect
 
 
-### Updated 2.4.0
+### Release Notes 
 
-+ emit searchText(text on input field) with @searchchange event #37
-  + this useful for ajax search (see ModelAjax.vue sample)
-+ ModelListSelect reset bug fix #46
-+ select option open when cursor focused #42 
-
+<https://github.com/moreta/vue-search-select/releases>
 
 # Demo
 
@@ -239,39 +235,45 @@ See All Samples : src/components/sample
 |-----------------|-----------------|----------|----------------------------|----------------------------|
 | ModelSelect     | options         | Array    |                            | option list                |
 |                 | isError         | Boolean  | false                      | error style                |
+|                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 | ModelListSelect | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
 |                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custom text function      |
+|                 | customText      | Function |                            | custom text function       |
 |                 | isError         | Boolean  | false                      | error style                |
+|                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 | BasicSelect     | options         | Array    |                            | option list                |
 |                 | selectedOption  | Object   | { value: '', text: '' }    | default option             |
 |                 | isError         | Boolean  | false                      | error style                |
+|                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 | ListSelect      | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
 |                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custom text function      |
+|                 | customText      | Function |                            | custom text function       |
 |                 | selectedItem    | Object   |                            | default option(raw object) |
 |                 | isError         | Boolean  | false                      | error style                |
+|                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 | MultiSelect     | options         | Array    |                            | option list                |
 |                 | selectedOptions | Array    |                            | default option list        |
 |                 | isError         | Boolean  | false                      | error style                |
+|                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 | MultiListSelect | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
 |                 | optionText      | String   |                            | text key                   |
-|                 | customText      | Function |                            | custom text function      |
+|                 | customText      | Function |                            | custom text function       |
 |                 | selectedItems   | Array    |                            | default option(raw object) |
 |                 | isError         | String   | false                      | error style                |
+|                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 

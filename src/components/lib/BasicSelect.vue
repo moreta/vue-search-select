@@ -1,6 +1,6 @@
 <template>
   <div class="ui fluid search selection dropdown"
-       :class="{ 'active visible':showMenu, 'error': isError }"
+       :class="{ 'active visible':showMenu, 'error': isError, 'disabled': isDisabled }"
        @click="openOptions"
        @focus="openOptions">
     <i class="dropdown icon"></i>
@@ -54,9 +54,6 @@
       selectedOption: {
         type: Object,
         default: () => { return { value: '', text: '' } }
-      },
-      placeholder: {
-        type: String
       }
     },
     data () {

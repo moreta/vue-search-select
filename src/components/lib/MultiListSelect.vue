@@ -13,6 +13,7 @@
           options: this.options,
           selectedOptions: this.items,
           isError: this.isError,
+          isDisabled: this.isDisabled,
           placeholder: this.placeholder,
           filterPredicate: this.filterPredicate
         },
@@ -37,9 +38,6 @@
       },
       selectedItems: {
         type: Array
-      },
-      placeholder: {
-        type: String
       }
     },
     computed: {

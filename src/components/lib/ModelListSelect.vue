@@ -11,6 +11,7 @@
           options: this.options,
           value: this.innerValue,
           isError: this.isError,
+          isDisabled: this.isDisabled,
           placeholder: this.placeholder,
           filterPredicate: this.filterPredicate
         },
@@ -36,9 +37,6 @@
       /* null also object */
       value: {
         type: [String, Number, Object]
-      },
-      placeholder: {
-        type: String
       }
     },
     computed: {
