@@ -36,6 +36,9 @@
       /* null also object */
       value: {
         type: [String, Number, Object]
+      },
+      placeholder: {
+        type: String
       }
     },
     computed: {

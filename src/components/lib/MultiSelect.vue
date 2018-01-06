@@ -65,6 +65,9 @@
       cleanSearch: {
         type: Boolean,
         default: true
+      },
+      placeholder: {
+        type: String
       }
     },
     data () {

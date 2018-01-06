@@ -35,6 +35,9 @@
       },
       selectedItem: {
         type: Object
+      },
+      placeholder: {
+        type: String
       }
     },
     computed: {

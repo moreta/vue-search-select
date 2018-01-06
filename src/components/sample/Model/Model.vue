@@ -12,7 +12,7 @@
         <div>
           <model-select :options="options"
                         v-model="item"
-                        placeholder="select item"
+                        placeholder="placeholder text"
                         @searchchange="printSearchText">
           </model-select>
         </div>
@@ -48,7 +48,7 @@
         <div>
           <model-select :options="options2"
                         v-model="item2"
-                        placeholder="select item2">
+                        placeholder="placeholder text">
           </model-select>
         </div>
       </div>
@@ -79,7 +79,7 @@
         <div>
           <model-select :options="options3"
                         v-model="item3"
-                        placeholder="select item3">
+                        placeholder="placeholder text">
           </model-select>
         </div>
       </div>

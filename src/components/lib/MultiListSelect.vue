@@ -37,6 +37,9 @@
       },
       selectedItems: {
         type: Array
+      },
+      placeholder: {
+        type: String
       }
     },
     computed: {

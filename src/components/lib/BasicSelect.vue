@@ -53,6 +53,9 @@
       selectedOption: {
         type: Object,
         default: () => { return { value: '', text: '' } }
+      },
+      placeholder: {
+        type: String
       }
     },
     data () {

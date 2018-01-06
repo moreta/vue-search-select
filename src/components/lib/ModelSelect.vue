@@ -51,6 +51,9 @@
       },
       value: {
         type: [String, Number, Object]
+      },
+      placeholder: {
+        type: String
       }
     },
     data () {
@@ -66,11 +69,12 @@
         if (this.searchText) {
           return ''
         } else {
+          let text = this.placeholder
           if (this.selectedOption) {
-            return this.selectedOption.text
+            text = this.selectedOption.text
           }
+          return text
         }
-        return ''
       },
       textClass () {
         if (!this.selectedOption && this.placeholder) {
