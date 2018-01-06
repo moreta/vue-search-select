@@ -8,11 +8,10 @@
         <button type="button" @click="selectOption" class="btn btn-info btn-sm">option select from parent</button>
       </div>
       <div>
-        <select-search :options="options"
-                       :selected-option="item"
-                       @select="onSelect"
-                       :is-error="isError">
-        </select-search>
+        <model-select :options="options"
+                      v-model="item"
+                      placeholder="placeholder text">
+        </model-select>
       </div>
     </div>
     <div class="flex-result">
@@ -20,23 +19,19 @@
         <thead>
         <tr>
           <th>value</th>
-          <th>text</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <td>{{item.value}}</td>
-          <td>{{item.text}}</td>
+          <td>{{item}}</td>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
 </template>
-
 <script>
-  import isEmpty from 'lodash/isEmpty'
-  import { BasicSelect } from '../../lib'
+  import { ModelSelect } from '../../lib'
   
   export default {
     data () {
@@ -48,40 +43,36 @@
           { value: '4', text: 'cd' + ' - ' + '4' },
           { value: '5', text: 'de' + ' - ' + '5' },
           { value: '6', text: 'ef' + ' - ' + '6' },
-          { value: '7', text: 'ef' + ' - ' + '7' },
-          { value: '8', text: 'ef' + ' - ' + '8' },
-          { value: '9', text: 'ef' + ' - ' + '9' },
           { value: '10', text: 'ef' + ' - ' + '10' },
           { value: '11', text: 'ef' + ' - ' + '11' },
-          { value: '12', text: 'ef' + ' - ' + '12' }
+          { value: '12', text: 'ef' + ' - ' + '12' },
+          { value: '13', text: 'down case' + ' - ' + 'testcase' },
+          { value: '14', text: 'camel case' + ' - ' + 'testCase' },
+          { value: '15', text: 'Capitalize case' + ' - ' + 'Testcase' },
+          { value: '16', text: 'more a' + ' - ' + '1' },
+          { value: '17', text: 'more a' + ' - ' + '2' },
+          { value: '18', text: 'more a' + ' - ' + '3' },
+          { value: '19', text: 'more a' + ' - ' + '4' },
+          { value: '20', text: 'more a' + ' - ' + '5' },
+          { value: '21', text: 'more a' + ' - ' + '6' },
+          { value: '22', text: 'more a' + ' - ' + '7' },
+          { value: '23', text: 'more a' + ' - ' + '8' },
+          { value: '24', text: 'more a' + ' - ' + '9' }
         ],
-        searchText: '', // If value is falsy, reset searchText & searchItem
-        item: {
-          value: '',
-          text: ''
-        }
-      }
-    },
-    computed: {
-      // a computed getter
-      isError () {
-        return isEmpty(this.item.value)
+        item: ''
       }
     },
     methods: {
-      onSelect (item) {
-        this.item = item
-      },
       reset () {
-        this.item = {}
+        this.item = ''
       },
       selectOption () {
         // select option from parent component
-        this.item = this.options[0]
+        this.item = this.options[0].value
       }
     },
     components: {
-      'select-search': BasicSelect
+      ModelSelect
     }
   }
 </script>
