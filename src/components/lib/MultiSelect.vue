@@ -1,6 +1,6 @@
 <template>
   <div class="ui fluid multiple search selection dropdown"
-       :class="{ 'active visible':showMenu, 'error': isError }"
+       :class="{ 'active visible':showMenu, 'error': isError, 'disabled': isDisabled }"
        @click="openOptions"
        @focus="openOptions">
     <i class="dropdown icon"></i>
@@ -17,14 +17,13 @@
            ref="input"
            :style="inputWidth"
            @focus.prevent="openOptions"
+           @keyup.esc="closeOptions"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
            @keydown.enter.prevent=""
            @keyup.enter.prevent="enterItem"
            @keydown.delete="deleteTextOrLastItem"
-           @keydown.esc="closeOptions"
-           @keydown.anyKeyCode="openOptions"
     />
     <div class="text"
          :class="textClass">{{inputText}}
@@ -49,7 +48,11 @@
 </template>
 
 <script>
-  import _ from 'lodash'
+  import differenceBy from 'lodash/differenceBy'
+  import last from 'lodash/last'
+  import unionWith from 'lodash/unionWith'
+  import isEqual from 'lodash/isEqual'
+  import reject from 'lodash/reject'
   import common from './common'
   import { baseMixin, commonMixin } from './mixins'
   
@@ -107,7 +110,7 @@
         }
       },
       nonSelectOptions () {
-        return _.differenceBy(this.options, this.selectedOptions, 'value')
+        return differenceBy(this.options, this.selectedOptions, 'value')
       },
       filteredOptions () {
         if (this.searchText) {
@@ -130,7 +133,7 @@
     methods: {
       deleteTextOrLastItem () {
         if (!this.searchText && this.selectedOptions.length > 0) {
-          this.deleteItem(_.last(this.selectedOptions))
+          this.deleteItem(last(this.selectedOptions))
         }
       },
       openOptions () {
@@ -165,13 +168,13 @@
         common.mousedownItem(this)
       },
       selectItem (option) {
-        const selectedOptions = _.unionWith(this.selectedOptions, [option], _.isEqual)
+        const selectedOptions = unionWith(this.selectedOptions, [option], isEqual)
         this.closeOptions()
         this.searchText = ''
         this.$emit('select', selectedOptions, option, 'insert')
       },
       deleteItem (option) {
-        const selectedOptions = _.reject(this.selectedOptions, option)
+        const selectedOptions = reject(this.selectedOptions, option)
         this.$emit('select', selectedOptions, option, 'delete')
       },
       accentsTidy (s) {

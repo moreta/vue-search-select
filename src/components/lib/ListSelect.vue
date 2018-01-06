@@ -11,6 +11,7 @@
           options: this.options,
           selectedOption: this.item,
           isError: this.isError,
+          isDisabled: this.isDisabled,
           placeholder: this.placeholder,
           filterPredicate: this.filterPredicate
         },

@@ -1,6 +1,6 @@
 <template>
   <div class="ui fluid search selection dropdown"
-       :class="{ 'active visible':showMenu, 'error': isError }"
+       :class="{ 'active visible':showMenu, 'error': isError, 'disabled': isDisabled }"
        @click="openOptions"
        @focus="openOptions">
     <i class="dropdown icon"></i>
@@ -10,6 +10,7 @@
            v-model="searchText"
            ref="input"
            @focus.prevent="openOptions"
+           @keyup.esc="closeOptions"
            @blur="blurInput"
            @keydown.up="prevItem"
            @keydown.down="nextItem"
@@ -66,11 +67,12 @@
         if (this.searchText) {
           return ''
         } else {
+          let text = this.placeholder
           if (this.selectedOption) {
-            return this.selectedOption.text
+            text = this.selectedOption.text
           }
+          return text
         }
-        return ''
       },
       textClass () {
         if (!this.selectedOption && this.placeholder) {

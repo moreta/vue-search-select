@@ -13,7 +13,7 @@
                            option-text="name"
                            :custom-text="codeAndNameAndDesc"
                            :selected-items="items"
-                           :is-error="isError"
+                           :is-disabled="isDisabled"
                            @select="onSelect">
         </multi-list-select>
       </div>
@@ -40,7 +40,8 @@
 </template>
 
 <script>
-  import _ from 'lodash'
+  import unionWith from 'lodash/unionWith'
+  import isEqual from 'lodash/isEqual'
   import { MultiListSelect } from '../../lib'
   
   export default {
@@ -59,8 +60,8 @@
     },
     computed: {
       // a computed getter
-      isError () {
-        return this.items.length === 0
+      isDisabled () {
+        return true
       }
     },
     methods: {
@@ -74,7 +75,7 @@
         this.items = [] // reset
       },
       selectItem () {
-        this.items = _.unionWith(this.items, [this.someList[0]], _.isEqual)
+        this.items = unionWith(this.items, [this.someList[0]], isEqual)
       }
     },
     components: {

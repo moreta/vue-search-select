@@ -7,6 +7,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isDisabled: {
+      type: Boolean,
+      default: false
+    },
     placeholder: {
       type: String,
       default: ''
