@@ -20,7 +20,7 @@
           <thead>
           <tr>
             <th>code</th>
-            <th>name<th>
+            <th>name</th>
           </tr>
           </thead>
           <tbody>
@@ -75,7 +75,7 @@
   import { ModelListSelect } from '../../lib'
   import axios from 'axios'
   import { ajaxFindCountry } from '../api/countriesApi'
-  
+
   export default {
     data () {
       return {
