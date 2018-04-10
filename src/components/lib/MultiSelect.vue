@@ -6,7 +6,8 @@
     <i class="dropdown icon"></i>
     <template v-for="(option, idx) in selectedOptions">
       <a class="ui label transition visible"
-         style="display: inline-block !important;">
+         style="display: inline-block !important;"
+         :data-vss-custom-attr="customAttr(option)">
         {{option.text}}<i class="delete icon" @click="deleteItem(option)"></i>
       </a>
     </template>
@@ -37,6 +38,7 @@
       <template v-for="(option, idx) in filteredOptions">
         <div class="item"
              :class="{ 'selected': option.selected, 'current': pointer === idx }"
+             :data-vss-custom-attr="customAttr(option)"
              @click.stop="selectItem(option)"
              @mousedown="mousedownItem"
              @mouseenter="pointerSet(idx)">
@@ -54,14 +56,11 @@
   import isEqual from 'lodash/isEqual'
   import reject from 'lodash/reject'
   import common from './common'
-  import { baseMixin, commonMixin } from './mixins'
-  
+  import { baseMixin, commonMixin, optionAwareMixin } from './mixins'
+
   export default {
-    mixins: [baseMixin, commonMixin],
+    mixins: [baseMixin, commonMixin, optionAwareMixin],
     props: {
-      options: {
-        type: Array
-      },
       selectedOptions: {
         type: Array
       },

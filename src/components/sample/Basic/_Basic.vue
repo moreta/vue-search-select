@@ -36,7 +36,7 @@
 
 <script>
   import { BasicSelect } from '../../lib'
-  
+
   export default {
     data () {
       return {
