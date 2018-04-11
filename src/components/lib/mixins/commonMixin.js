@@ -7,6 +7,10 @@ export default {
       type: Boolean,
       default: false
     },
+    customAttr: {
+      type: Function,
+      default: () => ''
+    },
     isDisabled: {
       type: Boolean,
       default: false

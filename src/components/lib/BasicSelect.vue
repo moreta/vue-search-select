@@ -19,7 +19,7 @@
            @keydown.delete="deleteTextOrItem"
     />
     <div class="text"
-         :class="textClass">{{inputText}}
+         :class="textClass" :data-vss-custom-attr="searchTextCustomAttr">{{inputText}}
     </div>
     <div class="menu"
          ref="menu"
@@ -30,6 +30,7 @@
       <template v-for="(option, idx) in filteredOptions">
         <div class="item"
              :class="{ 'selected': option.selected, 'current': pointer === idx }"
+             :data-vss-custom-attr="customAttrs[idx] ? customAttrs[idx] : ''"
              @click.stop="selectItem(option)"
              @mousedown="mousedownItem"
              @mouseenter="pointerSet(idx)">
@@ -43,14 +44,11 @@
 <script>
   /* event : select */
   import common from './common'
-  import { baseMixin, commonMixin } from './mixins'
-  
+  import { baseMixin, commonMixin, optionAwareMixin } from './mixins'
+
   export default {
-    mixins: [baseMixin, commonMixin],
+    mixins: [baseMixin, commonMixin, optionAwareMixin],
     props: {
-      options: {
-        type: Array
-      },
       selectedOption: {
         type: Object,
         default: () => { return { value: '', text: '' } }
@@ -60,6 +58,7 @@
       return {
         showMenu: false,
         searchText: '',
+        searchTextCustomAttr: '',
         mousedownState: false, // mousedown on option menu
         pointer: 0
       }
@@ -72,9 +71,20 @@
           let text = this.placeholder
           if (this.selectedOption.text) {
             text = this.selectedOption.text
+            this.searchTextCustomAttr = this.customAttr(this.selectedOption)
           }
           return text
         }
+      },
+      customAttrs () {
+        try {
+          if (Array.isArray(this.options)) {
+            return this.options.map(o => this.customAttr(o))
+          }
+        } catch (e) {
+          // if there is an error, just return an empty array
+        }
+        return []
       },
       textClass () {
         if (!this.selectedOption.text && this.placeholder) {
@@ -144,6 +154,11 @@
       },
       selectItem (option) {
         this.searchText = '' // reset text when select item
+        if (option && option.value) {
+          this.searchTextCustomAttr = this.customAttr(option)
+        } else {
+          this.searchTextCustomAttr = ''
+        }
         this.closeOptions()
         this.$emit('select', option)
       }
@@ -157,7 +172,7 @@
   .ui.dropdown .menu > .item:hover {
     background: none transparent !important;
   }
-  
+
   /* Menu Item Hover for Key event */
   .ui.dropdown .menu > .item.current {
     background: rgba(0, 0, 0, 0.05) !important;
