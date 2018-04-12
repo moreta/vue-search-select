@@ -58,12 +58,17 @@
       return {
         showMenu: false,
         searchText: '',
-        searchTextCustomAttr: '',
         mousedownState: false, // mousedown on option menu
         pointer: 0
       }
     },
     computed: {
+      searchTextCustomAttr () {
+        if (this.selectedOption && this.selectedOption.value) {
+          return this.customAttr(this.selectedOption)
+        }
+        return ''
+      },
       inputText () {
         if (this.searchText) {
           return ''
@@ -71,7 +76,6 @@
           let text = this.placeholder
           if (this.selectedOption.text) {
             text = this.selectedOption.text
-            this.searchTextCustomAttr = this.customAttr(this.selectedOption)
           }
           return text
         }
@@ -154,11 +158,6 @@
       },
       selectItem (option) {
         this.searchText = '' // reset text when select item
-        if (option && option.value) {
-          this.searchTextCustomAttr = this.customAttr(option)
-        } else {
-          this.searchTextCustomAttr = ''
-        }
         this.closeOptions()
         this.$emit('select', option)
       }
