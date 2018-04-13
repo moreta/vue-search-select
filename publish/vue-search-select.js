@@ -2770,13 +2770,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      showMenu: false,
 	      searchText: '',
-	      searchTextCustomAttr: '',
 	      mousedownState: false,
 	      pointer: 0
 	    };
 	  },
 	
 	  computed: {
+	    searchTextCustomAttr: function searchTextCustomAttr() {
+	      if (this.selectedOption && this.selectedOption.value) {
+	        return this.customAttr(this.selectedOption);
+	      }
+	      return '';
+	    },
 	    inputText: function inputText() {
 	      if (this.searchText) {
 	        return '';
@@ -2784,7 +2789,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var text = this.placeholder;
 	        if (this.selectedOption.text) {
 	          text = this.selectedOption.text;
-	          this.searchTextCustomAttr = this.customAttr(this.selectedOption);
 	        }
 	        return text;
 	      }
@@ -2871,11 +2875,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    selectItem: function selectItem(option) {
 	      this.searchText = '';
-	      if (option && option.value) {
-	        this.searchTextCustomAttr = this.customAttr(option);
-	      } else {
-	        this.searchTextCustomAttr = '';
-	      }
 	      this.closeOptions();
 	      this.$emit('select', option);
 	    }
@@ -3142,13 +3141,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return {
 	      showMenu: false,
 	      searchText: '',
-	      searchTextCustomAttr: '',
 	      mousedownState: false,
 	      pointer: 0
 	    };
 	  },
 	
 	  computed: {
+	    searchTextCustomAttr: function searchTextCustomAttr() {
+	      if (this.selectedOption && this.selectedOption.value) {
+	        return this.customAttr(this.selectedOption);
+	      }
+	      return '';
+	    },
 	    inputText: function inputText() {
 	      if (this.searchText) {
 	        return '';
@@ -3156,7 +3160,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var text = this.placeholder;
 	        if (this.selectedOption) {
 	          text = this.selectedOption.text;
-	          this.searchTextCustomAttr = this.customAttr(this.selectedOption);
 	        }
 	        return text;
 	      }
@@ -3257,11 +3260,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    selectItem: function selectItem(option) {
 	      this.searchText = '';
-	      if (option && option.value) {
-	        this.searchTextCustomAttr = this.customAttr(option);
-	      } else {
-	        this.searchTextCustomAttr = '';
-	      }
 	      this.closeOptions();
 	      if ((0, _typeof3.default)(this.value) === 'object' && this.value) {
 	        this.$emit('input', option);
@@ -4414,7 +4412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
 	
 	// exports
 
@@ -4442,7 +4440,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
 	
 	// exports
 
