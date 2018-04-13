@@ -27,7 +27,7 @@ A Vue.js search select component.
     + ListSelect for MultiSelect
 
 
-### Release Notes 
+### Release Notes
 
 <https://github.com/moreta/vue-search-select/releases>
 
@@ -238,6 +238,7 @@ See All Samples : src/components/sample
 |                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+|                 | customAttr      | Function | () => ''                   | Add custom html attribute  |
 | ModelListSelect | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
 |                 | optionText      | String   |                            | text key                   |
@@ -251,6 +252,7 @@ See All Samples : src/components/sample
 |                 | isError         | Boolean  | false                      | error style                |
 |                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
+|                 | customAttr      | Function | () => ''                   | Add custom html attribute  |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
 | ListSelect      | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
@@ -267,6 +269,7 @@ See All Samples : src/components/sample
 |                 | isDisabled      | Boolean  | false                      | disable component          |
 |                 | placeholder     | String   | ''                         |                            |
 |                 | filterPredicate | String   | new RegExp(inputText, 'i') |                            |
+|                 | customAttr      | Function | () => ''                   | Add custom html attribute  |
 | MultiListSelect | list            | Array    |                            | option list                |
 |                 | optionValue     | String   |                            | value key                  |
 |                 | optionText      | String   |                            | text key                   |
