@@ -170,11 +170,11 @@
         const selectedOptions = unionWith(this.selectedOptions, [option], isEqual)
         this.closeOptions()
         this.searchText = ''
-        this.$emit('select', selectedOptions, option, 'insert')
+        this.$emit('select', selectedOptions, option, 'insert', ...this.params)
       },
       deleteItem (option) {
         const selectedOptions = reject(this.selectedOptions, option)
-        this.$emit('select', selectedOptions, option, 'delete')
+        this.$emit('select', selectedOptions, option, 'delete', ...this.params)
       },
       accentsTidy (s) {
         var r = s.toString().toLowerCase()

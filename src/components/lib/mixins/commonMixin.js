@@ -24,6 +24,10 @@ export default {
       default: (text, inputText) => {
         return text.match(escapedRegExp(inputText))
       }
+    },
+    params: {
+      type: Array,
+      default: []
     }
   }
 }
