@@ -17,7 +17,7 @@
         },
         on: {
           input: this.onInput,
-          searchchange: (searchText) => this.$emit('searchchange', searchText)
+          searchchange: (searchText) => this.$emit('searchchange', searchText, ...this.params)
         }
       })
     },
@@ -73,14 +73,14 @@
       },
       onInput (option) {
         if (Object.keys(option).length === 0 && option.constructor === Object) {
-          this.$emit('input', option)
+          this.$emit('input', option, ...this.params)
         } else if (typeof option === 'object') {
           const item = this.list.find(e => {
             return e[this.optionValue] === option.value
           })
-          this.$emit('input', item)
+          this.$emit('input', item, ...this.params)
         } else if (typeof option === 'string') {
-          this.$emit('input', option)
+          this.$emit('input', option, ...this.params)
         }
       }
     },

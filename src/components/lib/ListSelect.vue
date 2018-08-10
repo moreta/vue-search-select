@@ -17,7 +17,7 @@
         },
         on: {
           select: this.onSelect,
-          searchchange: (searchText) => this.$emit('searchchange', searchText)
+          searchchange: (searchText) => this.$emit('searchchange', searchText, ...this.params)
         }
       })
     },
@@ -66,12 +66,12 @@
       },
       onSelect (option) {
         if (Object.keys(option).length === 0 && option.constructor === Object) {
-          this.$emit('select', option)
+          this.$emit('select', option, ...this.params)
         } else {
           const item = this.list.find((e, i) => {
             return e[this.optionValue] === option.value
           })
-          this.$emit('select', item)
+          this.$emit('select', item, ...this.params)
         }
       }
     },

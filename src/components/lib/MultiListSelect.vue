@@ -19,7 +19,7 @@
         },
         on: {
           select: this.onSelect,
-          searchchange: (searchText) => this.$emit('searchchange', searchText)
+          searchchange: (searchText) => this.$emit('searchchange', searchText, ...this.params)
         }
       })
     },
@@ -66,7 +66,7 @@
       },
       onSelect (options, option) {
         if (Object.keys(option).length === 0 && option.constructor === Object) {
-          this.$emit('select', options, option)
+          this.$emit('select', options, option, ...this.params)
         } else {
           const items = this.list.filter((e, i) => {
             return options.find((o, i) => {
@@ -74,7 +74,7 @@
             })
           })
           const item = find(this.list, [this.optionValue, option.value])
-          this.$emit('select', items, item)
+          this.$emit('select', items, item, ...this.params)
         }
       }
     },

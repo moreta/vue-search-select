@@ -170,12 +170,12 @@
         this.searchText = ''
         this.closeOptions()
         if (typeof this.value === 'object' && this.value) {
-          this.$emit('input', option)
+          this.$emit('input', option, ...this.params)
         } else {
           if (option.value) {
-            this.$emit('input', option.value)
+            this.$emit('input', option.value, ...this.params)
           } else {
-            this.$emit('input', '')
+            this.$emit('input', '', ...this.params)
           }
         }
       }
