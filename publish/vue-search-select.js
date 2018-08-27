@@ -3063,15 +3063,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    },
 	    innerValue: function innerValue() {
-	      if ((0, _typeof3.default)(this.value) === 'object') {
+	      if (!this.value) {
+	        return this.value;
+	      } else if ((0, _typeof3.default)(this.value) === 'object') {
 	        if (this.value) {
 	          return { value: this.value[this.optionValue], text: this.buildText(this.value) };
 	        } else {
 	          return { value: '', text: '' };
 	        }
-	      } else if (typeof this.value === 'string') {
-	        return this.value;
-	      } else if (typeof this.value === 'number') {
+	      } else {
 	        return this.value;
 	      }
 	    }
@@ -3098,7 +3098,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return e[_this3.optionValue] === option.value;
 	        });
 	        this.$emit('input', item);
-	      } else if (typeof option === 'string') {
+	      } else {
 	        this.$emit('input', option);
 	      }
 	    }
