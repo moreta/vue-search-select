@@ -46,15 +46,16 @@
         })
       },
       innerValue () {
-        if (typeof this.value === 'object') {
+        if (!this.value) {
+          // If js Falsy, type can not judge type. Send value to child directly
+          return this.value
+        } else if (typeof this.value === 'object') {
           if (this.value) {
             return { value: this.value[this.optionValue], text: this.buildText(this.value) }
           } else {
             return { value: '', text: '' }
           }
-        } else if (typeof this.value === 'string') {
-          return this.value
-        } else if (typeof this.value === 'number') {
+        } else {
           return this.value
         }
       }
@@ -79,7 +80,7 @@
             return e[this.optionValue] === option.value
           })
           this.$emit('input', item)
-        } else if (typeof option === 'string') {
+        } else {
           this.$emit('input', option)
         }
       }

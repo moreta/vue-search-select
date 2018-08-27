@@ -62,12 +62,45 @@
         <table class="ui celled table">
           <thead>
           <tr>
-            <th>value</th>
+            <th>value(string)</th>
           </tr>
           </thead>
           <tbody>
           <tr>
             <td>{{stringItem}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="flexbox">
+      <div class="flex-content">
+        <div>
+          <button type="button" @click="reset3" class="btn btn-info btn-sm">reset</button>
+        </div>
+        <div>
+          <button type="button" @click="selectOption3" class="btn btn-info btn-sm">option select from parent</button>
+        </div>
+        <div>
+          <model-list-select :list="options3"
+                             v-model="numberItem"
+                             option-value="id"
+                             option-text="name"
+                             :custom-text="idAndNameAndDesc"
+                             placeholder="select item2">
+          </model-list-select>
+        </div>
+      </div>
+      <div class="flex-result">
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value(number)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{numberItem}}</td>
           </tr>
           </tbody>
         </table>
@@ -104,7 +137,16 @@
           { code: '05', name: 'de', desc: 'desc05' },
           { code: '06', name: 'ef', desc: 'desc06' }
         ],
-        stringItem: ''
+        stringItem: '',
+        options3: [
+          { id: 1, name: 'aa', desc: 'desc01' },
+          { id: 2, name: 'ab', desc: 'desc02' },
+          { id: 3, name: 'bc', desc: 'desc03' },
+          { id: 4, name: 'cd', desc: 'desc04' },
+          { id: 5, name: 'de', desc: 'desc05' },
+          { id: 6, name: 'ef', desc: 'desc06' }
+        ],
+        numberItem: null
       }
     },
     methods: {
@@ -118,15 +160,27 @@
         // select option from parent component
         this.objectItem = this.options[0]
       },
+      printSearchText (searchText) {
+        this.searchText = searchText
+      },
+      /* sample 2 */
       reset2 () {
         this.stringItem = ''
       },
       selectOption2 () {
         // select option from parent component
-        this.stringItem = this.options[0].code
+        this.stringItem = this.options2[0].code
       },
-      printSearchText (searchText) {
-        this.searchText = searchText
+      /* sample 3 */
+      idAndNameAndDesc (item) {
+        return `${item.id} - ${item.name} - ${item.desc}`
+      },
+      reset3 () {
+        this.numberItem = null
+      },
+      selectOption3 () {
+        // select option from parent component
+        this.numberItem = this.options3[0].id
       }
     },
     components: {
