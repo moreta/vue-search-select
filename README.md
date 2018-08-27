@@ -12,10 +12,11 @@ A Vue.js search select component.
   + ModelSelect (from v2.3.8)
     + similar BasicSelect
     + value set through v-model
-    + value can be string or object
+    + value can be string, number, object (number support from v2.6.2)
       + If you pass string, onInput set by string
   + ModelListSelect (from v2.3.8)
     + ListSelect for ModelSelect
+    + number value support from v2.6.2
   + BasicSelect
     + simple search select
   + ListSelect
@@ -63,6 +64,8 @@ See All Samples : src/components/sample
 
 ## ModelSelect Component Example
 
+[more ModelSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/components/sample/Model/Model.vue)
+
 ```html
 <template>
         <!-- object value -->
@@ -109,20 +112,92 @@ See All Samples : src/components/sample
       reset () {
         this.item = {}
       },
-      selectOption () {
+      selectFromParentComponent1 () {
         // select option from parent component
         this.item = this.options[0]
       },
       reset2 () {
         this.item2 = ''
       },
-      selectOption2 () {
+      selectFromParentComponent2 () {
         // select option from parent component
         this.item2 = this.options2[0].value
       }
     },
     components: {
       ModelSelect
+    }
+  }
+</script>
+```
+
+## ModelListSelect Component Example
+
+[more ModelListSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/components/sample/Model/ModelList.vue)
+
+```html
+<template>
+  <model-list-select :list="options1"
+                     v-model="objectItem"
+                     option-value="code"
+                     option-text="name"
+                     placeholder="select item">
+  </model-list-select>
+  <model-list-select :list="options2"
+                     v-model="stringItem"
+                     option-value="code"
+                     :custom-text="codeAndNameAndDesc"
+                     placeholder="select item">
+  </model-list-select>
+</template>
+
+<script>
+  import { ModelListSelect } from 'vue-search-select'
+
+  export default {
+    data () {
+      return {
+        options1: [
+          { code: '01', name: 'aa', desc: 'desc01' },
+          { code: '02', name: 'ab', desc: 'desc02' },
+          { code: '03', name: 'bc', desc: 'desc03' },
+          { code: '04', name: 'cd', desc: 'desc04' },
+          { code: '05', name: 'de', desc: 'desc05' },
+          { code: '06', name: 'ef', desc: 'desc06' }
+        ],
+        objectItem: {},
+        options2: [
+          { code: '01', name: 'aa', desc: 'desc01' },
+          { code: '02', name: 'ab', desc: 'desc02' },
+          { code: '03', name: 'bc', desc: 'desc03' },
+          { code: '04', name: 'cd', desc: 'desc04' },
+          { code: '05', name: 'de', desc: 'desc05' },
+          { code: '06', name: 'ef', desc: 'desc06' }
+        ],
+        stringItem: ''
+      }
+    },
+    methods: {
+      codeAndNameAndDesc (item) {
+        return `${item.code} - ${item.name} - ${item.desc}`
+      },
+      reset1 () {
+        this.objectItem = {}
+      },
+      selectFromParentComponent1 () {
+        // select option from parent component
+        this.objectItem = this.options[0]
+      },
+      reset2 () {
+        this.stringItem = ''
+      },
+      selectFromParentComponent2 () {
+        // select option from parent component
+        this.stringItem = this.options[0].code
+      }
+    },
+    components: {
+      ModelListSelect
     }
   }
 </script>
@@ -166,7 +241,7 @@ See All Samples : src/components/sample
       reset () {
         this.item = {}
       },
-      selectOption () {
+      selectFromParentComponent () {
         // select option from parent component
         this.item = this.options[0]
       }
@@ -218,7 +293,7 @@ See All Samples : src/components/sample
         this.items = [] // reset
       },
       // select option from parent component
-      selectOption () {
+      selectFromParentComponent () {
         this.items = _.unionWith(this.items, [this.options[0]], _.isEqual)
       }
     },

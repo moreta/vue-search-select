@@ -13,7 +13,6 @@
                              v-model="objectItem"
                              option-value="code"
                              option-text="name"
-                             :custom-text="codeAndNameAndDesc"
                              placeholder="select item"
                              @searchchange="printSearchText">
           </model-list-select>
@@ -52,7 +51,6 @@
           <model-list-select :list="options2"
                              v-model="stringItem"
                              option-value="code"
-                             option-text="name"
                              :custom-text="codeAndNameAndDesc"
                              placeholder="select item2">
           </model-list-select>
@@ -85,7 +83,6 @@
           <model-list-select :list="options3"
                              v-model="numberItem"
                              option-value="id"
-                             option-text="name"
                              :custom-text="idAndNameAndDesc"
                              placeholder="select item2">
           </model-list-select>
