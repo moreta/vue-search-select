@@ -74,7 +74,12 @@
         showMenu: false,
         searchText: '',
         mousedownState: false, // mousedown on option menu
-        pointer: 0
+        pointer: -1
+      }
+    },
+    watch: {
+      selectedOptions () {
+        this.pointer = -1
       }
     },
     computed: {
