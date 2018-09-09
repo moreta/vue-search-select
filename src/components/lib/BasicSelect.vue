@@ -59,7 +59,18 @@
         showMenu: false,
         searchText: '',
         mousedownState: false, // mousedown on option menu
-        pointer: 0
+        pointer: -1
+      }
+    },
+    watch: {
+      selectedOption (newValue) {
+        if (newValue && newValue.value) {
+          this.pointer = this.filteredOptions.findIndex(option => {
+            return option.value === newValue.value
+          })
+        } else {
+          this.pointer = -1
+        }
       }
     },
     computed: {
