@@ -19,6 +19,10 @@
     <h3>isDisabled prop</h3>
     <disabled-prop-example />
   
+    <!-- bind value and on input -->
+    <h3>Handling Event sample</h3>
+    <customizing-event-example />
+  
   </div>
 </template>
 
@@ -28,6 +32,7 @@
   import NumberTypeExample from './_NumberType'
   import ErrorPropExample from './_ErrorProp'
   import DisabledPropExample from './_DisabledProp'
+  import CustomizingEventExample from './_CustomizingEvent'
   import { ModelSelect } from '../../lib'
   
   export default {
@@ -37,7 +42,8 @@
       StringTypeExample,
       NumberTypeExample,
       ErrorPropExample,
-      DisabledPropExample
+      DisabledPropExample,
+      CustomizingEventExample
     }
   }
 </script>
