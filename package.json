@@ -102,8 +102,7 @@
     "webpack-merge": "^0.14.1"
   },
   "peerDependencies": {
-    "lodash": "^4.0.0",
-    "vue": "^2.1.0"
+    "vue": "2.x"
   },
   "engines": {
     "node": ">= 4.0.0",
