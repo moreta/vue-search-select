@@ -50,159 +50,161 @@
 </template>
 
 <script>
-  import differenceBy from 'lodash/differenceBy'
-  import last from 'lodash/last'
-  import unionWith from 'lodash/unionWith'
-  import isEqual from 'lodash/isEqual'
-  import reject from 'lodash/reject'
-  import common from './common'
-  import { baseMixin, commonMixin, optionAwareMixin } from './mixins'
+import common from './common'
+import { baseMixin, commonMixin, optionAwareMixin } from './mixins'
 
-  export default {
-    mixins: [baseMixin, commonMixin, optionAwareMixin],
-    props: {
-      selectedOptions: {
-        type: Array
-      },
-      cleanSearch: {
-        type: Boolean,
-        default: true
+export default {
+  mixins: [baseMixin, commonMixin, optionAwareMixin],
+  props: {
+    selectedOptions: {
+      type: Array
+    },
+    cleanSearch: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data () {
+    return {
+      showMenu: false,
+      searchText: '',
+      mousedownState: false, // mousedown on option menu
+      pointer: -1
+    }
+  },
+  watch: {
+    selectedOptions () {
+      this.pointer = -1
+    }
+  },
+  computed: {
+    inputText () {
+      if (this.searchText) {
+        return ''
+      } else {
+        return this.placeholder
       }
     },
-    data () {
+    textClass () {
+      if (this.placeholder) {
+        return 'default'
+      } else {
+        return ''
+      }
+    },
+    inputWidth () {
       return {
-        showMenu: false,
-        searchText: '',
-        mousedownState: false, // mousedown on option menu
-        pointer: -1
+        width: ((this.searchText.length + 1) * 8) + 20 + 'px'
       }
     },
-    watch: {
-      selectedOptions () {
-        this.pointer = -1
+    menuClass () {
+      return {
+        visible: this.showMenu,
+        hidden: !this.showMenu
       }
     },
-    computed: {
-      inputText () {
-        if (this.searchText) {
-          return ''
-        } else {
-          return this.placeholder
-        }
-      },
-      textClass () {
-        if (this.placeholder) {
-          return 'default'
-        } else {
-          return ''
-        }
-      },
-      inputWidth () {
-        return {
-          width: ((this.searchText.length + 1) * 8) + 20 + 'px'
-        }
-      },
-      menuClass () {
-        return {
-          visible: this.showMenu,
-          hidden: !this.showMenu
-        }
-      },
-      menuStyle () {
-        return {
-          display: this.showMenu ? 'block' : 'none'
-        }
-      },
-      nonSelectOptions () {
-        return differenceBy(this.options, this.selectedOptions, 'value')
-      },
-      filteredOptions () {
-        if (this.searchText) {
-          return this.nonSelectOptions.filter(option => {
-            try {
-              if (this.cleanSearch) {
-                return this.filterPredicate(this.accentsTidy(option.text), this.searchText)
-              } else {
-                return this.filterPredicate(option.text, this.searchText)
-              }
-            } catch (e) {
-              return true
+    menuStyle () {
+      return {
+        display: this.showMenu ? 'block' : 'none'
+      }
+    },
+    nonSelectOptions () {
+      return this.options.filter(el => {
+        return this.selectedOptions.findIndex(o => o.value === el.value) === -1
+      })
+    },
+    filteredOptions () {
+      if (this.searchText) {
+        return this.nonSelectOptions.filter(option => {
+          try {
+            if (this.cleanSearch) {
+              return this.filterPredicate(this.accentsTidy(option.text), this.searchText)
+            } else {
+              return this.filterPredicate(option.text, this.searchText)
             }
-          })
-        } else {
-          return this.nonSelectOptions
-        }
-      }
-    },
-    methods: {
-      deleteTextOrLastItem () {
-        if (!this.searchText && this.selectedOptions.length > 0) {
-          this.deleteItem(last(this.selectedOptions))
-        }
-      },
-      openOptions () {
-        common.openOptions(this)
-      },
-      blurInput () {
-        common.blurInput(this)
-      },
-      closeOptions () {
-        common.closeOptions(this)
-      },
-      prevItem () {
-        common.prevItem(this)
-        this.closeOptions()
-        this.openOptions()
-      },
-      nextItem () {
-        common.nextItem(this)
-        this.closeOptions()
-        this.openOptions()
-      },
-      enterItem () {
-        common.enterItem(this)
-      },
-      pointerSet (index) {
-        common.pointerSet(this, index)
-      },
-      pointerAdjust () {
-        common.pointerAdjust(this)
-      },
-      mousedownItem () {
-        common.mousedownItem(this)
-      },
-      selectItem (option) {
-        const selectedOptions = unionWith(this.selectedOptions, [option], isEqual)
-        this.closeOptions()
-        this.searchText = ''
-        this.$emit('select', selectedOptions, option, 'insert')
-      },
-      deleteItem (option) {
-        const selectedOptions = reject(this.selectedOptions, option)
-        this.$emit('select', selectedOptions, option, 'delete')
-      },
-      accentsTidy (s) {
-        var r = s.toString().toLowerCase()
-        r = r.replace(new RegExp('[àáâãäå]', 'g'), 'a')
-        r = r.replace(new RegExp('æ', 'g'), 'ae')
-        r = r.replace(new RegExp('ç', 'g'), 'c')
-        r = r.replace(new RegExp('[èéêë]', 'g'), 'e')
-        r = r.replace(new RegExp('[ìíîï]', 'g'), 'i')
-        r = r.replace(new RegExp('ñ', 'g'), 'n')
-        r = r.replace(new RegExp('[òóôõö]', 'g'), 'o')
-        r = r.replace(new RegExp('œ', 'g'), 'oe')
-        r = r.replace(new RegExp('[ùúûü]', 'g'), 'u')
-        r = r.replace(new RegExp('[ýÿ]', 'g'), 'y')
-        return r
+          } catch (e) {
+            return true
+          }
+        })
+      } else {
+        return this.nonSelectOptions
       }
     }
+  },
+  methods: {
+    deleteTextOrLastItem () {
+      if (!this.searchText && this.selectedOptions.length > 0) {
+        this.deleteItem(this.selectedOptions[this.selectedOptions.length - 1])
+      }
+    },
+    openOptions () {
+      common.openOptions(this)
+    },
+    blurInput () {
+      common.blurInput(this)
+    },
+    closeOptions () {
+      common.closeOptions(this)
+    },
+    prevItem () {
+      common.prevItem(this)
+      this.closeOptions()
+      this.openOptions()
+    },
+    nextItem () {
+      common.nextItem(this)
+      this.closeOptions()
+      this.openOptions()
+    },
+    enterItem () {
+      common.enterItem(this)
+    },
+    pointerSet (index) {
+      common.pointerSet(this, index)
+    },
+    pointerAdjust () {
+      common.pointerAdjust(this)
+    },
+    mousedownItem () {
+      common.mousedownItem(this)
+    },
+    selectItem (option) {
+      const tempSelectedOptions = this.selectedOptions.concat(option)
+      const selectedOptions = tempSelectedOptions.filter((el, idx) => {
+        return tempSelectedOptions.indexOf(el) === idx
+      })
+      this.closeOptions()
+      this.searchText = ''
+      this.$emit('select', selectedOptions, option, 'insert')
+    },
+    deleteItem (option) {
+      const selectedOptions = this.selectedOptions.filter(o => {
+        return o.value !== option.value
+      })
+      this.$emit('select', selectedOptions, option, 'delete')
+    },
+    accentsTidy (s) {
+      let r = s.toString().toLowerCase()
+      r = r.replace(new RegExp('[àáâãäå]', 'g'), 'a')
+      r = r.replace(new RegExp('æ', 'g'), 'ae')
+      r = r.replace(new RegExp('ç', 'g'), 'c')
+      r = r.replace(new RegExp('[èéêë]', 'g'), 'e')
+      r = r.replace(new RegExp('[ìíîï]', 'g'), 'i')
+      r = r.replace(new RegExp('ñ', 'g'), 'n')
+      r = r.replace(new RegExp('[òóôõö]', 'g'), 'o')
+      r = r.replace(new RegExp('œ', 'g'), 'oe')
+      r = r.replace(new RegExp('[ùúûü]', 'g'), 'u')
+      r = r.replace(new RegExp('[ýÿ]', 'g'), 'y')
+      return r
+    }
   }
+}
 </script>
 <style scoped src="semantic-ui-label/label.css"></style>
 <style scoped src="semantic-ui-dropdown/dropdown.css"></style>
 <style>
-  /* Menu Item Hover for Key event */
-  .ui.dropdown .menu > .item.current {
-    background: rgba(0, 0, 0, 0.05);
-  }
+/* Menu Item Hover for Key event */
+.ui.dropdown .menu > .item.current {
+  background: rgba(0, 0, 0, 0.05);
+}
 </style>
