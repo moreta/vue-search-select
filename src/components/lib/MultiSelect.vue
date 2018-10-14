@@ -4,7 +4,7 @@
        @click="openOptions"
        @focus="openOptions">
     <i class="dropdown icon"></i>
-    <template v-for="(option, idx) in selectedOptions">
+    <template v-for="(option, idx) in selectedOptions" v-if="!hideSelectedOptions">
       <a class="ui label transition visible"
          style="display: inline-block !important;"
          :data-vss-custom-attr="customAttr(option)">
@@ -67,6 +67,10 @@
       cleanSearch: {
         type: Boolean,
         default: true
+      },
+      hideSelectedOptions: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
