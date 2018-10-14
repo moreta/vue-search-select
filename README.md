@@ -1,9 +1,8 @@
 # vue-search-select
 
-A Vue.js search select component.
+A Vue.js search select component with NO dependencies.
 
-+ Dependency only vue 2.x & lodash
-+ Design css use from <https://github.com/Semantic-Org>
++ CSS borrowed from <https://github.com/Semantic-Org>
 
 ## Version 2.x
 
@@ -55,7 +54,7 @@ yarn add vue-search-select
 ```
 yarn add vue-search-select@alpha
 # or
-yarn add vue-search-select@2.3.8-alpha.1
+yarn add vue-search-select@2.6.3-alpha.1
 ```
 
 # Sample code

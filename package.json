@@ -1,6 +1,6 @@
 {
   "name": "vue-search-select",
-  "version": "2.6.2",
+  "version": "2.6.3-alpha.1",
   "description": "A Vue.js search select form component",
   "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
@@ -100,9 +100,6 @@
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-merge": "^0.14.1"
-  },
-  "peerDependencies": {
-    "vue": "2.x"
   },
   "engines": {
     "node": ">= 4.0.0",
