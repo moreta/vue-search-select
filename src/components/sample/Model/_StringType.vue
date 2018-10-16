@@ -68,7 +68,7 @@
       },
       selectOption () {
         // select option from parent component
-        this.item = this.options[0].value
+        this.item = this.options[1].value
       }
     },
     components: {

@@ -10,6 +10,10 @@
     <!--Number type model -->
     <h3>Number type model</h3>
     <number-type-example />
+  
+    <!--Boolean type model -->
+    <h3>Boolean type value</h3>
+    <boolean-type-example />
     
     <!-- isError prop -->
     <h3>isError prop</h3>
@@ -30,6 +34,7 @@
   import ObjectTypeExample from './_ObjectType'
   import StringTypeExample from './_StringType'
   import NumberTypeExample from './_NumberType'
+  import BooleanTypeExample from './_BooleanType'
   import ErrorPropExample from './_ErrorProp'
   import DisabledPropExample from './_DisabledProp'
   import CustomizingEventExample from './_CustomizingEvent'
@@ -41,6 +46,7 @@
       ObjectTypeExample,
       StringTypeExample,
       NumberTypeExample,
+      BooleanTypeExample,
       ErrorPropExample,
       DisabledPropExample,
       CustomizingEventExample

@@ -49,7 +49,7 @@
     mixins: [baseMixin, commonMixin, optionAwareMixin],
     props: {
       value: {
-        type: [String, Number, Object]
+        type: [String, Number, Object, Boolean]
       }
     },
     data () {
@@ -57,7 +57,14 @@
         showMenu: false,
         searchText: '',
         mousedownState: false, // mousedown on option menu
-        pointer: 0
+        pointer: -1
+      }
+    },
+    watch: {
+      value (newValue) {
+        this.pointer = this.filteredOptions.findIndex(option => {
+          return option.value === this.optionValue(newValue)
+        })
       }
     },
     computed: {
@@ -119,16 +126,9 @@
           return this.options
         }
       },
-      optionValue () {
-        if (typeof this.value === 'object' && this.value !== null) {
-          return this.value.value
-        } else {
-          return this.value
-        }
-      },
       selectedOption () {
         return this.options.find(option => {
-          return option.value === this.optionValue
+          return option.value === this.optionValue(this.value)
         })
       }
     },
@@ -171,12 +171,21 @@
         this.closeOptions()
         if (typeof this.value === 'object' && this.value) {
           this.$emit('input', option)
+        } else if (typeof this.value === 'boolean') {
+          this.$emit('input', option.value)
         } else {
           if (option.value) {
             this.$emit('input', option.value)
           } else {
             this.$emit('input', '')
           }
+        }
+      },
+      optionValue (value) {
+        if (typeof value === 'object' && value !== null) {
+          return value.value
+        } else {
+          return value
         }
       }
     }
