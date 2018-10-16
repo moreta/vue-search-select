@@ -49,7 +49,7 @@
     mixins: [baseMixin, commonMixin, optionAwareMixin],
     props: {
       value: {
-        type: [String, Number, Object]
+        type: [String, Number, Object, Boolean]
       }
     },
     data () {
@@ -171,6 +171,8 @@
         this.closeOptions()
         if (typeof this.value === 'object' && this.value) {
           this.$emit('input', option)
+        } else if (typeof this.value === 'boolean') {
+          this.$emit('input', option.value)
         } else {
           if (option.value) {
             this.$emit('input', option.value)
