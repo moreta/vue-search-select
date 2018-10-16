@@ -1479,7 +1479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    value: {
-	      type: [String, Number, Object]
+	      type: [String, Number, Object, Boolean]
 	    }
 	  },
 	  computed: {
@@ -1562,7 +1562,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  mixins: [_mixins.baseMixin, _mixins.commonMixin, _mixins.optionAwareMixin],
 	  props: {
 	    value: {
-	      type: [String, Number, Object]
+	      type: [String, Number, Object, Boolean]
 	    }
 	  },
 	  data: function data() {
@@ -1693,6 +1693,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.closeOptions();
 	      if ((0, _typeof3.default)(this.value) === 'object' && this.value) {
 	        this.$emit('input', option);
+	      } else if (typeof this.value === 'boolean') {
+	        this.$emit('input', option.value);
 	      } else {
 	        if (option.value) {
 	          this.$emit('input', option.value);
@@ -1850,6 +1852,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    cleanSearch: {
 	      type: Boolean,
 	      default: true
+	    },
+	    hideSelectedOptions: {
+	      type: Boolean,
+	      default: false
 	    }
 	  },
 	  data: function data() {
@@ -2843,7 +2849,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
 	
 	// exports
 
@@ -2899,7 +2905,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05);\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05);\n}\n", ""]);
 	
 	// exports
 
@@ -3233,7 +3239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, [_c('i', {
 	    staticClass: "dropdown icon"
 	  }), _vm._v(" "), _vm._l((_vm.selectedOptions), function(option, idx) {
-	    return [_c('a', {
+	    return (!_vm.hideSelectedOptions) ? [_c('a', {
 	      staticClass: "ui label transition visible",
 	      staticStyle: {
 	        "display": "inline-block !important"
@@ -3248,7 +3254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _vm.deleteItem(option)
 	        }
 	      }
-	    })])]
+	    })])] : _vm._e()
 	  }), _vm._v(" "), _c('input', {
 	    directives: [{
 	      name: "model",
