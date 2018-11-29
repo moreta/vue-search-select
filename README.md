@@ -39,7 +39,7 @@ A Vue.js search select component with NO dependencies.
 
 # Demo
 
-<http://moreta.github.io/vue-search-select/>
+<https://moreta.github.io/vue-search-select/>
 
 # Usage
 

@@ -57,7 +57,9 @@
           { value: '21', text: 'more a' + ' - ' + '6' },
           { value: '22', text: 'more a' + ' - ' + '7' },
           { value: '23', text: 'more a' + ' - ' + '8' },
-          { value: '24', text: 'more a' + ' - ' + '9' }
+          { value: '24', text: 'more a' + ' - ' + '9' },
+          { value: '25', text: 'more あ' + ' - ' + '10' },
+          { value: '26', text: 'more い' + ' - ' + '11' }
         ],
         item: ''
       }
