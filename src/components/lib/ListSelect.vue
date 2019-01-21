@@ -54,7 +54,7 @@
     },
     methods: {
       buildText (e) {
-        if (e[this.optionValue]) {
+        if (e[this.optionValue] !== undefined) {
           if (this.customText) {
             return this.customText(e)
           } else {
