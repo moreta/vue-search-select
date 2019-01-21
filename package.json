@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "docs:build": "node build/build.js",
-    "docs:publish": "npm run docs:build && cd dist && git init && git add . && git commit -m 'update example' && git push -f git@github.com:moreta/vue-search-select.git gh-pages",
+    "docs:publish": "npm run docs:build && cd dist && git add . && git commit -m 'Deploy to gh-pages' && git push origin gh-pages",
     "unit": "karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
