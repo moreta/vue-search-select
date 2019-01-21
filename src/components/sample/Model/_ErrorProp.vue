@@ -27,23 +27,29 @@
   </div>
 </template>
 <script>
-  import { ModelSelect } from '../../lib'
-  
-  export default {
-    data () {
-      return {
-        options: [
-          { value: '1', text: 'aa' + ' - ' + '1' }
-        ],
-        item: {
-          value: '',
-          text: ''
-        },
-        isError: true
+import isEmpty from 'lodash/isEmpty'
+import { ModelSelect } from '../../lib'
+
+export default {
+  data () {
+    return {
+      options: [
+        { value: '1', text: 'aa' + ' - ' + '1' }
+      ],
+      item: {
+        value: '',
+        text: ''
       }
-    },
-    components: {
-      ModelSelect
     }
+  },
+  computed: {
+    // a computed getter
+    isError () {
+      return isEmpty(this.item.value)
+    }
+  },
+  components: {
+    ModelSelect
   }
+}
 </script>
