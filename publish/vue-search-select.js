@@ -1388,7 +1388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  methods: {
 	    buildText: function buildText(e) {
-	      if (e[this.optionValue]) {
+	      if (e[this.optionValue] !== undefined) {
 	        if (this.customText) {
 	          return this.customText(e);
 	        } else {
@@ -1506,7 +1506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  methods: {
 	    buildText: function buildText(e) {
-	      if (e[this.optionValue]) {
+	      if (e[this.optionValue] !== undefined) {
 	        if (this.customText) {
 	          return this.customText(e);
 	        } else {
@@ -1693,13 +1693,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.closeOptions();
 	      if ((0, _typeof3.default)(this.value) === 'object' && this.value) {
 	        this.$emit('input', option);
-	      } else if (typeof this.value === 'boolean') {
-	        this.$emit('input', option.value);
 	      } else {
-	        if (option.value) {
-	          this.$emit('input', option.value);
-	        } else {
-	          this.$emit('input', '');
+	        this.$emit('input', option.value);
+	        if (option.value === option.text) {
+	          this.searchText = option.value;
 	        }
 	      }
 	    },
@@ -1792,7 +1789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  methods: {
 	    buildText: function buildText(e) {
-	      if (e[this.optionValue]) {
+	      if (e[this.optionValue] !== undefined) {
 	        if (this.customText) {
 	          return this.customText(e);
 	        } else {
@@ -2035,6 +2032,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = {
 	  props: {
+	    id: {
+	      default: null
+	    },
+	    name: {
+	      type: String,
+	      default: ''
+	    },
 	    isError: {
 	      type: Boolean,
 	      default: false
@@ -2849,7 +2853,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
+	exports.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Menu Item Hover */\n.ui.dropdown .menu > .item:hover {\n  background: none transparent !important;\n}\n\n/* Menu Item Hover for Key event */\n.ui.dropdown .menu > .item.current {\n  background: rgba(0, 0, 0, 0.05) !important;\n}\n", ""]);
 	
 	// exports
 
@@ -3031,7 +3035,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    staticClass: "search",
 	    attrs: {
 	      "autocomplete": "off",
-	      "tabindex": "0"
+	      "tabindex": "0",
+	      "id": _vm.id,
+	      "name": _vm.name
 	    },
 	    domProps: {
 	      "value": _vm.searchText
