@@ -7,6 +7,7 @@
     <input class="search"
            autocomplete="off"
            tabindex="0"
+           :name="name"
            :value="searchText"
            @input="searchText = $event.target.value"
            ref="input"
@@ -174,6 +175,9 @@ export default {
         this.$emit('input', option)
       } else {
         this.$emit('input', option.value)
+        if (option.value === option.text) {
+          this.searchText = option.value
+        }
       }
     },
     optionValue (value) {

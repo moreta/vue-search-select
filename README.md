@@ -270,6 +270,7 @@ See All Samples : src/components/sample
 |                 | placeholder         | String   | ''                         |                                     |
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
 |                 | customAttr          | Function | () => ''                   | Add custom html attribute           |
+|                 | name                | String   |                            | input form name attribute           |
 | ModelListSelect | list                | Array    |                            | option list                         |
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
@@ -278,6 +279,7 @@ See All Samples : src/components/sample
 |                 | isDisabled          | Boolean  | false                      | disable component                   |
 |                 | placeholder         | String   | ''                         |                                     |
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
+|                 | name                | String   |                            | input form name attribute           |
 | BasicSelect     | options             | Array    |                            | option list                         |
 |                 | selectedOption      | Object   | { value: '', text: '' }    | default option                      |
 |                 | isError             | Boolean  | false                      | error style                         |
@@ -285,6 +287,7 @@ See All Samples : src/components/sample
 |                 | placeholder         | String   | ''                         |                                     |
 |                 | customAttr          | Function | () => ''                   | Add custom html attribute           |
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
+|                 | name                | String   |                            | input form name attribute           |
 | ListSelect      | list                | Array    |                            | option list                         |
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
@@ -294,6 +297,7 @@ See All Samples : src/components/sample
 |                 | isDisabled          | Boolean  | false                      | disable component                   |
 |                 | placeholder         | String   | ''                         |                                     |
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
+|                 | name                | String   |                            | input form name attribute           |
 | MultiSelect     | options             | Array    |                            | option list                         |
 |                 | selectedOptions     | Array    |                            | default option list                 |
 |                 | isError             | Boolean  | false                      | error style                         |
@@ -302,6 +306,7 @@ See All Samples : src/components/sample
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
 |                 | customAttr          | Function | () => ''                   | Add custom html attribute           |
 |                 | hideSelectedOptions | Boolean  | false                      | Hide Option list that item selected |
+|                 | name                | String   |                            | input form name attribute           |
 | MultiListSelect | list                | Array    |                            | option list                         |
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
@@ -311,6 +316,7 @@ See All Samples : src/components/sample
 |                 | isDisabled          | Boolean  | false                      | disable component                   |
 |                 | placeholder         | String   | ''                         |                                     |
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
+|                 | name                | String   |                            | input form name attribute           |
 
 # Run examples
 
