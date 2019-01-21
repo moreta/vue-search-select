@@ -28,8 +28,8 @@
     <customizing-event-example />
     
     <!-- bind value and on input -->
-    <h3>Name Prop</h3>
-    <name-prop-example />
+    <h3>name & id attribute</h3>
+    <name-and-id-prop-example />
   
   </div>
 </template>
@@ -42,7 +42,7 @@ import BooleanTypeExample from './_BooleanType'
 import ErrorPropExample from './_ErrorProp'
 import DisabledPropExample from './_DisabledProp'
 import CustomizingEventExample from './_CustomizingEvent'
-import NamePropExample from './_NameProp'
+import NameAndIdPropExample from './_NameAndIdProp'
 import { ModelSelect } from '../../lib'
 
 export default {
@@ -55,7 +55,7 @@ export default {
     ErrorPropExample,
     DisabledPropExample,
     CustomizingEventExample,
-    NamePropExample
+    NameAndIdPropExample
   }
 }
 </script>

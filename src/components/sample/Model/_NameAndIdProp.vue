@@ -14,7 +14,8 @@
         <div>
           <model-select :options="options"
                         v-model="item"
-                        name="mySelect"
+                        id="mySelectId"
+                        name="mySelectName"
                         placeholder="placeholder text">
           </model-select>
         </div>
@@ -71,7 +72,7 @@ export default {
     onSubmit (e) {
       e.preventDefault()
       const inputValue = document.getElementsByName('myInput')[0].value
-      const selectValue = document.getElementsByName('mySelect')[0].value
+      const selectValue = document.getElementsByName('mySelectName')[0].value
       console.log(inputValue)
       console.log(selectValue)
       window.alert('inputValue : ' + inputValue + ' - ' + 'selectValue : ' + selectValue)

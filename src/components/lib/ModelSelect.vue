@@ -7,6 +7,7 @@
     <input class="search"
            autocomplete="off"
            tabindex="0"
+           :id="id"
            :name="name"
            :value="searchText"
            @input="searchText = $event.target.value"
