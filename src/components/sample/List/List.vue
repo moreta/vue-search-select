@@ -12,6 +12,8 @@
                      option-value="code"
                      option-text="name"
                      :selected-item="item"
+                     id="mySelectId"
+                     name="mySelectName"
                      placeholder="select item"
                      @select="onSelect">
         </list-select>

@@ -7,6 +7,8 @@
     <input class="search"
            autocomplete="off"
            tabindex="0"
+           :id="id"
+           :name="name"
            :value="searchText"
            @input="searchText = $event.target.value"
            ref="input"
@@ -43,149 +45,151 @@
 </template>
 
 <script>
-  /* event : select */
-  import common from './common'
-  import { baseMixin, commonMixin, optionAwareMixin } from './mixins'
+import common from './common'
+import { baseMixin, commonMixin, optionAwareMixin } from './mixins'
 
-  export default {
-    mixins: [baseMixin, commonMixin, optionAwareMixin],
-    props: {
-      selectedOption: {
-        type: Object,
-        default: () => { return { value: '', text: '' } }
+export default {
+  mixins: [baseMixin, commonMixin, optionAwareMixin],
+  props: {
+    selectedOption: {
+      type: Object,
+      default: () => { return { value: '', text: '' } }
+    }
+  },
+  data () {
+    return {
+      showMenu: false,
+      searchText: '',
+      mousedownState: false, // mousedown on option menu
+      pointer: -1
+    }
+  },
+  watch: {
+    selectedOption (newValue) {
+      if (newValue && newValue.value) {
+        this.pointer = this.filteredOptions.findIndex(option => {
+          return option.value === newValue.value
+        })
+      } else {
+        this.pointer = -1
       }
-    },
-    data () {
-      return {
-        showMenu: false,
-        searchText: '',
-        mousedownState: false, // mousedown on option menu
-        pointer: -1
+    }
+  },
+  computed: {
+    searchTextCustomAttr () {
+      if (this.selectedOption && this.selectedOption.value) {
+        return this.customAttr(this.selectedOption)
       }
+      return ''
     },
-    watch: {
-      selectedOption (newValue) {
-        if (newValue && newValue.value) {
-          this.pointer = this.filteredOptions.findIndex(option => {
-            return option.value === newValue.value
-          })
-        } else {
-          this.pointer = -1
-        }
-      }
-    },
-    computed: {
-      searchTextCustomAttr () {
-        if (this.selectedOption && this.selectedOption.value) {
-          return this.customAttr(this.selectedOption)
-        }
+    inputText () {
+      if (this.searchText) {
         return ''
-      },
-      inputText () {
-        if (this.searchText) {
-          return ''
-        } else {
-          let text = this.placeholder
-          if (this.selectedOption.text) {
-            text = this.selectedOption.text
-          }
-          return text
+      } else {
+        let text = this.placeholder
+        if (this.selectedOption.text) {
+          text = this.selectedOption.text
         }
-      },
-      customAttrs () {
-        try {
-          if (Array.isArray(this.options)) {
-            return this.options.map(o => this.customAttr(o))
-          }
-        } catch (e) {
-          // if there is an error, just return an empty array
-        }
-        return []
-      },
-      textClass () {
-        if (!this.selectedOption.text && this.placeholder) {
-          return 'default'
-        } else {
-          return ''
-        }
-      },
-      menuClass () {
-        return {
-          visible: this.showMenu,
-          hidden: !this.showMenu
-        }
-      },
-      menuStyle () {
-        return {
-          display: this.showMenu ? 'block' : 'none'
-        }
-      },
-      filteredOptions () {
-        if (this.searchText) {
-          return this.options.filter((option) => {
-            try {
-              return this.filterPredicate(option.text, this.searchText)
-            } catch (e) {
-              return true
-            }
-          })
-        } else {
-          return this.options
-        }
+        return text
       }
     },
-    methods: {
-      deleteTextOrItem () {
-        if (!this.searchText && this.selectedOption) {
-          this.selectItem({})
-          this.openOptions()
+    customAttrs () {
+      try {
+        if (Array.isArray(this.options)) {
+          return this.options.map(o => this.customAttr(o))
         }
-      },
-      openOptions () {
-        common.openOptions(this)
-      },
-      blurInput () {
-        common.blurInput(this)
-      },
-      closeOptions () {
-        common.closeOptions(this)
-      },
-      prevItem () {
-        common.prevItem(this)
-      },
-      nextItem () {
-        common.nextItem(this)
-      },
-      enterItem () {
-        common.enterItem(this)
-      },
-      pointerSet (index) {
-        common.pointerSet(this, index)
-      },
-      pointerAdjust () {
-        common.pointerAdjust(this)
-      },
-      mousedownItem () {
-        common.mousedownItem(this)
-      },
-      selectItem (option) {
-        this.searchText = '' // reset text when select item
-        this.closeOptions()
-        this.$emit('select', option)
+      } catch (e) {
+        // if there is an error, just return an empty array
+      }
+      return []
+    },
+    textClass () {
+      if (!this.selectedOption.text && this.placeholder) {
+        return 'default'
+      } else {
+        return ''
+      }
+    },
+    menuClass () {
+      return {
+        visible: this.showMenu,
+        hidden: !this.showMenu
+      }
+    },
+    menuStyle () {
+      return {
+        display: this.showMenu ? 'block' : 'none'
+      }
+    },
+    filteredOptions () {
+      if (this.searchText) {
+        return this.options.filter((option) => {
+          try {
+            return this.filterPredicate(option.text, this.searchText)
+          } catch (e) {
+            return true
+          }
+        })
+      } else {
+        return this.options
+      }
+    }
+  },
+  methods: {
+    deleteTextOrItem () {
+      if (!this.searchText && this.selectedOption) {
+        this.selectItem({})
+        this.openOptions()
+      }
+    },
+    openOptions () {
+      common.openOptions(this)
+    },
+    blurInput () {
+      common.blurInput(this)
+    },
+    closeOptions () {
+      common.closeOptions(this)
+    },
+    prevItem () {
+      common.prevItem(this)
+    },
+    nextItem () {
+      common.nextItem(this)
+    },
+    enterItem () {
+      common.enterItem(this)
+    },
+    pointerSet (index) {
+      common.pointerSet(this, index)
+    },
+    pointerAdjust () {
+      common.pointerAdjust(this)
+    },
+    mousedownItem () {
+      common.mousedownItem(this)
+    },
+    selectItem (option) {
+      this.searchText = '' // reset text when select item
+      this.closeOptions()
+      this.$emit('select', option)
+      if (option.value === option.text) {
+        this.searchText = option.value
       }
     }
   }
+}
 </script>
 
 <style scoped src="semantic-ui-dropdown/dropdown.css"></style>
 <style>
-  /* Menu Item Hover */
-  .ui.dropdown .menu > .item:hover {
-    background: none transparent !important;
-  }
+/* Menu Item Hover */
+.ui.dropdown .menu > .item:hover {
+  background: none transparent !important;
+}
 
-  /* Menu Item Hover for Key event */
-  .ui.dropdown .menu > .item.current {
-    background: rgba(0, 0, 0, 0.05) !important;
-  }
+/* Menu Item Hover for Key event */
+.ui.dropdown .menu > .item.current {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
 </style>

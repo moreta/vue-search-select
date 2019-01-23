@@ -12,12 +12,13 @@
           <input v-model="input" name="myInput">
         </div>
         <div>
-          <model-select :options="options"
-                        v-model="item"
+          <basic-select :options="options"
+                        :selected-option="item"
                         id="mySelectId"
                         name="mySelectName"
-                        placeholder="placeholder text">
-          </model-select>
+                        placeholder="select item"
+                        @select="onSelect">
+          </basic-select>
         </div>
         <div>
           <button type="submit" @click="onSubmit">submit</button>
@@ -33,19 +34,22 @@
         <thead>
         <tr>
           <th>value</th>
+          <th>text</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <td>{{item}}</td>
+          <td>{{item.value}}</td>
+          <td>{{item.text}}</td>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
 </template>
+
 <script>
-import { ModelSelect } from '../../lib'
+import { BasicSelect } from '../../lib'
 
 export default {
   data () {
@@ -56,19 +60,27 @@ export default {
         { value: 'test3', text: 'test3' },
         { value: 'test4', text: 'test4' }
       ],
-      item: '',
+      searchText: '', // If value is falsy, reset searchText & searchItem
+      item: {
+        value: '',
+        text: ''
+      },
       input: ''
     }
   },
   methods: {
+    onSelect (item) {
+      this.item = item
+    },
     reset () {
-      this.item = ''
+      this.item = {}
     },
     selectOption () {
       // select option from parent component
-      this.item = this.options[0].value
+      this.item = this.options[0]
     },
     onSubmit (e) {
+      e.preventDefault()
       const inputValue = document.getElementsByName('myInput')[0].value
       const selectValue = document.getElementsByName('mySelectName')[0].value
       console.log(inputValue)
@@ -77,7 +89,7 @@ export default {
     }
   },
   components: {
-    ModelSelect
+    BasicSelect
   }
 }
 </script>

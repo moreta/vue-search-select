@@ -8,6 +8,8 @@
     render: function (createElement) {
       return createElement(ModelSelect, {
         props: {
+          id: this.id,
+          name: this.name,
           options: this.options,
           value: this.innerValue,
           isError: this.isError,

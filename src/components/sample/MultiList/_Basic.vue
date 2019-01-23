@@ -11,6 +11,8 @@
         <multi-list-select :list="someList"
                            option-value="code"
                            option-text="name"
+                           id="mySelectId"
+                           name="mySelectName"
                            :custom-text="codeAndNameAndDesc"
                            :selected-items="items"
                            placeholder="select item"

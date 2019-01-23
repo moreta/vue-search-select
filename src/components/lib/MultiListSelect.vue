@@ -7,6 +7,8 @@ export default {
   render: function (createElement) {
     return createElement(MultiSelect, {
       props: {
+        id: this.id,
+        name: this.name,
         options: this.options,
         selectedOptions: this.items,
         isError: this.isError,

@@ -13,6 +13,8 @@
                              v-model="objectItem"
                              option-value="code"
                              option-text="name"
+                             id="mySelectId"
+                             name="mySelectName"
                              placeholder="select item"
                              @searchchange="printSearchText">
           </model-list-select>

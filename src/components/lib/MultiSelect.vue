@@ -14,6 +14,8 @@
     <input class="search"
            autocomplete="off"
            tabindex="0"
+           :id="id"
+           :name="name"
            v-model="searchText"
            ref="input"
            :style="inputWidth"

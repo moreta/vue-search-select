@@ -8,6 +8,8 @@
     render: function (createElement) {
       return createElement(BasicSelect, {
         props: {
+          id: this.id,
+          name: this.name,
           options: this.options,
           selectedOption: this.item,
           isError: this.isError,
