@@ -150,7 +150,7 @@
           { id: 5, name: 'de', desc: 'desc05' },
           { id: 6, name: 'ef', desc: 'desc06' }
         ],
-        numberItem: ''
+        numberItem: null
       }
     },
     methods: {
