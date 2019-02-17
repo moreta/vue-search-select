@@ -1526,6 +1526,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onInput: function onInput(option) {
 	      var _this3 = this;
 	
+	      if (option === undefined) {
+	        return this.$emit('input', '');
+	      }
 	      if ((0, _keys2.default)(option).length === 0 && option.constructor === Object) {
 	        this.$emit('input', option);
 	      } else if ((typeof option === 'undefined' ? 'undefined' : (0, _typeof3.default)(option)) === 'object') {
