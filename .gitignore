@@ -5,3 +5,5 @@ node_modules/
 test/unit/coverage
 test/e2e/reports
 dist
+.project
+.settings
