@@ -28,6 +28,7 @@
               <router-link :to="{ path: '/CustomFilter' }" class="item">Custom Filter</router-link>
               <router-link :to="{ path: '/List' }" class="item">List</router-link>
               <router-link :to="{ path: '/ListCustomText' }" class="item">List Custom Text</router-link>
+              <router-link :to="{ path: '/Slot' }" class="item">Slot</router-link>
             </div>
           </div>
         </div>
@@ -41,20 +42,20 @@
 
 <style src="semantic-ui-css/semantic.css"></style>
 <style>
-  .flexbox {
-    display: flex;
-  }
-  .flex-menu {
-    width: 250px;
-  }
-  .flex-content {
-    flex-grow: 1;
-  }
-  .flex-result {
-    min-width: 400px;
-    width: 400px;
-  }
-  .flexbox > * {
-    margin: 0 20px;
-  }
+.flexbox {
+  display: flex;
+}
+.flex-menu {
+  width: 250px;
+}
+.flex-content {
+  flex-grow: 1;
+}
+.flex-result {
+  min-width: 400px;
+  width: 400px;
+}
+.flexbox > * {
+  margin: 0 20px;
+}
 </style>

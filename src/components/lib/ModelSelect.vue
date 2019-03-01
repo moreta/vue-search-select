@@ -22,7 +22,8 @@
            @keydown.delete="deleteTextOrItem"
     />
     <div class="text"
-         :class="textClass" :data-vss-custom-attr="searchTextCustomAttr">{{inputText}}
+         :class="textClass" :data-vss-custom-attr="searchTextCustomAttr">
+         {{inputText}}
     </div>
     <div class="menu"
          ref="menu"
@@ -37,7 +38,9 @@
              @click.stop="selectItem(option)"
              @mousedown="mousedownItem"
              @mouseenter="pointerSet(idx)">
-          {{option.text}}
+            <slot name="option" :value="option">
+                {{option.text}}
+            </slot>
         </div>
       </template>
     </div>

@@ -14,6 +14,7 @@ import Basic from './components/sample/Basic/Basic'
 import CustomFilter from './components/sample/Basic/CustomFilter'
 import List from './components/sample/List/List'
 import ListCustomText from './components/sample/List/ListCustomText'
+import Slot from './components/sample/Slot/Slot'
 
 Vue.use(VueRouter)
 Vue.config.devtools = true
@@ -30,7 +31,9 @@ const routes = [
   { path: '/Basic', component: Basic },
   { path: '/CustomFilter', component: CustomFilter },
   { path: '/List', component: List },
-  { path: '/ListCustomText', component: ListCustomText }
+  { path: '/ListCustomText', component: ListCustomText },
+  { path: '/Slot', component: Slot }
+
 ]
 const router = new VueRouter({
   routes // short for routes: routes
