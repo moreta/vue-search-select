@@ -95,8 +95,8 @@ export default {
     },
     customAttrs () {
       try {
-        if (Array.isArray(this.options)) {
-          return this.options.map(o => this.customAttr(o))
+        if (Array.isArray(this.filteredOptions)) {
+          return this.filteredOptions.map(o => this.customAttr(o))
         }
       } catch (e) {
         // if there is an error, just return an empty array
