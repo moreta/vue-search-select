@@ -1,0 +1,52 @@
+/* for em size*/
+.ui.dropdown {
+  font-size: 14px;
+
+  input {
+    font-size: 14px;
+  }
+
+  .menu > .item {
+    font-size: 14px;
+  }
+}
+
+.ui.selection.dropdown {
+  min-height: 14px;
+
+  .menu {
+    min-width: 100%;
+    width: 100%;
+  }
+}
+
+/* label close icon */
+i.icon.delete:before {
+  content: "\00d7";
+  font-family: Arial, sans-serif;
+}
+
+i.icon.delete {
+  position: relative;
+  display: inline-block;
+  width: 10px !important;
+
+  &:before, &:after {
+    position: absolute;
+    bottom: -1px;
+    right: 0;
+    content: ' ';
+    height: 12px;
+    width: 3px;
+    background-color: #333;
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+
+}

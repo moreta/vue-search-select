@@ -1,0 +1,87 @@
+/*!
+ * # Semantic UI 2.4.1 - Label
+ */
+
+/*******************************
+            Label
+*******************************/
+
+.ui.label {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: baseline;
+    margin: 0em 0.14285714em;
+    background-color: #E8E8E8;
+    background-image: none;
+    padding: 0.5833em 0.833em;
+    color: rgba(0, 0, 0, 0.6);
+    text-transform: none;
+    font-weight: bold;
+    border: 0px solid transparent;
+    border-radius: 0.28571429rem;
+    -webkit-transition: background 0.1s ease;
+    transition: background 0.1s ease;
+}
+.ui.label:first-child {
+    margin-left: 0em;
+}
+.ui.label:last-child {
+    margin-right: 0em;
+}
+
+/* Link */
+a.ui.label {
+    cursor: pointer;
+}
+
+/* Inside Link */
+.ui.label > a {
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.5;
+    -webkit-transition: 0.1s opacity ease;
+    transition: 0.1s opacity ease;
+}
+.ui.label > a:hover {
+    opacity: 1;
+}
+
+/* Image */
+.ui.label > img {
+    width: auto !important;
+    vertical-align: middle;
+    height: 2.1666em !important;
+}
+
+/* Icon */
+.ui.label > .icon {
+    width: auto;
+    margin: 0em 0.75em 0em 0em;
+}
+
+/* Detail */
+.ui.label > .detail {
+    display: inline-block;
+    vertical-align: top;
+    font-weight: bold;
+    margin-left: 1em;
+    opacity: 0.8;
+}
+.ui.label > .detail .icon {
+    margin: 0em 0.25em 0em 0em;
+}
+
+/* Removable label */
+.ui.label > .close.icon,
+.ui.label > .delete.icon {
+    cursor: pointer;
+    margin-right: 0em;
+    margin-left: 0.5em;
+    font-size: 0.92857143em;
+    opacity: 0.5;
+    -webkit-transition: background 0.1s ease;
+    transition: background 0.1s ease;
+}
+.ui.label > .delete.icon:hover {
+    opacity: 1;
+}
