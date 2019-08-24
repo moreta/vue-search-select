@@ -1,6 +1,6 @@
-/* for em size*/
 .ui.dropdown {
-  font-size: 14px;
+  box-sizing: border-box; /* for padding */
+  font-size: 14px; /* for em size */
 
   input {
     font-size: 14px;
