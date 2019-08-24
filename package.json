@@ -21,8 +21,8 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "lib:build": "vue-cli-service build --target lib --name VueSearchSelect ./src/lib/index.js",
-    "lib:publish": "npm run build-lib && npm run publish",
-    "lib:publish:alpha": "npm run build-lib && npm run publish  --tag alpha"
+    "lib:publish": "npm run lib:build && npm run publish",
+    "lib:publish:alpha": "npm run lib:build && npm run publish --tag alpha"
   },
   "devDependencies": {
     "core-js": "^2.6.5",
