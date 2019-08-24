@@ -1,6 +1,6 @@
 {
   "name": "vue-search-select",
-  "version": "2.9.0",
+  "version": "2.9.1-alpha.1",
   "description": "A Vue.js search select form component",
   "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
