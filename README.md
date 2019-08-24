@@ -15,7 +15,7 @@ A Vue.js search select component with NO dependencies.
   + ModelListSelect (from v2.3.8)
     + value set through v-model
     + Can pass custom list and customize display text to Component
-    + Wrap ModelSelect component    
+    + Wrap ModelSelect component
   + MultiSelect
     + search select for multiple select
   + MultiListSelect
@@ -26,6 +26,32 @@ A Vue.js search select component with NO dependencies.
     + value set through @select event
     + Can pass custom list and customize display text to Component
     + Wrap BasicSelect component
+
+### Version 2.9.1
+
+From v2.9.1 library css extracted standalone file.
+
+There are three file.
+
++ VueSearchSelect.common.js
+  + common js bundle for consuming via bundlers
++ VueSearchSelect.umd.js
+  + umd bundle for browser
++ VueSearchSelect.css
+  + extracted css
+
+From v2.9.1 vue-search-select no more need semantic-ui-css.
+
+If you already use semantic-ui(or formantic-ui) VueSearchSelect.css is unnecessary.
+If you want use vue-search-select without semantic-ui. Just use VueSearchSelect.[common|umd].js with VueSearchSelect.css
+
+*without semantic-ui*
+
+Need css import somewhere in your app.(for example main.js)
+
+```js
+import 'vue-search-select/dist/VueSearchSelect.css'
+```
 
 ### ModelSelect
 
@@ -62,7 +88,7 @@ yarn add vue-search-select
 ```
 npm install --save vue-search-select@alpha
 # or
-npm install --save vue-search-select@2.6.3-alpha.1
+npm install --save vue-search-select@2.9.1-alpha.2
 ```
 
 # Sample code
