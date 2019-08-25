@@ -73,8 +73,6 @@ export default {
     onSubmit (e) {
       const inputValue = document.getElementsByName('myInput')[0].value
       const selectValue = document.getElementsByName('mySelectName')[0].value
-      console.log(inputValue)
-      console.log(selectValue)
       window.alert('inputValue : ' + inputValue + ' - ' + 'selectValue : ' + selectValue)
     }
   },

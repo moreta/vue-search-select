@@ -74,8 +74,6 @@ export default {
       this.item = this.options[0].value
     },
     handleOnInput ($event) {
-      console.log('emitted input')
-      console.log($event)
       this.item = $event
     }
   },

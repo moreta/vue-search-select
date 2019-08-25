@@ -111,11 +111,11 @@ export default {
       if (this.animations.length === 0) {
         axios.get(`http://api.moemoe.tokyo/anime/v1/master/2017/2`)
           .then(response => {
-            console.log(response)
             this.animations = response.data
           })
           .catch(error => {
-            console.log(error)
+            /* eslint no-console: off */
+            console.error(error)
           })
       }
     },
