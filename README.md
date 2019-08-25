@@ -34,7 +34,7 @@ From v2.9.1 library css extracted standalone file.
 There are three file.
 
 + VueSearchSelect.common.js
-  + common js bundle for consuming via bundlers
+  + common js bundle for consuming via bundlers(webpack)
 + VueSearchSelect.umd.js
   + umd bundle for browser
 + VueSearchSelect.css
