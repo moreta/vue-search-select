@@ -7,7 +7,6 @@ node_modules/
 tests/*
 public/*
 src/*
-src/assets/*.png
+src/assets/*
 !src/lib/*
-!src/assets/*.css
-!src/assets/*.scss
+!src/assets/lib/*
