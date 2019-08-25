@@ -41,6 +41,7 @@ There are three file.
   + extracted css
 
 From v2.9.1 vue-search-select no more need semantic-ui-css.
+But still semantic-ui-css compatible html and css class use.
 
 If you already use semantic-ui(or formantic-ui) VueSearchSelect.css is unnecessary.
 If you want use vue-search-select without semantic-ui. Just use VueSearchSelect.[common|umd].js with VueSearchSelect.css
