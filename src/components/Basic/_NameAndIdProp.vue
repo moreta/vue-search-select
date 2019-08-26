@@ -1,51 +1,52 @@
 <template>
-  <div class="flexbox">
-    <div class="flex-content">
-      <div>
-        <button type="button" @click="reset" class="btn btn-info btn-sm">reset</button>
+  <div class="ui vertical segment">
+    <div class="flexbox">
+      <div class="flex-content">
+        <h3>name & id attribute</h3>
+        <div class="button-group">
+          <button type="button" @click="reset" class="small ui button">reset</button>
+          <button type="button" @click="selectOption" class="small ui button">option select from parent</button>
+        </div>
+        <form name="myForm" @submit.prevent>
+          <div class="ui input">
+            <input v-model="input" name="myInput">
+          </div>
+          <div>
+            <basic-select
+              :options="options"
+              :selected-option="item"
+              id="mySelectId"
+              name="mySelectName"
+              placeholder="select item"
+              @select="onSelect"
+            >
+            </basic-select>
+          </div>
+          <div>
+            <button type="submit" @click="onSubmit" class="small ui button">submit</button>
+          </div>
+          <div>
+            * Notice : Select input value can only be referenced when option.text and option.value are same. (like this {
+            value: 'test1', text: 'test1' })
+          </div>
+        </form>
       </div>
-      <div>
-        <button type="button" @click="selectOption" class="btn btn-info btn-sm">option select from parent</button>
+      <div class="flex-result">
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value</th>
+            <th>text</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{item.value}}</td>
+            <td>{{item.text}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-      <form name="myForm" @submit.prevent>
-        <div>
-          <input v-model="input" name="myInput">
-        </div>
-        <div>
-          <basic-select
-            :options="options"
-            :selected-option="item"
-            id="mySelectId"
-            name="mySelectName"
-            placeholder="select item"
-            @select="onSelect"
-          >
-          </basic-select>
-        </div>
-        <div>
-          <button type="submit" @click="onSubmit">submit</button>
-        </div>
-        <div>
-          * Notice : Select input value can only be referenced when option.text and option.value are same. (like this {
-          value: 'test1', text: 'test1' })
-        </div>
-      </form>
-    </div>
-    <div class="flex-result">
-      <table class="ui celled table">
-        <thead>
-        <tr>
-          <th>value</th>
-          <th>text</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>{{item.value}}</td>
-          <td>{{item.text}}</td>
-        </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </template>

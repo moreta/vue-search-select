@@ -1,68 +1,69 @@
 <template>
-  <div class="flexbox">
-    <div class="flex-content">
-      <div>
-        <button type="button" @click="reset" class="btn btn-info btn-sm">reset</button>
+  <div class="ui vertical segment">
+    <div class="flexbox">
+      <div class="flex-content">
+        <h3>MultiList</h3>
+        <div class="button-group">
+          <button type="button" @click="reset" class="small ui button">reset</button>
+          <button type="button" @click="selectItem" class="small ui button">select from parent</button>
+        </div>
+        <div>
+          <multi-list-select
+            :list="someList"
+            option-value="code"
+            option-text="name"
+            id="mySelectId"
+            name="mySelectName"
+            :custom-text="codeAndNameAndDesc"
+            :selected-items="items"
+            placeholder="select item"
+            @select="onSelect"
+            @searchchange="printSearchText"
+          >
+          </multi-list-select>
+        </div>
       </div>
-      <div>
-        <button type="button" @click="selectItem" class="btn btn-info btn-sm">select from parent</button>
-      </div>
-      <div>
-        <multi-list-select
-          :list="someList"
-          option-value="code"
-          option-text="name"
-          id="mySelectId"
-          name="mySelectName"
-          :custom-text="codeAndNameAndDesc"
-          :selected-items="items"
-          placeholder="select item"
-          @select="onSelect"
-          @searchchange="printSearchText"
-        >
-        </multi-list-select>
-      </div>
-    </div>
-    <div class="flex-result">
-      <div>
-        <h4>input text(searchText)</h4>
-        <p>{{searchText}}</p>
-        <h4>Last selected Item</h4>
-        <table class="ui celled table">
-          <thead>
-          <tr>
-            <th>code</th>
-            <th>name</th>
-            <th>desc</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{lastSelectItem.code}}</td>
-            <td>{{lastSelectItem.name}}</td>
-            <td>{{lastSelectItem.desc}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <h4>All selected item</h4>
-        <table class="ui celled table">
-          <thead>
-          <tr>
-            <th>code</th>
-            <th>name</th>
-            <th>desc</th>
-          </tr>
-          </thead>
-          <tbody v-for="item in items" :key="item.code">
-          <tr>
-            <td>{{item.code}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.desc}}</td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="flex-result">
+        <div>
+          <h4>input text(searchText)</h4>
+          <p>{{searchText}}</p>
+          <h4>Last selected Item</h4>
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>code</th>
+              <th>name</th>
+              <th>desc</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{lastSelectItem.code}}</td>
+              <td>{{lastSelectItem.name}}</td>
+              <td>{{lastSelectItem.desc}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>All selected item</h4>
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>code</th>
+              <th>name</th>
+              <th>desc</th>
+            </tr>
+            </thead>
+            <tbody v-for="item in items" :key="item.code">
+            <tr>
+              <td>{{item.code}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.desc}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

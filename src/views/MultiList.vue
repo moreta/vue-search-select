@@ -1,12 +1,7 @@
 <template>
   <div>
-    <h3>Basic</h3>
     <basic-example />
-
-    <h3>isError Prop</h3>
     <error-prop-example />
-
-    <h3>isDisabled Prop</h3>
     <disabled-prop-example />
   </div>
 </template>

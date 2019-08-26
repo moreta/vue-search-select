@@ -1,51 +1,54 @@
 <template>
-  <div class="flexbox">
-    <div class="flex-content">
-      <div>
-        <multi-select
-          :options="options"
-          :selected-options="items"
-          placeholder="select item"
-          :customAttr="customAttr"
-          @select="onSelect"
-        >
-        </multi-select>
+  <div class="ui vertical segment">
+    <div class="flexbox">
+      <div class="flex-content">
+        <h3>Multi with custom attribute to allow custom css</h3>
+        <div>
+          <multi-select
+            :options="options"
+            :selected-options="items"
+            placeholder="select item"
+            :customAttr="customAttr"
+            @select="onSelect"
+          >
+          </multi-select>
+        </div>
       </div>
-    </div>
-    <div class="flex-result">
-      <div>
-        <h4>Last selected Item</h4>
-        <table class="ui celled table">
-          <thead>
-          <tr>
-            <th>value</th>
-            <th>text</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{lastSelectItem.value}}</td>
-            <td>{{lastSelectItem.text}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <h4>All selected item</h4>
-        <table class="ui celled table">
-          <thead>
-          <tr>
-            <th>value</th>
-            <th>text</th>
-          </tr>
-          </thead>
-          <tbody v-for="item in items" :key="item.value">
-          <tr>
-            <td>{{item.value}}</td>
-            <td>{{item.text}}</td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="flex-result">
+        <div>
+          <h4>Last selected Item</h4>
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>value</th>
+              <th>text</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{lastSelectItem.value}}</td>
+              <td>{{lastSelectItem.text}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>All selected item</h4>
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>value</th>
+              <th>text</th>
+            </tr>
+            </thead>
+            <tbody v-for="item in items" :key="item.value">
+            <tr>
+              <td>{{item.value}}</td>
+              <td>{{item.text}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

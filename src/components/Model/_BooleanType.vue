@@ -1,32 +1,33 @@
 <template>
-  <div class="flexbox">
-    <div class="flex-content">
-      <div>
-        <button type="button" @click="toFalse" class="btn btn-info btn-sm">to false</button>
+  <div class="ui vertical segment">
+    <div class="flexbox">
+      <div class="flex-content">
+        <h3>Boolean type value</h3>
+        <div class="button-group">
+          <button type="button" @click="toFalse" class="small ui button">to false</button>
+          <button type="button" @click="toTrue" class="small ui button">to true</button>
+        </div>
+        <div>
+          <model-select :options="options"
+                        v-model="item"
+                        placeholder="placeholder text">
+          </model-select>
+        </div>
       </div>
-      <div>
-        <button type="button" @click="toTrue" class="btn btn-info btn-sm">to true</button>
+      <div class="flex-result">
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{item}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-      <div>
-        <model-select :options="options"
-                      v-model="item"
-                      placeholder="placeholder text">
-        </model-select>
-      </div>
-    </div>
-    <div class="flex-result">
-      <table class="ui celled table">
-        <thead>
-        <tr>
-          <th>value</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>{{item}}</td>
-        </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </template>

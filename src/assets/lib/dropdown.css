@@ -12,9 +12,7 @@
     display: inline-block;
     outline: none;
     text-align: left;
-    -webkit-transition: width 0.1s ease, -webkit-box-shadow 0.1s ease;
     transition: width 0.1s ease, -webkit-box-shadow 0.1s ease;
-    transition: box-shadow 0.1s ease, width 0.1s ease;
     transition: box-shadow 0.1s ease, width 0.1s ease, -webkit-box-shadow 0.1s ease;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

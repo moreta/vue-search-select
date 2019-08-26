@@ -1,118 +1,117 @@
 <template>
   <div>
-    <div class="flexbox">
-      <div class="flex-content">
-        <div>
-          <button type="button" @click="reset" class="btn btn-info btn-sm">reset</button>
+    <div class="ui vertical segment">
+      <div class="flexbox">
+        <div class="flex-content">
+          <h3>OptionValue & OptionText prop</h3>
+          <div class="button-group">
+            <button type="button" @click="reset" class="small ui button">reset</button>
+            <button type="button" @click="selectOption" class="small ui button">option select from parent</button>
+          </div>
+          <div>
+            <model-list-select
+              :list="options"
+              v-model="objectItem"
+              option-value="code"
+              option-text="name"
+              id="mySelectId"
+              name="mySelectName"
+              placeholder="select item"
+              @searchchange="printSearchText"
+            >
+            </model-list-select>
+          </div>
         </div>
-        <div>
-          <button type="button" @click="selectOption" class="btn btn-info btn-sm">option select from parent</button>
+        <div class="flex-result">
+          <h4>input text(searchText)</h4>
+          <p>{{searchText}}</p>
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>code</th>
+              <th>name</th>
+              <th>desc</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{objectItem.code}}</td>
+              <td>{{objectItem.name}}</td>
+              <td>{{objectItem.desc}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div>
-          <model-list-select
-            :list="options"
-            v-model="objectItem"
-            option-value="code"
-            option-text="name"
-            id="mySelectId"
-            name="mySelectName"
-            placeholder="select item"
-            @searchchange="printSearchText"
-          >
-          </model-list-select>
-        </div>
-      </div>
-      <div class="flex-result">
-        <h4>input text(searchText)</h4>
-        <p>{{searchText}}</p>
-        <table class="ui celled table">
-          <thead>
-          <tr>
-            <th>code</th>
-            <th>name</th>
-            <th>desc</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{objectItem.code}}</td>
-            <td>{{objectItem.name}}</td>
-            <td>{{objectItem.desc}}</td>
-          </tr>
-          </tbody>
-        </table>
       </div>
     </div>
-
-    <h3>String type Option value ModelList</h3>
-    <div class="flexbox">
-      <div class="flex-content">
-        <div>
-          <button type="button" @click="reset2" class="btn btn-info btn-sm">reset</button>
+    <div class="ui vertical segment">
+      <div class="flexbox">
+        <div class="flex-content">
+          <h3>String type Option value ModelList</h3>
+          <div class="button-group">
+            <button type="button" @click="reset2" class="small ui button">reset</button>
+            <button type="button" @click="selectOption2" class="small ui button">option select from parent</button>
+          </div>
+          <div>
+            <model-list-select
+              :list="options2"
+              v-model="stringItem"
+              option-value="code"
+              :custom-text="codeAndNameAndDesc"
+              placeholder="select item2"
+            >
+            </model-list-select>
+          </div>
         </div>
-        <div>
-          <button type="button" @click="selectOption2" class="btn btn-info btn-sm">option select from parent</button>
+        <div class="flex-result">
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>value(string)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{stringItem}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div>
-          <model-list-select
-            :list="options2"
-            v-model="stringItem"
-            option-value="code"
-            :custom-text="codeAndNameAndDesc"
-            placeholder="select item2"
-          >
-          </model-list-select>
-        </div>
-      </div>
-      <div class="flex-result">
-        <table class="ui celled table">
-          <thead>
-          <tr>
-            <th>value(string)</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{stringItem}}</td>
-          </tr>
-          </tbody>
-        </table>
       </div>
     </div>
-
-    <h3>Number type Option Value ModelList</h3>
-    <div class="flexbox">
-      <div class="flex-content">
-        <div>
-          <button type="button" @click="reset3" class="btn btn-info btn-sm">reset</button>
+    <div class="ui vertical segment">
+      <div class="flexbox">
+        <div class="flex-content">
+          <h3>Number type Option Value ModelList</h3>
+          <div class="button-group">
+            <button type="button" @click="reset3" class="small ui button">reset</button>
+            <button type="button" @click="selectOption3" class="small ui button">option select from parent</button>
+          </div>
+          <div>
+            <model-list-select
+              :list="options3"
+              v-model="numberItem"
+              option-value="id"
+              :custom-text="idAndNameAndDesc"
+              placeholder="select item2"
+            >
+            </model-list-select>
+          </div>
         </div>
-        <div>
-          <button type="button" @click="selectOption3" class="btn btn-info btn-sm">option select from parent</button>
+        <div class="flex-result">
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>value(number)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{numberItem}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div>
-          <model-list-select
-            :list="options3"
-            v-model="numberItem"
-            option-value="id"
-            :custom-text="idAndNameAndDesc"
-            placeholder="select item2"
-          >
-          </model-list-select>
-        </div>
-      </div>
-      <div class="flex-result">
-        <table class="ui celled table">
-          <thead>
-          <tr>
-            <th>value(number)</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{numberItem}}</td>
-          </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </div>

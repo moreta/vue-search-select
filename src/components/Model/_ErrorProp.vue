@@ -1,30 +1,33 @@
 <template>
-  <div class="flexbox">
-    <div class="flex-content">
-      <div>
-        <model-select
-          :options="options"
-          v-model="item"
-          :is-error="isError"
-        >
-        </model-select>
+  <div class="ui vertical segment">
+    <div class="flexbox">
+      <div class="flex-content">
+        <h3>isError prop</h3>
+        <div>
+          <model-select
+            :options="options"
+            v-model="item"
+            :is-error="isError"
+          >
+          </model-select>
+        </div>
       </div>
-    </div>
-    <div class="flex-result">
-      <table class="ui celled table">
-        <thead>
-        <tr>
-          <th>value</th>
-          <th>text</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>{{item.value}}</td>
-          <td>{{item.text}}</td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="flex-result">
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value</th>
+            <th>text</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{item.value}}</td>
+            <td>{{item.text}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>

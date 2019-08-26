@@ -1,42 +1,43 @@
 <template>
-  <div class="flexbox">
-    <div class="flex-content">
-      <div>
-        <button type="button" @click="reset" class="btn btn-info btn-sm">reset</button>
+  <div class="ui vertical segment">
+    <div class="flexbox">
+      <div class="flex-content">
+        <h3>isError Prop</h3>
+        <div class="button-group">
+          <button type="button" @click="reset" class="small ui button">reset</button>
+          <button type="button" @click="selectItem" class="small ui button">select from parent</button>
+        </div>
+        <div>
+          <multi-list-select
+            :list="someList"
+            option-value="code"
+            option-text="name"
+            :custom-text="codeAndNameAndDesc"
+            :selected-items="items"
+            :is-error="isError"
+            @select="onSelect"
+          >
+          </multi-list-select>
+        </div>
       </div>
-      <div>
-        <button type="button" @click="selectItem" class="btn btn-info btn-sm">select from parent</button>
+      <div class="flex-result">
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>value</th>
+            <th>text</th>
+            <th>desc</th>
+          </tr>
+          </thead>
+          <tbody v-for="item in items" :key="item.code">
+          <tr>
+            <td>{{item.code}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.desc}}</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-      <div>
-        <multi-list-select
-          :list="someList"
-          option-value="code"
-          option-text="name"
-          :custom-text="codeAndNameAndDesc"
-          :selected-items="items"
-          :is-error="isError"
-          @select="onSelect"
-        >
-        </multi-list-select>
-      </div>
-    </div>
-    <div class="flex-result">
-      <table class="ui celled table">
-        <thead>
-        <tr>
-          <th>value</th>
-          <th>text</th>
-          <th>desc</th>
-        </tr>
-        </thead>
-        <tbody v-for="item in items" :key="item.code">
-        <tr>
-          <td>{{item.code}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.desc}}</td>
-        </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </template>

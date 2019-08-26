@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import Model from './views/Model'
 import ModelList from './views/ModelList'
 import ModelAjax from './views/ModelAjax'
@@ -17,9 +16,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
-      redirect: 'Model'
+      redirect: '/model'
     },
     // model
     { path: '/model', name: 'model', component: Model },
