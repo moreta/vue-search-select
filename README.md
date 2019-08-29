@@ -41,18 +41,16 @@ There are three file.
   + extracted css
 
 From v2.9.1 vue-search-select no more need semantic-ui-css. (Demo page wrote without semantic-ui)
-But still semantic-ui-css compatible html and css class use.
-
-If you already use semantic-ui(or formantic-ui) VueSearchSelect.css is unnecessary.
-If you want use vue-search-select without semantic-ui. Just use VueSearchSelect.[common|umd].js with VueSearchSelect.css
-
-*without semantic-ui*
-
-Need css import somewhere in your app.(for example main.js)
+But Need css import somewhere in your app.(for example main.js)
 
 ```js
 import 'vue-search-select/dist/VueSearchSelect.css'
 ```
+And still semantic-ui-css compatible html and css classes used.
+
+If you already use semantic-ui(or formantic-ui) VueSearchSelect.css import is unnecessary.
+If you want use vue-search-select without semantic-ui-css, import VueSearchSelect.css.
+
 
 ### ModelSelect
 
@@ -89,6 +87,16 @@ npm install --save vue-search-select@alpha
 # or
 npm install --save vue-search-select@2.9.1-alpha.9
 ```
+
+## Setup
+
+Add this on main.js or somewhere your plugin file. (from v2.9.1)
+```js
+import 'vue-search-select/dist/VueSearchSelect.css'
+```
+
+**If you already use semantic-ui-css, css import not necessary.**
+
 
 # Sample code
 
