@@ -1,0 +1,83 @@
+<template>
+  <div class="ui vertical segment">
+    <div class="flexbox">
+      <div class="flex-content">
+        <div class="button-group">
+          <button type="button" @click="reset" class="small ui button">reset</button>
+          <button type="button" @click="selectItem" class="small ui button">select from parent</button>
+        </div>
+        <div>
+          <list-select
+            :list="someList"
+            option-value="code"
+            option-text="name"
+            :custom-text="codeAndNameAndDesc"
+            :selected-item="item"
+            @select="onSelect"
+          >
+          </list-select>
+        </div>
+      </div>
+      <div class="flex-result">
+        <table class="ui celled table">
+          <thead>
+          <tr>
+            <th>code</th>
+            <th>name</th>
+            <th>desc</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{item.code}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.desc}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ListSelect } from '../lib'
+
+export default {
+  data () {
+    return {
+      someList: [
+        { code: '01', name: 'aa', desc: 'desc01' },
+        { code: '02', name: 'ab', desc: 'desc02' },
+        { code: '03', name: 'bc', desc: 'desc03' },
+        { code: '04', name: 'cd', desc: 'desc04' },
+        { code: '05', name: 'de', desc: 'desc05' },
+        { code: '06', name: 'ef', desc: 'desc06' }
+      ],
+      item: {
+        code: '',
+        name: '',
+        desc: ''
+      }
+    }
+  },
+  methods: {
+    codeAndNameAndDesc (item) {
+      return `${item.code} - ${item.name} - ${item.desc}`
+    },
+    onSelect (item) {
+      this.item = item
+    },
+    reset () {
+      this.item = {}
+    },
+    selectItem () {
+      // select option from parent component
+      this.item = this.someList[0]
+    }
+  },
+  components: {
+    ListSelect
+  }
+}
+</script>

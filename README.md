@@ -15,7 +15,7 @@ A Vue.js search select component with NO dependencies.
   + ModelListSelect (from v2.3.8)
     + value set through v-model
     + Can pass custom list and customize display text to Component
-    + Wrap ModelSelect component    
+    + Wrap ModelSelect component
   + MultiSelect
     + search select for multiple select
   + MultiListSelect
@@ -26,6 +26,33 @@ A Vue.js search select component with NO dependencies.
     + value set through @select event
     + Can pass custom list and customize display text to Component
     + Wrap BasicSelect component
+
+### Version 2.9.1
+
+From v2.9.1 library css extracted standalone file.
+
+There are three file.
+
++ VueSearchSelect.common.js
+  + common js bundle for consuming via bundlers(webpack)
++ VueSearchSelect.umd.js
+  + umd bundle for browser
++ VueSearchSelect.css
+  + extracted css
+
+From v2.9.1 vue-search-select no more need semantic-ui-css. (Demo page wrote without semantic-ui)
+But still semantic-ui-css compatible html and css class use.
+
+If you already use semantic-ui(or formantic-ui) VueSearchSelect.css is unnecessary.
+If you want use vue-search-select without semantic-ui. Just use VueSearchSelect.[common|umd].js with VueSearchSelect.css
+
+*without semantic-ui*
+
+Need css import somewhere in your app.(for example main.js)
+
+```js
+import 'vue-search-select/dist/VueSearchSelect.css'
+```
 
 ### ModelSelect
 
@@ -39,18 +66,18 @@ A Vue.js search select component with NO dependencies.
 
 # Demo
 
-<https://moreta.github.io/vue-search-select/>
+<https://vue-search-select.netlify.com>
 
 # Usage
 
 ## Install
 
+npm
 ```bash
 npm install --save vue-search-select
 ```
 
-or by yarn
-
+yarn
 ```bash
 yarn add vue-search-select
 ```
@@ -58,9 +85,9 @@ yarn add vue-search-select
 ### Install alpha version
 
 ```
-yarn add vue-search-select@alpha
+npm install --save vue-search-select@alpha
 # or
-yarn add vue-search-select@2.6.3-alpha.1
+npm install --save vue-search-select@2.9.1-alpha.9
 ```
 
 # Sample code
@@ -69,7 +96,7 @@ See All Samples : src/components/sample
 
 ## ModelSelect Component Example
 
-[more ModelSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/components/sample/Model/Model.vue)
+[more ModelSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/views/Model.vue)
 
 ```html
 <template>
@@ -138,7 +165,7 @@ See All Samples : src/components/sample
 
 ## ModelListSelect Component Example
 
-[more ModelListSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/components/sample/Model/ModelList.vue)
+[more ModelListSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/components/views/ModelList.vue)
 
 ```html
 <template>
@@ -327,10 +354,7 @@ See All Samples : src/components/sample
 # Run examples
 
 ```bash
-# install dependencies
-yarn install
-
-# serve with hot reload at localhost:9090
-yarn run dev
+npm install
+npm run serve
 ```
 

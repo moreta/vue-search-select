@@ -2,7 +2,11 @@
 *.log
 .DS_Store
 node_modules/
-test/unit/coverage
-test/e2e/reports
-examples
-webpack.*
+.*
+*.js
+tests/*
+public/*
+src/*
+src/assets/*
+!src/lib/*
+!src/assets/lib/*
