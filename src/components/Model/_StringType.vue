@@ -3,12 +3,14 @@
     <div class="flexbox">
       <div class="flex-content">
         <h3>String type model</h3>
-        <div>
+        <div class="button-group">
           <button type="button" @click="reset" class="small ui button">reset</button>
           <button type="button" @click="selectOption" class="small ui button">option select from parent</button>
+          <button type="button" @click="openOption" class="small ui button">open option by button click</button>
         </div>
         <div>
           <model-select
+            ref="select"
             :options="options"
             v-model="item"
             placeholder="placeholder text"
@@ -74,6 +76,9 @@ export default {
     selectOption () {
       // select option from parent component
       this.item = this.options[1].value
+    },
+    openOption () {
+      this.$refs.select.openOptions()
     }
   },
   components: {
