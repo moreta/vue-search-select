@@ -66,20 +66,18 @@ import 'vue-search-select/dist/VueSearchSelect.css'
 
 # Demo
 
-<https://moreta.github.io/vue-search-select/>
+<https://vue-search-select.netlify.com>
 
 # Usage
 
 ## Install
 
 npm
-
 ```bash
 npm install --save vue-search-select
 ```
 
 yarn
-
 ```bash
 yarn add vue-search-select
 ```
@@ -89,7 +87,7 @@ yarn add vue-search-select
 ```
 npm install --save vue-search-select@alpha
 # or
-npm install --save vue-search-select@2.9.1-alpha.2
+npm install --save vue-search-select@2.9.1-alpha.9
 ```
 
 # Sample code
