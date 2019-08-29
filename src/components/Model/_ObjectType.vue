@@ -46,7 +46,6 @@ export default {
     return {
       // item1
       options: [
-        { value: '', text: 'select value' },
         { value: '1', text: 'aa' + ' - ' + '1' },
         { value: '2', text: 'ab' + ' - ' + '2' },
         { value: '3', text: 'bc' + ' - ' + '3' },
@@ -82,7 +81,7 @@ export default {
     },
     selectOption () {
       // select option from parent component
-      this.item = this.options[0]
+      this.item = this.options[1]
     },
     printSearchText (searchText) {
       this.searchText = searchText
