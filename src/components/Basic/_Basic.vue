@@ -1,8 +1,8 @@
 <template>
   <div class="ui vertical segment">
-    <h3>Basic</h3>
     <div class="flexbox">
       <div class="flex-content">
+        <h3>Basic</h3>
         <div class="button-group">
           <button type="button" @click="reset" class="small ui button">reset</button>
           <button type="button" @click="selectOption" class="small ui button">option select from parent</button>

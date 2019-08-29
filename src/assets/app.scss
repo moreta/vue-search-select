@@ -15,7 +15,6 @@
   --gray500: #697386;
   --blue500: #556cd6;
   --blue50: #f5fbff;
-  --blue50: #f5fbff;
   --border-radius-8: 8px;
   --font14: 14px;
   --background-color: rgb(249, 250, 251);
@@ -215,6 +214,10 @@ a {
 
   > * {
     margin: 0 20px;
+  }
+
+  h3, h4 {
+    margin-bottom: 10px;
   }
 
   .flex-menu {

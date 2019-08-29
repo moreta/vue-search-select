@@ -125,5 +125,6 @@ export default {
 }
 </script>
 
+<!-- When use semantic-ui-css, comment out lib.scss(VueSearchSelect.css) -->
 <!--<style src="semantic-ui-css/semantic.css"></style>-->
 <style src="./assets/app.scss" lang="scss"></style>
