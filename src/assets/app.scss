@@ -206,15 +206,8 @@ a {
   display: flex;
   flex-direction: row;
   width: 100%;
-  max-width: calc(1264px + 10vw);
-  max-width: calc(600px + 600px + 5vw + 5vw + 32px + 32px);
   max-width: var(--content-max-width);
-  padding: 5vw;
   padding: var(--method-area-padding);
-
-  > * {
-    margin: 0 20px;
-  }
 
   h3, h4 {
     margin-bottom: 10px;
@@ -225,12 +218,13 @@ a {
   }
 
   .flex-content {
-    flex-grow: 1;
+    padding: 0 10px;
+    width: 60%;
   }
 
   .flex-result {
-    min-width: 400px;
-    width: 400px;
+    padding: 0 10px;
+    width: 40%;
   }
 
 }
