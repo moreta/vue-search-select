@@ -11,13 +11,31 @@
           <div class="sidebar-nav-heading">Model (value by v-model)</div>
           <ul class="sidebar-nav-items">
             <li>
-              <router-link :to="{ path: 'model' }" class="sidebar-nav-item">Model</router-link>
+              <router-link
+                :to="{ path: 'model' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                Model
+              </router-link>
             </li>
             <li>
-              <router-link :to="{ path: 'model-list' }" class="sidebar-nav-item">ModelList</router-link>
+              <router-link
+                :to="{ path: 'model-list' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                ModelList
+              </router-link>
             </li>
             <li>
-              <router-link :to="{ path: 'model-ajax' }" class="sidebar-nav-item">Ajax sample</router-link>
+              <router-link
+                :to="{ path: 'model-ajax' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                Ajax sample
+              </router-link>
             </li>
           </ul>
         </div>
@@ -25,10 +43,22 @@
           <div class="sidebar-nav-heading">Multi</div>
           <ul class="sidebar-nav-items">
             <li>
-              <router-link :to="{ path: 'multi' }" class="sidebar-nav-item">Multi</router-link>
+              <router-link
+                :to="{ path: 'multi' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                Multi
+              </router-link>
             </li>
             <li>
-              <router-link :to="{ path: 'multi-list' }" class="sidebar-nav-item">Multi List</router-link>
+              <router-link
+                :to="{ path: 'multi-list' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                Multi List
+              </router-link>
             </li>
           </ul>
         </div>
@@ -36,16 +66,39 @@
           <div class="sidebar-nav-heading">Basic</div>
           <ul class="sidebar-nav-items">
             <li>
-              <router-link :to="{ path: 'basic' }" class="sidebar-nav-item">Basic</router-link>
+              <router-link
+                :to="{ path: 'basic' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                Basic
+              </router-link>
             </li>
             <li>
-              <router-link :to="{ path: 'custom-filter' }" class="sidebar-nav-item">Custom Filter</router-link>
+              <router-link
+                :to="{ path: 'custom-filter' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >Custom Filter
+              </router-link>
             </li>
             <li>
-              <router-link :to="{ path: 'list' }" class="sidebar-nav-item">List</router-link>
+              <router-link
+                :to="{ path: 'list' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                List
+              </router-link>
             </li>
             <li>
-              <router-link :to="{ path: 'list-custom-text' }" class="sidebar-nav-item">List Custom Text</router-link>
+              <router-link
+                :to="{ path: 'list-custom-text' }"
+                class="sidebar-nav-item"
+                exact-active-class="selected"
+              >
+                List Custom Text
+              </router-link>
             </li>
           </ul>
         </div>

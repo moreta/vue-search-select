@@ -46,6 +46,7 @@ h1, h2, h3, h4, h5, h6, li, ol, p, ul {
 a {
   font-weight: 500;
   text-decoration: none;
+  color: var(--gray500);
 }
 
 #nav {
@@ -90,6 +91,7 @@ a {
     text-align: center;
     border-bottom: 1px solid var(--gray100);
     background: var(--background-color);
+    box-shadow: -1px 0 0 0 var(--gray100) inset;
 
     .box-link {
       justify-content: center;
@@ -140,16 +142,10 @@ a {
         cursor: pointer;
         transition: color .2s ease;
 
-        &:visited {
-          text-decoration: none;
-          color: var(--gray500);
-        }
-
         &.selected {
-          color: var(--blue500);
+          color: white;
           font-weight: 500;
-          background: #f5fbff;
-          background: var(--blue50);
+          background: var(--gray300);
           border-top-right-radius: var(--border-radius-8);
           border-bottom-right-radius: var(--border-radius-8);
           margin-right: var(--sp12);
@@ -166,6 +162,7 @@ a {
     height: var(--footer-height);
     border-top: 1px solid var(--gray100);
     background: var(--background-color);
+    box-shadow: -1px 0 0 0 var(--gray100) inset;
     padding: 0 var(--sp12);
   }
 }
