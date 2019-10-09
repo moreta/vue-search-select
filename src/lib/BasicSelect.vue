@@ -41,7 +41,7 @@
         v-for="(option, idx) in filteredOptions"
         :key="idx"
         class="item"
-        :class="{ 'selected': option.selected, 'selected': pointer === idx }"
+        :class="{ 'selected': option.selected || pointer === idx }"
         :data-vss-custom-attr="customAttrs[idx] ? customAttrs[idx] : ''"
         @click.stop="selectItem(option)"
         @mousedown="mousedownItem"
