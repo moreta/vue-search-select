@@ -3,10 +3,11 @@
 .DS_Store
 node_modules/
 .*
-*.js
+*.config.js
 tests/*
 public/*
 src/*
 src/assets/*
 !src/lib/*
 !src/assets/lib/*
+!dist/*
