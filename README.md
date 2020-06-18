@@ -173,7 +173,7 @@ See All Samples : src/components/sample
 
 ## ModelListSelect Component Example
 
-[more ModelListSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/components/views/ModelList.vue)
+[more ModelListSelect sample code see this](https://github.com/moreta/vue-search-select/blob/master/src/views/ModelList.vue)
 
 ```html
 <template>
