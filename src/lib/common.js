@@ -10,7 +10,6 @@ export default {
       self.searchText = ''
       self.closeOptions()
     }
-    
     self.$emit('blur')
   },
   closeOptions (self) {
