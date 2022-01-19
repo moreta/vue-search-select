@@ -8,7 +8,7 @@
     <i class="dropdown icon"></i>
     <input
       class="search"
-      autocomplete="off"
+      autocomplete="new-password"
       :tabindex="isDisabled ? -1 : 0"
       :id="id"
       :name="name"
