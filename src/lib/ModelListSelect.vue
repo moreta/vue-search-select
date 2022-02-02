@@ -16,7 +16,8 @@ export default {
         isError: this.isError,
         isDisabled: this.isDisabled,
         placeholder: this.placeholder,
-        filterPredicate: this.filterPredicate
+        filterPredicate: this.filterPredicate,
+        customAttr: this.customAttr
       },
       on: {
         input: this.onInput,
