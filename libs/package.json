@@ -1,0 +1,35 @@
+{
+  "name": "vue-search-select",
+  "version": "3.0.0",
+  "description": "A Vue.js search select form component",
+  "author": "moreta <moretajoo@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "autocomplete",
+    "vuejs",
+    "select",
+    "search"
+  ],
+  "type": "module",
+  "main": "./dist/VueSearchSelect.umd.cjs",
+  "module": "./dist/VueSearchSelect.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/VueSearchSelect.js",
+      "require": "./dist/VueSearchSelect.umd.cjs"
+    },
+    "./dist/VueSearchSelect.css": {
+      "import": "./dist/VueSearchSelect.css",
+      "require": "./dist/VueSearchSelect.css"
+    }
+  },
+  "scripts": {
+    "build": "vue-tsc && vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moreta/vue-search-select.git"
+  }
+}
