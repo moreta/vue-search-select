@@ -9,6 +9,7 @@
     <input
       class="search"
       autocomplete="off"
+      :disabled="isDisabled"
       :tabindex="isDisabled ? -1 : 0"
       :id="id"
       :name="name"
