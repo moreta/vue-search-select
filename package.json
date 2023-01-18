@@ -1,6 +1,6 @@
 {
   "name": "vue-search-select",
-  "version": "2.9.5",
+  "version": "2.9.6",
   "description": "A Vue.js search select form component",
   "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
@@ -40,7 +40,7 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
     "semantic-ui-css": "^2.4.1",
