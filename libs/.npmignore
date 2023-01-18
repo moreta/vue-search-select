@@ -1,5 +1,6 @@
 assets
 components
 index.ts
+vite.config.ts
 !dist
 !types

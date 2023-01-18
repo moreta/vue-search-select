@@ -1,7 +1,7 @@
 {
   "name": "@vue-search-select/monorepo",
   "private": true,
-  "version": "3.0.0",
+  "version": "3.0.4",
   "type": "module",
   "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "build:libs": "pnpm -C libs run build",
     "build": "pnpm run -r build",
     "dev:docs": "pnpm run build:libs && pnpm -C docs run dev",
-    "publish": "pnpm run build:libs && pnpm -C libs run publish --access public --tag alpha"
+    "publish:libs": "pnpm run build:libs && pnpm -C libs run publish:libs --access public"
   },
   "engines": {
     "node": ">=18",

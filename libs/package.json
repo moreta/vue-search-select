@@ -1,6 +1,6 @@
 {
   "name": "vue-search-select",
-  "version": "3.0.0",
+  "version": "3.0.4",
   "description": "A Vue.js search select form component",
   "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
@@ -26,7 +26,8 @@
     }
   },
   "scripts": {
-    "build": "vue-tsc && vite build"
+    "build": "vue-tsc && vite build",
+    "publish:libs": "npm publish"
   },
   "repository": {
     "type": "git",
