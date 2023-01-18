@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 libs/types
+
+# Local Netlify folder
+.netlify

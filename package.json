@@ -13,7 +13,8 @@
     "build:libs": "pnpm -C libs run build",
     "build": "pnpm run -r build",
     "dev:docs": "pnpm run build:libs && pnpm -C docs run dev",
-    "publish:libs": "pnpm run build:libs && pnpm -C libs run publish:libs --access public"
+    "publish:libs": "pnpm run build:libs && pnpm -C libs run publish:libs --access public",
+    "publish:docs": "pnpm run build && pnpm --package=netlify-cli dlx netlify deploy --dir=./docs/dist --prod"
   },
   "engines": {
     "node": ">=18",
