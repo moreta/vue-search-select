@@ -13,6 +13,7 @@ export default {
     self.$emit("blur")
   },
   closeOptions(self) {
+    self.$refs.input.blur()
     self.showMenu = false
   },
   /**
