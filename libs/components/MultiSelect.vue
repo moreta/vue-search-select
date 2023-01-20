@@ -182,12 +182,10 @@ export default {
     },
     prevItem() {
       common.prevItem(this)
-      this.closeOptions()
       this.openOptions()
     },
     nextItem() {
       common.nextItem(this)
-      this.closeOptions()
       this.openOptions()
     },
     enterItem() {
