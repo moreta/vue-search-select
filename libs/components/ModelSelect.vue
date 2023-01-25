@@ -201,7 +201,7 @@ export default {
         this.$emit("update:modelValue", option)
       } else {
         this.$emit("update:modelValue", option.value)
-        if (option.value === option.text) {
+        if (option.value !== undefined && option.value === option.text) {
           this.searchText = option.value
         }
       }
