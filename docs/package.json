@@ -1,7 +1,7 @@
 {
   "name": "@vue-search-select/docs",
   "private": true,
-  "version": "3.0.7",
+  "version": "3.0.8",
   "type": "module",
   "author": "moreta <moretajoo@gmail.com>",
   "license": "MIT",
