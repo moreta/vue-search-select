@@ -39,11 +39,14 @@ export default {
     customText: {
       type: Function,
     },
+    optionDisabled: {
+      type: String,
+    },
   },
   computed: {
     options() {
       return this.list.map(e => {
-        return { value: e[this.optionValue], text: this.buildText(e) }
+        return { value: e[this.optionValue], text: this.buildText(e), disabled: !!e[this.optionDisabled] }
       })
     },
     innerValue() {
@@ -52,9 +55,13 @@ export default {
         return this.modelValue
       } else if (typeof this.modelValue === "object") {
         if (this.modelValue) {
-          return { value: this.modelValue[this.optionValue], text: this.buildText(this.modelValue) }
+          return {
+            value: this.modelValue[this.optionValue],
+            text: this.buildText(this.modelValue),
+            disabled: !!this.modelValue[this.optionDisabled]
+          }
         } else {
-          return { value: "", text: "" }
+          return { value: "", text: "", disabled: false }
         }
       } else {
         return this.modelValue
