@@ -37,16 +37,19 @@ export default {
     selectedItems: {
       type: Array,
     },
+    optionDisabled: {
+      type: String,
+    },
   },
   computed: {
     options() {
       return this.list.map(e => {
-        return { value: e[this.optionValue], text: this.buildText(e) }
+        return { value: e[this.optionValue], text: this.buildText(e), disabled: !!e[this.optionDisabled] }
       })
     },
     items() {
       return this.selectedItems.map(e => {
-        return { value: e[this.optionValue], text: this.buildText(e) }
+        return { value: e[this.optionValue], text: this.buildText(e), disabled: !!e[this.optionDisabled] }
       })
     },
   },

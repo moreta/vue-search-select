@@ -58,7 +58,9 @@ export default {
   // down enter key
   enterItem(self) {
     const currentItem = self.filteredOptions[self.pointer]
-    if (currentItem) {
+    const disabledItem = currentItem.disabled
+
+    if (currentItem && !disabledItem) {
       self.selectItem(currentItem)
     }
   },

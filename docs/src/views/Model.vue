@@ -8,6 +8,7 @@
     <disabled-prop-example />
     <customizing-event-example />
     <name-and-id-prop-example />
+    <disabled-options-example />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import ErrorPropExample from "../components/Model/_ErrorProp.vue"
 import DisabledPropExample from "../components/Model/_DisabledProp.vue"
 import CustomizingEventExample from "../components/Model/_CustomizingEvent.vue"
 import NameAndIdPropExample from "../components/Model/_NameAndIdProp.vue"
+import DisabledOptionsExample from "../components/Model/_DisabledOptions.vue"
 
 export default {
   components: {
@@ -31,6 +33,7 @@ export default {
     DisabledPropExample,
     CustomizingEventExample,
     NameAndIdPropExample,
+    DisabledOptionsExample
   },
 }
 </script>
