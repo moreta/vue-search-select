@@ -78,6 +78,7 @@ pnpm add vue-search-select
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
 |                 | customText          | Function |                            | custom text function                |
+|                 | optionDisabled      | String   | false                      | disabled key                        |
 |                 | isError             | Boolean  | false                      | error style                         |
 |                 | isDisabled          | Boolean  | false                      | disable component                   |
 |                 | placeholder         | String   | ''                         |                                     |
@@ -98,6 +99,7 @@ pnpm add vue-search-select
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
 |                 | customText          | Function |                            | custom text function                |
+|                 | optionDisabled      | String   | false                      | disabled key                        |
 |                 | selectedItems       | Array    |                            | default option(raw object)          |
 |                 | isError             | String   | false                      | error style                         |
 |                 | isDisabled          | Boolean  | false                      | disable component                   |
