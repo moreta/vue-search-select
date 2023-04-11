@@ -74,6 +74,8 @@ pnpm add vue-search-select
 |                 | customAttr          | Function | () => ''                   | Add custom html attribute           |
 |                 | name                | String   |                            | input form name attribute           |
 |                 | id                  | String   |                            | id attribute                        |
+|                 | searchchange        | Event    |                            | event triggered on search change    |
+|                 | blur                | Event    |                            | event triggered on input blur       |
 | ModelListSelect | list                | Array    |                            | option list                         |
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
@@ -85,6 +87,8 @@ pnpm add vue-search-select
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
 |                 | name                | String   |                            | input form name attribute           |
 |                 | id                  | String   |                            | id attribute                        |
+|                 | searchchange        | Event    |                            | event triggered on search change    |
+|                 | blur                | Event    |                            | event triggered on input blur       |
 | MultiSelect     | options             | Array    |                            | option list                         |
 |                 | selectedOptions     | Array    |                            | default option list                 |
 |                 | isError             | Boolean  | false                      | error style                         |
@@ -95,6 +99,9 @@ pnpm add vue-search-select
 |                 | hideSelectedOptions | Boolean  | false                      | Hide Option list that item selected |
 |                 | name                | String   |                            | input form name attribute           |
 |                 | id                  | String   |                            | id attribute                        |
+|                 | searchchange        | Event    |                            | event triggered on search change    |
+|                 | blur                | Event    |                            | event triggered on input blur       |
+|                 | select              | Event    |                            | event triggered when item selected  |
 | MultiListSelect | list                | Array    |                            | option list                         |
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
@@ -107,6 +114,9 @@ pnpm add vue-search-select
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
 |                 | name                | String   |                            | input form name attribute           |
 |                 | id                  | String   |                            | id attribute                        |
+|                 | searchchange        | Event    |                            | event triggered on search change    |
+|                 | blur                | Event    |                            | event triggered on input blur       |
+|                 | select              | Event    |                            | event triggered when item selected  |
 
 # Run examples
 
