@@ -18,6 +18,7 @@
               name="mySelectName"
               placeholder="select item"
               @searchchange="printSearchText"
+              @blur="handleBlur"
             >
             </model-list-select>
           </div>
@@ -190,6 +191,9 @@ export default {
     selectOption3() {
       // select option from parent component
       this.numberItem = this.options3[0].id
+    },
+    handleBlur() {
+      console.log("handleBlur")
     },
   },
   components: {

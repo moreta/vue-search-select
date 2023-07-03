@@ -19,6 +19,7 @@ export default {
       isDisabled: this.isDisabled,
       placeholder: this.placeholder,
       filterPredicate: this.filterPredicate,
+      onBlur: () => this.$emit('blur'),
       "onUpdate:modelValue": this.onInput,
       onSearchchange: (searchText) => this.$emit("searchchange", searchText)
     })
