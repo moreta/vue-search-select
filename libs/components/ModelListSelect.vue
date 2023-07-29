@@ -14,6 +14,7 @@ export default {
       id: this.id,
       name: this.name,
       options: this.options,
+      debounce: this.debounce,
       modelValue: this.innerValue,
       isError: this.isError,
       isDisabled: this.isDisabled,

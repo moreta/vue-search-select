@@ -74,11 +74,13 @@ pnpm add vue-search-select
 |                 | customAttr          | Function | () => ''                   | Add custom html attribute           |
 |                 | name                | String   |                            | input form name attribute           |
 |                 | id                  | String   |                            | id attribute                        |
+|                 | debounce            | Number   |                            | wait time between inputs before triggering the "searchchange" event |
 |                 | searchchange        | Event    |                            | event triggered on search change    |
 |                 | blur                | Event    |                            | event triggered on input blur       |
 | ModelListSelect | list                | Array    |                            | option list                         |
 |                 | optionValue         | String   |                            | value key                           |
 |                 | optionText          | String   |                            | text key                            |
+|                 | debounce            | Number   |                            | wait time between inputs before triggering the "searchchange" event |
 |                 | customText          | Function |                            | custom text function                |
 |                 | optionDisabled      | String   | false                      | disabled key                        |
 |                 | isError             | Boolean  | false                      | error style                         |
@@ -99,6 +101,7 @@ pnpm add vue-search-select
 |                 | hideSelectedOptions | Boolean  | false                      | Hide Option list that item selected |
 |                 | name                | String   |                            | input form name attribute           |
 |                 | id                  | String   |                            | id attribute                        |
+|                 | debounce            | Number   |                            | wait time between inputs before triggering the "searchchange" event |
 |                 | searchchange        | Event    |                            | event triggered on search change    |
 |                 | blur                | Event    |                            | event triggered on input blur       |
 |                 | select              | Event    |                            | event triggered when item selected  |
@@ -114,6 +117,7 @@ pnpm add vue-search-select
 |                 | filterPredicate     | String   | new RegExp(inputText, 'i') |                                     |
 |                 | name                | String   |                            | input form name attribute           |
 |                 | id                  | String   |                            | id attribute                        |
+|                 | debounce            | Number   |                            | wait time between inputs before triggering the "searchchange" event |
 |                 | searchchange        | Event    |                            | event triggered on search change    |
 |                 | blur                | Event    |                            | event triggered on input blur       |
 |                 | select              | Event    |                            | event triggered when item selected  |

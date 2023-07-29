@@ -39,6 +39,43 @@
     <div class="ui vertical segment">
       <div class="flexbox">
         <div class="flex-content">
+          <h3>Dynamic Search with ajax and 500ms debounce (country name)</h3>
+          <div>
+            <model-list-select
+              :list="countries"
+              option-value="code"
+              option-text="name"
+              v-model="selectedCountryDebounce"
+              debounce="500"
+              placeholder="select item"
+              @searchchange="searchCountry"
+            >
+            </model-list-select>
+          </div>
+        </div>
+        <div class="flex-result">
+          <h4>input text(searchText)</h4>
+          <p>{{ searchText }}</p>
+          <table class="ui celled table">
+            <thead>
+            <tr>
+              <th>code</th>
+              <th>name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{ selectedCountryDebounce.code }}</td>
+              <td>{{ selectedCountryDebounce.name }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="ui vertical segment">
+      <div class="flexbox">
+        <div class="flex-content">
           <h3>Init with ajax</h3>
           <div>
             <model-list-select
@@ -89,7 +126,9 @@ export default {
     return {
       countries: [],
       selectedCountry: {},
+      selectedCountryDebounce: {},
       searchText: "",
+      searchTextDebounce: "",
       animations: [],
       selectedAnimation: {},
       searchText2: "",
@@ -101,6 +140,12 @@ export default {
   methods: {
     searchCountry(searchText) {
       this.searchText = searchText
+      ajaxFindCountry(searchText).then(response => {
+        this.countries = response
+      })
+    },
+    searchCountryDebounce(searchText) {
+      this.searchTextDebounce = searchText
       ajaxFindCountry(searchText).then(response => {
         this.countries = response
       })
