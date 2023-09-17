@@ -14,7 +14,9 @@
         style="display: inline-block !important;"
         :data-vss-custom-attr="customAttr(option)"
       >
-        {{ option.text }}<i class="delete icon" @click="deleteItem(option)"></i>
+        <slot name="selected" :option="option" :idx="idx">
+          {{ option.text }}<i class="delete icon" @click="deleteItem(option)"></i>
+        </slot>
       </a>
     </template>
     <input
@@ -59,7 +61,9 @@
         @mousedown="mousedownItem"
         @mouseenter="pointerSet(idx)"
       >
-        {{ option.text }}
+        <slot :option="option" :idx="idx">
+          {{ option.text }}
+        </slot>
       </div>
     </div>
   </div>
