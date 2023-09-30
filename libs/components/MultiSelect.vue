@@ -103,6 +103,7 @@ export default {
       searchText: "",
       mousedownState: false, // mousedown on option menu
       pointer: -1,
+      timeout: null,
     }
   },
   watch: {
@@ -113,7 +114,12 @@ export default {
       this.pointerAdjust()
     },
     searchText() {
-      this.$emit("searchchange", this.searchText)
+      if(this.debounce > 0){
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {this.$emit("searchchange", this.searchText)}, this.debounce);
+      } else {
+        this.$emit("searchchange", this.searchText)
+      }
     },
   },
   computed: {

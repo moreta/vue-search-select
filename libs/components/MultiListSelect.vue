@@ -12,6 +12,7 @@ export default {
       id: this.id,
       name: this.name,
       options: this.options,
+      debounce: this.debounce,
       selectedOptions: this.items,
       isError: this.isError,
       isDisabled: this.isDisabled,

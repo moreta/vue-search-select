@@ -26,6 +26,10 @@ export default {
       type: String,
       default: "",
     },
+    debounce: {
+      type: Number,
+      default: 0
+    },
     filterPredicate: {
       type: Function,
       default: (text, inputText) => {
